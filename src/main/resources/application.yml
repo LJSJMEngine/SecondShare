@@ -1,0 +1,39 @@
+# 서버 포트
+server:
+  port: 8080
+
+spring:
+  output:
+    ansi:
+      enabled: always
+
+  #thymeleaf
+  thymeleaf:
+    cache: false
+    prefix: classpath:templates/
+
+  #datasource 설정
+  datasource:
+    driver-class-name:
+    url:
+    username:
+    password:
+
+  security:
+    user:
+      name:
+      password:
+
+#MyBatis
+mybatis:
+  mapper-locations:
+
+app:
+
+  # pasing setting
+  pagination:
+
+
+  # upload setting
+  upload:
+    path:
