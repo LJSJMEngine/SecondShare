@@ -40,7 +40,7 @@ CREATE TABLE s1_authority
 CREATE TABLE s1_category
 (
 	id int NOT NULL AUTO_INCREMENT,
-	c_type varchar(40) NOT NULL,
+	name varchar(40) NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -154,9 +154,7 @@ CREATE TABLE s1_user
 	name varchar(20) NOT NULL,
 	phoneNM varchar(20) NOT NULL,
 	email varchar(100) NOT NULL,
-	age int,
 	registDate datetime,
-	birth varchar(20),
 	status int,
 	PRIMARY KEY (id),
 	UNIQUE (username),

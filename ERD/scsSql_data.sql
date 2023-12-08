@@ -28,3 +28,48 @@ DELETE FROM s1_post;
 ALTER TABLE s1_post AUTO_INCREMENT = 1;
 DELETE FROM s1_user;
 ALTER TABLE s1_user AUTO_INCREMENT = 1;
+
+/* 유저 정보 영역 */
+
+INSERT INTO s1_authority (name) VALUES
+('ROLE_ADMIN'), ('ROLE_MEMBER')
+;
+
+INSERT INTO s1_user (username, password, name, phoneNM, email, status) VALUES
+('ADMIN1', '1234', '관리자1', '010-1111-2222', 'admin1@gmail.com', 0),
+('USER1', '1234', '회원1', '010-3333-4444', 'user1@gmail.com', 0)
+;
+
+INSERT INTO s1_user_authority VALUES
+(1, 1),
+(1, 2),
+(2, 2)
+;
+
+/* 게시물 정보 영역 */
+
+INSERT INTO s1_post (user_id, subject, contents) VALUES
+(1, '제목1', '내용1'),
+(2, '제목2', '내용2')
+;
+
+INSERT INTO s1_comment (user_id, post_id, content) VALUES
+(1, 1, '댓글1'),
+(1, 2, '댓글2'),
+(2, 1, '댓글3'),
+(2, 2, '댓글4')
+;
+
+INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
+(1, 'face01.png', 'face01.png')
+;
+
+/* 카테고리 설정 */
+
+INSERT INTO s1_category (name) VALUES
+('생활용품'),
+('가전제품')
+;
+
+/* 채팅 정보 영역 */
+
