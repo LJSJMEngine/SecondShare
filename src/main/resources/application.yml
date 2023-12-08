@@ -10,7 +10,7 @@ spring:
   #thymeleaf
   thymeleaf:
     cache: false
-    prefix: classpath:templates/
+    prefix: classpath:templates/scdsh/
 
   #datasource 설정
   datasource:
@@ -21,8 +21,8 @@ spring:
 
   security:
     user:
-      name: user
-      password: 1234
+      name:
+      password:
 
 #MyBatis
 mybatis:
