@@ -21,8 +21,8 @@ spring:
 
   security:
     user:
-      name:
-      password:
+      name: user
+      password: 1234
 
 #MyBatis
 mybatis:
@@ -32,8 +32,10 @@ app:
 
   # pasing setting
   pagination:
+    write_pages: 10
+    page_rows: 10
 
 
   # upload setting
   upload:
-    path:
+    path: upload

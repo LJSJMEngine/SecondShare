@@ -1,24 +1,24 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
-
 DROP TABLE IF EXISTS s1_attachment;
 DROP TABLE IF EXISTS s1_user_authority;
 DROP TABLE IF EXISTS s1_authority;
+DROP TABLE IF EXISTS s1_post_category;
 DROP TABLE IF EXISTS s1_category;
+DROP TABLE IF EXISTS s1_chatMessage;
+DROP TABLE IF EXISTS s1_chatroom_user;
+DROP TABLE IF EXISTS s1_chatroom;
 DROP TABLE IF EXISTS s1_comment;
+DROP TABLE IF EXISTS s1_like;
+DROP TABLE IF EXISTS s1_location;
 DROP TABLE IF EXISTS s1_notice;
-DROP TABLE IF EXISTS s1_post_tag;
 DROP TABLE IF EXISTS s1_review;
 DROP TABLE IF EXISTS s1_post;
-DROP TABLE IF EXISTS s1_tag;
 DROP TABLE IF EXISTS s1_user;
 
 
-
-
 /* Create Tables */
-
 CREATE TABLE s1_attachment
 (
 	id int NOT NULL AUTO_INCREMENT,
@@ -39,14 +39,38 @@ CREATE TABLE s1_authority
 
 CREATE TABLE s1_category
 (
-	c_id int NOT NULL AUTO_INCREMENT,
-	c_name varchar(50),
-	c_class varchar(50),
-	c_type varchar(50),
-	c_price int,
-	PRIMARY KEY (c_id),
-	UNIQUE (c_class),
-	UNIQUE (c_type)
+	id int NOT NULL AUTO_INCREMENT,
+	c_type varchar(40) NOT NULL,
+	PRIMARY KEY (id)
+);
+
+
+CREATE TABLE s1_chatMessage
+(
+	chat_id int NOT NULL AUTO_INCREMENT,
+	content text,
+	checkedContent boolean,
+	PRIMARY KEY (chat_id)
+);
+
+
+CREATE TABLE s1_chatroom
+(
+	room_id int NOT NULL AUTO_INCREMENT,
+	post_id int NOT NULL,
+	createDate datetime,
+	lastUpdateDate datetime,
+	subject varchar(50),
+	roomState int,
+	PRIMARY KEY (room_id)
+);
+
+
+CREATE TABLE s1_chatroom_user
+(
+	seller_id int NOT NULL,
+	room_id int NOT NULL,
+	post_id int NOT NULL
 );
 
 
@@ -57,8 +81,24 @@ CREATE TABLE s1_comment
 	post_id int NOT NULL,
 	content longtext NOT NULL,
 	regdate datetime,
-	soldCheck boolean,
+	soldCheck int,
 	PRIMARY KEY (id)
+);
+
+
+CREATE TABLE s1_like
+(
+	id int NOT NULL,
+	post_id int NOT NULL
+);
+
+
+CREATE TABLE s1_location
+(
+	user_id int NOT NULL,
+	arr1 text,
+	arr2 text,
+	zipcode int
 );
 
 
@@ -66,8 +106,10 @@ CREATE TABLE s1_notice
 (
 	id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
-	status longtext,
-	contents longtext,
+	status int,
+	status_name varchar(50),
+	contents text,
+	readChk boolean,
 	PRIMARY KEY (id)
 );
 
@@ -80,15 +122,13 @@ CREATE TABLE s1_post
 	contents longtext,
 	price int,
 	viewCnt int,
+	status int,
 	regDate datetime,
-	status boolean,
-	goodCnt int,
-	tags longtext,
 	PRIMARY KEY (post_id)
 );
 
 
-CREATE TABLE s1_post_tag
+CREATE TABLE s1_post_category
 (
 	post_id int NOT NULL,
 	tag_id int NOT NULL
@@ -101,15 +141,7 @@ CREATE TABLE s1_review
 	user_id int NOT NULL,
 	post_id int NOT NULL,
 	reviewChk boolean NOT NULL,
-	content longtext,
-	PRIMARY KEY (id)
-);
-
-
-CREATE TABLE s1_tag
-(
-	id int NOT NULL AUTO_INCREMENT,
-	name varchar(40) NOT NULL,
+	content longtext NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -118,13 +150,14 @@ CREATE TABLE s1_user
 (
 	id int NOT NULL AUTO_INCREMENT,
 	username varchar(100) NOT NULL,
-	password varchar(22) NOT NULL,
+	password varchar(200) NOT NULL,
 	name varchar(20) NOT NULL,
 	phoneNM varchar(20) NOT NULL,
-	email varchar(80) NOT NULL,
+	email varchar(100) NOT NULL,
 	age int,
 	registDate datetime,
-	location longtext,
+	birth varchar(20),
+	status int,
 	PRIMARY KEY (id),
 	UNIQUE (username),
 	UNIQUE (email)
@@ -149,11 +182,43 @@ ALTER TABLE s1_user_authority
 ;
 
 
+ALTER TABLE s1_post_category
+	ADD FOREIGN KEY (tag_id)
+	REFERENCES s1_category (id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE s1_chatroom_user
+	ADD FOREIGN KEY (room_id)
+	REFERENCES s1_chatroom (room_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
 ALTER TABLE s1_attachment
 	ADD FOREIGN KEY (post_id)
 	REFERENCES s1_post (post_id)
 	ON UPDATE RESTRICT
 	ON DELETE CASCADE
+;
+
+
+ALTER TABLE s1_chatroom
+	ADD FOREIGN KEY (post_id)
+	REFERENCES s1_post (post_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE s1_chatroom_user
+	ADD FOREIGN KEY (post_id)
+	REFERENCES s1_post (post_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
 ;
 
 
@@ -165,7 +230,15 @@ ALTER TABLE s1_comment
 ;
 
 
-ALTER TABLE s1_post_tag
+ALTER TABLE s1_like
+	ADD FOREIGN KEY (post_id)
+	REFERENCES s1_post (post_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE s1_post_category
 	ADD FOREIGN KEY (post_id)
 	REFERENCES s1_post (post_id)
 	ON UPDATE RESTRICT
@@ -181,15 +254,31 @@ ALTER TABLE s1_review
 ;
 
 
-ALTER TABLE s1_post_tag
-	ADD FOREIGN KEY (tag_id)
-	REFERENCES s1_tag (id)
+ALTER TABLE s1_chatroom_user
+	ADD FOREIGN KEY (seller_id)
+	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE s1_comment
+	ADD FOREIGN KEY (user_id)
+	REFERENCES s1_user (id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE s1_like
+	ADD FOREIGN KEY (id)
+	REFERENCES s1_user (id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE s1_location
 	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
@@ -209,7 +298,7 @@ ALTER TABLE s1_post
 	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
-	ON DELETE CASCADE
+	ON DELETE RESTRICT
 ;
 
 
@@ -217,7 +306,7 @@ ALTER TABLE s1_review
 	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
-	ON DELETE CASCADE
+	ON DELETE RESTRICT
 ;
 
 
