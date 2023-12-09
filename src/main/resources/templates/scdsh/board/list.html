@@ -8,12 +8,23 @@
 </head>
 <h2>게시물 목록</h2>
 <body>
+
+<form th:action="@{/board/list}" method="get">
+    <input type="text" name="keyword" placeholder="검색어를 입력하세요">
+    <button type="submit">검색</button>
+</form>
+
+
+
+
+
 <table border="1">
     <thead>
     <tr>
-        <th>게시물 ID</th>
-        <th>제목</th>
+        <th>게시물 번호</th>
+        <th>제목입니다</th>
         <th>내용</th>
+        <th>가격</th>
 
     </tr>
     </thead>
@@ -22,7 +33,8 @@
     <tr th:each="post : ${list}">
         <td th:text="${post.post_id}"></td>
         <td th:text="${post.subject}"></td>
-        <td th:text="${post.contents}"></td>
+        <td th:text="${post.contents}">
+        <td th:text="${post.price}"></td>
 
     </tr>
     </tbody>

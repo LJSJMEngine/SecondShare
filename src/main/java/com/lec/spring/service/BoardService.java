@@ -6,8 +6,11 @@ import org.springframework.ui.Model;
 import java.util.List;
 
 public interface BoardService {
-//    List<Post> list();
+
+    List<Post> list();
 
     List<Post> list(Model model);
+
+    List<Post> search(String keyword);
 
 }

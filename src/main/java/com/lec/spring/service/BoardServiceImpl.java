@@ -20,11 +20,12 @@ public class BoardServiceImpl implements BoardService {
         System.out.println("BoardService() 생성");
     }
 
-//    @Override
-//    public List<Post> list() {
-//
-//        return postRepository.findAll();
-//    }
+
+    @Override
+    public List<Post> list() {
+        return postRepository.findAll();
+    }
+
 
     @Override
     public List<Post> list(Model model) {
@@ -32,5 +33,9 @@ public class BoardServiceImpl implements BoardService {
         List<Post> list = postRepository.findAll();
         model.addAttribute("list", list);
         return list;
+    }
+
+    public List<Post> search(String keyword) {
+        return postRepository.search(keyword);
     }
 }
