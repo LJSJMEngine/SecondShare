@@ -37,6 +37,7 @@ public class ChatServiceImpl implements ChatService{
                 .roomId(randomId)
                 .name(name)
                 .build();
+        System.out.println(randomId);
         chatRooms.put(randomId, chatRoom);
         return chatRoom;
     }
