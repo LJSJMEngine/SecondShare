@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.PostRepository">
+
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Post"
+            useGeneratedKeys="true" keyColumn="post_id" keyProperty="post_id">
+        INSERT INTO s1_post (user_id, subject, contents, price, viewCnt, status, regDate)
+        VALUES (#{user_id}, #{subject}, #{contents}, #{price}, #{viewCnt}, #{status}, #{regDate})
+    </insert>
+
+    <select id="findById" resultType="com.lec.spring.domain.Post">
+        SELECT * FROM s1_post WHERE post_id = #{id}
+    </select>
+
+    <select id="findAll" resultType="com.lec.spring.domain.Post">
+        SELECT * FROM s1_post ORDER BY post_id DESC
+    </select>
+
+    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.Post">
+        UPDATE s1_post
+        SET subject = #{subject}, contents = #{contents}, price = #{price}
+        WHERE post_id = #{post_id}
+    </update>
+
+
+
+</mapper>

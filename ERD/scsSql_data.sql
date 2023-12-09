@@ -66,9 +66,14 @@ INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
 
 /* 카테고리 설정 */
 
+
 INSERT INTO s1_category (name) VALUES
+('패션의류'),
 ('생활용품'),
-('가전제품')
+('가전제품'),
+('스포츠용품'),
+('도서/음반/DVD'),
+('문구/오피스')
 ;
 
 /* 채팅 정보 영역 */
