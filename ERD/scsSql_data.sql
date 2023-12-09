@@ -35,9 +35,9 @@ INSERT INTO s1_authority (name) VALUES
 ('ROLE_ADMIN'), ('ROLE_MEMBER')
 ;
 
-INSERT INTO s1_user (username, password, name, phoneNM, email, status) VALUES
-('ADMIN1', '1234', '관리자1', '010-1111-2222', 'admin1@gmail.com', 0),
-('USER1', '1234', '회원1', '010-3333-4444', 'user1@gmail.com', 0)
+INSERT INTO s1_user (username, password,repassword, name, phoneNM, email) VALUES
+('ADMIN1', '1234','1234', '관리자1', '010-1111-2222', 'admin1@gmail.com'),
+('USER1', '1234','1234', '회원1', '010-3333-4444', 'user1@gmail.com')
 ;
 
 INSERT INTO s1_user_authority VALUES
@@ -66,9 +66,14 @@ INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
 
 /* 카테고리 설정 */
 
+
 INSERT INTO s1_category (name) VALUES
+('패션의류'),
 ('생활용품'),
-('가전제품')
+('가전제품'),
+('스포츠용품'),
+('도서/음반/DVD'),
+('문구/오피스')
 ;
 
 /* 채팅 정보 영역 */

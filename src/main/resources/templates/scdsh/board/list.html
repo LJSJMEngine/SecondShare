@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script th:src="@{/js/list.js}"></script>
+    <title>목록 페이지</title>
 </head>
+<h2>게시물 목록</h2>
 <body>
 
+<form th:action="@{/board/list}" method="get">
+    <input type="text" name="keyword" placeholder="검색어를 입력하세요">
+    <button type="submit">검색</button>
+</form>
+
+
+
+
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>게시물 번호</th>
+        <th>제목입니다</th>
+        <th>내용</th>
+        <th>가격</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 게시물 목록을 반복하며 출력 -->
+    <tr th:each="post : ${list}">
+        <td th:text="${post.post_id}"></td>
+        <td th:text="${post.subject}"></td>
+        <td th:text="${post.contents}">
+        <td th:text="${post.price}"></td>
+
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
