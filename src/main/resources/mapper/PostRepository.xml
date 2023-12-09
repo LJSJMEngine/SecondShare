@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.PostRepository">
+
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Post"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO s1_post
+        (user_id, subject, content, price)
+        VALUES
+        ( #{user.id}, #{subject}, #{content}, #{price})
+    </insert>
+
+    <update id="incViewCnt" flushCache="true">
+        UPDATE s1_post
+        SET viewCnt = viewCnt + 1
+        WHERE post_id = #{post_id}
+    </update>
+
+    <sql id="SELECT_BASE">
+        SELECT
+        p.post_id "p_post_id"
+        , p.user_id "p_user_id"
+        , p.subject "p_subject"
+        , p.contents "p_contents"
+        , p.price "p_price"
+        , p.viewCnt "p_viewCnt"
+        , p.regDate "p_regDate"
+        , p.status "p_status"
+        , p.goodCnt "p_goodCnt"
+        , p.tags "p_tags"
+        , u.id "u_id"
+        , u.username "u_username"
+        , u.location "u_location"
+        FROM s1_post p, s1_user u
+        WHERE p.post_id = u.id
+    </sql>
+    <resultMap id="mapUser" type="com.lec.spring.domain.User">
+        <result column="u_id" property="id"/>
+        <result column="u_username" property="username"/>
+        <result column="u_regdate" property="regDate"/>
+    </resultMap>
+
+    <resultMap id="mapPost" type="com.lec.spring.domain.Post">
+        <result column="p_post_id" property="id"/>
+        <result column="p_user_id" property="user_id"/>
+        <result column="p_subject" property="subject"/>
+        <result column="p_contents" property="contents"/>
+        <result column="p_price" property="price"/>
+        <result column="p_viewCnt" property="viewCnt"/>
+        <result column="p_regDate" property="regDate"/>
+        <result column="p_status" property="status"/>
+        <result column="p_goodCnt" property="goodCnt"/>
+        <result column="p_tags" property="tags"/>
+        <collection property="user" resultMap="mapUser"/>
+    </resultMap>
+
+    <select id="findByPostId" resultType="com.lec.spring.domain.Post">
+        <include refid="SELECT_BASE"/>
+            AND post_id = #{post_id}
+    </select>
+
+    <select id="findAll" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        ORDER BY p.id DESC
+    </select>
+
+<!--  delStatus 글을 삭제했을경우 완전히 삭제되면 안되니
+회원탈퇴의 경우와 같이 비활성화 column boolean임  -->
+    <update id="modify" flushCache="true"
+            parameterType="com.lec.spring.domain.Post">
+        UPDATE s1_post
+        SET subject = #{subject}, content = #{content}, price = #{price}, delStatus = #{delStatus}
+        WHERE id = #{id}
+    </update>
+
+
+</mapper>

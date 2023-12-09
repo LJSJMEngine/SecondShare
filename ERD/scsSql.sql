@@ -120,10 +120,13 @@ CREATE TABLE s1_post
 	user_id int NOT NULL,
 	subject varchar(200) NOT NULL,
 	contents longtext,
-	price int,
-	viewCnt int,
-	status int,
+	price int DEFAULT 0,
+	viewCnt int DEFAULT 0,
 	regDate datetime,
+	status int DEFAULT 0, -- 거래 상태
+	delStatus boolean DEFAULT FALSE, -- 글을 삭제했을경우 TRUE 가 되고 관리자 외 비공개
+	goodCnt int DEFAULT 0,
+	tags longtext,
 	PRIMARY KEY (post_id)
 );
 
@@ -140,8 +143,9 @@ CREATE TABLE s1_review
 	id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
 	post_id int NOT NULL,
-	reviewChk boolean NOT NULL,
-	content longtext NOT NULL,
+	reviewChk int DEFAULT 0,
+	reviewSc int,-- 별로에요 ~ 좋아요
+	content longtext,
 	PRIMARY KEY (id)
 );
 
@@ -151,11 +155,13 @@ CREATE TABLE s1_user
 	id int NOT NULL AUTO_INCREMENT,
 	username varchar(100) NOT NULL,
 	password varchar(200) NOT NULL,
+	repassword varchar(200) NOT NULL,
 	name varchar(20) NOT NULL,
 	phoneNM varchar(20) NOT NULL,
 	email varchar(100) NOT NULL,
 	registDate datetime,
-	status int,
+	location longtext,
+	status int DEFAULT 0,
 	PRIMARY KEY (id),
 	UNIQUE (username),
 	UNIQUE (email)
