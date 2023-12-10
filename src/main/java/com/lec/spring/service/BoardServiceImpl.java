@@ -57,6 +57,12 @@ public class BoardServiceImpl implements BoardService {
 //    }
 
     @Override
+    public List<Post> searchByCategory(Long categoryId) {
+
+        return postRepository.searchByCategory(categoryId);
+    }
+
+    @Override
     public int write(Post post) {
         return 0;
     }
