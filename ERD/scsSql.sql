@@ -16,6 +16,7 @@ DROP TABLE IF EXISTS s1_notice;
 DROP TABLE IF EXISTS s1_review;
 DROP TABLE IF EXISTS s1_post;
 DROP TABLE IF EXISTS s1_user;
+DROP TABLE IF EXISTS s1_visit;
 
 
 /* Create Tables */
@@ -167,6 +168,15 @@ CREATE TABLE s1_user_authority
 	user_id int NOT NULL,
 	authority_id int NOT NULL
 );
+
+CREATE TABLE s1_visit
+(
+    id int(20) NOT NULL,
+    visitDate datetime,
+    number int(11)
+    PRIMARY KEY (id)
+)
+
 
 
 
