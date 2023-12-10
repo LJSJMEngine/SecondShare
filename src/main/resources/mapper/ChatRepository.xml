@@ -8,23 +8,24 @@
         SELECT
         room_id,
         post_id,
+        seller_id,
+        buyer_id,
         createDate,
         lastUpdateDate,
         subject,
-        roomState,
+        roomState
         FROM
         s1_chatroom
         WHERE
         1 = 1
     </sql>
 
-    <select id="findRoomById" resultType="com.lec.spring.repository.ChatRepository">
+    <select id="findRoomById" resultType="com.lec.spring.domain.ChatRoom">
         <include refid="SELECT_CHAT"/>
         AND room_id = #{room_id}
     </select>
-    <select id="findAllRoom" resultType="com.lec.spring.repository.ChatRepository">
-        <include refid="SELECT_CHAT"/>
-        ORDER BY room_id
+    <select id="findAllRoom" resultType="com.lec.spring.domain.ChatRoom">
+        Select * FROM s1_chatroom ORDER BY room_id
     </select>
 
 </mapper>

@@ -34,16 +34,17 @@ public class ChatController {
     public List<ChatRoom> findAllRoom() {
         return chatService.findAllRoom();
     }
-    @RequestMapping("chatMake")
+    @RequestMapping("chatTest")
     public String chatListView(Model model){
 
         for(ChatRoom room : chatService.findAllRoom())
         {
-            System.out.println(room.getRoomId() + " " + room.getName());
+            System.out.println(room.getRoom_id() + " " + room.getSubject());
+            System.out.println(room);
         }
         model.addAttribute("chatName",1);
 
-        return "chat/chatMake";
+        return "chat/chatTest";
     }
 }
 

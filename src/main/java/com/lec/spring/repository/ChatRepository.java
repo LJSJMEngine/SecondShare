@@ -9,9 +9,9 @@ import java.util.Map;
 
 public interface ChatRepository {
 
-    public ChatRoom findRoomById(String room_id);
+    ChatRoom findRoomById(String room_id);
 
-    public List<ChatRoom> findAllRoom();
+    List<ChatRoom> findAllRoom();
 
-    public ChatRoom createChatRoom(String name);
+    ChatRoom createChatRoom(String name);
 }

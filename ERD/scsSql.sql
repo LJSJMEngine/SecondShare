@@ -66,7 +66,7 @@ CREATE TABLE s1_chatroom
 	buyer_id int NOT NULL,
 	createDate datetime,
 	lastUpdateDate datetime,
-	subject varchar(50),
+	subject varchar(50) NOT NULL,
 	roomState int,
 	PRIMARY KEY (room_id)
 );
