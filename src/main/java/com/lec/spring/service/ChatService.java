@@ -9,13 +9,11 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ChatService {
-    void init();
+
 
     List<ChatRoom> findAllRoom();
 
     ChatRoom findRoomById(String roomId);
 
     ChatRoom createRoom(String name);
-
-    <T> void sendMessage(WebSocketSession session, T message);
 }
