@@ -1,27 +1,25 @@
-package com.lec.spring.service;
+    package com.lec.spring.service;
 
-import com.lec.spring.domain.Post;
-import org.springframework.ui.Model;
+    import com.lec.spring.domain.Post;
+    import org.springframework.ui.Model;
 
-import java.util.List;
+    import java.util.List;
 
-import com.lec.spring.domain.Post;
+    public interface BoardService {
 
-public interface BoardService {
+        List<Post> list();
 
-    List<Post> list();
+        List<Post> list(Model model);
+        List<Post> searchByTitle(String keyword);
+        List<Post> searchByCategory(String keyword);
 
-    List<Post> list(Model model);
+        int write(Post post);
 
-    List<Post> search(String keyword);
+        Post detail(Long id);
 
-    int write(Post post);
+        Post selectByPostId(Long id);
 
-    Post detail(Long id);
-
-    Post selectByPostId(Long id);
-
-    int modify(Post post);
+        int modify(Post post);
 
 
-}
+    }

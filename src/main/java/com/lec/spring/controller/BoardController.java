@@ -1,19 +1,13 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.service.BoardService;
-import org.springframework.security.core.parameters.P;
+import com.lec.spring.domain.Category;
 import com.lec.spring.domain.Post;
 import com.lec.spring.service.BoardService;
+import com.lec.spring.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,24 +18,33 @@ public class BoardController {
     private BoardService boardService;
 
 
+    @Autowired
+    private CategoryService categoryService;
 
-//    @GetMapping("/board/list")
-//    public void list(Model model){
-//        boardService.list(model);
-//
-//    }
-
-    @GetMapping("/board/list")
-    public String list(@RequestParam(required = false) String keyword, Model model) {
+    @GetMapping("/list")
+    public String list(@RequestParam(required = false) String type,
+                       @RequestParam(required = false) String keyword,
+                       Model model) {
         List<Post> list;
 
-        if (StringUtils.hasText(keyword)) {
-            list = boardService.search(keyword);
+        if ("subject".equals(type)) {
+            list = boardService.searchByTitle(keyword);
+        } else if ("category".equals(type)) {
+            // Assuming category names are unique
+            Category category = categoryService.getCategoryByName(keyword);
+            if (category != null) {
+                list = boardService.searchByCategory(category.getName());
+            } else {
+                list = boardService.list();
+            }
         } else {
             list = boardService.list();
         }
 
+        List<Category> categories = categoryService.getAllCategories();
+
         model.addAttribute("list", list);
+        model.addAttribute("categories", categories);
         return "board/list";
     }
 

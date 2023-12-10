@@ -9,35 +9,38 @@
 <h2>게시물 목록</h2>
 <body>
 
-<form th:action="@{/board/list}" method="get">
-    <input type="text" name="keyword" placeholder="검색어를 입력하세요">
-    <button type="submit">검색</button>
+<div>
+    <form name="search" method="Get" action="">
+        <select name="type">
+            <option selected value="">전체</option>
+            <option value="title">제목</option>
+            <option value="category">카테고리</option>
+        </select>
+        <input type="text" name="keyword" value=""/>
+        <input type="submit" class="btn btn-outline-primary mr-2" value="검색" />
+    </form>
+</div>
+
+<form >
+    <!-- 목록 -->
+    <table class="table table-hover">
+        <!-- 테이블 헤더 생략 (기존 내용 유지) -->
+
+        <tbody>
+        <tr th:each="post : ${list}">
+            <!-- 기존 내용 유지 및 카테고리 표시 추가 -->
+            <td th:text="${post.post_id}"></td>
+            <td>
+                <a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a>
+                <span th:if="${post.category != null}" th:text="' [' + ${post.category.name} + ']'"></span>
+            </td>
+            <td th:text="${post.user.username}"></td>
+            <td th:text="${post.viewCnt}"></td>
+            <td th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- 목록 -->
 </form>
-
-
-
-
-
-<table border="1">
-    <thead>
-    <tr>
-        <th>게시물 번호</th>
-        <th>제목입니다</th>
-        <th>내용</th>
-        <th>가격</th>
-
-    </tr>
-    </thead>
-    <tbody>
-    <!-- 게시물 목록을 반복하며 출력 -->
-    <tr th:each="post : ${list}">
-        <td th:text="${post.post_id}"></td>
-        <td th:text="${post.subject}"></td>
-        <td th:text="${post.contents}">
-        <td th:text="${post.price}"></td>
-
-    </tr>
-    </tbody>
-</table>
 </body>
 </html>

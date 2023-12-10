@@ -20,9 +20,9 @@ public interface PostRepository {
 
     List<Post> findAll();
 
-
-    List<Post> search(@Param("keyword") String keyword);
-
     int update(Post post);
 
+    List<Post> searchByTitle(@Param("keyword") String keyword);
+
+    List<Post> searchByCategory(@Param("keyword") String keyword);
 }

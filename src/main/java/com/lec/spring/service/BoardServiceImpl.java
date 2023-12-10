@@ -14,13 +14,17 @@ import java.util.List;
 @Service
 public class BoardServiceImpl implements BoardService {
 
+
     private UserRepository userRepository;
-    private PostRepository postRepository;
+
+
+   private PostRepository postRepository;
 
     @Autowired
-    public BoardServiceImpl(SqlSession sqlSession){
-        userRepository = sqlSession.getMapper(UserRepository.class);
+    public BoardServiceImpl(SqlSession sqlSession){  // MyBatis 가 생성한 SqlSession 빈(bean) 객체 주입
         postRepository = sqlSession.getMapper(PostRepository.class);
+        userRepository = sqlSession.getMapper(UserRepository.class);
+
         System.out.println("BoardService() 생성");
     }
 
@@ -30,7 +34,6 @@ public class BoardServiceImpl implements BoardService {
         return postRepository.findAll();
     }
 
-
     @Override
     public List<Post> list(Model model) {
 
@@ -39,8 +42,12 @@ public class BoardServiceImpl implements BoardService {
         return list;
     }
 
-    public List<Post> search(String keyword) {
-        return postRepository.search(keyword);
+    public List<Post> searchByTitle(String keyword) {
+        return postRepository.searchByTitle(keyword);
+    }
+
+    public List<Post> searchByCategory(String keyword) {
+        return postRepository.searchByCategory(keyword);
     }
 
     @Override

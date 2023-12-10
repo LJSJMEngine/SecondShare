@@ -23,5 +23,10 @@ public class Post {
     private int status;
     private int goodCnt;
 
+    private Category category;
+
+
     private User user; //작성자 아이디
+
+
 }
