@@ -1,13 +1,21 @@
 package com.lec.spring.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class User {
     private Long id;     // PK
     private String username;    // 아이디
     private String password;    // 비밀번호
+    @ToString.Exclude
     private String passwordChk;     // 비밀번호 확인
     private String name;    // 이름
     private String phoneNM;     // 전화번호
@@ -18,5 +26,7 @@ public class User {
 
 
     // 회원 권한
+    @Builder.Default
+    @ToString.Exclude
     private List<Authority> authorities = new ArrayList<>();
 }
