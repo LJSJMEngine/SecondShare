@@ -1,6 +1,7 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
+
 DROP TABLE IF EXISTS s1_attachment;
 DROP TABLE IF EXISTS s1_user_authority;
 DROP TABLE IF EXISTS s1_authority;
@@ -16,10 +17,12 @@ DROP TABLE IF EXISTS s1_notice;
 DROP TABLE IF EXISTS s1_review;
 DROP TABLE IF EXISTS s1_post;
 DROP TABLE IF EXISTS s1_user;
-DROP TABLE IF EXISTS s1_visit;
+
+
 
 
 /* Create Tables */
+
 CREATE TABLE s1_attachment
 (
 	id int NOT NULL AUTO_INCREMENT,
@@ -41,7 +44,7 @@ CREATE TABLE s1_authority
 CREATE TABLE s1_category
 (
 	id int NOT NULL AUTO_INCREMENT,
-	name varchar(40) NOT NULL,
+	c_type varchar(40) NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -155,7 +158,9 @@ CREATE TABLE s1_user
 	name varchar(20) NOT NULL,
 	phoneNM varchar(20) NOT NULL,
 	email varchar(100) NOT NULL,
+	age int,
 	registDate datetime,
+	birth varchar(20),
 	status int,
 	PRIMARY KEY (id),
 	UNIQUE (username),
@@ -168,15 +173,6 @@ CREATE TABLE s1_user_authority
 	user_id int NOT NULL,
 	authority_id int NOT NULL
 );
-
-CREATE TABLE s1_visit
-(
-    id int(20) NOT NULL,
-    visitDate datetime,
-    number int(11)
-    PRIMARY KEY (id)
-)
-
 
 
 
