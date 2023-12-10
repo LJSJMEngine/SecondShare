@@ -3,6 +3,7 @@ package com.lec.spring.controller;
 import com.lec.spring.domain.ChatRoom;
 import com.lec.spring.service.ChatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,29 +19,19 @@ import java.util.Random;
 @RestController
 @RequestMapping("/chat")
 public class ChatController {
+    @Autowired
     private final ChatService chatService;
 
-    @PostMapping
+    @PostMapping("/")
     public ChatRoom createRoom(@RequestParam String name) {
         return chatService.createRoom(name);
     }
 
-    @GetMapping
+    @GetMapping("/")
     public List<ChatRoom> findAllRoom() {
         return chatService.findAllRoom();
     }
 
-    @RequestMapping("/chatMake")
-    public void ChatRoom (Model model)
-    {
-        System.out.println("chatMake");
-        Random r = new Random();
-        String chatName = chatService.createRoom("newChatName" + r.ints(25).toString()).getName();
-
-        model.addAttribute("chatName",chatName);
-
-
-    }
 
 }
 
