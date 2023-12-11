@@ -42,19 +42,19 @@ public class BoardServiceImpl implements BoardService {
         return list;
     }
 
-    public List<Post> searchByTitle(String keyword) {
-        return postRepository.searchByTitle(keyword);
+    public List<Post> search(String keyword) {
+        return postRepository.search(keyword);
     }
 
     public List<Post> searchByCategory(String keyword) {
         return postRepository.searchByCategory(keyword);
     }
 
-    @Override
-    public List<Post> searchByCategory(Long categoryId) {
-
-        return postRepository.searchByCategory(categoryId);
-    }
+//    @Override
+//    public List<Post> searchByCategory(Long categoryId) {
+//
+//        return postRepository.searchByCategory(categoryId);
+//    }
 
     @Override
     public int write(Post post) {

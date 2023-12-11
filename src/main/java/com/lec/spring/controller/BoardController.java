@@ -28,7 +28,7 @@ public class BoardController {
         List<Post> list;
 
         if ("subject".equals(type)) {
-            list = boardService.searchByTitle(keyword);
+            list = boardService.search(keyword);
         } else if ("category".equals(type)) {
             // Assuming category names are unique
             Category category = categoryService.getCategoryByName(keyword);
@@ -47,6 +47,7 @@ public class BoardController {
         model.addAttribute("categories", categories);
         return "board/list";
     }
+
 
     @GetMapping("/write")
     public void write(){}

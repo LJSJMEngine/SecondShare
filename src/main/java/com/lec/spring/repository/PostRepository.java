@@ -22,7 +22,7 @@ public interface PostRepository {
 
     int update(Post post);
 
-    List<Post> searchByTitle(@Param("keyword") String keyword);
+    List<Post> search(@Param("keyword") String keyword);
 
     List<Post> searchByCategory(@Param("keyword") String keyword);
 }

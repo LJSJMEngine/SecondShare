@@ -10,7 +10,7 @@
         List<Post> list();
 
         List<Post> list(Model model);
-        List<Post> searchByTitle(String keyword);
+        List<Post> search(String keyword);
         List<Post> searchByCategory(String keyword);
 
         int write(Post post);

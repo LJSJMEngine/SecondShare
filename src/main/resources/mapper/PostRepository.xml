@@ -79,21 +79,24 @@
     <!-- search -->
     <select id="search" resultMap="mapPost" parameterType="String">
         SELECT
-        user_id,
-        post_id,
-        subject,
-        contents,
-        price,
-        viewCnt,
-        status,
-        regDate
-        FROM
-        s1_post
+        p.post_id "p_post_id"
+        , p.user_id "p_user_id"
+        , p.subject "p_subject"
+        , p.contents "p_contents"
+        , p.price "p_price"
+        , p.viewCnt "p_viewCnt"
+        , p.regDate "p_regDate"
+        , p.status "p_status"
+        , p.goodCnt "p_goodCnt"
+        , p.tags "p_tags"
+        , u.id "u_id"
+        , u.username "u_username"
+        , u.location "u_location"
+        FROM s1_post p, s1_user u
         <where>
             LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
-            OR LOWER(p.contents) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         </where>
-        ORDER BY post_id DESC
+        ORDER BY p.post_id DESC
     </select>
 
 </mapper>
