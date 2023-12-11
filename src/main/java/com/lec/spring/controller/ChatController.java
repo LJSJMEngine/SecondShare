@@ -1,9 +1,15 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.ChatMessage;
 import com.lec.spring.domain.ChatRoom;
 import com.lec.spring.service.ChatService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +28,7 @@ import java.util.Random;
 public class ChatController {
     @Autowired
     private final ChatService chatService;
+    private final SimpMessageSendingOperations messagingTemplate;
 
     @PostMapping("/")
     @ResponseBody
@@ -46,6 +53,31 @@ public class ChatController {
 
         return "chat/chatTest";
     }
+    @RequestMapping("room")
+    public void roomtest(){}
+    @RequestMapping("roomdetail")
+    public void roomdetail(){}
+
+    @PostMapping("roomdetail")
+    public void PostRoomDetail(@Valid ChatRoom roomData, Model model)
+    {
+        model.addAttribute("roomInfo",roomData);
+
+
+    }
+
+
+    @MessageMapping("/chat/message")
+    public void message(ChatMessage message) {
+
+
+        if (ChatMessage.MessageType.JOIN.equals(message.getType()))
+            message.setMessage(message.getSender() + "님이 입장하셨습니다.");
+
+
+        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+    }
+
 }
 
-
+// 디테일 페이지 진입점 알려줘야함.
