@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.ChatRepository">
+    <sql id="SELECT_CHAT">
+        SELECT
+        room_id,
+        post_id,
+        seller_id,
+        buyer_id,
+        createDate,
+        lastUpdateDate,
+        subject,
+        roomState
+        FROM
+        s1_chatroom
+        WHERE
+        1 = 1
+    </sql>
+
+    <select id="findRoomById" resultType="com.lec.spring.domain.ChatRoom">
+        <include refid="SELECT_CHAT"/>
+        AND room_id = #{room_id}
+    </select>
+    <select id="findAllRoom" resultType="com.lec.spring.domain.ChatRoom">
+        Select * FROM s1_chatroom ORDER BY room_id
+    </select>
+
+</mapper>
