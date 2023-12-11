@@ -27,5 +27,6 @@
     <select id="findAllRoom" resultType="com.lec.spring.domain.ChatRoom">
         Select * FROM s1_chatroom ORDER BY room_id
     </select>
+    <!--createRoom-->
 
 </mapper>

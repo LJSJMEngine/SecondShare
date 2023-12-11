@@ -36,12 +36,9 @@ public class ChatServiceImpl implements ChatService{
     }
 
     public ChatRoom createRoom(int post_id, int buyer_id, int seller_id) {
-        //채팅방 이름은 게시글 id + 구매자 id + 판매자 id값의 String
-        //각 해시 값의 사이는 #로 구분
-
-        String chatName = post_id + "#" + buyer_id + "#" + seller_id;
-
-
-        return chatRepo.createChatRoom(name);
+        // 매핑 된 DB에서 채팅방 생성
+        ChatRoom newRoom = chatRepo.createChatRoom(post_id,buyer_id,seller_id);
+        newRoom.instanciate(ChatRoom.CREATETYPE.POSTTRADE);
+        return newRoom;
     }
 }

@@ -26,7 +26,7 @@ public class ChatController {
     @PostMapping("/")
     @ResponseBody
     public ChatRoom createRoom(@RequestParam String name) {
-        return chatService.createRoom(name);
+        return chatService.createRoom(1,2,3);
     }
 
     @GetMapping("/")
