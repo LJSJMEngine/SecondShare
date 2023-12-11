@@ -3,6 +3,9 @@ package com.lec.spring.repository;
 import com.lec.spring.domain.User;
 
 public interface UserRepository {
+    int save(User user);
+
+    int update(Long id);
 
     // id 값을 통해 user 를 리턴
     User findById(Long id);
