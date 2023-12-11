@@ -1,3 +1,30 @@
+$(function()){
+
+    var ws = Stomp.over(sock);
+
+    function connect() {
+        // pub/sub event
+        ws.connect({}, function(frame) {
+            ws.subscribe("/sub/chat/room/"+vm.$data.roomId, function(message) {
+                var recv = JSON.parse(message.body);
+                vm.recvMessage(recv);
+            });
+            ws.send("/pub/chat/message", {}, JSON.stringify({type:'ENTER', roomId:vm.$data.roomId, sender:vm.$data.sender}));
+        }, function(error) {
+            if(reconnect++ <= 5) {
+                setTimeout(function() {
+                    console.log("connection reconnect");
+                    sock = new SockJS("/ws-stomp");
+                    ws = Stomp.over(sock);
+                    connect();
+                },10*1000);
+            }
+        });
+    }
+    connect();
+
+}
+
 alert(document.title);
     // websocket & stomp initialize
     var sock = new SockJS("/ws-stomp");
