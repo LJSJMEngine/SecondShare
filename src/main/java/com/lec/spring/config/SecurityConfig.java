@@ -18,6 +18,11 @@ public class SecurityConfig {
     }
 
     @Bean
+    public WebSecurityCustomizer webSecurityCustomizer(){
+        return web -> web.ignoring().anyRequest();
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
@@ -53,5 +58,7 @@ public class SecurityConfig {
                 .build();
 
     }
+
+
 
 }
