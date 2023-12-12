@@ -24,9 +24,22 @@
         <include refid="SELECT_CHAT"/>
         AND room_id = #{room_id}
     </select>
+    <select id="findRoomByUserAndRoomId" resultType="com.lec.spring.domain.ChatRoom">
+    <include refid="SELECT_CHAT"/>
+        AND post_id = #{post_id}
+        AND buyer_id = #{buyer_id}
+        AND seller_id = #{seller_id}
+</select>
     <select id="findAllRoom" resultType="com.lec.spring.domain.ChatRoom">
         Select * FROM s1_chatroom ORDER BY room_id
     </select>
-    <!--createRoom-->
+
+    <insert id="createChatRoom" flushCache="true" parameterType="com.lec.spring.domain.ChatRoom"
+            useGeneratedKeys="true" keyColumn="room_id" keyProperty="room_id">
+        INSERT INTO s1_chatroom
+        (post_id, seller_id, buyer_id, createDate, lastUpdateDate, subject, roomState)
+        VALUES
+        (#{post_id}, #{seller_id}, #{buyer_id}, #{createDate}, #{lastUpdateDate}, #{subject}, #{roomState})
+    </insert>
 
 </mapper>

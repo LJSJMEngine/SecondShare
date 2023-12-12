@@ -1,16 +1,9 @@
 package com.lec.spring.domain;
 
-import com.lec.spring.service.ChatService;
 import lombok.*;
-import org.springframework.web.socket.WebSocketSession;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -26,8 +19,8 @@ public class ChatRoom {
 
 
     //추가하는 데이터 목록
-    private Date createDate; // 생성 시간
-    private Date lastUpdateDate; // 최종 수정 시간
+    private Timestamp createDate; // 생성 시간
+    private Timestamp lastUpdateDate; // 최종 수정 시간
     private String subject; // 접속 ID
     private int roomState; // 방 상태
     /*
@@ -49,13 +42,14 @@ public class ChatRoom {
         switch (initType)
         {
             case POSTTRADE,NONE -> {
-                roomName = post_id + "#" + buyer_id + "#" + seller_id;
+                roomName = post_id + "#" + seller_id + "#" + buyer_id;
 
             }
         }
         // DB에서 생성된 값 이외의 데이터 초기화
         subject = roomName;
-        createDate = Date.valueOf(LocalDate.now());
+        createDate = java.sql.Timestamp.valueOf(LocalDateTime.now());
+        lastUpdateDate = createDate;
         roomState = 0;
     }
 }

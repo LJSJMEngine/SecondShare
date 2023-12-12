@@ -35,10 +35,13 @@ public class ChatServiceImpl implements ChatService{
         return chatRepo.findRoomById(roomId);
     }
 
-    public ChatRoom createRoom(int post_id, int buyer_id, int seller_id) {
+    public ChatRoom createRoom(ChatRoom cRoom) {
         // 매핑 된 DB에서 채팅방 생성
-        ChatRoom newRoom = chatRepo.createChatRoom(post_id,buyer_id,seller_id);
-        newRoom.instanciate(ChatRoom.CREATETYPE.POSTTRADE);
-        return newRoom;
+
+        cRoom.instanciate(ChatRoom.CREATETYPE.POSTTRADE);
+        chatRepo.createChatRoom(cRoom);
+
+        System.out.println("createCheck");
+        return cRoom;
     }
 }

@@ -33,7 +33,7 @@ public class ChatController {
     @PostMapping("/")
     @ResponseBody
     public ChatRoom createRoom(@RequestParam String name) {
-        return chatService.createRoom(1,2,3);
+        return null;
     }
 
     @GetMapping("/")
@@ -41,29 +41,46 @@ public class ChatController {
     public List<ChatRoom> findAllRoom() {
         return chatService.findAllRoom();
     }
-    @RequestMapping("chatTest")
-    public String chatListView(Model model){
 
-        for(ChatRoom room : chatService.findAllRoom())
-        {
+    @RequestMapping("chatTest")
+    public String chatListView(Model model) {
+
+        for (ChatRoom room : chatService.findAllRoom()) {
             System.out.println(room.getRoom_id() + " " + room.getSubject());
             System.out.println(room);
         }
-        model.addAttribute("chatName",1);
+        model.addAttribute("chatName", 1);
 
         return "chat/chatTest";
     }
+
     @RequestMapping("room")
-    public void roomtest(){}
+    public void roomtest() {
+    }
+
     @RequestMapping("roomdetail")
-    public void roomdetail(){}
+    public void roomdetail() {
+    }
 
     @PostMapping("roomdetail")
-    public void PostRoomDetail(@Valid ChatRoom roomData, Model model)
-    {
-        model.addAttribute("roomInfo",roomData);
+    public void PostRoomDetail(@Valid ChatRoom roomData, Model model) {
+        model.addAttribute("roomInfo", roomData);
 
 
+    }
+
+    @RequestMapping("roomDebug")
+    public String RoomDebug() {
+        return "chat/roomDebug";
+    }
+    @PostMapping("roomDebug")
+    public String RoomCreate(@Valid ChatRoom cRoom, Model model) {
+        System.out.println("PostData : " + cRoom);
+
+        cRoom = chatService.createRoom(cRoom);
+        System.out.println("DBInsert : " + cRoom);
+        model.addAttribute("RoomData",cRoom);
+        return "chat/roomDebug";
     }
 
 
