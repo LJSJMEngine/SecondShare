@@ -24,5 +24,5 @@ public interface PostRepository {
 
     List<Post> search(@Param("keyword") String keyword);
 
-    List<Post> searchByCategory(@Param("keyword") String keyword);
+    List<Post> searchByCategory(@Param("type") String keyword);
 }

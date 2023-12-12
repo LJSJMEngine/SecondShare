@@ -18,13 +18,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     public CategoryServiceImpl(SqlSession sqlSession) {
         categoryRepository = sqlSession.getMapper(CategoryRepository.class);
-
-        System.out.println("BoardService() 생성");
+        System.out.println("categoryService() 생성");
     }
-        @Override
-        public int saveCategory (Category category){
-            return categoryRepository.save(category);
-        }
+
 
         @Override
         public List<Category> getAllCategories () {

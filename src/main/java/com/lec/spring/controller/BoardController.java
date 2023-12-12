@@ -30,7 +30,6 @@ public class BoardController {
         if ("subject".equals(type)) {
             list = boardService.search(keyword);
         } else if ("category".equals(type)) {
-            // Assuming category names are unique
             Category category = categoryService.getCategoryByName(keyword);
             if (category != null) {
                 list = boardService.searchByCategory(category.getName());

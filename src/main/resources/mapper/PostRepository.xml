@@ -34,14 +34,23 @@
         , u.id "u_id"
         , u.username "u_username"
         , u.location "u_location"
-        FROM s1_post p, s1_user u
-        WHERE p.post_id = u.id
+        , c.id "c_id"
+        , c.name "c_name"
+        FROM s1_post p, s1_user u ,s1_category c
+        WHERE 1 = 1
     </sql>
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>
         <result column="u_username" property="username"/>
         <result column="u_regdate" property="regDate"/>
     </resultMap>
+
+
+    <resultMap id="mapCategory" type="com.lec.spring.domain.Category">
+        <result column="c_id" property="id"/>
+        <result column="c_name" property="name"/>
+    </resultMap>
+
 
     <resultMap id="mapPost" type="com.lec.spring.domain.Post">
         <result column="p_post_id" property="post_id"/>
@@ -55,6 +64,7 @@
         <result column="p_goodCnt" property="goodCnt"/>
         <result column="p_tags" property="tags"/>
         <collection property="user" resultMap="mapUser"/>
+        <collection property="category" resultMap="mapCategory"/>
     </resultMap>
 
     <select id="findByPostId" resultType="com.lec.spring.domain.Post">
@@ -76,27 +86,18 @@
         WHERE post_id = #{post_id}
     </update>
 
-    <!-- search -->
     <select id="search" resultMap="mapPost" parameterType="String">
-        SELECT
-        p.post_id "p_post_id"
-        , p.user_id "p_user_id"
-        , p.subject "p_subject"
-        , p.contents "p_contents"
-        , p.price "p_price"
-        , p.viewCnt "p_viewCnt"
-        , p.regDate "p_regDate"
-        , p.status "p_status"
-        , p.goodCnt "p_goodCnt"
-        , p.tags "p_tags"
-        , u.id "u_id"
-        , u.username "u_username"
-        , u.location "u_location"
-        FROM s1_post p, s1_user u
-        <where>
-            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
-        </where>
+        <include refid="SELECT_BASE"/>
+        AND  LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+        OR   LOWER(c.name) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         ORDER BY p.post_id DESC
     </select>
+
+
+
+
+
+
+
 
 </mapper>

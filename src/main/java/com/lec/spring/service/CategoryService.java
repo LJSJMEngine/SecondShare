@@ -11,7 +11,7 @@ import java.util.List;
 public interface CategoryService {
 
 
-    int saveCategory(Category category);
+
     List<Category> getAllCategories();
     Category getCategoryByName(String name);
 }

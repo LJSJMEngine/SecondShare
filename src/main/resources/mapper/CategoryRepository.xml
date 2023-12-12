@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- CategoryRepository.xml -->
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -5,8 +6,10 @@
 
 <mapper namespace="com.lec.spring.repository.CategoryRepository">
 
-    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Category">
-        INSERT INTO s1_category (name) VALUES (#{name})
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Category"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO s1_category (id, name)
+        VALUES (#{id}, #{name})
     </insert>
 
     <select id="findAll" resultType="com.lec.spring.domain.Category">

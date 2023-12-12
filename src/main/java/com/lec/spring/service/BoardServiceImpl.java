@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Post;
+import com.lec.spring.repository.CategoryRepository;
 import com.lec.spring.repository.PostRepository;
 import com.lec.spring.repository.UserRepository;
 import org.apache.ibatis.session.SqlSession;
@@ -20,10 +21,14 @@ public class BoardServiceImpl implements BoardService {
 
    private PostRepository postRepository;
 
+
+   private CategoryRepository categoryRepository;
+
     @Autowired
     public BoardServiceImpl(SqlSession sqlSession){  // MyBatis 가 생성한 SqlSession 빈(bean) 객체 주입
         postRepository = sqlSession.getMapper(PostRepository.class);
         userRepository = sqlSession.getMapper(UserRepository.class);
+        categoryRepository = sqlSession.getMapper(CategoryRepository.class);
 
         System.out.println("BoardService() 생성");
     }
@@ -46,15 +51,11 @@ public class BoardServiceImpl implements BoardService {
         return postRepository.search(keyword);
     }
 
-    public List<Post> searchByCategory(String keyword) {
-        return postRepository.searchByCategory(keyword);
+    public List<Post> searchByCategory(String type) {
+        return postRepository.searchByCategory(type);
     }
 
-//    @Override
-//    public List<Post> searchByCategory(Long categoryId) {
-//
-//        return postRepository.searchByCategory(categoryId);
-//    }
+
 
     @Override
     public int write(Post post) {
