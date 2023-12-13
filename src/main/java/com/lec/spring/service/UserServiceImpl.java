@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     public UserServiceImpl(SqlSession sqlSession) {
-        //userRepository = sqlSession.getMapper(UserRepository.class);
-        //authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
+        userRepository = sqlSession.getMapper(UserRepository.class);
+        authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
     }
 
     @Override
