@@ -152,4 +152,18 @@ public class MyPageController {
         return ResponseEntity.ok(myPosts);
     }
 
+    @PostMapping("/deleteAllMyPosts")
+    public ResponseEntity<String> deleteAllMyPosts() {
+        Long currentId = 2L;
+
+        try {
+            userService.deleteAllMyPosts(currentId);
+            return ResponseEntity.ok("모든 판매글이 성공적으로 삭제되었습니다.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 전체 삭제 중 오류가 발생했습니다.");
+        }
+    }
+
 }
