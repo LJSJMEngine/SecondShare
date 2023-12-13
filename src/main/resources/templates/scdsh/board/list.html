@@ -15,12 +15,12 @@
     <form name="search"  method="GET">
         <select name="type">
             <option value="subject">제목</option>
-            <option value="name">패션의류</option>
-            <option value="name">생활용품</option>
-            <option value="name">가전제품</option>
-            <option value="name">스포츠용품</option>
-            <option value="name">도서/음반/DVD</option>
-            <option value="문구//오피스">문구/오피스</option>
+            <option value="1">패션의류</option>
+            <option value="2">생활용품</option>
+            <option value="3">가전제품</option>
+            <option value="4">스포츠용품</option>
+            <option value="5">도서/음반/DVD</option>
+            <option value="6">문구/오피스</option>
         </select>
         <input type="text" name="keyword" value=""/>
         <input type="submit" class="btn btn-outline-primary mr-2" value="검색"/>
@@ -37,20 +37,17 @@
     <!-- 목록 -->
     <table class="table table-hover">
         <!-- 테이블 헤더 생략 (기존 내용 유지) -->
-
         <tbody>
         <tr th:each="post : ${list}">
-            <!-- 기존 내용 유지 및 카테고리 표시 추가 -->
             <td th:text="${post.post_id}"></td>
-            <td>
-                <a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a>
-                <span th:if="${post.category != null}" th:text="' [' + ${post.category.name} + ']'"></span>
-
-            </td>
+            <td><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></td>
             <td th:text="${post.user.username}"></td>
             <td th:text="${post.viewCnt}"></td>
+            <td th:text="${post.category.name}"></td>
             <td th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
         </tr>
+        </tbody>
+
 
         </tbody>
     </table>

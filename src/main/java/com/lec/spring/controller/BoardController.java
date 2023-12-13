@@ -24,26 +24,22 @@ public class BoardController {
     @GetMapping("/list")
     public String list(@RequestParam(required = false) String type,
                        @RequestParam(required = false) String keyword,
+                       @RequestParam(required = false) Long tag,
                        Model model) {
         List<Post> list;
 
         if ("subject".equals(type)) {
-            list = boardService.search(keyword);
-        } else if ("category".equals(type)) {
-            Category category = categoryService.getCategoryByName(keyword);
-            if (category != null) {
-                list = boardService.searchByCategory(category.getName());
-            } else {
-                list = boardService.list();
-            }
+            list = boardService.search(keyword,tag);
+        }
+        else if ("id".equals(type)) {
+            list = boardService.search(keyword,tag);
+
         } else {
             list = boardService.list();
         }
 
-        List<Category> categories = categoryService.getAllCategories();
-
         model.addAttribute("list", list);
-        model.addAttribute("categories", categories);
+
         return "board/list";
     }
 

@@ -10,8 +10,8 @@
         List<Post> list();
 
         List<Post> list(Model model);
-        List<Post> search(String keyword);
-        List<Post> searchByCategory(String type);
+        List<Post> search(String keyword, Long tag);
+//        List<Post> searchByCategory(String type);
 
 
         int write(Post post);

@@ -37,7 +37,7 @@
         , c.id "c_id"
         , c.name "c_name"
         FROM s1_post p, s1_user u ,s1_category c
-        WHERE 1 = 1
+        WHERE p.post_id = u.id
     </sql>
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>
@@ -86,12 +86,16 @@
         WHERE post_id = #{post_id}
     </update>
 
-    <select id="search" resultMap="mapPost" parameterType="String">
+    <select id="search" resultMap="mapPost" parameterType="map">
         <include refid="SELECT_BASE"/>
-        AND  LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
-        OR   LOWER(c.name) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
-        ORDER BY p.post_id DESC
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            OR LOWER(c.id) LIKE LOWER(CONCAT('%', #{tag}, '%'))
+            ORDER BY p.post_id DESC
     </select>
+
+
+
+
 
 
 
