@@ -30,10 +30,8 @@
         , p.regDate "p_regDate"
         , p.status "p_status"
         , p.goodCnt "p_goodCnt"
-        , p.tags "p_tags"
         , u.id "u_id"
         , u.username "u_username"
-        , u.location "u_location"
         FROM s1_post p, s1_user u
         WHERE p.post_id = u.id
     </sql>
@@ -88,10 +86,8 @@
         , p.regDate "p_regDate"
         , p.status "p_status"
         , p.goodCnt "p_goodCnt"
-        , p.tags "p_tags"
         , u.id "u_id"
         , u.username "u_username"
-        , u.location "u_location"
         FROM s1_post p, s1_user u
         <where>
             LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
