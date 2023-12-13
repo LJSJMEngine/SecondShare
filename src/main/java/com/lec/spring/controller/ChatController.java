@@ -30,16 +30,11 @@ public class ChatController {
     private final ChatService chatService;
     private final SimpMessageSendingOperations messagingTemplate;
 
-    @PostMapping("/")
-    @ResponseBody
-    public ChatRoom createRoom(@RequestParam String name) {
-        return null;
-    }
+    @MessageMapping("/chat/message")
+    public void chatMessage(ChatMessage message) {
+        //db에 저장+
+        messagingTemplate.convertAndSend("/sub/chat/room" + message.getRoomId(),message);
 
-    @GetMapping("/")
-    @ResponseBody
-    public List<ChatRoom> findAllRoom() {
-        return chatService.findAllRoom();
     }
 
     @RequestMapping("chatTest")
@@ -82,19 +77,6 @@ public class ChatController {
         model.addAttribute("RoomData",cRoom);
         return "chat/roomDebug";
     }
-
-
-    @MessageMapping("/chat/message")
-    public void message(ChatMessage message) {
-
-
-        if (ChatMessage.MessageType.JOIN.equals(message.getType()))
-            message.setMessage(message.getSender() + "님이 입장하셨습니다.");
-
-
-        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
-    }
-
 }
 
 // 디테일 페이지 진입점 알려줘야함.

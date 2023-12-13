@@ -1,43 +1,61 @@
+const stompClient = new StompJs.Client({
+    brokerURL: 'ws://localhost:8080/ws-stomp'
+});
 
-    var vm = new Vue({
-        el: '#app',
-        data: {
-            room_name : '',
-            chatrooms: [
-            ]
-        },
-        created() {
-            this.findAllRoom();
-        },
-        methods: {
-            findAllRoom: function() {
-                axios.get('/chat/rooms').then(response => { this.chatrooms = response.data; });
-            },
-            createRoom: function() {
-                if("" === this.room_name) {
-                    alert("방 제목을 입력해 주십시요.");
-                    return;
-                } else {
-                    var params = new URLSearchParams();
-                    params.append("name",this.room_name);
-                    axios.post('/chat/room', params)
-                    .then(
-                        response => {
-                            alert(response.data.name+"방 개설에 성공하였습니다.")
-                            this.room_name = '';
-                            this.findAllRoom();
-                        }
-                    )
-                    .catch( response => { alert("채팅방 개설에 실패하였습니다."); } );
-                }
-            },
-            enterRoom: function(roomId) {
-                var sender = prompt('대화명을 입력해 주세요.');
-                if(sender != "") {
-                    localStorage.setItem('wschat.sender',sender);
-                    localStorage.setItem('wschat.roomId',roomId);
-                    location.href="/chat/room/enter/"+roomId;
-                }
-            }
-        }
+stompClient.onConnect = (frame) => {
+    setConnected(true);
+    console.log('Connected: ' + frame);
+    stompClient.subscribe('/topic/greetings', (greeting) => {
+        showGreeting(JSON.parse(greeting.body).content);
     });
+};
+
+stompClient.onWebSocketError = (error) => {
+    console.error('Error with websocket', error);
+};
+
+stompClient.onStompError = (frame) => {
+    console.error('Broker reported error: ' + frame.headers['message']);
+    console.error('Additional details: ' + frame.body);
+};
+
+function setConnected(connected) {
+    $("#connect").prop("disabled", connected);
+    $("#disconnect").prop("disabled", !connected);
+    if (connected) {
+        $("#conversation").show();
+    }
+    else {
+        $("#conversation").hide();
+    }
+    $("#greetings").html("");
+}
+
+function connect() {
+    stompClient.activate();
+}
+
+function disconnect() {
+    stompClient.deactivate();
+    setConnected(false);
+    console.log("Disconnected");
+}
+
+function sendName() {
+    stompClient.publish({
+        destination: "/app/hello",
+        body: JSON.stringify({'name': $("#name").val()})
+    });
+}
+
+function showGreeting(message) {
+    $("#greetings").append("<tr><td>" + message + "</td></tr>");
+}
+
+$(function () {
+    $("form").on('submit', (e) => e.preventDefault());
+    $( "#connect" ).click(() => connect());
+    $( "#disconnect" ).click(() => disconnect());
+    $( "#send" ).click(() => sendName());
+});
+
