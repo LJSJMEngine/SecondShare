@@ -35,9 +35,12 @@ INSERT INTO s1_authority (name) VALUES
 ('ROLE_ADMIN'), ('ROLE_MEMBER')
 ;
 
-INSERT INTO s1_user (username, password, name, phoneNM, email, status) VALUES
-('ADMIN1', '1234', '관리자1', '010-1111-2222', 'admin1@gmail.com', 0),
-('USER1', '1234', '회원1', '010-3333-4444', 'user1@gmail.com', 0)
+INSERT INTO s1_user (username, password, name, phoneNM, email, registDate, status) VALUES
+('ADMIN1', '1234', '관리자1', '010-1111-2222', 'admin1@gmail.com', NOW(), 0),
+('USER1', '1234', '회원1', '010-3333-4444', 'user1@gmail.com', NOW(), 0),
+('USER2', '1234', '회원2', '010-5555-6666', 'user2@gmail.com', NOW(), 0),
+('USER3', '1234', '회원3', '010-7777-8888', 'user3@gmail.com', NOW(), 0),
+('USER4', '1234', '회원4', '010-9999-0000', 'user4@gmail.com', NOW(), 0)
 ;
 
 INSERT INTO s1_user_authority VALUES

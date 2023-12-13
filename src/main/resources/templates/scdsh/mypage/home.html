@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지</title>
+    <link rel="stylesheet" href="/css/mypage.css">
+</head>
+<body>
+<div class="title">
+    <h2>마이페이지</h2>
+    <hr>
+</div>
+<div class="container-full">
+    <div class="container-left">
+        <div class="row">
+            <!-- 좌측 버튼 그룹 -->
+            <div class="col-md-3">
+                <div class="mypageBtn">
+                    <button class="nav" onclick="loadContent('view')">프로필 보기</button>
+                    <button class="nav" onclick="loadContent('modify')">프로필 수정</button>
+                    <button class="nav" onclick="loadContent('products')">상품 보기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- 우측 컨텐츠 영역 -->
+        <div class="container-right" id="content-container"></div>
+</div>
+
+<!-- jQuery 및 부트스트랩 JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/js/mypage.js"></script>
+</body>
+</html>
