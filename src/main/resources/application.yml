@@ -7,6 +7,11 @@ spring:
     ansi:
       enabled: always
 
+  redis:
+    host: localhost
+    post: 6379
+
+
   #thymeleaf
   thymeleaf:
     cache: false
@@ -41,19 +46,9 @@ app:
     path: upload
 
 
-
-
 # coolsms 문자 인증
 coolsms:
   api:
     key: "NCSEPDRPAKJZQYG7"
     secret: "QNLN3IVMM14AP1WRFGWL9F9JDKM3ITF9"
     fromnumber: "010-7797-9285"
-
-spring:
-  redis:
-    host: localhost
-    post: 6379
-
-
-
