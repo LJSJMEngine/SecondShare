@@ -18,5 +18,13 @@ public interface UserService {
 
     // id에 따른 사용자의 권한
     List<Authority> selectAuthById(Long id);
+
+    // 마이페이지 - 프로필 보기, 프로필 수정
+    User getUserByUsername(String username);
+    void deleteAccount(String username);
+    void updatePassword(String newPassword, String username);
+    void updatePhoneNumber(String newPhoneNumber, String username);
+    void updateEmailAddress(String newEmailAddress, String username);
+
 }
 

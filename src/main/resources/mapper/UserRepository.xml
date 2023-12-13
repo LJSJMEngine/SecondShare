@@ -46,20 +46,34 @@
         WHERE id = #{id}
     </update>
 
+
+
+    <select id="findByUsername" resultType="com.lec.spring.domain.User">
+        SELECT * FROM s1_user WHERE username = #{username}
+    </select>
+
+    <update id="updatePassword" parameterType="map">
+        UPDATE s1_user
+        SET password = #{newPassword}
+        WHERE username = #{username}
+    </update>
+
+    <update id="updatePhoneNumber" parameterType="map">
+        UPDATE s1_user
+        SET phoneNM = #{newPhoneNumber}
+        WHERE username = #{username}
+    </update>
+
+    <update id="updateEmailAddress" parameterType="map">
+        UPDATE s1_user
+        SET email = #{newEmailAddress}
+        WHERE username = #{username}
+    </update>
+
+    <update id="deleteAccount" parameterType="map">
+        UPDATE s1_user
+        SET status = 1
+        WHERE username = #{username}
+    </update>
+
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

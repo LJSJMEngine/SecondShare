@@ -1,0 +1,169 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Title Styles */
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.title h2 {
+    margin-bottom: 10px;
+}
+
+.title hr {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+/* Container Styles */
+.container-full {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.container-left {
+    flex: 0 0 20%;
+}
+
+.container-right {
+    flex: 0 0 75%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styles */
+.mypageBtn {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mypageBtn button.nav {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.mypageBtn button:hover {
+    background-color: #0056b3;
+}
+
+.delete-account-btn {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid #d9534f;
+  color: #fff;
+  background-color: #d9534f;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.delete-account-btn:hover {
+  background-color: #c9302c;
+  border-color: #ac2925;
+  color: #fff;
+}
+
+/* Updated CSS for span, label, and input */
+.showMyPage span {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.showMyPage label.input {
+    display: inline-block;
+    width: 200px;
+}
+
+.showMyPage input.answer {
+    width: 200px;
+        padding: 8px;
+        margin-bottom: 10px;
+        margin-left: 0;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+}
+
+.showMyPage button.modify {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 50px;
+    transition: background-color 0.3s;
+}
+
+.showMyPage button.save {
+background-color: #007bff;
+    color: #ffffff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 50px;
+    transition: background-color 0.3s;
+}
+
+.showMyPage button:hover {
+    background-color: #0056b3;
+}
+
+/* Message Styles */
+p {
+    text-align: center;
+    color: #555555;
+    margin-top: 20px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container-full {
+        flex-direction: column;
+    }
+
+    .container-left, .container-right, .showMyPage {
+        width: 100%;
+    }
+}
+
+/* Error Message Styles */
+#passwordErrorMessage {
+    color: red;
+    margin-top: 0;
+    margin-left: 0;
+    text-align: left
+}
+
+#phoneNMErrorMessage {
+    color: red;
+    margin-top: 0;
+    margin-left: 0;
+    text-align: left
+}
+
+#EmailErrorMessage {
+    color: red;
+    margin-top: 0;
+    margin-left: 0;
+    text-align: left
+}
