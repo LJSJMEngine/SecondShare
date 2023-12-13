@@ -1,10 +1,10 @@
-/* General Styles */
+/* 일반 */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f8f9fa;
 }
 
-/* Title Styles */
+/* 제목 */
 .title {
     text-align: center;
     margin-bottom: 20px;
@@ -19,7 +19,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* Container Styles */
+/* 컨테이너 */
 .container-full {
     display: flex;
     justify-content: space-between;
@@ -38,7 +38,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Button Styles */
+/* 버튼 */
 .mypageBtn {
     margin-top: 20px;
     display: flex;
@@ -82,7 +82,7 @@ body {
   color: #fff;
 }
 
-/* Updated CSS for span, label, and input */
+/* 프로필 보기 및 수정 항목들 */
 .showMyPage span {
     display: block;
     margin-bottom: 15px;
@@ -103,9 +103,9 @@ body {
 }
 
 .showMyPage button.modify {
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
+    color: #fff;
+    border: 2px solid #d9534f;
+    background-color: #d9534f;
     padding: 5px;
     border-radius: 4px;
     cursor: pointer;
@@ -113,29 +113,21 @@ body {
     transition: background-color 0.3s;
 }
 
-.showMyPage button.save {
-background-color: #007bff;
-    color: #ffffff;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 50px;
-    transition: background-color 0.3s;
-}
-
 .showMyPage button:hover {
-    background-color: #0056b3;
+    background-color: #c9302c;
+    border-color: #ac2925;
+    color: #fff;
+
 }
 
-/* Message Styles */
+/* 메세지 */
 p {
     text-align: center;
     color: #555555;
     margin-top: 20px;
 }
 
-/* Responsive Styles */
+/* 반응 */
 @media (max-width: 768px) {
     .container-full {
         flex-direction: column;
@@ -146,7 +138,7 @@ p {
     }
 }
 
-/* Error Message Styles */
+/* 에러 메세지 */
 #passwordErrorMessage {
     color: red;
     margin-top: 0;
@@ -166,4 +158,61 @@ p {
     margin-top: 0;
     margin-left: 0;
     text-align: left
+}
+
+/* 테이블 스타일 */
+.myPostsList {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.myPostsList th, .myPostsList td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.myPostsList th {
+  background-color: #f2f2f2;
+  text-align: center;
+}
+
+.myPostsList th:first-child,
+.myPostsList td:first-child {
+  width: 50%;
+}
+
+.myPostsList th:nth-child(2),
+.myPostsList td:nth-child(2) {
+  width: 20%;
+  text-align: center;
+}
+
+.myPostsList th:nth-child(3),
+.myPostsList td:nth-child(3) {
+  width: 30%;
+  text-align: center;
+}
+
+/* 판매글 전체 삭제 버튼 스타일 */
+.delete-myPosts-btn {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid #d9534f;
+  color: #fff;
+  background-color: #d9534f;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.delete-myPosts-btn:hover {
+  background-color: #c9302c;
+  border-color: #ac2925;
+  color: #fff;
 }

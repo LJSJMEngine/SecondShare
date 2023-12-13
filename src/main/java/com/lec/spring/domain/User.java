@@ -52,4 +52,9 @@ public class User {
     public void setNewEmailAddress(String newEmailAddress) {
         this.newEmailAddress = newEmailAddress;
     }
+
+    // 마이페이지 - 판매물품
+    @Builder.Default
+    @JsonIgnore
+    private List<Post.MyPosts> myPosts = new ArrayList<>();
 }

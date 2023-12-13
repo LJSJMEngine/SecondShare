@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Authority;
+import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AuthorityRepository;
 import com.lec.spring.repository.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -30,6 +32,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User findById(Long id) {
+        return userRepository.findById(id);
     }
 
     @Override
@@ -65,6 +72,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id);
     }
 
     @Override
@@ -123,4 +135,17 @@ public class UserServiceImpl implements UserService{
         String emailRegex = "^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]+$";
         return emailAddress.matches(emailRegex);
     }
+
+    @Override
+    public List<Post.MyPosts> showMyPosts(Long id) {
+        try {
+            return userRepository.showMyPosts(id);
+        } catch (Exception e) {
+            // 예외가 발생한 경우 로그 출력
+            e.printStackTrace();
+            return Collections.emptyList(); // 빈 리스트 반환
+        }
+    }
+
+
 }

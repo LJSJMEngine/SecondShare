@@ -9,6 +9,10 @@
         SELECT * FROM s1_user WHERE username = #{username}
     </select>
 
+    <select id="findById" resultType="com.lec.spring.domain.User">
+        SELECT * FROM s1_user WHERE id = #{id}
+    </select>
+
     <update id="updatePassword" parameterType="map">
         UPDATE s1_user
         SET password = #{newPassword}
@@ -32,5 +36,12 @@
         SET status = 1
         WHERE username = #{username}
     </update>
+
+    <select id="showMyPosts" parameterType="long" resultType="com.lec.spring.domain.Post$MyPosts">
+        SELECT p.subject, p.status, p.regDate
+        FROM s1_post p
+        JOIN s1_user u ON p.user_id = u.id
+        WHERE u.id = #{id}
+    </select>
 
 </mapper>

@@ -1,5 +1,6 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -115,8 +114,42 @@ public class MyPageController {
         }
     }
 
-    @GetMapping("/products")
-    public String showProductsPage(Model model) {
-        return "mypage/products";
+    /*@GetMapping("/myPosts")
+    public ResponseEntity<List<Post.MyPosts>> showMyPosts() {
+        // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        // User user = (User) auth.getPrincipal();
+        Long id = 2L; // userId = 2 임시 설정
+
+        List<Post.MyPosts> myPosts = userService.showMyPosts(id); // (user.getId)
+        myPosts.forEach(System.out::println);
+
+        return ResponseEntity.ok(myPosts);
+    }*/
+
+    @GetMapping("/myPosts")
+    public String myPosts(Model model) {
+        Long currentUserId = 2L;  // 임시 설정
+
+        User userProfile = userService.getUserById(currentUserId);
+        model.addAttribute("userProfile", userProfile);
+
+        List<Post.MyPosts> myPosts = userService.showMyPosts(currentUserId);
+        long statusOneCount = myPosts.stream().filter(post -> post.getStatus() == 1).count();
+
+        model.addAttribute("myPosts", myPosts);
+        model.addAttribute("statusOneCount", statusOneCount);
+
+        return "mypage/myPosts";
     }
+
+    @PostMapping("/myPostsData")
+    public ResponseEntity<List<Post.MyPosts>> showMyPostsData() {
+        // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        // User user = (User) auth.getPrincipal();
+        Long userId = 2L; // 임시 설정
+        List<Post.MyPosts> myPosts = userService.showMyPosts(userId); // (user.getId)
+
+        return ResponseEntity.ok(myPosts);
+    }
+
 }
