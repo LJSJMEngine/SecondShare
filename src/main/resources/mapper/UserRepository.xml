@@ -36,8 +36,8 @@
             useGeneratedKeys="true"
             keyColumn="id"
             keyProperty="id">
-        INSERT INTO s1_user(username, password, name, birth, phoneNM, email)
-        VALUES(#{username}, #{password}, #{name}, #{birth}, #{phoneNM}, #{email})
+        INSERT INTO s1_user(username, password, name, phoneNM, email)
+        VALUES(#{username}, #{password}, #{name}, #{phoneNM}, #{email})
     </insert>
 
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.User">
@@ -48,13 +48,13 @@
 
 
 
-    <select id="findByUsername" resultType="com.lec.spring.domain.User">
+<!--    <select id="findByUsername" resultType="com.lec.spring.domain.User">
         SELECT * FROM s1_user WHERE username = #{username}
     </select>
 
     <select id="findById" resultType="com.lec.spring.domain.User">
         SELECT * FROM s1_user WHERE id = #{id}
-    </select>
+    </select>-->
 
     <update id="updatePassword" parameterType="map">
         UPDATE s1_user
