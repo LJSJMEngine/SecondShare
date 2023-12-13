@@ -22,5 +22,32 @@ SELECT * FROM s1_user;
 
 SELECT * FROM s1_post;
 
+SELECT * FROM s1
+
+        SELECT
+        p.post_id "p_post_id"
+        , p.user_id "p_user_id"
+        , p.subject "p_subject"
+        , p.contents "p_contents"
+        , p.price "p_price"
+        , p.viewCnt "p_viewCnt"
+        , p.regDate "p_regDate"
+        , p.status "p_status"
+        , p.goodCnt "p_goodCnt"
+        , p.tags "p_tags"
+        , u.id "u_id"
+        , u.username "u_username"
+        , u.location "u_location"
+        , c.id "c_id"
+        , c.name "c_name"
+        FROM s1_post p, s1_user u ,s1_category c
+        WHERE p.post_id = u.id
+        ORDER BY p.post_id DESC;
 
 
+            
+            
+            
+            
+            
+            

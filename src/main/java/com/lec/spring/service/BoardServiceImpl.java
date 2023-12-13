@@ -29,7 +29,6 @@ public class BoardServiceImpl implements BoardService {
         postRepository = sqlSession.getMapper(PostRepository.class);
         userRepository = sqlSession.getMapper(UserRepository.class);
         categoryRepository = sqlSession.getMapper(CategoryRepository.class);
-
         System.out.println("BoardService() 생성");
     }
 
@@ -41,14 +40,13 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<Post> list(Model model) {
-
         List<Post> list = postRepository.findAll();
         model.addAttribute("list", list);
         return list;
     }
 
-    public List<Post> search(String keyword, Long tag) {
-        return postRepository.search(keyword, tag);
+    public List<Post> search(String keyword) {
+        return postRepository.search(keyword);
     }
 
 //    public List<Post> searchByCategory(String tag) {

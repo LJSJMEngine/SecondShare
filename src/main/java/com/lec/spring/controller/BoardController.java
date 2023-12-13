@@ -29,10 +29,10 @@ public class BoardController {
         List<Post> list;
 
         if ("subject".equals(type)) {
-            list = boardService.search(keyword,tag);
+            list = boardService.search(keyword);
         }
         else if ("id".equals(type)) {
-            list = boardService.search(keyword,tag);
+            list = boardService.search(keyword);
 
         } else {
             list = boardService.list();

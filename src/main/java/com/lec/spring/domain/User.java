@@ -26,5 +26,5 @@ public class User {
     private int status;
 
     // 회원 권한
-    private List<Authority> authorities = new ArrayList<>();
+//    private List<Authority> authorities = new ArrayList<>();
 }

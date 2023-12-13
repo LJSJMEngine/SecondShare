@@ -89,7 +89,6 @@
     <select id="search" resultMap="mapPost" parameterType="map">
         <include refid="SELECT_BASE"/>
             AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
-            OR LOWER(c.id) LIKE LOWER(CONCAT('%', #{tag}, '%'))
             ORDER BY p.post_id DESC
     </select>
 
