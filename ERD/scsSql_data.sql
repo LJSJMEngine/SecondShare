@@ -35,9 +35,12 @@ INSERT INTO s1_authority (name) VALUES
 ('ROLE_ADMIN'), ('ROLE_MEMBER')
 ;
 
-INSERT INTO s1_user (username, password,repassword, name, phoneNM, email) VALUES
-('ADMIN1', '1234','1234', '관리자1', '010-1111-2222', 'admin1@gmail.com'),
-('USER1', '1234','1234', '회원1', '010-3333-4444', 'user1@gmail.com')
+INSERT INTO s1_user (username, password, name, phoneNM, email, registDate, status) VALUES
+('ADMIN1', '1234', '관리자1', '010-1111-2222', 'admin1@gmail.com', NOW(), 0),
+('USER1', '1234', '회원1', '010-3333-4444', 'user1@gmail.com', NOW(), 0),
+('USER2', '1234', '회원2', '010-5555-6666', 'user2@gmail.com', NOW(), 0),
+('USER3', '1234', '회원3', '010-7777-8888', 'user3@gmail.com', NOW(), 0),
+('USER4', '1234', '회원4', '010-9999-0000', 'user4@gmail.com', NOW(), 0)
 ;
 
 INSERT INTO s1_user_authority VALUES
@@ -48,33 +51,14 @@ INSERT INTO s1_user_authority VALUES
 
 /* 게시물 정보 영역 */
 
-INSERT INTO s1_post (user_id, subject, contents,price,status) VALUES
-(1, '제목1', '내용1',5000,1),
-(2, '제목2', '내용2',6000,2),
-(1, '제목3', '내용3',26100,1),
-(2, '제목4', '내용4',46400,1),
-(2, '제목5', '내용5',52000,2),
-(1, '제목6', '내용5',52000,2),
-(1, '제목7', '내용5',52000,2),
-(2, '제목8', '내용5',52000,2),
-(2, '제목9', '내용5',52000,2),
-(1, '제목10', '내용5',52000,1),
-(1, '제목11', '내용5',52000,1),
-(1, '제목12', '내용5',52000,1),
-(2, '제목13', '내용5',52000,1),
-(1, '제목14', '내용5',52000,1),
-(2, '제목15', '내용5',52000,1),
-(1, '제목16', '내용5',52000,2),
-(2, '제목17', '내용5',52000,2),
-(1, '제목18', '내용5',52000,2),
-(2, '제목19', '내용5',52000,1),
-(1, '제목20', '내용5',52000,2),
-(2, '제목21', '내용5',52000,1),
-(1, '제목21', '내용5',52000,2),
-(2, '제목22', '내용5',52000,1),
-(2, '제목23', '내용5',52000,2),
-(1, '제목24', '내용5',52000,2)
-
+INSERT INTO s1_post (user_id, subject, contents, price, status, regDate) VALUES
+(1, '제목1', '내용1', 20000, 0, NOW()),
+(2, '제목2', '내용2', 15000, 1, NOW()),
+(2, '제목3', '내용3', 20000, 1, NOW()),
+(2, '제목4', '내용4', 15000, 0, NOW()),
+(2, '제목5', '내용5', 20000, 0, NOW()),
+(2, '제목6', '내용6', 15000, 0, NOW()),
+(3, '제목7', '내용7', 15000, 0, NOW())
 ;
 
 INSERT INTO s1_comment (user_id, post_id, content) VALUES
@@ -84,15 +68,21 @@ INSERT INTO s1_comment (user_id, post_id, content) VALUES
 (2, 2, '댓글4')
 ;
 
+INSERT INTO s1_review (user_id, post_id, reviewChk, content) VALUES
+(2, 2, 2, '설명이 상세해요'),
+(2, 3, 2, '상태가 좋아요'),
+(2, 4, 1, '친절해요'),
+(2, 5, 0, '대답이 느려요'),
+(2, 6, 1, '저렴해요')
+;
+
 INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
 (1, 'face01.png', 'face01.png')
 ;
 
 /* 카테고리 설정 */
 
-
 INSERT INTO s1_category (name) VALUES
-('패션의류'),
 ('생활용품'),
 ('가전제품'),
 ('스포츠용품'),
@@ -102,3 +92,29 @@ INSERT INTO s1_category (name) VALUES
 
 /* 채팅 정보 영역 */
 
+
+INSERT INTO s1_chatroom (subject, post_id ,buyer_id, seller_id) VALUES
+('채팅방 이름', 3, 1, 2)
+;
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS loopInsert$$
+
+CREATE PROCEDURE loopInsert()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    WHILE i <= 500 DO
+
+    INSERT INTO s1_user(username, password, name, phoneNM, email, status)
+      VALUES (concat('id',i), concat('1234qwer',i), concat('이름',i), concat('010-1234-', i), concat(i, '@naver.com'), 0);
+      SET i = i + 1;
+
+     INSERT INTO s1_post (user_id, subject, contents)
+     VALUES (i, concat('제목',i), concat('내용',i))
+;
+    END WHILE;
+END$$
+DELIMITER $$
+
+CALL loopInsert;

@@ -8,9 +8,9 @@
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Post"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO s1_post
-        (user_id, subject, content, price,status)
+        (user_id, subject, content, price)
         VALUES
-        ( #{user.id}, #{subject}, #{content}, #{price}, #{status})
+        ( #{user.id}, #{subject}, #{content}, #{price})
     </insert>
 
     <update id="incViewCnt" flushCache="true">
@@ -30,10 +30,8 @@
         , p.regDate "p_regDate"
         , p.status "p_status"
         , p.goodCnt "p_goodCnt"
-        , p.tags "p_tags"
         , u.id "u_id"
         , u.username "u_username"
-        , u.location "u_location"
         FROM s1_post p, s1_user u
         WHERE p.user_id = u.id
     </sql>
@@ -101,13 +99,5 @@
     <select id="countAll" resultType="int">
         SELECT count(*) FROM s1_post
     </select>
-
-
-
-
-
-
-
-
 
 </mapper>

@@ -22,6 +22,8 @@ public interface PostRepository {
 
     int update(Post post);
 
+    int delete(Post post);
+
     List<Post> search(@Param("keyword") String keyword);
 
     // 페이징 from 부터 rows 개 만큼

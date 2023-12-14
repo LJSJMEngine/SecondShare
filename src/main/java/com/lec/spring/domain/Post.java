@@ -1,12 +1,11 @@
 package com.lec.spring.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,18 +16,29 @@ public class Post {
     private Long user_id;
     private String subject;
     private String contents;
-    private int price;
-    private Long viewCnt;
-    private LocalDateTime regDate;
+    private int viewCnt;
     private int status;
-    private int goodCnt;
+    private LocalDateTime regDate;
 
+    private User user;
 
+    // 마이페이지 - 내 판매물품
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class MyPosts {
+        private Long post_id;
+        private Long user_id;
+        private String subject;
+        private int status;
+        private LocalDateTime regDate;
+    }
 
-
-    private Category category; // 카테고리
-
-    private User user; // 글 작성자
+    // 첨부파일
+    @ToString.Exclude
+    @Builder.Default
+    private List<Attachment> fileList = new ArrayList<>();
 
 
 }

@@ -1,11 +1,16 @@
 # 서버 포트
 server:
-  port: 8080
+  port: 8093
 
 spring:
   output:
     ansi:
       enabled: always
+
+  redis:
+    host: localhost
+    post: 6379
+
 
   #thymeleaf
   thymeleaf:
@@ -38,4 +43,12 @@ app:
 
   # upload setting
   upload:
-    path: upload
+    path: upfile
+
+
+# coolsms 문자 인증
+coolsms:
+  api:
+    key: "NCSEPDRPAKJZQYG7"
+    secret: "QNLN3IVMM14AP1WRFGWL9F9JDKM3ITF9"
+    fromnumber: "010-7797-9285"

@@ -1,6 +1,7 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
+
 DROP TABLE IF EXISTS s1_attachment;
 DROP TABLE IF EXISTS s1_user_authority;
 DROP TABLE IF EXISTS s1_authority;
@@ -18,7 +19,10 @@ DROP TABLE IF EXISTS s1_post;
 DROP TABLE IF EXISTS s1_user;
 
 
+
+
 /* Create Tables */
+
 CREATE TABLE s1_attachment
 (
 	id int NOT NULL AUTO_INCREMENT,
@@ -120,13 +124,10 @@ CREATE TABLE s1_post
 	user_id int NOT NULL,
 	subject varchar(200) NOT NULL,
 	contents longtext,
-	price int DEFAULT 0,
-	viewCnt int DEFAULT 0,
+	price int,
+	viewCnt int,
+	status int,
 	regDate datetime,
-	status int DEFAULT 0, -- 거래 상태
-	delStatus boolean DEFAULT FALSE, -- 글을 삭제했을경우 TRUE 가 되고 관리자 외 비공개
-	goodCnt int DEFAULT 0,
-	tags longtext,
 	PRIMARY KEY (post_id)
 );
 
@@ -143,9 +144,8 @@ CREATE TABLE s1_review
 	id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
 	post_id int NOT NULL,
-	reviewChk int DEFAULT 0,
-	reviewSc int,-- 별로에요 ~ 좋아요
-	content longtext,
+	reviewChk int NOT NULL,
+	content longtext NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -155,13 +155,13 @@ CREATE TABLE s1_user
 	id int NOT NULL AUTO_INCREMENT,
 	username varchar(100) NOT NULL,
 	password varchar(200) NOT NULL,
-	repassword varchar(200) NOT NULL,
 	name varchar(20) NOT NULL,
 	phoneNM varchar(20) NOT NULL,
 	email varchar(100) NOT NULL,
+	age int,
 	registDate datetime,
-	location longtext,
-	status int DEFAULT 0,
+	birth varchar(20),
+	status int,
 	PRIMARY KEY (id),
 	UNIQUE (username),
 	UNIQUE (email)

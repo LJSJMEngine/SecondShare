@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Authority {
-    private int id;    // PK
+    private Long id;    // PK
     private String name;    // 권한명 (ADMIN, MEMBER)
 }
