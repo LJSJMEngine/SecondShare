@@ -48,9 +48,12 @@ INSERT INTO s1_user_authority VALUES
 
 /* 게시물 정보 영역 */
 
-INSERT INTO s1_post (user_id, subject, contents) VALUES
-(1, '제목1', '내용1'),
-(2, '제목2', '내용2')
+INSERT INTO s1_post (user_id, subject, contents,price,status) VALUES
+(1, '제목1', '내용1',5000,1),
+(2, '제목2', '내용2',6000,2),
+(1, '제목3', '내용3',26100,1),
+(2, '제목4', '내용4',46400,1),
+(1, '제목5', '내용5',52000,2)
 ;
 
 INSERT INTO s1_comment (user_id, post_id, content) VALUES

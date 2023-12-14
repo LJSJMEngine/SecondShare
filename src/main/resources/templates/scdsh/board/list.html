@@ -28,23 +28,27 @@
     </form>
 </div>
 
-<th>id</th>
 <th>제목</th>
 <th>작성자</th>
-<th>조회수</th>
+<th>가격</th>
+<th>카테고리</th>
+<th>판매상태</th>
+<th>작성일</th>
+<th>좋아요 갯수</th>
 
-<form >
+<form>
     <!-- 목록 -->
     <table class="table table-hover">
         <!-- 테이블 헤더 생략 (기존 내용 유지) -->
         <tbody>
         <tr th:each="post : ${list}">
-            <td th:text="${post.post_id}"></td>
             <td><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></td>
-            <td th:text="${post.user.username}"></td>
-            <td th:text="${post.viewCnt}"></td>
+            <td><a th:href="@{'/board/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></td>
+            <td th:text="${post.price}"></td>
             <td th:text="${post.category.name}"></td>
+            <td th:text="${post.status == 1 ? '판매중' : (post.status == 2 ? '판매완료' : '판매불가')}"></td>
             <td th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+
         </tr>
         </tbody>
 

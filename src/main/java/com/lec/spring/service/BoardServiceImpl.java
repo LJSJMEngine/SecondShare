@@ -49,12 +49,6 @@ public class BoardServiceImpl implements BoardService {
         return postRepository.search(keyword);
     }
 
-//    public List<Post> searchByCategory(String tag) {
-//        return postRepository.searchByCategory(tag);
-//    }
-
-
-
     @Override
     public int write(Post post) {
         return 0;

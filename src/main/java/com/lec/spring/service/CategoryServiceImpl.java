@@ -20,16 +20,11 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository = sqlSession.getMapper(CategoryRepository.class);
         System.out.println("categoryService() 생성");
     }
-
-
         @Override
         public List<Category> getAllCategories () {
             return categoryRepository.findAll();
         }
 
-        @Override
-        public Category getCategoryByName (String tag){
-            return categoryRepository.findByName(tag);
-        }
+
     }
 

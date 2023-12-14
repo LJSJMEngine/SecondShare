@@ -22,7 +22,6 @@ public class Post {
     private LocalDateTime regDate;
     private int status;
     private int goodCnt;
-
     private Category category;
 
 
