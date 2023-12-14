@@ -4,10 +4,57 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lec.spring.repository.UserRepository">
+    <sql id="SELECT">
+        SELECT
+            id "id",
+            username "username",
+            password "password",
+            name "name",
+            phoneNM "phoneNM",
+            email "email",
+            registDate "registDate",
+            status "status"
+        FROM
+            s1_user
+        WHERE
+            1 = 1
+    </sql>
+
+    <select id="findById" resultType="com.lec.spring.domain.User">
+        <include refid="SELECT"/>
+        AND id = #{id}
+    </select>
 
     <select id="findByUsername" resultType="com.lec.spring.domain.User">
+        <include refid="SELECT"/>
+        AND username = #{username}
+    </select>
+
+    <insert id="join"
+            flushCache="true"
+            parameterType="com.lec.spring.domain.User"
+            useGeneratedKeys="true"
+            keyColumn="id"
+            keyProperty="id">
+        INSERT INTO s1_user(username, password, name, phoneNM, email)
+        VALUES(#{username}, #{password}, #{name}, #{phoneNM}, #{email})
+    </insert>
+
+    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.User">
+        UPDATE s1_user
+        SET password = #{password}, phoneNM = #{phoneNM}, email = #{email}
+        WHERE id = #{id}
+    </update>
+
+
+
+<!--    <select id="findByUsername" resultType="com.lec.spring.domain.User">
         SELECT * FROM s1_user WHERE username = #{username}
     </select>
+
+    <select id="findById" resultType="com.lec.spring.domain.User">
+        SELECT * FROM s1_user WHERE id = #{id}
+    </select>-->
 
     <update id="updatePassword" parameterType="map">
         UPDATE s1_user
@@ -32,5 +79,12 @@
         SET status = 1
         WHERE username = #{username}
     </update>
+
+    <select id="showMyPosts" parameterType="long" resultType="com.lec.spring.domain.Post$MyPosts">
+        SELECT p.subject, p.status, p.regDate
+        FROM s1_post p
+        JOIN s1_user u ON p.user_id = u.id
+        WHERE u.id = #{id}
+    </select>
 
 </mapper>

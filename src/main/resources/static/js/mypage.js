@@ -9,6 +9,8 @@ function loadContent(action) {
         .catch(error => console.error('에러:', error));
 }
 
+
+// 마이페이지 - 회원 탈퇴 기능
 function confirmDeleteAccount() {
     var confirmDelete = confirm("정말 회원 탈퇴를 진행하시겠습니까?");
     if (confirmDelete) {
@@ -17,8 +19,6 @@ function confirmDeleteAccount() {
     }
 }
 
-// 마이페이지 - 회원 탈퇴 기능
-// 서버에 회원 탈퇴 요청을 보내는 함수
 function deleteAccountRequest() {
     var currentUsername = "USER1"; // 실제 사용자 아이디를 가져오도록 수정
     var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
@@ -239,4 +239,9 @@ function isValidPhoneNumber(phoneNumber) {
 function isValidEmailAddress(email) {
     var emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/;
     return emailRegex.test(email);
+}
+
+// 마이페이지 - 판매물품 전체 삭제
+function deleteAllMyPosts() {
+    // TODO
 }

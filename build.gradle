@@ -32,8 +32,12 @@ dependencies {
 
 	///////////////////////////////////////////////////////////////////////웹소켓
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-	implementation 'org.webjars:stomp-websocket:2.3.3'
-	implementation 'org.webjars:sockjs-client:1.0.2'
+	implementation 'org.webjars:stomp-websocket:2.3.3-1'
+
+	// 본인인증
+	implementation 'net.nurigo:javaSDK:2.2'
+	implementation 'org.json:json:20230618'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.4.10'
 }
 
 tasks.named('bootBuildImage') {
