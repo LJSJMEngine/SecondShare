@@ -21,17 +21,17 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/scdch/detail/**").authenticated()
+                        .requestMatchers("/board/detail/**").authenticated()
                         .requestMatchers(
-                                "/scdsh/write/**",
-                                "/scdsh/update/**",
-                                "/scdsh/delete/**").hasAnyRole("ADMIN", "MEMBER")
+                                "/board/write/**",
+                                "/board/update/**",
+                                "/board/delete/**").hasAnyRole("ADMIN", "MEMBER")
                         .anyRequest().permitAll()
                 )
 
                 .formLogin(form -> form
-                        .loginPage("/scdsh/login")
-                        .loginProcessingUrl("/scdsh/login")
+                        .loginPage("/user/login")
+                        .loginProcessingUrl("/user/login")
                         .defaultSuccessUrl("/")
 
                         .successHandler(new CustomLoginSuccessHandler("/main"))
@@ -39,8 +39,8 @@ public class SecurityConfig {
                 )
 
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer
-                        .logoutUrl("/scdsh/logout")
-                        .logoutSuccessUrl("/scdsh/login?logout")
+                        .logoutUrl("/user/logout")
+                        .logoutSuccessUrl("/user/login?logout")
                         .invalidateHttpSession(false)
 
                         .logoutSuccessHandler(new CustomLogoutSuccessHandler())
