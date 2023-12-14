@@ -119,7 +119,7 @@ CREATE TABLE s1_post
 	subject varchar(200) NOT NULL,
 	contents longtext,
 	price int,
-	viewCnt int,
+	viewCnt int DEFAULT 0,
 	status int,
 	regDate datetime,
 	PRIMARY KEY (post_id)
@@ -138,7 +138,7 @@ CREATE TABLE s1_review
 	id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
 	post_id int NOT NULL,
-	reviewChk boolean NOT NULL,
+	reviewChk int NOT NULL,
 	content longtext NOT NULL,
 	PRIMARY KEY (id)
 );

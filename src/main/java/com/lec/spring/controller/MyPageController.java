@@ -1,7 +1,9 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.Post;
+import com.lec.spring.domain.Review;
 import com.lec.spring.domain.User;
+import com.lec.spring.service.ReviewService;
 import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +20,12 @@ import java.util.Map;
 public class MyPageController {
 
     private final UserService userService;
+    private final ReviewService reviewService;
 
     @Autowired
-    public MyPageController(UserService userService) {
+    public MyPageController(UserService userService, ReviewService reviewService) {
         this.userService = userService;
+        this.reviewService = reviewService;
     }
 
     @GetMapping("/home")
@@ -114,18 +118,6 @@ public class MyPageController {
         }
     }
 
-    /*@GetMapping("/myPosts")
-    public ResponseEntity<List<Post.MyPosts>> showMyPosts() {
-        // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // User user = (User) auth.getPrincipal();
-        Long id = 2L; // userId = 2 임시 설정
-
-        List<Post.MyPosts> myPosts = userService.showMyPosts(id); // (user.getId)
-        myPosts.forEach(System.out::println);
-
-        return ResponseEntity.ok(myPosts);
-    }*/
-
     @GetMapping("/myPosts")
     public String myPosts(Model model) {
         Long currentUserId = 2L;  // 임시 설정
@@ -139,6 +131,10 @@ public class MyPageController {
         model.addAttribute("myPosts", myPosts);
         model.addAttribute("statusOneCount", statusOneCount);
 
+        List<Review.MyReceivedReviews> myReceivedReviews = reviewService.findReviewsByUserId(Math.toIntExact(currentUserId));
+
+        model.addAttribute("myReceivedReviews", myReceivedReviews);
+
         return "mypage/myPosts";
     }
 
@@ -150,6 +146,20 @@ public class MyPageController {
         List<Post.MyPosts> myPosts = userService.showMyPosts(userId); // (user.getId)
 
         return ResponseEntity.ok(myPosts);
+    }
+
+    @PostMapping("/deleteAllMyPosts")
+    public ResponseEntity<String> deleteAllMyPosts() {
+        Long currentId = 2L;
+
+        try {
+            userService.deleteAllMyPosts(currentId);
+            return ResponseEntity.ok("모든 판매글이 성공적으로 삭제되었습니다.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 전체 삭제 중 오류가 발생했습니다.");
+        }
     }
 
 }

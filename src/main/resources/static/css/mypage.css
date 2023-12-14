@@ -62,24 +62,24 @@ body {
 }
 
 .delete-account-btn {
-  display: inline-block;
-  padding: 8px 12px;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  border: 2px solid #d9534f;
-  color: #fff;
-  background-color: #d9534f;
-  border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s;
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #d9534f;
+    color: #fff;
+    background-color: #d9534f;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .delete-account-btn:hover {
-  background-color: #c9302c;
-  border-color: #ac2925;
-  color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+    color: #fff;
 }
 
 /* 프로필 보기 및 수정 항목들 */
@@ -95,11 +95,11 @@ body {
 
 .showMyPage input.answer {
     width: 200px;
-        padding: 8px;
-        margin-bottom: 10px;
-        margin-left: 0;
-        border: 1px solid #cccccc;
-        border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 10px;
+    margin-left: 0;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
 }
 
 .showMyPage button.modify {
@@ -117,7 +117,6 @@ body {
     background-color: #c9302c;
     border-color: #ac2925;
     color: #fff;
-
 }
 
 /* 메세지 */
@@ -139,80 +138,110 @@ p {
 }
 
 /* 에러 메세지 */
-#passwordErrorMessage {
-    color: red;
-    margin-top: 0;
-    margin-left: 0;
-    text-align: left
-}
-
-#phoneNMErrorMessage {
-    color: red;
-    margin-top: 0;
-    margin-left: 0;
-    text-align: left
-}
-
+#passwordErrorMessage,
+#phoneNMErrorMessage,
 #EmailErrorMessage {
     color: red;
     margin-top: 0;
     margin-left: 0;
-    text-align: left
+    text-align: left;
 }
 
 /* 테이블 스타일 */
 .myPostsList {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
 .myPostsList th, .myPostsList td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
 }
 
 .myPostsList th {
-  background-color: #f2f2f2;
-  text-align: center;
+    background-color: #f2f2f2;
+    text-align: center;
 }
 
 .myPostsList th:first-child,
 .myPostsList td:first-child {
-  width: 50%;
+    width: 50%;
 }
 
 .myPostsList th:nth-child(2),
 .myPostsList td:nth-child(2) {
-  width: 20%;
-  text-align: center;
+    width: 20%;
+    text-align: center;
 }
 
 .myPostsList th:nth-child(3),
 .myPostsList td:nth-child(3) {
-  width: 30%;
-  text-align: center;
+    width: 30%;
+    text-align: center;
 }
 
 /* 판매글 전체 삭제 버튼 스타일 */
 .delete-myPosts-btn {
-  display: inline-block;
-  padding: 8px 12px;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  border: 2px solid #d9534f;
-  color: #fff;
-  background-color: #d9534f;
-  border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s;
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #d9534f;
+    color: #fff;
+    background-color: #d9534f;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .delete-myPosts-btn:hover {
-  background-color: #c9302c;
-  border-color: #ac2925;
-  color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+    color: #fff;
+}
+
+/* 각 리뷰 박스 스타일 */
+.reviewBox {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+.reviewContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.reviewBox {
+    width: 20%;
+    margin: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.reviewStatus {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* reviewChk 별로 색상 다르게 */
+.reviewBox.status-0 {
+    background-color: white;
+}
+
+.reviewBox.status-1 {
+    background-color: white;
+}
+
+.reviewBox.status-2 {
+    background-color: white;
 }

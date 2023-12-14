@@ -1,0 +1,20 @@
+<!-- CategoryRepository.xml -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.CategoryRepository">
+
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Category">
+        INSERT INTO s1_category (name) VALUES (#{name})
+    </insert>
+
+    <select id="findAll" resultType="com.lec.spring.domain.Category">
+        SELECT * FROM s1_category
+    </select>
+
+    <select id="findByName" resultType="com.lec.spring.domain.Category" parameterType="String">
+        SELECT * FROM s1_category WHERE name = #{name}
+    </select>
+
+</mapper>
