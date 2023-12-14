@@ -28,14 +28,7 @@ import java.util.Random;
 public class ChatController {
     @Autowired
     private final ChatService chatService;
-    private final SimpMessageSendingOperations messagingTemplate;
 
-    @MessageMapping("/message")
-    public ChatMessage chatMessage(ChatMessage message) {
-        //db에 저장+
-        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(),message);
-        return  message;
-    }
 
     @RequestMapping("chatTest")
     public String chatListView(Model model) {
