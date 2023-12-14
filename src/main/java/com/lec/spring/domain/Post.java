@@ -1,10 +1,7 @@
 package com.lec.spring.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,6 +21,8 @@ public class Post {
     private int status;
     private LocalDateTime regDate;
 
+    private User user;
+
     // 마이페이지 - 내 판매물품
     @Data
     @AllArgsConstructor
@@ -37,9 +36,10 @@ public class Post {
         private LocalDateTime regDate;
     }
 
-/*    @Builder.Default
-    @JsonIgnore
-    private List<MyPosts> myPosts = new ArrayList<>();*/
+    // 첨부파일
+    @ToString.Exclude
+    @Builder.Default
+    private List<Attachment> fileList = new ArrayList<>();
 
 
 }

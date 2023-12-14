@@ -1,6 +1,7 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
+
 DROP TABLE IF EXISTS s1_attachment;
 DROP TABLE IF EXISTS s1_user_authority;
 DROP TABLE IF EXISTS s1_authority;
@@ -18,7 +19,10 @@ DROP TABLE IF EXISTS s1_post;
 DROP TABLE IF EXISTS s1_user;
 
 
+
+
 /* Create Tables */
+
 CREATE TABLE s1_attachment
 (
 	id int NOT NULL AUTO_INCREMENT,
@@ -58,11 +62,9 @@ CREATE TABLE s1_chatroom
 (
 	room_id int NOT NULL AUTO_INCREMENT,
 	post_id int NOT NULL,
-	seller_id int NOT NULL,
-	buyer_id int NOT NULL,
 	createDate datetime,
 	lastUpdateDate datetime,
-	subject varchar(50) NOT NULL,
+	subject varchar(50),
 	roomState int,
 	PRIMARY KEY (room_id)
 );
@@ -156,7 +158,9 @@ CREATE TABLE s1_user
 	name varchar(20) NOT NULL,
 	phoneNM varchar(20) NOT NULL,
 	email varchar(100) NOT NULL,
+	age int,
 	registDate datetime,
+	birth varchar(20),
 	status int,
 	PRIMARY KEY (id),
 	UNIQUE (username),

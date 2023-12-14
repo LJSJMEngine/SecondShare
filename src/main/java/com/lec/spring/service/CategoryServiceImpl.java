@@ -19,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryServiceImpl(SqlSession sqlSession) {
         categoryRepository = sqlSession.getMapper(CategoryRepository.class);
 
-        System.out.println("BoardService() 생성");
+        System.out.println("CategoryService() 생성");
     }
         @Override
         public int saveCategory (Category category){
