@@ -33,16 +33,20 @@ public class BoardController {
                        @RequestParam(required = false) String keyword,
                        Integer page,
                        Model model) {
+
         List<Post> list;
 
         if ("subject".equals(type)) {
             list = boardService.search(keyword);
+            boardService.list(page, model);
         }
         else if ("id".equals(type)) {
             list = boardService.search(keyword);
+            boardService.list(page, model);
 
         } else {
             list = boardService.list();
+            boardService.list(page, model);
         }
 
         model.addAttribute("list", list);

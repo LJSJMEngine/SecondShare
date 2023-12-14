@@ -128,7 +128,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     public List<Post> searchByCategory(String keyword) {
-        return postRepository.searchByCategory(keyword);
+        return postRepository.search(keyword);
     }
 
     @Override

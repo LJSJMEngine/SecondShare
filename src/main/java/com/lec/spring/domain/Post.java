@@ -18,9 +18,12 @@ public class Post {
     private String contents;
     private int viewCnt;
     private int status;
+    private  int price;
     private LocalDateTime regDate;
 
     private User user;
+
+    private  Category category;
 
     // 마이페이지 - 내 판매물품
     @Data

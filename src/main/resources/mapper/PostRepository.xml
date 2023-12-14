@@ -29,7 +29,6 @@
         , p.viewCnt "p_viewCnt"
         , p.regDate "p_regDate"
         , p.status "p_status"
-        , p.goodCnt "p_goodCnt"
         , u.id "u_id"
         , u.username "u_username"
         FROM s1_post p, s1_user u

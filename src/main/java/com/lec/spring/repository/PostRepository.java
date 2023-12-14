@@ -6,11 +6,11 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
-import com.lec.spring.domain.Like;
+import com.lec.spring.domain.Heart;
 
 import java.util.List;
 
-public interface PostRepository {
+public interface    PostRepository {
 
     int save(Post post);
 
