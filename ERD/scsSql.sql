@@ -138,7 +138,7 @@ CREATE TABLE s1_review
 	id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
 	post_id int NOT NULL,
-	reviewChk boolean NOT NULL,
+	reviewChk int NOT NULL,
 	content longtext NOT NULL,
 	PRIMARY KEY (id)
 );

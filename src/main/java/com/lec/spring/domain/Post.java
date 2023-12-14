@@ -37,9 +37,5 @@ public class Post {
         private LocalDateTime regDate;
     }
 
-/*    @Builder.Default
-    @JsonIgnore
-    private List<MyPosts> myPosts = new ArrayList<>();*/
-
 
 }
