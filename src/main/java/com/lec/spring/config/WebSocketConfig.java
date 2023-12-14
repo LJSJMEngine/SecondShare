@@ -6,7 +6,6 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.*;
 
-@RequiredArgsConstructor
 @Configuration
 @EnableWebSocketMessageBroker
 
@@ -15,8 +14,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws-stomp").setAllowedOrigins("*").withSockJS();
-
         System.out.println("StompEndPoint Setup");
+        System.out.println(registry);
 
     }
 

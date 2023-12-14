@@ -33,7 +33,7 @@ public class ChatController {
     @MessageMapping("/message")
     public ChatMessage chatMessage(ChatMessage message) {
         //db에 저장+
-        messagingTemplate.convertAndSend("/sub/chat/room" + message.getRoomId(),message);
+        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(),message);
         return  message;
     }
 
