@@ -9,6 +9,7 @@ import org.springframework.validation.Validator;
 
 import java.util.regex.Pattern;
 
+@Component
 public class UserValidator implements Validator {
 
         @Autowired
