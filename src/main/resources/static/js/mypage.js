@@ -242,6 +242,34 @@ function isValidEmailAddress(email) {
 }
 
 // 마이페이지 - 판매물품 전체 삭제
-function deleteAllMyPosts() {
-    // TODO
+function confirmDeleteAllMyPosts() {
+    var confirmDelete = confirm("정말 모든 판매글을 삭제하시겠습니까?");
+    if (confirmDelete) {
+        // 전체 삭제 요청 보내기
+        deleteAllMyPostsRequest();
+    }
+}
+
+function deleteAllMyPostsRequest() {
+    var currentId = 2; // 2L 대신에 2를 사용
+    var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+
+    // 서버로 전체 삭제 요청 보내기
+    fetch('/mypage/deleteAllMyPosts', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({
+            id: currentId,
+        }),
+    })
+    .then(response => response.text())
+    .then(result => {
+        alert(result);
+    })
+    .catch(error => {
+        console.error('에러:', error);
+    });
 }

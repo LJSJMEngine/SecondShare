@@ -68,6 +68,14 @@ INSERT INTO s1_comment (user_id, post_id, content) VALUES
 (2, 2, '댓글4')
 ;
 
+INSERT INTO s1_review (user_id, post_id, reviewChk, content) VALUES
+(2, 2, 2, '설명이 상세해요'),
+(2, 3, 2, '상태가 좋아요'),
+(2, 4, 1, '친절해요'),
+(2, 5, 0, '대답이 느려요'),
+(2, 6, 1, '저렴해요')
+;
+
 INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
 (1, 'face01.png', 'face01.png')
 ;

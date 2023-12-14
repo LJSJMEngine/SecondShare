@@ -57,4 +57,10 @@ public class User {
     @Builder.Default
     @JsonIgnore
     private List<Post.MyPosts> myPosts = new ArrayList<>();
+    public List<Post.MyPosts> getMyPosts() {
+        return myPosts;
+    }
+    public void setMyPosts(List<Post.MyPosts> myPosts) {
+        this.myPosts = myPosts;
+    }
 }
