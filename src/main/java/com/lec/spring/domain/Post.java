@@ -20,8 +20,9 @@ public class Post {
     private Long user_id;
     private String subject;
     private String contents;
-    private int viewCnt;
-    private int status;
+    private Integer price;
+    private Integer viewCnt;
+    private Integer status;
     private LocalDateTime regDate;
 
     // 마이페이지 - 내 판매물품
@@ -33,7 +34,7 @@ public class Post {
         private Long post_id;
         private Long user_id;
         private String subject;
-        private int status;
+        private Integer status;
         private LocalDateTime regDate;
     }
 

@@ -119,7 +119,7 @@ CREATE TABLE s1_post
 	subject varchar(200) NOT NULL,
 	contents longtext,
 	price int,
-	viewCnt int,
+	viewCnt int DEFAULT 0,
 	status int,
 	regDate datetime,
 	PRIMARY KEY (post_id)
