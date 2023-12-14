@@ -22,10 +22,13 @@ public class Post {
     private LocalDateTime regDate;
     private int status;
     private int goodCnt;
-    private Category category;
 
 
-    private User user; //작성자 아이디
+
+
+    private Category category; // 카테고리
+
+    private User user; // 글 작성자
 
 
 }

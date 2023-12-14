@@ -8,9 +8,9 @@
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Post"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO s1_post
-        (user_id, subject, content, price)
+        (user_id, subject, content, price,status)
         VALUES
-        ( #{user.id}, #{subject}, #{content}, #{price})
+        ( #{user.id}, #{subject}, #{content}, #{price}, #{status})
     </insert>
 
     <update id="incViewCnt" flushCache="true">
@@ -34,10 +34,8 @@
         , u.id "u_id"
         , u.username "u_username"
         , u.location "u_location"
-        , c.id "c_id"
-        , c.name "c_name"
-        FROM s1_post p, s1_user u ,s1_category c
-        WHERE p.post_id = u.id
+        FROM s1_post p, s1_user u
+        WHERE p.user_id = u.id
     </sql>
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>
@@ -86,14 +84,23 @@
         WHERE post_id = #{post_id}
     </update>
 
+
     <select id="search" resultMap="mapPost" parameterType="map">
         <include refid="SELECT_BASE"/>
-            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
-            ORDER BY p.post_id DESC
+        AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+        ORDER BY p.post_id DESC
     </select>
 
+    <!-- 페이징 용 쿼리 -->
+    <select id="selectFromRow" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        ORDER BY p.post_id DESC
+        LIMIT #{param1}, #{param2}
+    </select>
 
-
+    <select id="countAll" resultType="int">
+        SELECT count(*) FROM s1_post
+    </select>
 
 
 

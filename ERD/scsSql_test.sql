@@ -40,8 +40,8 @@ SELECT * FROM s1
         , u.location "u_location"
         , c.id "c_id"
         , c.name "c_name"
-        FROM s1_post p, s1_user u ,s1_category c
-        WHERE p.post_id = u.id
+        FROM s1_post p, s1_user u, s1_category c 
+        WHERE   p.user_id = u.id
         ORDER BY p.post_id DESC;
 
 

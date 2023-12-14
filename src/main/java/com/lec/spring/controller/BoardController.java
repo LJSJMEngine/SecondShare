@@ -4,6 +4,7 @@ import com.lec.spring.domain.Category;
 import com.lec.spring.domain.Post;
 import com.lec.spring.service.BoardService;
 import com.lec.spring.service.CategoryService;
+import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +25,7 @@ public class BoardController {
     @GetMapping("/list")
     public String list(@RequestParam(required = false) String type,
                        @RequestParam(required = false) String keyword,
-                       @RequestParam(required = false) Long tag,
+                       Integer page,
                        Model model) {
         List<Post> list;
 
@@ -39,9 +40,12 @@ public class BoardController {
         }
 
         model.addAttribute("list", list);
-
+        boardService.list(page, model);
         return "board/list";
     }
+
+
+
 
 
     @GetMapping("/write")
@@ -68,4 +72,12 @@ public class BoardController {
     }
 
 //    @GetMapping("review")
+
+    @PostMapping("/pageRows")
+    public String pageRows(Integer page, Integer pageRows){
+        U.getSession().setAttribute("pageRows", pageRows);
+        return "redirect:/board/list?page=" + page;
+    }
+
+
 }

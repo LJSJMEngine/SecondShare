@@ -9,7 +9,10 @@
 
         List<Post> list();
 
-        List<Post> list(Model model);
+        List<Post> list(Integer page, Model model);
+
+
+
         List<Post> search(String keyword);
 
         int write(Post post);
