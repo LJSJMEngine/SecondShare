@@ -1,23 +1,33 @@
-const stompClient = new StompJs.Client({
-    brokerURL: 'ws://localhost:8080/ws-stomp'
+
+$(function () {
+console.log(RoomData);
+var sock = new SockJS("/ws-stomp");
+console.log(sock);
+        var client = Stomp.over(sock); // 1. SockJS를 내부에 들고 있는 client를 내어준다.
+console.log(client);
+
+client.connect({}, function () {
+//            //// 3. send(path, header, message)로 메시지를 보낼 수 있다.
+//            //client.send('/publish/chat/join', {}, JSON.stringify({chatRoomId: 2, writer: 3}));
+//            //// 4. subscribe(path, callback)로 메시지를 받을 수 있다. callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
+//            //client.subscribe('/subscribe/chat/room/' + roomId, function (chat) {
+//            //    var content = JSON.parse(chat.body);
+//            //    chatBox.append('<li>' + content.message + '(' + content.writer + ')</li>')
+//            //});
+//            console.log("setConnect");
+//        });
+//        $( "#send" ).click(function () {
+//            var message = messageInput.val();
+//            client.send('/publish/chat/message', {}, JSON.stringify({chatRoomId: roomId, message: message, writer: member}));
+//            messageInput.val('');
+        });
+
+
+    $("form").on('submit', (e) => e.preventDefault());
+    $( "#connect" ).click(() => connect());
+    $( "#disconnect" ).click(() => disconnect());
 });
 
-stompClient.onConnect = (frame) => {
-    setConnected(true);
-    console.log('Connected: ' + frame);
-    stompClient.subscribe('/topic/greetings', (greeting) => {
-        showGreeting(JSON.parse(greeting.body).content);
-    });
-};
-
-stompClient.onWebSocketError = (error) => {
-    console.error('Error with websocket', error);
-};
-
-stompClient.onStompError = (frame) => {
-    console.error('Broker reported error: ' + frame.headers['message']);
-    console.error('Additional details: ' + frame.body);
-};
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -30,11 +40,6 @@ function setConnected(connected) {
     }
     $("#greetings").html("");
 }
-
-function connect() {
-    stompClient.activate();
-}
-
 function disconnect() {
     stompClient.deactivate();
     setConnected(false);
@@ -48,14 +53,6 @@ function sendName() {
     });
 }
 
-function showGreeting(message) {
-    $("#greetings").append("<tr><td>" + message + "</td></tr>");
+function sendChat(message) {
+    $("#chatList").append("<tr><td>" + message + "</td></tr>");
 }
-
-$(function () {
-    $("form").on('submit', (e) => e.preventDefault());
-    $( "#connect" ).click(() => connect());
-    $( "#disconnect" ).click(() => disconnect());
-    $( "#send" ).click(() => sendName());
-});
-

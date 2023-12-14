@@ -8,7 +8,7 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="@{/chat/roomDebug}" method="post">
+<form th:action="@{/chat/room}" method="post">
     <div class="my-3">
         <label for="post_id">게시판 id:</label>
         <input type="text" class="form-control" id="post_id" placeholder="쿠폰 이름" name="post_id" >
@@ -19,6 +19,5 @@
     </div>
     <button type="submit" class="btn btn-outline-dark">생성 완료</button>
 </form>
-<h3 th:if="${RoomData}">[[${RoomData.subject}]]</h3>
 </body>
 </html>

@@ -30,11 +30,11 @@ public class ChatController {
     private final ChatService chatService;
     private final SimpMessageSendingOperations messagingTemplate;
 
-    @MessageMapping("/chat/message")
-    public void chatMessage(ChatMessage message) {
+    @MessageMapping("/message")
+    public ChatMessage chatMessage(ChatMessage message) {
         //db에 저장+
         messagingTemplate.convertAndSend("/sub/chat/room" + message.getRoomId(),message);
-
+        return  message;
     }
 
     @RequestMapping("chatTest")
@@ -68,14 +68,14 @@ public class ChatController {
     public String RoomDebug() {
         return "chat/roomDebug";
     }
-    @PostMapping("roomDebug")
+    @PostMapping("room")
     public String RoomCreate(@Valid ChatRoom cRoom, Model model) {
         System.out.println("PostData : " + cRoom);
 
         cRoom = chatService.createRoom(cRoom);
         System.out.println("DBInsert : " + cRoom);
         model.addAttribute("RoomData",cRoom);
-        return "chat/roomDebug";
+        return "chat/room";
     }
 }
 

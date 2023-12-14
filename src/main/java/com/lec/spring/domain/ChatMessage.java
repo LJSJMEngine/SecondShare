@@ -13,6 +13,7 @@ public class ChatMessage {
         JOIN, TALK
     }
 
+    //https://supawer0728.github.io/2018/03/30/spring-websocket/
     private MessageType type; // 메시지 타입
     private String roomId; // 방번호
     private String sender; // 메시지 보낸사람

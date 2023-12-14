@@ -13,5 +13,4 @@ public interface ChatRepository {
     List<ChatRoom> findAllRoom();
     int createChatRoom(ChatRoom chatRoom);
 
-    ChatRoom findRoomByUserAndPostId(ChatRoom chatRoom);
 }
