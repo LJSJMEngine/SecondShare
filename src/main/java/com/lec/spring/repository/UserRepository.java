@@ -47,4 +47,9 @@ public interface UserRepository {
     // 마이페이지 - 판매물품
     List<Post.MyPosts> showMyPosts(Long id);
 
+    // 마이페이지 - 판매물품 전체 삭제
+    void deleteAllMyPostsByUserId(
+            @Param("id") Long id
+    );
+
 }
