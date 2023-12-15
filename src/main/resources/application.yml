@@ -43,7 +43,7 @@ app:
 
   # upload setting
   upload:
-    path: upfile
+    path: upload
 
 
 # coolsms 문자 인증

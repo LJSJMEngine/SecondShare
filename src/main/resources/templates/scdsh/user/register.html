@@ -2,11 +2,82 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="CSS.css">
     <title>회원가입</title>
 </head>
 <body>
+<link rel="stylesheet" href="JS.js">
 
 
+<!--
+    1. 메세지 hidden 옵션
+    2. 중복 확인 미완성
 
+-->
+
+
+<div id="register-wrapper">
+
+    <div class="register">
+        <h1>Second Share <br> 회원가입</h1>
+    </div>
+
+    <hr><br>
+
+    <div class="regForm">
+        <form th:action="@{/user/register}" method="POST">
+
+            <div class="reg-group">
+                아이디 <br><input type="text" class="reg-input" id="username" name="username" placeholder="아이디를 입력하세요" th:value="${username}" autofocus>
+                <input type="button" class="button" id="idChkButton" name="idChkButton" value="중복확인">
+
+                <p class="red" >이미 사용중인 ID 입니다.</p>
+                <p class="green" >사용 가능한 ID 입니다.</p>
+            </div>
+            <br>
+            <div class="reg-group">
+                비밀번호 <br><input type="text" class="reg-input" id="password" name="password" placeholder="8~22자리 / 영문 + 숫자 + 특수문자 포함">
+                <p class="red">비밀번호 형식에 맞지 않습니다.</p>
+            </div>
+            <br>
+            <div class="reg-group">
+                비밀번호 확인 <br><input type="text" class="reg-input" id="passwordChk" name="passwordChk" placeholder="비밀번호 확인" th:value="${passwordChk}">
+                <p class="red">비밀번호가 일치하지 않습니다.</p>
+            </div>
+            <br>
+            <div class="reg-group">
+                이름 <br><input type="text" class="reg-input" id="name" name="name" placeholder="이름을 입력하세요" th:value="${name}">
+            </div>
+            <br>
+            <div class="reg-group">
+                전화번호 <br><input type="text" class="reg-input" id="phoneNM" name="phoneNM" placeholder="전화번호를 입력하세요" th:value="${phoneNM}">
+                <input type="button" class="button" id="smsButton" name="smsButton" value="인증번호 전송">
+            </div>
+            <br>
+            <div class="reg-group">
+                <input type="text" class="reg-input" id="verifyNM" name="verfiyNM" placeholder="인증번호를 입력하세요" th:value="${verfiyNum}">
+                <input type="button" class="button" id="smsButton" name="smsButton" value="인증번호 확인">
+                <p class="red">인증번호가 맞지 않습니다. 다시 입력하세요.</p>
+                <p class="green">본인인증 완료</p>
+            </div>
+            <br>
+            <div class="reg-group">
+                이메일 <br><input type="text" class="reg-input" id="email" name="email" placeholder="email@secondshare.com" th:value="${email}">
+            </div>
+
+
+            <br><br><hr>
+
+            <div class="moveToLogin">
+                계정이 있다면? <a th:href="@{/user/login}">로그인</a>
+            </div>
+
+            <div>
+                <button type="submit">회원가입</button>
+            </div>
+        </form>
+    </div>
+
+</div>
 </body>
 </html>

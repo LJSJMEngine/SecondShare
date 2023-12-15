@@ -1,50 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <link rel="stylesheet" href="/css/mypage.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-
-    <script th:src="@{/js/write.js}"></script>
+    <title>Title</title>
 </head>
 <body>
-<div class="" >
-    <h2>상품 등록하기</h2>
-    <form th:action="@{/board/write}" method="post" enctype="multipart/form-data">
-        <div >
-            <label class="input" for="subject">제목:</label>
-            <input type="text" id="subject" name="subject" placeholder="상품의 이름을 적어주세요" th:value="${subject}">
-            <span class="text-danger" th:if="${error_subject}" th:utext="${error_subject}"></span>
-        </div>
 
-        <div >
-            <label>작성자:</label>
-            <span>[[${user.username}]][[${user.name}]]</span>
-        </div>
-
-        <div >
-            <label for="content">내용:</label>
-            <textarea rows="5" id="content" placeholder="내용을 입력하세요" name="content" th:utext="${content}"></textarea>
-        </div>
-
-        <div >
-            <label>첨부 사진:</label>
-            <div id="files">
-
-            </div>
-            <button type="button" id="btnAdd">추가</button>
-        </div>
-
-        <button type="submit">작성완료</button>
-        <button type="button" onclick="history.back()">이전으로</button>
-    </form>
-</div>
 </body>
 </html>

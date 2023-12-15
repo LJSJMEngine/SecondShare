@@ -1,55 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <script th:src="@{/js/list.js}"></script>
-    <title>목록 페이지</title>
+    <title>Title</title>
 </head>
-<h2>게시물 목록</h2>
 <body>
 
-<div>
-    <form name="search"  method="GET">
-        <select name="type">
-            <option value="subject">제목</option>
-            <option value="category">카테고리</option>
-        </select>
-        <input type="text" name="keyword" value=""/>
-        <input type="submit" class="btn btn-outline-primary mr-2" value="검색"/>
-        <a href="/board/write"><button class="btn-outline-primary mr-3">글쓰기</btn></a>
-    </form>
-</div>
-
-<th>id</th>
-<th>제목</th>
-<th>작성자</th>
-<th>조회수</th>
-
-<form >
-    <!-- 목록 -->
-    <table class="table table-hover">
-        <!-- 테이블 헤더 생략 (기존 내용 유지) -->
-
-        <tbody>
-        <tr th:each="post : ${list}">
-            <!-- 기존 내용 유지 및 카테고리 표시 추가 -->
-            <td th:text="${post.post_id}"></td>
-            <td>
-                <a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a>
-                <span th:if="${post.category != null}" th:text="' [' + ${post.category.name} + ']'"></span>
-
-            </td>
-            <td th:text="${post.user.username}"></td>
-<!--            <td th:text="${post.category.name}"></td>-->
-            <td th:text="${post.viewCnt}"></td>
-            <td th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-        </tr>
-<!--        <td th:text="${category.name}"></td>-->
-
-        </tbody>
-    </table>
-    <!-- 목록 -->
-</form>
 </body>
 </html>

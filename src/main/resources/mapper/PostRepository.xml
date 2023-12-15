@@ -57,7 +57,7 @@
 
     <select id="findByPostId" resultType="com.lec.spring.domain.Post">
         <include refid="SELECT_BASE"/>
-            AND post_id = #{post_id}
+        AND post_id = #{post_id}
     </select>
 
     <select id="findAll" resultMap="mapPost">
@@ -65,8 +65,8 @@
         ORDER BY post_id DESC
     </select>
 
-<!--  delStatus 글을 삭제했을경우 완전히 삭제되면 안되니
-회원탈퇴의 경우와 같이 비활성화 column boolean임  -->
+    <!--  delStatus 글을 삭제했을경우 완전히 삭제되면 안되니
+    회원탈퇴의 경우와 같이 비활성화 column boolean임  -->
     <update id="modify" flushCache="true"
             parameterType="com.lec.spring.domain.Post">
         UPDATE s1_post
@@ -95,4 +95,7 @@
         ORDER BY p.post_id DESC
     </select>
 
+    <select id="findLatestPosts" resultType="map">
+        SELECT * FROM s1_post WHERE 1=1 ORDER BY regDate DESC LIMIT 5;
+    </select>
 </mapper>
