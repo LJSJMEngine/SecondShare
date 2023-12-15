@@ -160,7 +160,6 @@ CREATE TABLE s1_user
 	email varchar(100) NOT NULL,
 	age int,
 	registDate datetime,
-	birth varchar(20),
 	status int,
 	PRIMARY KEY (id),
 	UNIQUE (username),

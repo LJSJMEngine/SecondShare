@@ -36,11 +36,9 @@ INSERT INTO s1_authority (name) VALUES
 ;
 
 INSERT INTO s1_user (username, password, name, phoneNM, email, registDate, status) VALUES
-('ADMIN1', '1234', '관리자1', '010-1111-2222', 'admin1@gmail.com', NOW(), 0),
-('USER1', '1234', '회원1', '010-3333-4444', 'user1@gmail.com', NOW(), 0),
-('USER2', '1234', '회원2', '010-5555-6666', 'user2@gmail.com', NOW(), 0),
-('USER3', '1234', '회원3', '010-7777-8888', 'user3@gmail.com', NOW(), 0),
-('USER4', '1234', '회원4', '010-9999-0000', 'user4@gmail.com', NOW(), 0)
+('USER1', '$2a$10$6gVaMy7.lbezp8bGRlV2fOArmA3WAk2EHxSKxncnzs28/m3DXPyA2', '회원1', '010-1111-2222', 'user1@mail.com', NOW(), 0),
+('USER2', '$2a$10$7LTnvLaczZbEL0gabgqgfezQPr.xOtTab2NAF/Yt4FrvTSi0Y29Xa', '회원2', '010-2222-3333', 'user2@mail.com', NOW(), 0),
+('ADMIN1', '$2a$10$53OEi/JukSMPr3z5RQBFH.z0TCYSUDPtxf1/8caRyRVdDNdHA9QHi', '관리자1', '010-3333-4444', 'admin1@mail.com', NOW(), 0)
 ;
 
 INSERT INTO s1_user_authority VALUES
@@ -91,11 +89,6 @@ INSERT INTO s1_category (name) VALUES
 ;
 
 /* 채팅 정보 영역 */
-
-
-INSERT INTO s1_chatroom (subject, post_id ,buyer_id, seller_id) VALUES
-('채팅방 이름', 3, 1, 2)
-;
 
 
 DELIMITER $$

@@ -5,7 +5,6 @@ import com.lec.spring.domain.UserValidator;
 import com.lec.spring.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,7 +34,7 @@ public class UserController {
 
     @PostMapping("/loginError")
     public String loginError(){
-        return "scdsh/login";
+        return "user/login";
     }
 
     @RequestMapping("/rejectAuth")

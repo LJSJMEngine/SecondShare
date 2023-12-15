@@ -14,6 +14,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder encoder() {
+        System.out.println("PasswordEncoder bean 생성");
         return new BCryptPasswordEncoder();
     }
 
@@ -24,8 +25,10 @@ public class SecurityConfig {
                         .requestMatchers("/board/detail/**").authenticated()
                         .requestMatchers(
                                 "/board/write/**",
-                                "/board/update/**",
-                                "/board/delete/**").hasAnyRole("ADMIN", "MEMBER")
+                                "/board/modify/**",
+                                "/board/delete/**",
+                                "/mypage/**",
+                                "/user/userpage").hasAnyRole("ADMIN", "MEMBER")
                         .anyRequest().permitAll()
                 )
 
