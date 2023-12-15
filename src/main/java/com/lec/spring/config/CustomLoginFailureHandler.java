@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
 
-    private final String DEFAULT_FAIL_URL = "/scdsh/loginError";
+    private final String DEFAULT_FAIL_URL = "/user/loginError";
 
 
     @Override
