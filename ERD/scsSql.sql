@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS s1_chatMessage;
 DROP TABLE IF EXISTS s1_chatroom_user;
 DROP TABLE IF EXISTS s1_chatroom;
 DROP TABLE IF EXISTS s1_comment;
-DROP TABLE IF EXISTS s1_like;
+DROP TABLE IF EXISTS s1_heart;
 DROP TABLE IF EXISTS s1_location;
 DROP TABLE IF EXISTS s1_notice;
 DROP TABLE IF EXISTS s1_review;
@@ -90,10 +90,12 @@ CREATE TABLE s1_comment
 );
 
 
-CREATE TABLE s1_like
+CREATE TABLE s1_heart
 (
-	id int NOT NULL,
-	post_id int NOT NULL
+	id int NOT NULL AUTO_INCREMENT,
+	user_id int NOT NULL,
+	post_id int NOT NULL,
+	PRIMARY KEY (id)
 );
 
 
@@ -233,11 +235,11 @@ ALTER TABLE s1_comment
 ;
 
 
-ALTER TABLE s1_like
+ALTER TABLE s1_heart
 	ADD FOREIGN KEY (post_id)
 	REFERENCES s1_post (post_id)
 	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON DELETE CASCADE
 ;
 
 
@@ -273,11 +275,11 @@ ALTER TABLE s1_comment
 ;
 
 
-ALTER TABLE s1_like
-	ADD FOREIGN KEY (id)
+ALTER TABLE s1_heart
+	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON DELETE CASCADE
 ;
 
 

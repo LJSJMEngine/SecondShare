@@ -23,7 +23,12 @@ ORDER BY id DESC;
 
 SELECT * FROM s1_user;
 
+
 SELECT * FROM s1_post;
+
+SELECT * FROM s1_heart;
+
+SELECT * FROM s1_user_authority;
 
 
 

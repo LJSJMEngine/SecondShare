@@ -52,3 +52,9 @@ coolsms:
     key: "NCSEPDRPAKJZQYG7"
     secret: "QNLN3IVMM14AP1WRFGWL9F9JDKM3ITF9"
     fromnumber: "010-7797-9285"
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG

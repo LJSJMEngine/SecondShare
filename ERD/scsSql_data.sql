@@ -16,8 +16,8 @@ DELETE FROM s1_chatroom;
 ALTER TABLE s1_chatroom AUTO_INCREMENT = 1;
 DELETE FROM s1_comment;
 ALTER TABLE s1_comment AUTO_INCREMENT = 1;
-DELETE FROM s1_like;
-ALTER TABLE s1_like AUTO_INCREMENT = 1;
+DELETE FROM s1_heart;
+ALTER TABLE s1_heart AUTO_INCREMENT = 1;
 DELETE FROM s1_location;
 ALTER TABLE s1_location AUTO_INCREMENT = 1;
 DELETE FROM s1_notice;
@@ -44,7 +44,8 @@ INSERT INTO s1_user (username, password, name, phoneNM, email, registDate, statu
 INSERT INTO s1_user_authority VALUES
 (1, 1),
 (1, 2),
-(2, 2)
+(2, 2),
+(3, 2)
 ;
 
 /* 게시물 정보 영역 */
@@ -77,6 +78,8 @@ INSERT INTO s1_review (user_id, post_id, reviewChk, content) VALUES
 INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
 (1, 'face01.png', 'face01.png')
 ;
+
+
 
 /* 카테고리 설정 */
 

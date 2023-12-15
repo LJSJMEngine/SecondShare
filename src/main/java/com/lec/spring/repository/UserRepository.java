@@ -10,9 +10,6 @@ import java.util.List;
 
 @Mapper
 public interface UserRepository {
-    int save(User user);
-
-    int update(Long id);
 
     // id 값을 통해 user 를 리턴
     User findById(@Param("id") Long id);
@@ -22,6 +19,8 @@ public interface UserRepository {
 
     // 신규 user 등록
     int join(User user);
+
+    int update(User user);
 
     // 마이페이지 - 프로필 수정
     void updatePassword(

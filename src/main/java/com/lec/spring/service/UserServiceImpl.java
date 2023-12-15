@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username.toUpperCase());
     }
 
     @Override
@@ -40,13 +40,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean idExist(String username) {
-        User user = findByUsername(username);
+        User user = findByUsername(username.toUpperCase());
         return (user != null);
     }
 
     @Override
     public int register(User user) {
-        user.setUsername(user.getUsername());
+        user.setUsername(user.getUsername().toUpperCase());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.join(user);
 
