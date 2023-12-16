@@ -16,6 +16,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
             HttpServletResponse response,
             AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
-        response.sendRedirect("/scdsh/rejectAuthority");
+        response.sendRedirect("/user/rejectAuthority");
     }
 }

@@ -17,7 +17,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
             HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
 
-        String redirectUrl = "/scdsh/login?logoutHandler";
+        String redirectUrl = "/user/login?logoutHandler";
 
         if (request.getParameter("return_url") != null) {
             redirectUrl = request.getParameter("return_url");
