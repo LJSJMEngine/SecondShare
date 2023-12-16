@@ -30,6 +30,10 @@ public class ChatController {
     private final ChatService chatService;
 
 
+    @RequestMapping("chatDebug")
+    public void chatDebug()
+    {}
+
     @RequestMapping("chatTest")
     public String chatListView(Model model) {
 

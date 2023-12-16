@@ -14,6 +14,8 @@ public class ChatMessageController {
     public ChatMessage chatMessage(ChatMessage message) {
         //db에 저장+
         messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(),message);
+        System.out.println("My : MessageInServer");
+        System.out.println(message.getRoomId());
         return  message;
     }
 

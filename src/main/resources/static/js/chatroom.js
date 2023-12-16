@@ -1,34 +1,46 @@
 $(function () {
-    console.log(RoomData);
-    var sock = new SockJS("http://localhost:8093/ws-stomp");
+    const stompClient = new StompJs.Client({
+        brokerURL: 'ws://localhost:8093/ws-stomp'
+    });
     var roomId = RoomData.room_id;
-    console.log(sock);
+    stompClient.activate();
 
-
-    var client = Stomp.over(sock); // 1. SockJS를 내부에 들고 있는 client를 내어준다.
-
-
-
-    client.connect({}, function (frame) {
-            console.log("Connected");
-             //            //// 3. send(path, header, message)로 메시지를 보낼 수 있다.
-            client.send('/pub/message', {}, JSON.stringify({chatRoomId: 2,message:"messageTest", writer: 3}));
-//// 4. subscribe(path, callback)로 메시지를 받을 수 있다. callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
-            client.subscribe('/sub/chat/room/' + roomId, function (chat) {
-                console.log(chat);
-                var content = JSON.parse(chat.body);
-                subChat(console.message);
-        });
+    //Stomp연결
+    stompClient.onConnect = (frame) => {
+    console.log('Connected: ' + frame);
+    stompClient.subscribe('/sub/chat/room/' + roomId, function (chat) {
+            var content = JSON.parse(chat.body);
+            console.log(content);
+            subChat(content.message);
     });
 
+        stompClient.publish({
+            destination: "/pub/message",
+            body: JSON.stringify({roomId: 2, message:"messageTest", sender: 3})
+        });
 
+    stompClient.publish({
+        destination: "/pub/message",
+        body: JSON.stringify({roomId: 2, message:"messageTest", sender: 3})
+        });
+    };
 
+    //웹소켓 에러
+    stompClient.onWebSocketError = (error) => {
+        console.error('Error with websocket', error);
+    };
+
+    //Stomp 에러
+    stompClient.onStompError = (frame) => {
+        console.error('Broker reported error: ' + frame.headers['message']);
+        console.error('Additional details: ' + frame.body);
+    };
     $( "#sendChat" ).click(function () {
         var message = $("#chatInput").val();
-        console.log(message);
-        console.log(client);
-        client.send('/chat/pub/chat/message', {}, JSON.stringify({chatRoomId: roomId, message: message, writer: RoomData.buyer_id}));
-        console.log(client);
+        stompClient.publish({
+            destination: "/pub/message",
+            body: JSON.stringify({roomId: roomId, message: message, sender: RoomData.buyer_id})
+        });
         $("#chatInput").val('');
     });
 });
