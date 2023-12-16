@@ -57,9 +57,5 @@ public class UserValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "비밀번호는 필수 입력 사항입니다.");
     }
 
-    @Override
-    public Errors validateObject(Object target) {
-        return Validator.super.validateObject(target);
-    }
-
 }
+
