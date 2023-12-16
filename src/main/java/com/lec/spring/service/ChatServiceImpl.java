@@ -41,7 +41,7 @@ public class ChatServiceImpl implements ChatService{
         cRoom.instanciate(ChatRoom.CREATETYPE.POSTTRADE);
         chatRepo.createChatRoom(cRoom);
 
-        System.out.println("createCheck");
+        System.out.println("[SECONDSHARE] Chat : CreateSuccessRoom");
         return cRoom;
     }
 }

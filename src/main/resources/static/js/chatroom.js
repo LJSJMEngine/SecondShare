@@ -11,17 +11,11 @@ $(function () {
     stompClient.subscribe('/sub/chat/room/' + roomId, function (chat) {
             var content = JSON.parse(chat.body);
             console.log(content);
-            subChat(content.message);
+            subChat(content.content);
     });
-
         stompClient.publish({
-            destination: "/pub/message",
-            body: JSON.stringify({roomId: 2, message:"messageTest", sender: 3})
-        });
-
-    stompClient.publish({
-        destination: "/pub/message",
-        body: JSON.stringify({roomId: 2, message:"messageTest", sender: 3})
+          destination: "/pub/message",
+          body: JSON.stringify({room_id: 2, content:"messageTest", sender_id: 3})
         });
     };
 
@@ -39,7 +33,7 @@ $(function () {
         var message = $("#chatInput").val();
         stompClient.publish({
             destination: "/pub/message",
-            body: JSON.stringify({roomId: roomId, message: message, sender: RoomData.buyer_id})
+            body: JSON.stringify({room_id: roomId, content: message, sender_id: RoomData.buyer_id})
         });
         $("#chatInput").val('');
     });
