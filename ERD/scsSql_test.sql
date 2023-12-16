@@ -5,8 +5,8 @@ SELECT * FROM s1_comment ORDER BY id DESC;
 SELECT * FROM s1_review ORDER BY id DESC;
 SELECT * FROM s1_authority ORDER BY id DESC;
 SELECT * FROM s1_notice ORDER BY id DESC;
-
 SELECT * FROM s1_chatroom  ORDER BY room_id DESC;
+SELECT * FROM s1_chatMessage  ORDER BY room_id DESC;
 
 SELECT
 	id,
