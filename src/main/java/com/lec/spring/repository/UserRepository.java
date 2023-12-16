@@ -4,7 +4,6 @@ import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -12,10 +11,10 @@ import java.util.List;
 public interface UserRepository {
 
     // id 값을 통해 user 를 리턴
-    User findById(@Param("id") Long id);
+    User findById(Long id);
 
     // 회원의 아이디로 user 정보 리턴
-    User findByUsername(@Param("username") String username);
+    User findByUsername(String username);
 
     // 신규 user 등록
     int join(User user);

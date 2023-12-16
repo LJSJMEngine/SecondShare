@@ -14,20 +14,24 @@ import java.util.List;
 public class User {
     private Long id;     // PK
     private String username;    // 아이디
+    @JsonIgnore
     private String password;    // 비밀번호
     @ToString.Exclude
+    @JsonIgnore
     private String passwordChk;     // 비밀번호 확인
     private String name;    // 이름
     private String phoneNM;     // 전화번호
+    @JsonIgnore
     private String email;   // 이메일
+    @JsonIgnore
     private LocalDateTime registDate;   // 가입일자
-    private String birth;   // 생년월일
     private int status;  // 회원 상태 (활성화 / 비활성화)
 
 
     // 회원 권한
     @Builder.Default
     @ToString.Exclude
+    @JsonIgnore
     private List<Authority> authorities = new ArrayList<>();
 
     // 마이페이지 - 프로필 수정

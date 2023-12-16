@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.2.0'
+	id 'org.springframework.boot' version '3.1.5'
 	id 'io.spring.dependency-management' version '1.1.4'
 }
 
@@ -35,7 +35,9 @@ dependencies {
 	implementation 'org.webjars:stomp-websocket:2.3.3-1'
 
 	// 본인인증
-	implementation 'net.nurigo:javaSDK:2.2'
+	implementation ('net.nurigo:javaSDK:2.2'){
+		exclude group: 'commons-logging'
+	}
 	implementation 'org.json:json:20230618'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.4.10'
 }

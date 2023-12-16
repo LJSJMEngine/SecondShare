@@ -14,10 +14,8 @@
             email "email",
             registDate "registDate",
             status "status"
-        FROM
-            s1_user
-        WHERE
-            1 = 1
+        FROM s1_user
+        WHERE 1 = 1
     </sql>
 
     <select id="findById" resultType="com.lec.spring.domain.User">

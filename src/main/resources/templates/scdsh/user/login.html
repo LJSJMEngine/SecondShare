@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="CSS.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
     <title>로그인</title>
 </head>
 <body>
@@ -16,14 +16,17 @@
     <hr><br><br>
 
     <div class="loginForm">
+        <div class="col-12 text-danger" th:text="${errorMsg}">
+            <!-- 에러 메세지 -->
+        </div>
 
         <form th:action="@{/user/login}" method="POST">
 
             <div class="log-group">
-                <input type="text" class="login-input" placeholder="ID" th:value="${username}">
+                <input type="text" class="login-input" id="username" name="username" placeholder="ID" th:value="${username}" required>
             </div>
             <div class="log-group">
-                <input type="text" class="login-input" placeholder="Password" th:value="${password}">
+                <input type="text" class="login-input" id="password" name="password" placeholder="Password" required>
             </div>
 
             <div class="log-group">
@@ -32,7 +35,7 @@
 
 
             <div class="log-group-submit">
-                <button type="submit" id="loginBtn">로그인</button> <br>
+                <button type="submit">로그인</button> <br>
                 계정이 없다면? <a th:href="@{/user/register}">회원가입</a>
             </div>
 

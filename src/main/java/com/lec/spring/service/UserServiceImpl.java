@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     private UserRepository userRepository;
     private AuthorityRepository authorityRepository;
 
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService{
     public UserServiceImpl(SqlSession sqlSession) {
         userRepository = sqlSession.getMapper(UserRepository.class);
         authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
+        System.out.println(getClass().getName() + "() 생성");
     }
 
     @Override

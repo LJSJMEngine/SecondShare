@@ -43,7 +43,7 @@ CREATE TABLE s1_authority
 CREATE TABLE s1_category
 (
 	id int NOT NULL AUTO_INCREMENT,
-	c_type varchar(40) NOT NULL,
+	name varchar(40) NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -249,7 +249,7 @@ ALTER TABLE s1_chatroom
 	ADD FOREIGN KEY (seller_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON DELETE CASCADE
 ;
 
 

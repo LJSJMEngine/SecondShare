@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,16 +20,16 @@ public class SecurityConfig {
     }
 
     @Bean
+    public WebSecurityCustomizer webSecurityCustomizer(){
+        return web -> web.ignoring().anyRequest();
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/board/detail/**").authenticated()
-                        .requestMatchers(
-                                "/board/write/**",
-                                "/board/modify/**",
-                                "/board/delete/**",
-                                "/mypage/**",
-                                "/user/userpage").hasAnyRole("ADMIN", "MEMBER")
+                        .requestMatchers("/board/write/**", "/board/modify/**", "/board/delete/**", "/mypage/**", "/user/userpage/**").hasAnyRole("MEMBER", "ADMIN")
                         .anyRequest().permitAll()
                 )
 
@@ -36,6 +37,9 @@ public class SecurityConfig {
                         .loginPage("/user/login")
                         .loginProcessingUrl("/user/login")
                         .defaultSuccessUrl("/")
+
+                        .usernameParameter("username")
+                        .passwordParameter("password")
 
                         .successHandler(new CustomLoginSuccessHandler("/main"))
                         .failureHandler(new CustomLoginFailureHandler())
