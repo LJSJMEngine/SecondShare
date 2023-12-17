@@ -1,11 +1,18 @@
-package com.lec.spring.chat.service;
+package com.lec.spring.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.spring.domain.ChatRoom;
-import com.lec.spring.chat.repository.ChatRepository;
+import com.lec.spring.repository.ChatRepository;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service

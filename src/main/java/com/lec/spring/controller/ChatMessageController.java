@@ -1,7 +1,8 @@
-package com.lec.spring.chat.controller;
+package com.lec.spring.controller;
 
 import com.lec.spring.domain.ChatMessage;
-import com.lec.spring.chat.service.ChatMessageService;
+import com.lec.spring.service.ChatMessageService;
+import com.lec.spring.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;

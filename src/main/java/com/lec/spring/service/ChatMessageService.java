@@ -1,6 +1,7 @@
-package com.lec.spring.chat.service;
+package com.lec.spring.service;
 
 import com.lec.spring.domain.ChatMessage;
+import com.lec.spring.repository.ChatMessageRepository;
 
 import java.util.List;
 
