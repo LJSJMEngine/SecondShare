@@ -44,4 +44,10 @@ public class ChatServiceImpl implements ChatService{
         System.out.println("[SECONDSHARE] Chat : CreateSuccessRoom");
         return cRoom;
     }
+
+    @Override
+    public ChatRoom findRoomByPostAndBuyer(int Post_id,int Buyer_id)
+    {
+        return chatRepo.findRoomByPostAndBuyer(Post_id,Buyer_id);
+    }
 }

@@ -11,22 +11,22 @@
         room_id,
         content,
         checkedContent,
-        createDate,
+        createDate
         FROM
         s1_chatMessage
         WHERE
         1 = 1
     </sql>
-    <select id="findAllMessage" resultType="com.lec.spring.domain.ChatRoom">
+    <select id="findAllMessage" resultType="com.lec.spring.domain.ChatMessage">
         <include refid="SELECT_MESSAGE"/>
         ORDER BY chat_id
     </select>
-    <select id="findMessageFromRoomId" resultType="com.lec.spring.domain.ChatRoom">
+    <select id="findMessageFromRoomId" parameterType="int" resultType="com.lec.spring.domain.ChatMessage">
         <include refid="SELECT_MESSAGE"/>
         AND room_id = #{room_id} ORDER BY chat_id
     </select>
 
-    <insert id="createMessage" flushCache="true" parameterType="com.lec.spring.domain.ChatRoom"
+    <insert id="createMessage" flushCache="true" parameterType="com.lec.spring.domain.ChatMessage"
             useGeneratedKeys="true" keyColumn="chat_id" keyProperty="chat_id">
         INSERT INTO s1_chatMessage
         ( room_id, sender_id, content, checkedContent, createDate)

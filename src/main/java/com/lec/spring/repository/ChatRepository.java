@@ -14,4 +14,6 @@ public interface ChatRepository {
     ChatRoom findRoomById(String room_id);
 
     int createChatRoom(ChatRoom chatRoom);
+
+    ChatRoom findRoomByPostAndBuyer(int Post_id,int Buyer_id);
 }
