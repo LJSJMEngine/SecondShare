@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.lec.spring.repository.PostRepository">
+<mapper namespace="com.lec.spring.post.repository.PostRepository">
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Post"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
@@ -95,7 +95,38 @@
         ORDER BY p.post_id DESC
     </select>
 
-    <select id="findLatestPosts" resultType="map">
-        SELECT * FROM s1_post WHERE 1=1 ORDER BY regDate DESC LIMIT 5;
+    <!-- 메인페이지 - 최신 판매글 -->
+    <select id="findLatestPostsWithUsername" resultType="map">
+        SELECT
+            p.*, u.username
+            , a.filename AS attachment_filename
+        FROM s1_post p
+        JOIN s1_user u ON p.user_id = u.id
+        LEFT JOIN s1_attachment a ON p.post_id = a.post_id
+        WHERE 1=1
+        ORDER BY p.regDate DESC LIMIT 5;
     </select>
+
+    <!-- 메인페이지 - 관심 판매글 -->
+    <select id="findLikedPostIdsByUsername" resultType="java.lang.Long">
+        SELECT
+            l.post_id
+            , p.*
+            , u.username
+            , a.filename
+        FROM s1_like l
+        JOIN s1_post p ON l.post_id = p.id
+        JOIN s1_user u ON p.user_id = u.id
+        LEFT JOIN s1_attachment a ON p.post_id = a.post_id
+        WHERE
+            u.username = #{username}
+        ORDER BY l.id DESC LIMIT 5;
+    </select>
+
+    <!-- 사용자 ID 가져오기 -->
+    <select id="findUserIdByUsername" resultType="java.lang.Long">
+        SELECT id FROM s1_user WHERE username = #{username}
+    </select>
+
+
 </mapper>

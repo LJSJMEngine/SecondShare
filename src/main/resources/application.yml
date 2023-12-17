@@ -40,10 +40,13 @@ app:
     write_pages: 10
     page_rows: 10
 
-
   # upload setting
   upload:
     path: upload
+
+  # img setting
+  img:
+    path: img
 
 
 # coolsms 문자 인증

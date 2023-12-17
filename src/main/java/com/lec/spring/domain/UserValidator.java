@@ -1,6 +1,7 @@
 package com.lec.spring.domain;
 
-import com.lec.spring.service.UserService;
+import com.lec.spring.domain.User;
+import com.lec.spring.login.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
