@@ -25,7 +25,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/board/write/**",
                                 "/board/update/**",
-                                "/board/delete/**").hasAnyRole("ADMIN", "MEMBER")
+                                "/board/delete/**").hasAnyRole("ROLE_ADMIN", "ROLE_MEMBER")
                         .anyRequest().permitAll()
                 )
 

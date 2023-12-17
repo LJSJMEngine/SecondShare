@@ -58,6 +58,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("username", user.getUsername());
             redirectAttributes.addFlashAttribute("name", user.getName());
             redirectAttributes.addFlashAttribute("email", user.getEmail());
+            redirectAttributes.addFlashAttribute("password", user.getPassword());
 
             List<FieldError> errorList = result.getFieldErrors();
             for (FieldError error : errorList) {
