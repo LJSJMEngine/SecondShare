@@ -19,7 +19,7 @@
 <!-- 페이징 헤더 -->
 
 <div>
-    <form name="search"  method="GET">
+    <form name="search" method="GET" th:action="${url}">
         <select name="type">
             <option value="subject">제목</option>
             <option value="1">패션의류</option>
@@ -29,9 +29,9 @@
             <option value="5">도서/음반/DVD</option>
             <option value="6">문구/오피스</option>
         </select>
-        <input type="text" name="keyword" value=""/>
-        <input type="submit" class="btn btn-outline-primary mr-2" value="검색"/>
-        <a href="/board/write"><button class="btn-outline-primary mr-3">글쓰기</btn></a>
+        <input type="text" name="keyword" value="" />
+        <input type="submit" class="btn btn-outline-primary mr-2" value="검색" />
+        <a th:href="@{/board/write}"><button class="btn-outline-primary mr-3">글쓰기</button></a>
     </form>
 </div>
 
@@ -54,7 +54,9 @@
             <td><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></td>
             <td><a th:href="@{'/board/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></td>
             <td th:text="${post.price}"></td>
-            <td th:text="${post.attachment.sourcename}"></td>
+            <td><a th:href="@{'/board/detail/' + ${post.post_id}}">
+                <img th:src="@{/upload/{imageName}(imageName=${post.attachment.sourcename})} " alt="Image" />
+            </a></td>
             <td th:text="${post.status == 1 ? '판매중' : (post.status == 2 ? '판매완료' : '판매불가')}"></td>
             <td><span th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
         </tr>

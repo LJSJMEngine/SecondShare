@@ -31,6 +31,14 @@ public interface    PostRepository {
     //전체 글 개수
     int countAll();
 
+    // 검색 결과의 전체 개수
+    int countSearchResults(@Param("keyword") String keyword);
+
+    // 검색 결과를 페이징하여 가져오기
+    List<Post> searchWithPagination(@Param("type") String type, @Param("keyword") String keyword,
+                                   int from,  int rows);
+
+
 
     // 메인페이지 - 최신 판매글
     List<Post> findLatestPosts();

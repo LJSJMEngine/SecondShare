@@ -3,7 +3,7 @@ ALTER TABLE s1_attachment AUTO_INCREMENT = 1;
 DELETE FROM s1_user_authority ;
 ALTER TABLE s1_user_authority AUTO_INCREMENT = 1;
 DELETE FROM s1_authority;
-ALTER TABLE s1_authority AUTO_INCREMENT = 1;
+ALTER TABLE s1_authority AUTO_INCREMENT =	 1;
 DELETE FROM s1_post_category;
 ALTER TABLE s1_post_category AUTO_INCREMENT = 1;
 DELETE FROM s1_category;
@@ -82,7 +82,7 @@ INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
 
 /* 카테고리 설정 */
 
-INSERT INTO s1_category (name) VALUES
+INSERT INTO s1_category (c_type) VALUES
 ('생활용품'),
 ('가전제품')
 ;

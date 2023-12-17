@@ -34,23 +34,21 @@ public class BoardController {
                        Integer page,
                        Model model) {
 
-        List<Post> list;
+
 
         if ("subject".equals(type)) {
-            list = boardService.search(keyword);
-            boardService.list(page, model);
+            boardService.search(keyword);
+            boardService.list(page, model,type,keyword);
         }
         else if ("id".equals(type)) {
-            list = boardService.search(keyword);
-            boardService.list(page, model);
+            boardService.search(keyword);
+            boardService.list(page, model,type,keyword);
 
         } else {
-            list = boardService.list();
-            boardService.list(page, model);
+
+            boardService.list(page, model,type,keyword);
         }
 
-        model.addAttribute("list", list);
-        boardService.list(page, model);
         return "board/list";
     }
 

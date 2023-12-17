@@ -12,7 +12,7 @@ public interface BoardService {
 
     List<Post> list();
 
-        List<Post> list(Integer page, Model model);
+        List<Post> list(Integer page, Model model, String keyword , String type);
 
 
 
