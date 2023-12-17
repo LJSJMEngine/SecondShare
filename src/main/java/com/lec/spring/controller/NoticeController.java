@@ -1,6 +1,6 @@
-package com.lec.spring.notice.controller;
+package com.lec.spring.controller;
 
-import com.lec.spring.notice.service.NoticeService;
+import com.lec.spring.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
