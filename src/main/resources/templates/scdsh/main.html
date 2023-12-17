@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
     <title>Home</title>
 </head>
 <body>
@@ -16,8 +16,39 @@
     <br>
     <!-- 최신 판매글 목록 -->
     <h4>최신 판매글</h4>
+    <br>
 
-    <table class="latestPostsList">
+    <div id="content-area" class="latestPosts">
+        <ul class="article-album">
+            <li th:each="post : ${latestPosts}">
+                <!--판매글 대표 이미지 -->
+                <a href="#" class="album-img" onclick="clickLink();">
+                    <img src="/img/sample.jpg" width="200" height="200" alt="img">
+                    <span class="list-i-selling">
+                        <i class="soldChk"></i>    <!--soldChk 표시 -->
+                    </span>
+                </a>
+                <dl>
+                    <!--판매글 제목 -->
+                    <dt>
+                        <a href="#" th:text="${post.subject}" class="subject" onclick="clickLink();"></a>
+                    </dt>
+                    <!--판매글 가격 -->
+                    <dd th:text="${#numbers.formatDecimal(post.price, 0, 'COMMA', 0, 'POINT') + '원'}" class="price"></dd>
+                    <!--판매글 작성자명 -->
+                    <dd th:text="${post.user_id}" class="name"></dd>
+                    <!--판매글 작성일 & 조회수 -->
+                    <dd class="date_cnt">
+                        <span th:text="${#temporals.format(post.regDate, 'MM/dd')}" class="regDate"></span>
+                        <span th:text="'조회 ' + ${post.viewCnt}" class="viewCnt"></span>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+
+    <!--<table class="latestPostsList">
         <thead>
         <tr>
             <th>제목</th>
@@ -40,7 +71,7 @@
             </tr>
         </th:block>
         </tbody>
-    </table>
+    </table>-->
 
 <!--    private Long post_id;
     private Long user_id;
