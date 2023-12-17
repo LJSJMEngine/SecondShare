@@ -1,7 +1,3 @@
 $(function(){
-    $("#idChkButton").click(function(){
-
-
-    })
 
 }

@@ -2,11 +2,11 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet"  href="/css/user.css">
+    <link rel="stylesheet" type="text/css" href="CSS.css">
     <title>회원가입</title>
 </head>
 <body>
-<link rel="stylesheet" href="/js/user.js">
+<link rel="stylesheet" href="JS.js">
 
 
 <!--
@@ -25,14 +25,14 @@
     <hr><br>
 
     <div class="regForm">
-        <form th:action="@{/user/register}" method="POST" name="frm">
+        <form th:action="@{/user/register}" method="POST">
 
             <div class="reg-group">
                 아이디 <br><input type="text" class="reg-input" id="username" name="username" placeholder="아이디를 입력하세요" th:value="${username}" autofocus>
-                <input type="button" id="idChkButton" name="idChkButton" value="중복확인" onclick="return idCheck()">
+                <input type="button" class="button" id="idChkButton" name="idChkButton" value="중복확인">
 
-                <p class="red">이미 사용중인 ID 입니다.</p>
-                <p class="green">사용 가능한 ID 입니다.</p>
+                <p class="red" >이미 사용중인 ID 입니다.</p>
+                <p class="green" >사용 가능한 ID 입니다.</p>
             </div>
             <br>
             <div class="reg-group">
@@ -68,16 +68,16 @@
 
             <br><br><hr>
 
-            <div class="joinBottom">
-                <button type="submit" id="joinBtn">회원가입</button> <br>
+            <div class="moveToLogin">
                 계정이 있다면? <a th:href="@{/user/login}">로그인</a>
             </div>
 
-
+            <div>
+                <button type="submit">회원가입</button>
+            </div>
         </form>
     </div>
 
 </div>
-
 </body>
 </html>
