@@ -124,6 +124,7 @@ CREATE TABLE s1_post
 	viewCnt int DEFAULT 0,
 	status int,
 	regDate datetime,
+	sampleImg int,
 	PRIMARY KEY (post_id)
 );
 

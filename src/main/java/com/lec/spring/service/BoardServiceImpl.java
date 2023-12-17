@@ -47,7 +47,7 @@ public class BoardServiceImpl implements BoardService {
     public BoardServiceImpl(SqlSession sqlSession){  // MyBatis 가 생성한 SqlSession 빈(bean) 객체 주입
         postRepository = sqlSession.getMapper(PostRepository.class);
         userRepository = sqlSession.getMapper(UserRepository.class);
-
+        attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
         System.out.println("BoardService() 생성");
     }
 
@@ -101,7 +101,9 @@ public class BoardServiceImpl implements BoardService {
 
             if (file != null){
                 file.setPost_id(postId);
+                file.setIsspImg(true);
                 attachmentRepository.save(file);
+
             }
         }
     }

@@ -23,6 +23,7 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+
     @Autowired
     private CategoryService categoryService;
 
@@ -129,4 +130,3 @@ public class BoardController {
 
 //    @GetMapping("review")
 }
-

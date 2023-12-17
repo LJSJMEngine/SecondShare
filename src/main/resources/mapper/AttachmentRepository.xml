@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.AttachmentRepository">
+    <insert id="insert" flushCache="true" parameterType="arrayList">
+        INSERT INTO s1_attachment (sourcename, filename, post_id)
+        VALUES
+            <foreach collection="list" item="e" separator=",">
+                (#{e.sourcename}, #{e.filename}, #{param2})
+            </foreach>
+    </insert>
+
+    <insert id="save" flushCache="true"
+            parameterType="com.lec.spring.domain.Attachment">
+        INSERT INTO s1_attachment(sourcename, filename, post_id)
+        VALUES
+            (#{sourcename}, #{filename}, #{post_id})
+    </insert>
+
+    <sql id="SELECT">
+        SELECT id, sourcename, filename, post_id
+        FROM s1_attachment
+        WHERE 1 = 1
+    </sql>
+
+    <select id="findByPost" resultType="com.lec.spring.domain.Attachment">
+        <include refid="SELECT"/>
+        AND
+            post_id = #{param1}
+        ORDER BY id ASC
+    </select>
+
+    <select id="findById" resultType="com.lec.spring.domain.Attachment">
+        <include refid="SELECT"/>
+        AND id = #{id}
+    </select>
+
+    <select id="findByIds" resultType="com.lec.spring.domain.Attachment"
+            parameterType="java.util.ArrayList">
+        <include refid="SELECT"/>
+        AND id IN (
+            <foreach collection="array" item="e" separator=",">
+                     #{e}
+            </foreach>)
+        ORDER BY id ASC
+    </select>
+
+    <delete id="deleteByIds" flushCache="true"
+            parameterType="java.util.ArrayList">
+        DELETE FROM s1_attachment
+        WHERE id IN (
+        <foreach collection="array" item="e" separator=",">
+            #{e}
+        </foreach>)
+    </delete>
+
+    <delete id="delete" flushCache="true">
+        DELETE FROM s1_attachment WHERE id = #{id}
+    </delete>
+</mapper>
