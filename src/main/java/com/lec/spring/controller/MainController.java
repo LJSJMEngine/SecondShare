@@ -1,7 +1,7 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.User;
-import com.lec.spring.post.service.PostService;
+import com.lec.spring.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
