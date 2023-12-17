@@ -1,6 +1,8 @@
 package com.lec.spring.post.service;
 
+import com.lec.spring.chat.repository.ChatMessageRepository;
 import com.lec.spring.post.repository.PostRepository;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,11 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
+
     @Autowired
-    public PostServiceImpl(PostRepository postRepository) {
-        this.postRepository = postRepository;
+    public PostServiceImpl(SqlSession sqlss){
+        this.postRepository = sqlss.getMapper(PostRepository.class);
+        System.out.println("[SERVICEIMPL] PostServiceImpl Init");
     }
 
     // 마이페이지 - 최신 판매글

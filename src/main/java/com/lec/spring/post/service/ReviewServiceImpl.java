@@ -1,7 +1,9 @@
 package com.lec.spring.post.service;
 
 import com.lec.spring.domain.Review;
+import com.lec.spring.post.repository.PostRepository;
 import com.lec.spring.post.repository.ReviewRepository;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +15,12 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
 
-    @Autowired
-    public ReviewServiceImpl(ReviewRepository reviewRepository) {
-        this.reviewRepository = reviewRepository;
-    }
 
+    @Autowired
+    public ReviewServiceImpl(SqlSession sqlss){
+        this.reviewRepository = sqlss.getMapper(ReviewRepository.class);
+        System.out.println("[SERVICEIMPL] ReviewServiceImpl Init");
+    }
     @Override
     public List<Review.MyReceivedReviews> findReviewsByUserId(int userId) {
         try {
