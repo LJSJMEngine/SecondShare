@@ -1,0 +1,37 @@
+package com.lec.spring.post.service;
+
+import com.lec.spring.domain.Category;
+import com.lec.spring.post.repository.CategoryRepository;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class CategoryServiceImpl implements CategoryService {
+
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    public CategoryServiceImpl(SqlSession sqlSession) {
+        categoryRepository = sqlSession.getMapper(CategoryRepository.class);
+
+        System.out.println("CategoryService() 생성");
+    }
+        @Override
+        public int saveCategory (Category category){
+            return categoryRepository.save(category);
+        }
+
+        @Override
+        public List<Category> getAllCategories () {
+            return categoryRepository.findAll();
+        }
+
+        @Override
+        public Category getCategoryByName (String name){
+            return categoryRepository.findByName(name);
+        }
+    }
+

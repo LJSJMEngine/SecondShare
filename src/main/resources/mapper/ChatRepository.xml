@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.lec.spring.repository.ChatRepository">
+<mapper namespace="com.lec.spring.chat.repository.ChatRepository">
     <sql id="SELECT_CHAT">
         SELECT
         room_id,

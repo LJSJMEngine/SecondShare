@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.lec.spring.repository.PostRepository">
+<mapper namespace="com.lec.spring.post.repository.PostRepository">
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Post"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
