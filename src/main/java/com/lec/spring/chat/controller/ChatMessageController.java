@@ -17,6 +17,7 @@ public class ChatMessageController {
     private final ChatMessageService messageService;
 
     private final SimpMessageSendingOperations messagingTemplate;
+
     @MessageMapping("/message")
     public ChatMessage chatMessage(ChatMessage message) {
         messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoom_id(),message);
