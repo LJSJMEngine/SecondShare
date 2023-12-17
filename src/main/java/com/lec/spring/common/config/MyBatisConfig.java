@@ -1,4 +1,4 @@
-package com.lec.spring.config;
+package com.lec.spring.common.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;

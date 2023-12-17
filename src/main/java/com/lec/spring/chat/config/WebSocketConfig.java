@@ -1,4 +1,4 @@
-package com.lec.spring.config;
+package com.lec.spring.chat.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

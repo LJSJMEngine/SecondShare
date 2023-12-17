@@ -1,4 +1,4 @@
-package com.lec.spring.repository;
+package com.lec.spring.common.repository;
 
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.User;

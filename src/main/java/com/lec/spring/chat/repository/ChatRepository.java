@@ -1,4 +1,4 @@
-package com.lec.spring.repository;
+package com.lec.spring.chat.repository;
 
 import com.lec.spring.domain.ChatMessage;
 import com.lec.spring.domain.ChatRoom;

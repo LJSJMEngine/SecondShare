@@ -1,4 +1,4 @@
-package com.lec.spring.controller;
+package com.lec.spring.common.controller;
 
 import com.lec.spring.domain.User;
 import com.lec.spring.post.service.PostService;

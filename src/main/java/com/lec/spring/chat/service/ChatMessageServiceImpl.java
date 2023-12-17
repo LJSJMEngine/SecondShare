@@ -1,7 +1,7 @@
-package com.lec.spring.service;
+package com.lec.spring.chat.service;
 
 import com.lec.spring.domain.ChatMessage;
-import com.lec.spring.repository.ChatMessageRepository;
+import com.lec.spring.chat.repository.ChatMessageRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

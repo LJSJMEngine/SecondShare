@@ -1,4 +1,4 @@
-package com.lec.spring.service;
+package com.lec.spring.chat.service;
 
 import com.lec.spring.domain.ChatRoom;
 import org.springframework.web.socket.WebSocketSession;
