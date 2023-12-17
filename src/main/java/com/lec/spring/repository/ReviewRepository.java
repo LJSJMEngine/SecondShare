@@ -8,6 +8,8 @@ import java.util.List;
 
 @Mapper
 public interface ReviewRepository {
+
     // 마이페이지 - 내 리뷰 보기
     List<Review.MyReceivedReviews> findReviewsByUserId(@Param("userId") int userId);
+
 }

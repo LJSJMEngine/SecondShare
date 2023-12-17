@@ -8,7 +8,6 @@ DROP TABLE IF EXISTS s1_authority;
 DROP TABLE IF EXISTS s1_post_category;
 DROP TABLE IF EXISTS s1_category;
 DROP TABLE IF EXISTS s1_chatMessage;
-DROP TABLE IF EXISTS s1_chatroom_user;
 DROP TABLE IF EXISTS s1_chatroom;
 DROP TABLE IF EXISTS s1_comment;
 DROP TABLE IF EXISTS s1_like;
@@ -44,7 +43,7 @@ CREATE TABLE s1_authority
 CREATE TABLE s1_category
 (
 	id int NOT NULL AUTO_INCREMENT,
-	name varchar(40) NOT NULL,
+	c_type varchar(40) NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -52,8 +51,11 @@ CREATE TABLE s1_category
 CREATE TABLE s1_chatMessage
 (
 	chat_id int NOT NULL AUTO_INCREMENT,
+	sender_id int NOT NULL,
+	room_id int NOT NULL,
 	content text,
 	checkedContent boolean,
+	createDate datetime,
 	PRIMARY KEY (chat_id)
 );
 
@@ -62,19 +64,12 @@ CREATE TABLE s1_chatroom
 (
 	room_id int NOT NULL AUTO_INCREMENT,
 	post_id int NOT NULL,
+	buyer_id int NOT NULL,
 	createDate datetime,
 	lastUpdateDate datetime,
-	subject varchar(50),
+	subject varchar(50) NOT NULL,
 	roomState int,
 	PRIMARY KEY (room_id)
-);
-
-
-CREATE TABLE s1_chatroom_user
-(
-	seller_id int NOT NULL,
-	room_id int NOT NULL,
-	post_id int NOT NULL
 );
 
 
@@ -125,7 +120,7 @@ CREATE TABLE s1_post
 	subject varchar(200) NOT NULL,
 	contents longtext,
 	price int,
-	viewCnt int,
+	viewCnt int DEFAULT 0,
 	status int,
 	regDate datetime,
 	PRIMARY KEY (post_id)
@@ -194,7 +189,7 @@ ALTER TABLE s1_post_category
 ;
 
 
-ALTER TABLE s1_chatroom_user
+ALTER TABLE s1_chatMessage
 	ADD FOREIGN KEY (room_id)
 	REFERENCES s1_chatroom (room_id)
 	ON UPDATE RESTRICT
@@ -211,14 +206,6 @@ ALTER TABLE s1_attachment
 
 
 ALTER TABLE s1_chatroom
-	ADD FOREIGN KEY (post_id)
-	REFERENCES s1_post (post_id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE s1_chatroom_user
 	ADD FOREIGN KEY (post_id)
 	REFERENCES s1_post (post_id)
 	ON UPDATE RESTRICT
@@ -258,8 +245,16 @@ ALTER TABLE s1_review
 ;
 
 
-ALTER TABLE s1_chatroom_user
-	ADD FOREIGN KEY (seller_id)
+ALTER TABLE s1_chatMessage
+	ADD FOREIGN KEY (sender_id)
+	REFERENCES s1_user (id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE s1_chatroom
+	ADD FOREIGN KEY (buyer_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT

@@ -82,8 +82,8 @@
         ORDER BY p.post_id DESC
     </select>
 
-<!--  delStatus 글을 삭제했을경우 완전히 삭제되면 안되니
-회원탈퇴의 경우와 같이 비활성화 column boolean임  -->
+    <!--  delStatus 글을 삭제했을경우 완전히 삭제되면 안되니
+    회원탈퇴의 경우와 같이 비활성화 column boolean임  -->
     <update id="modify" flushCache="true"
             parameterType="com.lec.spring.domain.Post">
         UPDATE s1_post
@@ -109,4 +109,7 @@
         SELECT count(*) FROM s1_post
     </select>
 
+    <select id="findLatestPosts" resultType="map">
+        SELECT * FROM s1_post WHERE 1=1 ORDER BY regDate DESC LIMIT 5;
+    </select>
 </mapper>

@@ -10,9 +10,6 @@ import java.util.List;
 
 @Mapper
 public interface UserRepository {
-    int save(User user);
-
-    int update(Long id);
 
     // id 값을 통해 user 를 리턴
     User findById(@Param("id") Long id);

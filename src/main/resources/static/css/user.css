@@ -1,0 +1,111 @@
+/* -------------- 회원가입 페이지 ---------------- */
+
+#register-wrapper {
+    width: 1000px;
+    height: 1500px;
+    margin: auto;
+}
+
+.register h1 {
+    text-align: center;
+    outline: 1px solid red;
+
+}
+
+.regForm {
+    outline: 1px solid orange;
+    padding: 8px;
+}
+
+.reg-group {
+    font-size: 20px;
+    outline: 1px solid yellow;
+}
+
+.reg-group input.reg-input {
+    border-radius: 3px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    width: 500px;
+    height: 30px;
+}
+
+.reg-group input.button {
+    height: 30px;
+    border-radius: 3px;
+    border: 1px solid #333;
+}
+
+
+.reg-group p.red {
+    font-size: 13px;
+    color: red;
+}
+
+.reg-group p.green {
+    font-size: 13px;
+    color: limegreen;
+}
+
+
+
+
+/* -------------- 로그인 페이지 ---------------- */
+
+#login-wrapper {
+    width: 1000px;
+    height: 1500px;
+    margin: auto;
+}
+
+.login h1 {
+    text-align: center;
+    outline: 1px solid red;
+}
+
+.loginForm {
+    outline: 1px solid orange;
+    padding: 8px;
+}
+
+.log-group {
+    font-size: 20px;
+    outline: 1px solid yellow;
+    text-align: center;
+}
+
+.log-group input.login-input {
+    border-radius: 3px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 550px;
+    height: 40px;
+}
+
+div.remember {
+    font-size: 13px;
+}
+
+#loginBtn {
+    border-radius: 5px;
+    width: 200px;
+    height: 30px;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    cursor: pointer;
+}
+
+.log-group-submit {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.log-group-submit a {
+    color: #333;
+    font-weight: bold;
+}
+
+
+.log-group input {
+    cursor: pointer;
+}

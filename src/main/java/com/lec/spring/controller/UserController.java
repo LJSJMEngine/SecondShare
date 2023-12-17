@@ -1,6 +1,7 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.User;
+import com.lec.spring.domain.UserValidator;
 import com.lec.spring.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("/scdsh")
+@RequestMapping("/user")
 public class UserController {
 
     //test001
@@ -34,7 +35,7 @@ public class UserController {
 
     @PostMapping("/loginError")
     public String loginError(){
-        return "scdsh/login";
+        return "user/login";
     }
 
     @RequestMapping("/rejectAuth")
@@ -63,12 +64,12 @@ public class UserController {
                 redirectAttributes.addFlashAttribute("error", error.getCode());
                 break;
             }
-            return "redirect:/scdsh/register";
+            return "redirect:/user/register";
         }
 
         int count = userService.register(user);
         model.addAttribute("result", count);
-        return "/scdsh/registerOk";
+        return "/user/registerOk";
     }
 
     @Autowired
