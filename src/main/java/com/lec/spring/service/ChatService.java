@@ -15,5 +15,5 @@ public interface ChatService {
 
     ChatRoom findRoomById(String roomId);
 
-    ChatRoom createRoom(String name);
+    ChatRoom createRoom(ChatRoom chatRoom);
 }

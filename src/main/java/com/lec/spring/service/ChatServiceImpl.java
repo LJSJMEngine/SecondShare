@@ -35,7 +35,13 @@ public class ChatServiceImpl implements ChatService{
         return chatRepo.findRoomById(roomId);
     }
 
-    public ChatRoom createRoom(String name) {
-        return chatRepo.createChatRoom(name);
+    public ChatRoom createRoom(ChatRoom cRoom) {
+        // 매핑 된 DB에서 채팅방 생성
+
+        cRoom.instanciate(ChatRoom.CREATETYPE.POSTTRADE);
+        chatRepo.createChatRoom(cRoom);
+
+        System.out.println("[SECONDSHARE] Chat : CreateSuccessRoom");
+        return cRoom;
     }
 }
