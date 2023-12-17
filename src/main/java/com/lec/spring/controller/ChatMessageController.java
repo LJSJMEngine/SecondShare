@@ -9,6 +9,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Controller
 public class ChatMessageController {
@@ -24,6 +26,15 @@ public class ChatMessageController {
         //database 저장
 
         return  message;
+    }
+    @MessageMapping("/init")
+    public void chatInit(ChatMessage message) {
+
+        List<ChatMessage> messageList = messageService.findMessageFromRoomId(message.getRoom_id());
+        for (ChatMessage msg : messageList) {
+            messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoom_id(),msg);
+
+        }
     }
 
 }

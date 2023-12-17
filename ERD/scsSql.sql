@@ -64,7 +64,6 @@ CREATE TABLE s1_chatroom
 (
 	room_id int NOT NULL AUTO_INCREMENT,
 	post_id int NOT NULL,
-	seller_id int NOT NULL,
 	buyer_id int NOT NULL,
 	createDate datetime,
 	lastUpdateDate datetime,
@@ -248,14 +247,6 @@ ALTER TABLE s1_review
 
 ALTER TABLE s1_chatMessage
 	ADD FOREIGN KEY (sender_id)
-	REFERENCES s1_user (id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE s1_chatroom
-	ADD FOREIGN KEY (seller_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
