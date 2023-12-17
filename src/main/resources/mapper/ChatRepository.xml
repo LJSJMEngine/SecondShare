@@ -28,4 +28,14 @@
         Select * FROM s1_chatroom ORDER BY room_id
     </select>
 
+    <insert id="createChatRoom" flushCache="true" parameterType="com.lec.spring.domain.ChatRoom"
+            useGeneratedKeys="true" keyColumn="room_id" keyProperty="room_id">
+        INSERT INTO s1_chatroom
+        (post_id, seller_id, buyer_id, createDate, lastUpdateDate, subject, roomState)
+        VALUES
+        (#{post_id}, #{seller_id}, #{buyer_id}, #{createDate}, #{lastUpdateDate}, #{subject}, #{roomState})
+    </insert>
+
+    <!--chatMessage -->
+
 </mapper>

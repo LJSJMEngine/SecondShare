@@ -33,7 +33,6 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         super.onAuthenticationSuccess(request, response, authentication);
     }
 
-
     // client ip 불러오기
     public static String getClientIp(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");

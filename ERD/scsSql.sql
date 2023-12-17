@@ -51,9 +51,11 @@ CREATE TABLE s1_category
 CREATE TABLE s1_chatMessage
 (
 	chat_id int NOT NULL AUTO_INCREMENT,
+	sender_id int NOT NULL,
 	room_id int NOT NULL,
 	content text,
 	checkedContent boolean,
+	createDate datetime,
 	PRIMARY KEY (chat_id)
 );
 
@@ -239,6 +241,14 @@ ALTER TABLE s1_post_category
 ALTER TABLE s1_review
 	ADD FOREIGN KEY (post_id)
 	REFERENCES s1_post (post_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE s1_chatMessage
+	ADD FOREIGN KEY (sender_id)
+	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
