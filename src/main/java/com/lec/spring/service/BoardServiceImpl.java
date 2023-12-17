@@ -26,6 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,13 +47,14 @@ public class BoardServiceImpl implements BoardService {
 
 
 
+
    private CategoryRepository categoryRepository;
 
     @Autowired
     public BoardServiceImpl(SqlSession sqlSession){  // MyBatis 가 생성한 SqlSession 빈(bean) 객체 주입
         postRepository = sqlSession.getMapper(PostRepository.class);
         userRepository = sqlSession.getMapper(UserRepository.class);
-
+        attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
         System.out.println("BoardService() 생성");
     }
 
@@ -62,9 +64,9 @@ public class BoardServiceImpl implements BoardService {
         return postRepository.findAll();
     }
 
+    @Transactional
     @Override
     public List<Post> list(Integer page, Model model) {
-
         if(page == null) page = 1;   // 디폴트 1 page
         if(page < 1) page = 1;
 
@@ -100,6 +102,7 @@ public class BoardServiceImpl implements BoardService {
             endPage = startPage + writePages - 1;
             if (endPage >= totalPage) endPage = totalPage;
 
+            pageRows = 5;
             // 해당 페이지의 글 목록 읽어오기
             list = postRepository.selectFromRow(fromRow, pageRows);
             model.addAttribute("list", list);
@@ -118,8 +121,6 @@ public class BoardServiceImpl implements BoardService {
         model.addAttribute("startPage", startPage);  // [페이징] 에 표시할 시작 페이지
         model.addAttribute("endPage", endPage);   // [페이징] 에 표시할 마지막 페이지
 
-
-
         return list;
     }
 
@@ -127,9 +128,7 @@ public class BoardServiceImpl implements BoardService {
         return postRepository.search(keyword);
     }
 
-    public List<Post> searchByCategory(String keyword) {
-        return postRepository.search(keyword);
-    }
+
 
     @Override
     public int write(Post post, Map<String, MultipartFile> files) {

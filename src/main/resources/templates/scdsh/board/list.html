@@ -15,14 +15,6 @@
 <div class="mb-3 mt-3 clearfix">
     <span class="float-start me-2">총 [[${cnt}]]개</span>
     <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
-    <span class="float-end">
-                <form name="frmPageRows">
-                    <input type="hidden" name="page" th:value="${page}">
-                    <select class="form-select" name="pageRows">
-                        <option value="4" th:selected="${pageRows==4}">4</option>
-                    </select>
-                </form>
-            </span>
 </div>
 <!-- 페이징 헤더 -->
 
@@ -53,6 +45,7 @@
         <th>작성자</th>
         <th>가격</th>
         <!--<th>카테고리</th>-->
+        <th>판매상품</th>
         <th>판매상태</th>
         <th>작성일</th>
         <th>좋아요 갯수</th>
@@ -61,10 +54,9 @@
             <td><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></td>
             <td><a th:href="@{'/board/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></td>
             <td th:text="${post.price}"></td>
-<!--            <td th:text="${post.category.name}"></td>-->
+            <td th:text="${post.attachment.sourcename}"></td>
             <td th:text="${post.status == 1 ? '판매중' : (post.status == 2 ? '판매완료' : '판매불가')}"></td>
-            <td th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-
+            <td><span th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
         </tr>
         </tbody>
     </table>

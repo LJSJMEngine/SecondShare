@@ -31,7 +31,10 @@
         , p.status "p_status"
         , u.id "u_id"
         , u.username "u_username"
-        FROM s1_post p, s1_user u
+        , a.sourcename "a_sourcename"
+        , a.filename "a_filename"
+        , a.id "a_id"
+        FROM s1_post p, s1_user u  ,s1_attachment a
         WHERE p.user_id = u.id
     </sql>
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
@@ -44,6 +47,12 @@
     <resultMap id="mapCategory" type="com.lec.spring.domain.Category">
         <result column="c_id" property="id"/>
         <result column="c_name" property="name"/>
+    </resultMap>
+
+    <resultMap id="mapAttachment" type="com.lec.spring.domain.Attachment">
+        <result column="a_id" property="id"/>
+        <result column="a_sourcename" property="sourcename"/>
+        <result column="a_filecename" property="filecename"/>
     </resultMap>
 
 
@@ -60,16 +69,17 @@
         <result column="p_tags" property="tags"/>
         <collection property="user" resultMap="mapUser"/>
         <collection property="category" resultMap="mapCategory"/>
+        <collection property="attachment" resultMap="mapAttachment"/>
     </resultMap>
 
     <select id="findByPostId" resultType="com.lec.spring.domain.Post">
         <include refid="SELECT_BASE"/>
-            AND post_id = #{post_id}
+            AND p.post_id = #{p.post_id}
     </select>
 
     <select id="findAll" resultMap="mapPost">
         <include refid="SELECT_BASE"/>
-        ORDER BY post_id DESC
+        ORDER BY p.post_id DESC
     </select>
 
 <!--  delStatus 글을 삭제했을경우 완전히 삭제되면 안되니

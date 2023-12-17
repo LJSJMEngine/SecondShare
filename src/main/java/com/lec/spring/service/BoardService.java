@@ -1,6 +1,7 @@
     package com.lec.spring.service;
 
     import com.lec.spring.domain.Post;
+    import org.springframework.security.core.parameters.P;
     import org.springframework.ui.Model;
     import org.springframework.web.multipart.MultipartFile;
 
