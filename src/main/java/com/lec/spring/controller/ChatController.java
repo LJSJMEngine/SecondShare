@@ -30,37 +30,6 @@ public class ChatController {
     private final ChatService chatService;
 
 
-    @RequestMapping("chatDebug")
-    public void chatDebug()
-    {}
-
-    @RequestMapping("chatTest")
-    public String chatListView(Model model) {
-
-        for (ChatRoom room : chatService.findAllRoom()) {
-            System.out.println(room.getRoom_id() + " " + room.getSubject());
-            System.out.println(room);
-        }
-        model.addAttribute("chatName", 1);
-
-        return "chat/chatTest";
-    }
-
-    @RequestMapping("room")
-    public void roomtest() {
-    }
-
-    @RequestMapping("roomdetail")
-    public void roomdetail() {
-    }
-
-    @PostMapping("roomdetail")
-    public void PostRoomDetail(@Valid ChatRoom roomData, Model model) {
-        model.addAttribute("roomInfo", roomData);
-
-
-    }
-
     @RequestMapping("roomDebug")
     public String RoomDebug() {
         return "chat/roomDebug";
