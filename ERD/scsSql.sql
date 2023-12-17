@@ -101,15 +101,23 @@ CREATE TABLE s1_location
 );
 
 
-CREATE TABLE s1_notice
-(
-	id int NOT NULL AUTO_INCREMENT,
-	user_id int NOT NULL,
-	status int,
-	status_name varchar(50),
-	contents text,
-	readChk boolean,
-	PRIMARY KEY (id)
+CREATE TABLE s1_notice (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    comment_id INT,
+    post_id INT,
+    review_id INT,
+    type INT NOT NULL,
+    status INT,
+    contents TEXT,
+    readChk BOOLEAN NOT NULL,
+    regDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    INDEX idx_user_id (user_id),
+    FOREIGN KEY (user_id) REFERENCES s1_user(id),
+    FOREIGN KEY (comment_id) REFERENCES s1_comment(id),
+    FOREIGN KEY (post_id) REFERENCES s1_post(post_id),
+    FOREIGN KEY (review_id) REFERENCES s1_review(id)
 );
 
 

@@ -36,6 +36,9 @@ dependencies {
 	 implementation'org.webjars:stomp-websocket:2.3.3-1'
 	 implementation'org.webjars:webjars-locator:0.30'
 
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework:spring-messaging:5.3.10'
+
 	// 본인인증
 	implementation 'net.nurigo:javaSDK:2.2'
 	implementation 'org.json:json:20230618'
