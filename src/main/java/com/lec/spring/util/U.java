@@ -1,6 +1,6 @@
 package com.lec.spring.util;
 
-import com.lec.spring.config.PrincipalDetails;
+import com.lec.spring.login.config.PrincipalDetails;
 import com.lec.spring.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
