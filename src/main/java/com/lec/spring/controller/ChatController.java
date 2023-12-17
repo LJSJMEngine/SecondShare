@@ -29,7 +29,6 @@ public class ChatController {
     @Autowired
     private final ChatService chatService;
 
-
     @RequestMapping("roomDebug")
     public String RoomDebug() {
         return "chat/roomDebug";

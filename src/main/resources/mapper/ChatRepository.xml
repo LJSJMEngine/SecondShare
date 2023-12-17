@@ -38,6 +38,17 @@
         (#{post_id}, #{buyer_id}, #{createDate}, #{lastUpdateDate}, #{subject}, #{roomState})
     </insert>
 
+    <update id="updateRoomState" flushCache="true" parameterType="int">
+        UPDATE s1_chatroom
+        SET roomState = #{roomState}
+        WHERE post_id = #{post_id}
+    </update>
     <!--chatMessage -->
+
+    <!--
+     - 필요한 작업목록
+     - 하나의 포스트에 대한 모든 채팅방리스트
+     -
+     -->
 
 </mapper>

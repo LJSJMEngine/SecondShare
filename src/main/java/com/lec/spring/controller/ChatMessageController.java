@@ -25,7 +25,6 @@ public class ChatMessageController {
 
         messageService.createMessage(message);
         //database 저장
-
         return  message;
     }
     @MessageMapping("/init")

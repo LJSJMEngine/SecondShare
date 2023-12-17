@@ -19,4 +19,6 @@ public interface ChatService {
 
     ChatRoom findRoomByPostAndBuyer(int Post_id,int Buyer_id);
 
+    void updateRoomState(int post_id, int roomState);
+
 }
