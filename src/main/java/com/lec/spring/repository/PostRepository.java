@@ -36,7 +36,7 @@ public interface    PostRepository {
 
     // 검색 결과를 페이징하여 가져오기
     List<Post> searchWithPagination(@Param("type") String type, @Param("keyword") String keyword,
-                                   int from,  int rows);
+                                    @Param("from") int from, @Param("rows") int rows);
 
 
 

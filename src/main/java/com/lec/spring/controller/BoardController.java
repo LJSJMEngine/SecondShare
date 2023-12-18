@@ -49,6 +49,9 @@ public class BoardController {
             boardService.list(page, model,type,keyword);
         }
 
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("type", type);
+
         return "board/list";
     }
 

@@ -19,7 +19,7 @@
 <!-- 페이징 헤더 -->
 
 <div>
-    <form name="search" method="GET" th:action="${url}">
+    <form id="search" name="search" method="GET" th:action="${url}">
         <select name="type">
             <option value="subject">제목</option>
             <option value="1">패션의류</option>
@@ -55,7 +55,7 @@
             <td><a th:href="@{'/board/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></td>
             <td th:text="${post.price}"></td>
             <td><a th:href="@{'/board/detail/' + ${post.post_id}}">
-                <img th:src="@{/upload/{imageName}(imageName=${post.attachment.sourcename})} " alt="Image" />
+                <img th:src="@{/upload/{imageName}(imageName=${post.attachment.sourcename})} "style="width:50px" alt="Image" />
             </a></td>
             <td th:text="${post.status == 1 ? '판매중' : (post.status == 2 ? '판매완료' : '판매불가')}"></td>
             <td><span th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
@@ -65,8 +65,14 @@
     <!-- 목록 -->
 
     <!-- pagination -->
-    <th:block th:insert="~{board/pagination::pagination}"></th:block>
-    <!-- pagination -->
+    <div th:insert="~{board/pagination::pagination}">
+    <div class="container mt-1">
+        <ul class="pagination justify-content-center">
+            <th:block th:insert="~{board/pagination::pagination}"></th:block>
+        </ul>
+    </div>
+    </div>
+        <!-- pagination -->
 
 
 
