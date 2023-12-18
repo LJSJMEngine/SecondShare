@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import java.util.List;
@@ -29,6 +31,21 @@ public class ChatController {
     @Autowired
     private final ChatService chatService;
 
+    @MessageMapping("/roomUpdateDate")
+    public void lastUpdateDate(ChatMessage message) {
+        // lastUpdateDate 업데이트해야함.
+        System.out.println("MESSAGE SEND : lastUpdateDate");
+
+        Timestamp currentDate = java.sql.Timestamp.valueOf(LocalDateTime.now());
+        chatService.updateRoomLastDate(message.getRoom_id(), currentDate);
+
+
+    }
+
+    @MessageMapping("/roomUpdateState")
+    public void roomUpdateState(ChatMessage message){
+
+    }
     @RequestMapping("roomDebug")
     public String RoomDebug() {
         return "chat/roomDebug";

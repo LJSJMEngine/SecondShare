@@ -8,16 +8,14 @@ $(function () {
 
     //Stomp연결
     stompClient.onConnect = (frame) => {
-        console.log('Connected: ' + frame);
         stompClient.subscribe('/sub/chat/room/' + roomId, function (chat) {
                 var content = JSON.parse(chat.body);
-                console.log(content);
                 subChat(content.content);
         });
-        stompClient.publish({
-          destination: "/pub/init",
-          body: JSON.stringify({room_id: roomId, content:"getMessageList", sender_id: RoomData.buyer_id})
-        });
+
+        publishMessage("INIT", "/pub/init", "getMessageList", RoomData.buyer_id);
+
+
     };
 
     //웹소켓 에러
@@ -33,7 +31,8 @@ $(function () {
     $( "#sendChat" ).click(function () {
         messageSend();
     });
-    $("#sendChat").keydown(function(){
+    $("#chatInput").keydown(function(event){
+
         if(event.keyCode == 13){
             messageSend();
         }
@@ -42,13 +41,28 @@ $(function () {
 });
 function messageSend() {
         var message = $("#chatInput").val();
-        console.log(stompClient);
-        stompClient.publish({
-            destination: "/pub/message",
-            body: JSON.stringify({room_id: roomId, content: message, sender_id: RoomData.buyer_id})
-        });
+        publishMessage("MESSAGE" , "/pub/message", message, RoomData.buyer_id);
         $("#chatInput").val('');
 }
 function subChat(message) {
     $("#chatList").append("<tr><td>" + message + "</td></tr>");
+}
+function publishMessage(TYPE , dest , message, senderId) {
+
+       var JsonBody = JSON.stringify({room_id: roomId, content: message, sender_id: senderId})
+
+        if(TYPE == "MESSAGE"){
+            stompClient.publish({
+                destination: "/pub/roomUpdateDate",
+                body: JsonBody
+            });
+
+        }
+
+        console.log("[PUBLISH] : dest : " + dest + " Message : " + message + " senderId :" + senderId);
+
+        stompClient.publish({
+            destination: dest,
+            body: JsonBody
+        });
 }

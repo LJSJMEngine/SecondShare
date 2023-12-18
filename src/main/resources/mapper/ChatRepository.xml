@@ -30,13 +30,27 @@
         <include refid="SELECT_CHAT"/>
         AND buyer_id = #{Buyer_id} AND post_id = #{Post_id}
     </select>
+
+
+    <select id="getPostData"  parameterType="int" resultType="com.lec.spring.domain.Post">
+        Select * FROM s1_post WHERE post_id = #{post_id}
+    </select>
+
+
+
     <insert id="createChatRoom" flushCache="true" parameterType="com.lec.spring.domain.ChatRoom"
             useGeneratedKeys="true" keyColumn="room_id" keyProperty="room_id">
         INSERT INTO s1_chatroom
         (post_id, buyer_id, createDate, lastUpdateDate, subject, roomState)
         VALUES
-        (#{post_id}, #{buyer_id}, #{createDate}, #{lastUpdateDate}, #{subject}, #{roomState})
+        (#{post_id}, #{buyer_id}, #{createDate}, #{lastUpdateDate}, (Select subject FROM s1_post WHERE post_id = #{post_id}), #{roomState})
     </insert>
+
+    <update id="updateRoomLastDate" flushCache="true" parameterType="map">
+        UPDATE s1_chatroom
+        SET lastUpdateDate = #{lastUpdateDate}
+        WHERE room_id = #{room_id}
+    </update>
 
     <update id="updateRoomState" flushCache="true" parameterType="int">
         UPDATE s1_chatroom

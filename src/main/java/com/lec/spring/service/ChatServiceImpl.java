@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.spring.domain.ChatRoom;
+import com.lec.spring.domain.Post;
 import com.lec.spring.repository.ChatRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Service
@@ -39,6 +41,8 @@ public class ChatServiceImpl implements ChatService{
         // 매핑 된 DB에서 채팅방 생성
 
         cRoom.instanciate(ChatRoom.CREATETYPE.POSTTRADE);
+        Post p = chatRepo.getPostData(cRoom.getPost_id());
+        cRoom.setSubject(p.getSubject());
         chatRepo.createChatRoom(cRoom);
 
         System.out.println("[SECONDSHARE] Chat : CreateSuccessRoom");
@@ -58,4 +62,11 @@ public class ChatServiceImpl implements ChatService{
         System.out.println("[SECONDSHARE] Chat : change RoomState, Post_id : " + post_id + ", STATE : " + roomState);
 
     }
+
+    @Override
+    public void updateRoomLastDate(int room_id, Timestamp lastUpdateDate)
+    {
+        chatRepo.updateRoomLastDate(room_id,lastUpdateDate);
+    }
+
 }

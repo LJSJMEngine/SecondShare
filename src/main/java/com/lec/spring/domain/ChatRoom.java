@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ChatRoom {
 
-    //post_id, seller_id, buyer_id 세 값이 없으면 채팅방 생성이 불가능.
+    //post_id, buyer_id 세 값이 없으면 채팅방 생성이 불가능.
     private int room_id;
     private int post_id;
     private int buyer_id;
@@ -46,7 +46,6 @@ public class ChatRoom {
             }
         }
         // DB에서 생성된 값 이외의 데이터 초기화
-        subject = roomName;
         createDate = java.sql.Timestamp.valueOf(LocalDateTime.now());
         lastUpdateDate = createDate;
         roomState = 0;
