@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lec.spring.domain.ChatMessage;
 import com.lec.spring.domain.ChatRoom;
 import com.lec.spring.domain.Post;
 import com.lec.spring.repository.ChatRepository;
@@ -33,8 +34,13 @@ public class ChatServiceImpl implements ChatService{
         return chatRepo.findAllRoom();
     }
 
-    public ChatRoom findRoomById(String roomId) {
+    public ChatRoom findRoomById(int roomId) {
         return chatRepo.findRoomById(roomId);
+    }
+
+    @Override
+    public List<ChatMessage> findMessageFromRoomId(int room_id) {
+        return chatRepo.findMessageFromRoomId(room_id);
     }
 
     public ChatRoom createRoom(ChatRoom cRoom) {

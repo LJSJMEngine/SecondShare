@@ -5,6 +5,8 @@ $(function () {
         brokerURL: 'ws://localhost:8093/ws-stomp'
     });
     stompClient.activate();
+    console.log(MessageList);
+    console.log(dataCheck);
 
     //Stomp연결
     stompClient.onConnect = (frame) => {
@@ -49,14 +51,13 @@ function subChat(message) {
 }
 function publishMessage(TYPE , dest , message, senderId) {
 
-       var JsonBody = JSON.stringify({room_id: roomId, content: message, sender_id: senderId})
+           var JsonBody = JSON.stringify({room_id: roomId, content: message, sender_id: senderId})
 
         if(TYPE == "MESSAGE"){
             stompClient.publish({
                 destination: "/pub/roomUpdateDate",
                 body: JsonBody
             });
-
         }
 
         console.log("[PUBLISH] : dest : " + dest + " Message : " + message + " senderId :" + senderId);

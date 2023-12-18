@@ -13,7 +13,7 @@ import java.util.Map;
 
 public interface ChatRepository {
     List<ChatRoom> findAllRoom();
-    ChatRoom findRoomById(String room_id);
+    ChatRoom findRoomById(int room_id);
 
     int createChatRoom(ChatRoom chatRoom);
 
@@ -23,4 +23,6 @@ public interface ChatRepository {
     void updateRoomLastDate(@Param("room_id") int room_id,@Param("lastUpdateDate") Timestamp lastUpdateDate);
 
     Post getPostData(int post_id);
+
+    List<ChatMessage> findMessageFromRoomId(int room_id);
 }

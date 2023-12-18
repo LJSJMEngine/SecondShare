@@ -1,5 +1,6 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.ChatMessage;
 import com.lec.spring.domain.ChatRoom;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -14,7 +15,8 @@ public interface ChatService {
 
     List<ChatRoom> findAllRoom();
 
-    ChatRoom findRoomById(String roomId);
+    ChatRoom findRoomById(int roomId);
+    List<ChatMessage> findMessageFromRoomId(int room_id);
 
     ChatRoom createRoom(ChatRoom chatRoom);
 

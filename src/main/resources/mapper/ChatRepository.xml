@@ -26,6 +26,9 @@
     <select id="findAllRoom" resultType="com.lec.spring.domain.ChatRoom">
         Select * FROM s1_chatroom ORDER BY room_id
     </select>
+    <select id="findMessageFromRoomId" parameterType="int" resultType="com.lec.spring.domain.ChatMessage">
+        Select * FROM s1_chatmessage WHERE room_id = #{room_id} ORDER BY chat_id
+    </select>
     <select id="findRoomByPostAndBuyer"  parameterType="int" resultType="com.lec.spring.domain.ChatRoom">
         <include refid="SELECT_CHAT"/>
         AND buyer_id = #{Buyer_id} AND post_id = #{Post_id}

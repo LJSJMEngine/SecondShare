@@ -63,6 +63,8 @@ public class ChatController {
             cRoom = newRoom;
         System.out.println("DBInsert : " + cRoom);
         model.addAttribute("RoomData",cRoom);
+
+        model.addAttribute("MessageList",chatService.findMessageFromRoomId(cRoom.getRoom_id()));
         return "chat/room";
     }
 }
