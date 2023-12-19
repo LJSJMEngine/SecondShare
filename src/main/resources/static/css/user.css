@@ -82,11 +82,6 @@
 
 /* -------------- 로그인 페이지 ---------------- */
 
-#login-wrapper {
-    width: 1000px;
-    height: 1500px;
-    margin: auto;
-}
 
 .login h1 {
     text-align: center;
@@ -96,6 +91,9 @@
 .loginForm {
     outline: 1px solid orange;
     padding: 8px;
+    width: 1000px;
+    height: 1500px;
+    margin: auto;
 }
 
 .log-group {
@@ -125,12 +123,8 @@ div.remember {
     cursor: pointer;
 }
 
-.log-group-submit {
-    text-align: center;
-    margin-top: 10px;
-}
 
-.log-group-submit a {
+.moveToRegister a {
     color: #333;
     font-weight: bold;
 }

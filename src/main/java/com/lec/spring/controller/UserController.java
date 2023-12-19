@@ -4,6 +4,7 @@ import com.lec.spring.domain.User;
 //import com.lec.spring.domain.UserValidator;
 import com.lec.spring.service.MemberService;
 import com.lec.spring.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,8 +32,11 @@ public class UserController {
     @GetMapping("/login")
     public void login(Model model){}
 
+
     @PostMapping("/login")
-    public void loginProcess(){}
+    public void loginProcess(){
+        System.out.println("이게 뜨면 안됨");
+    }
 
     @PostMapping("/loginError")
     public String loginError(){
