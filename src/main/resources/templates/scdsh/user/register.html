@@ -2,19 +2,19 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="CSS.css">
+    <link rel="stylesheet" type="text/css" href="/css/user.css">
+    <script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
+    <script th:src="@{/js/user.js}"></script>
     <title>회원가입</title>
 </head>
 <body>
-<link rel="stylesheet" href="JS.js">
+
 
 
 <!--
     1. 메세지 hidden 옵션
     2. 중복 확인 미완성
-
 -->
-
 
 <div id="register-wrapper">
 
@@ -25,14 +25,14 @@
     <hr><br>
 
     <div class="regForm">
-        <form th:action="@{/user/register}" method="POST">
+        <form th:action="@{/user/register}" method="POST" name="frm">
 
             <div class="reg-group">
                 아이디 <br><input type="text" class="reg-input" id="username" name="username" placeholder="아이디를 입력하세요" th:value="${username}" autofocus>
                 <input type="button" class="button" id="idChkButton" name="idChkButton" value="중복확인">
 
-                <p class="red" >이미 사용중인 ID 입니다.</p>
-                <p class="green" >사용 가능한 ID 입니다.</p>
+                <label id="label1"></label>
+
             </div>
             <br>
             <div class="reg-group">
@@ -68,16 +68,16 @@
 
             <br><br><hr>
 
-            <div class="moveToLogin">
+            <div class="joinBottom">
+                <button type="submit" id="joinBtn" disabled=true>회원가입</button> <br>
                 계정이 있다면? <a th:href="@{/user/login}">로그인</a>
             </div>
 
-            <div>
-                <button type="submit">회원가입</button>
-            </div>
+
         </form>
     </div>
 
 </div>
+
 </body>
 </html>
