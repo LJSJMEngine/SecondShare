@@ -21,9 +21,9 @@ public class ChatMessageController {
 
     @MessageMapping("/message")
     public ChatMessage chatMessage(ChatMessage message) {
+        messageService.createMessage(message);
         messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoom_id(),message);
 
-        messageService.createMessage(message);
         //database 저장
         return  message;
     }

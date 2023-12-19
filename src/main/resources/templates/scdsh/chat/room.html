@@ -7,10 +7,6 @@
     <title>Websocket Chat</title>
     <meta charset="utf-8">
     <!-- CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/chat.css">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
     <link rel="stylesheet" href="/css/chat.css">
@@ -36,7 +32,7 @@
                 <div class="chat">
                     <div class="row chat-header clearfix ">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
                                     <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
                                 </a>
@@ -55,37 +51,16 @@
                     </div>
                     <!-- 채팅 히스토리 -->
                     <div class="col chat-history">
-                        <ul class="m-b-0">
-                            
-                            <li class="clearfix">
-                                <div class="message-data text-end">
-                                    <span class="message-data-time">10:10 AM, Today</span>
-                                </div>
-                                <div class="message other-message float-right"> My</div>
-                            </li>
+                        <ul class="m-b-0" id = "NewChatList">
 
-                            <li class="clearfix">
-                                <div class="message-data">
-                                    <span class="message-data-time">10:12 AM, Today</span>
-                                </div>
-                                <div class="message my-message">Other</div>
-                            </li>
-
-                            <li class="clearfix">
-                                <div class="message-data">
-                                    <span class="message-data-time">10:15 AM, Today</span>
-                                </div>
-                                <div class="message my-message">Project has been already finished and I have results to show you.</div>
-                            </li>
                         </ul>
                     </div>
                     <div class="chat-message clearfix">
                         <div class="input-group mb-0">
-                            <input type="text" class="form-control" placeholder="Enter text here...">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <button class="fa fa-send"></button></span>
-                            </div>
+                            <input type="text" class="form-control" id="chatInput" placeholder="채팅을 입력해주세요" name="chatInput">
+                            <button class="sendButton input-group-text"id="sendChat">
+                                <div class="fa fa-send sendImg"></div>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -114,34 +89,5 @@
         </div>
     </div>
 </div>
-<div id="chat container" class="container-full">
-    <div class="container-left">
-        <div class="row">
-            <div class="col-md-12">
-                <table id="conversation" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>ChatList</th>
-                    </tr>
-                    </thead>
-                    <tbody id="chatList">
-                    <tr>
-                        <td>
-                            MESSAGE
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <input type="text" class="form-control" id="chatInput" placeholder="채팅 입력" name="chatInput">
-                <button type="button" id="sendChat" class="btn btn-outline-dark">입력</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 </body>
 </html>
