@@ -16,6 +16,7 @@ public class Post {
     private Long user_id;
     private String subject;
     private String contents;
+    private int category_id;
     private int viewCnt;
     private int status;
     private  int price;

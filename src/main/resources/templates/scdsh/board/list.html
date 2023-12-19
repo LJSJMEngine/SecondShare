@@ -6,32 +6,30 @@
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script th:src="@{/js/list.js}"></script>
     <title>목록 페이지</title>
 </head>
 <h2>게시물 목록</h2>
 <body>
 <!-- 페이징 헤더 -->
 <div class="mb-3 mt-3 clearfix">
-    <span class="float-start me-2">총 [[${cnt}]]개</span>
+    <span class="float-start me-2">[[${type}]]/[[${keyword}]] 검색:[[${cnt}]]개</span>
     <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
 </div>
 <!-- 페이징 헤더 -->
-
+<a th:href="@{/board/write}"><button class="btn-outline-primary mr-3">글쓰기</button></a>
 <div>
-    <form id="search" name="search" method="GET" th:action="${url}">
+    <form id="search" name="search" method="GET" >
         <select name="type">
-            <option value="subject">제목</option>
-            <option value="1">패션의류</option>
-            <option value="2">생활용품</option>
-            <option value="3">가전제품</option>
-            <option value="4">스포츠용품</option>
-            <option value="5">도서/음반/DVD</option>
-            <option value="6">문구/오피스</option>
+            <option value="제목" th:selected="${type == '제목'}">제목</option>
+            <option value="생활용품" th:selected="${type == '생활용품'}">생활용품</option>
+            <option value="패션의류" th:selected="${type == '패션의류'}">패션의류</option>
+            <option value="가전제품" th:selected="${type == '가전제품'}">가전제품</option>
+            <option value="스포츠용품" th:selected="${type == '스포츠용품'}">스포츠용품</option>
+            <option value="도서/음반/DVD" th:selected="${type == '도서/음반/DVD'}">도서/음반/DVD</option>
+            <option value="문구/오피스" th:selected="${type == '문구/오피스'}">문구/오피스</option>
         </select>
-        <input type="text" name="keyword" value="" />
+        <input type="text" name="keyword"/>
         <input type="submit" class="btn btn-outline-primary mr-2" value="검색" />
-        <a th:href="@{/board/write}"><button class="btn-outline-primary mr-3">글쓰기</button></a>
     </form>
 </div>
 
@@ -44,7 +42,7 @@
         <th>제목</th>
         <th>작성자</th>
         <th>가격</th>
-        <!--<th>카테고리</th>-->
+        <th>카테고리</th>
         <th>판매상품</th>
         <th>판매상태</th>
         <th>작성일</th>
@@ -54,10 +52,11 @@
             <td><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></td>
             <td><a th:href="@{'/board/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></td>
             <td th:text="${post.price}"></td>
+            <td th:text="${post.category.name}"></td>
             <td><a th:href="@{'/board/detail/' + ${post.post_id}}">
                 <img th:src="@{/upload/{imageName}(imageName=${post.attachment.sourcename})} "style="width:50px" alt="Image" />
             </a></td>
-            <td th:text="${post.status == 1 ? '판매중' : (post.status == 2 ? '판매완료' : '판매불가')}"></td>
+            <td th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></td>
             <td><span th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
         </tr>
         </tbody>

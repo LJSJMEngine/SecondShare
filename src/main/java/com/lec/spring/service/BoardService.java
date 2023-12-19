@@ -12,11 +12,7 @@ public interface BoardService {
 
     List<Post> list();
 
-        List<Post> list(Integer page, Model model, String keyword , String type);
-
-
-
-        List<Post> search(String keyword);
+    List<Post> list(Integer page, Model model, String keyword , String type);
 
     int write(Post post, Map<String, MultipartFile> files);
 

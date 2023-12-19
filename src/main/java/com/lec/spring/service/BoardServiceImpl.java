@@ -44,17 +44,14 @@ public class BoardServiceImpl implements BoardService {
     private UserRepository userRepository;
     private PostRepository postRepository;
     private AttachmentRepository attachmentRepository;
-
-
-
-
-   private CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
     public BoardServiceImpl(SqlSession sqlSession){  // MyBatis 가 생성한 SqlSession 빈(bean) 객체 주입
         postRepository = sqlSession.getMapper(PostRepository.class);
         userRepository = sqlSession.getMapper(UserRepository.class);
         attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
+        categoryRepository = sqlSession.getMapper(CategoryRepository.class);
         System.out.println("BoardService() 생성");
     }
 
@@ -64,17 +61,10 @@ public class BoardServiceImpl implements BoardService {
         return postRepository.findAll();
     }
 
-
-    public List<Post> search(String keyword) {
-        return postRepository.search(keyword);
-    }
-
     @Override
     public List<Post> list(Integer page, Model model, String type, String keyword) {
         if (page == null) page = 1;   // 디폴트 1 page
         if (page < 1) page = 1;
-
-
 
         // 페이징
         // writePages: 한 [페이징] 당 몇개의 페이지가 표시되나
@@ -85,22 +75,17 @@ public class BoardServiceImpl implements BoardService {
         Integer pageRows = (Integer) session.getAttribute("pageRows");
         if (pageRows == null) pageRows = PAGE_ROWS; // 만약 session 에 없으면 기본값으로 동작
         session.setAttribute("page", page);  // 현재 페이지 번호 -> session 에 저장
-        pageRows = 5;
         long cnt;
         List<Post> list;
         int totalPage;
         int startPage;
         int endPage;
 
-        if (StringUtils.isEmpty(type) || StringUtils.isEmpty(keyword)) {
-            // 일반 목록 조회
-            cnt = postRepository.countAll();
-            list = postRepository.selectFromRow((page - 1) * pageRows, pageRows);
-        } else {
+
             // 검색 결과 목록 조회
-            cnt = postRepository.countSearchResults(keyword);
+            cnt = postRepository.countSearchResults(keyword,type);
             list = postRepository.searchWithPagination(type, keyword, (page - 1) * pageRows, pageRows);
-        }
+
 
         totalPage = (int) Math.ceil(cnt / (double) pageRows);
         startPage = (((page - 1) / writePages) * writePages) + 1;

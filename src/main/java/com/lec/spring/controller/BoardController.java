@@ -25,29 +25,13 @@ public class BoardController {
     private BoardService boardService;
 
 
-    @Autowired
-    private CategoryService categoryService;
-
     @GetMapping("/list")
     public String list(@RequestParam(required = false) String type,
                        @RequestParam(required = false) String keyword,
                        Integer page,
                        Model model) {
 
-
-
-        if ("subject".equals(type)) {
-            boardService.search(keyword);
-            boardService.list(page, model,type,keyword);
-        }
-        else if ("id".equals(type)) {
-            boardService.search(keyword);
-            boardService.list(page, model,type,keyword);
-
-        } else {
-
-            boardService.list(page, model,type,keyword);
-        }
+        boardService.list(page, model, type, keyword);
 
         model.addAttribute("keyword", keyword);
         model.addAttribute("type", type);
