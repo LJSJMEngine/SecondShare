@@ -2,7 +2,10 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/user.css">
+    <script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
+    <script th:src="@{/js/user.js}"></script>
     <title>로그인</title>
 </head>
 <body>
@@ -20,10 +23,10 @@
         <form th:action="@{/user/login}" method="POST">
 
             <div class="log-group">
-                <input type="text" class="login-input" placeholder="ID" th:value="${username}">
+                <input type="text" class="login-input" placeholder="ID" th:value="${username}" required>
             </div>
             <div class="log-group">
-                <input type="text" class="login-input" placeholder="Password" th:value="${password}">
+                <input type="password" class="login-input" placeholder="Password" required>
             </div>
 
             <div class="log-group">

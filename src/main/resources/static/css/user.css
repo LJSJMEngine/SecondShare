@@ -20,6 +20,12 @@
 .reg-group {
     font-size: 20px;
     outline: 1px solid yellow;
+    margin-left: 250px;
+}
+
+.reg-group p {
+    /* display: none; */
+    /* float: right; */
 }
 
 .reg-group input.reg-input {
@@ -32,10 +38,34 @@
 
 .reg-group input.button {
     height: 30px;
-    border-radius: 3px;
+    border-radius: 5px;
     border: 1px solid #333;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
 }
 
+.joinBottom {
+    text-align: center;
+}
+
+
+#joinBtn {
+    width: 300px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+
+
+
+
+/* 이하 수정 필요 (js 보면서 확인) */
 
 .reg-group p.red {
     font-size: 13px;

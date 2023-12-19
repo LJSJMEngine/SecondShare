@@ -23,6 +23,7 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
+
         PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
 
         List<String> role = new ArrayList<>();
