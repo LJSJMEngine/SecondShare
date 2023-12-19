@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService{
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.join(user);
 
-        Authority authority = authorityRepository.findByName("MEMBER");
+        Authority authority = authorityRepository.findByName("ROLE_MEMBER");
 
         Long userId = user.getId();
         Long authId = authority.getId();
