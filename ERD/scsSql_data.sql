@@ -33,6 +33,7 @@ INSERT INTO s1_authority (name) VALUES
 ('ROLE_ADMIN'), ('ROLE_MEMBER')
 ;
 
+
 INSERT INTO s1_user (username, password, name, phoneNM, email, registDate, status) VALUES
 ('ADMIN1', '$2a$10$53OEi/JukSMPr3z5RQBFH.z0TCYSUDPtxf1/8caRyRVdDNdHA9QHi', '관리자1', '010-1111-2222', 'admin1@gmail.com', NOW(), 0),
 ('USER1', '$2a$10$6gVaMy7.lbezp8bGRlV2fOArmA3WAk2EHxSKxncnzs28/m3DXPyA2', '회원1', '010-3333-4444', 'user1@gmail.com', NOW(), 0),

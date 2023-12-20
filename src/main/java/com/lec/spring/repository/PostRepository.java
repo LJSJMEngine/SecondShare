@@ -25,11 +25,9 @@ public interface PostRepository {
 
     int delete(Post post);
 
-    List<Post> search(@Param("keyword") String keyword);
+
 
     // 페이징 from 부터 rows 개 만큼
-    List<Post> selectFromRow(int from, int rows);
-
     int countAll();
 
     // 검색 결과의 전체 개수

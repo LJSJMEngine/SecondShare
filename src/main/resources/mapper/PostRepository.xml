@@ -34,8 +34,6 @@
         , u.username "u_username"
         , u.name "u_name"
         , u.email "u_email"
-        FROM s1_post p, s1_user u
-        WHERE p.user_id = u.id
         , a.sourcename "a_sourcename"
         , a.filename "a_filename"
         , a.id "a_id"
