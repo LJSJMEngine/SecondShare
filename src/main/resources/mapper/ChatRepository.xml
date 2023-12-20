@@ -8,7 +8,6 @@
         SELECT
         room_id,
         post_id,
-        seller_id,
         buyer_id,
         createDate,
         lastUpdateDate,
@@ -27,13 +26,16 @@
     <select id="findAllRoom" resultType="com.lec.spring.domain.ChatRoom">
         Select * FROM s1_chatroom ORDER BY room_id
     </select>
-
+    <select id="findRoomByPostAndBuyer"  parameterType="int" resultType="com.lec.spring.domain.ChatRoom">
+        <include refid="SELECT_CHAT"/>
+        AND buyer_id = #{Buyer_id} AND post_id = #{Post_id}
+    </select>
     <insert id="createChatRoom" flushCache="true" parameterType="com.lec.spring.domain.ChatRoom"
             useGeneratedKeys="true" keyColumn="room_id" keyProperty="room_id">
         INSERT INTO s1_chatroom
-        (post_id, seller_id, buyer_id, createDate, lastUpdateDate, subject, roomState)
+        (post_id, buyer_id, createDate, lastUpdateDate, subject, roomState)
         VALUES
-        (#{post_id}, #{seller_id}, #{buyer_id}, #{createDate}, #{lastUpdateDate}, #{subject}, #{roomState})
+        (#{post_id}, #{buyer_id}, #{createDate}, #{lastUpdateDate}, #{subject}, #{roomState})
     </insert>
 
     <!--chatMessage -->

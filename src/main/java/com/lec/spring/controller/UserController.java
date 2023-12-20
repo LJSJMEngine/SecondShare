@@ -1,11 +1,15 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.User;
-import com.lec.spring.domain.UserValidator;
+//import com.lec.spring.domain.UserValidator;
+import com.lec.spring.service.MemberService;
 import com.lec.spring.service.UserService;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,21 +27,15 @@ public class UserController {
     //test001
     @Autowired
     private UserService userService;
+    private MemberService memberService;
 
     @GetMapping("/login")
     public void login(Model model){}
 
+
     @PostMapping("/login")
-    public String loginProcess(@RequestParam String username, @RequestParam String password, HttpSession session, RedirectAttributes redirectAttributes) {
-        if (userService.authenticateUser(username, password)) {
-            // 로그인 성공 시
-            session.setAttribute("username", username);
-            return "redirect:/main";
-        } else {
-            // 로그인 실패 시
-            redirectAttributes.addFlashAttribute("errorMessage", "Invalid username or password");
-            return "redirect:/user/loginError";
-        }
+    public void loginProcess(){
+        System.out.println("이게 뜨면 안됨");
     }
 
     @PostMapping("/loginError")
@@ -53,45 +51,52 @@ public class UserController {
     @GetMapping("/register")
     public void register(){}
 
-    @PostMapping("/register")
-    public String registerOk(
-            @Valid User user,
-            BindingResult result,
-            Model model,
-            RedirectAttributes redirectAttributes
-            ){
-
-        if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("username", user.getUsername());
-            redirectAttributes.addFlashAttribute("name", user.getName());
-            redirectAttributes.addFlashAttribute("email", user.getEmail());
-
-            List<FieldError> errorList = result.getFieldErrors();
-            for (FieldError error : errorList) {
-                redirectAttributes.addFlashAttribute("error", error.getCode());
-                break;
-            }
-            return "redirect:/user/register";
-        }
-
-        int count = userService.register(user);
-        model.addAttribute("result", count);
-        return "/user/registerOk";
-    }
-
-//    @RequestMapping("/userpage")
-//    public String anotherUserPage(Model model){
-//        // Post 의 작성자 정보 불러오기
+//    @PostMapping("/register")
+//    public String registerOk(
+//            @Valid User user,
+//            BindingResult result,
+//            Model model,
+//            RedirectAttributes redirectAttributes
+//            ){
 //
+//        if (result.hasErrors()) {
+//            redirectAttributes.addFlashAttribute("username", user.getUsername());
+//            redirectAttributes.addFlashAttribute("name", user.getName());
+//            redirectAttributes.addFlashAttribute("email", user.getEmail());
+//
+//            List<FieldError> errorList = result.getFieldErrors();
+//            for (FieldError error : errorList) {
+//                redirectAttributes.addFlashAttribute("error", error.getCode());
+//                break;
+//            }
+//            return "redirect:/user/register";
+//        }
+//
+//        int count = userService.register(user);
+//        model.addAttribute("result", count);
+//        return "/user/registerOk";
 //    }
 
-    @Autowired
-    UserValidator userValidator;
+    @PostMapping("/register")
+    @ResponseBody
+    public ResponseEntity<Boolean> confirmId(String id) {
+        if (id == null || id.trim().isEmpty()) {
+            return new ResponseEntity<>(false, HttpStatus.OK); // Null or empty ID
+        }
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        binder.setValidator(userValidator);
+        boolean result = !memberService.selectId(id); // ID is not empty, check for duplication
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+
+
+//    @Autowired
+//    UserValidator userValidator;
+
+//    @InitBinder
+//    public void initBinder(WebDataBinder binder) {
+//        binder.setValidator(userValidator);
+//    }
 
 
 

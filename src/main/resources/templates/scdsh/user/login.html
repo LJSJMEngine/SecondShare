@@ -2,31 +2,30 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/user.css">
+    <script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
+    <script th:src="@{/js/user.js}"></script>
     <title>로그인</title>
 </head>
 <body>
 
-<div id="login-wrapper">
 
-    <div class="login">
-        <h1>Second Share <br> 로그인</h1>
-    </div>
-
-    <hr><br><br>
 
     <div class="loginForm">
-        <div class="col-12 text-danger" th:text="${errorMsg}">
-            <!-- 에러 메세지 -->
-        </div>
 
         <form th:action="@{/user/login}" method="POST">
 
+            <div class="login">
+                <h1>Second Share <br> 로그인</h1>
+            </div>
+            <hr><br><br>
+
             <div class="log-group">
-                <input type="text" class="login-input" id="username" name="username" placeholder="ID" th:value="${username}" required>
+                <input type="text" class="login-input" name="username" placeholder="ID" th:value="${username}" required>
             </div>
             <div class="log-group">
-                <input type="password" class="login-input" id="password" name="password" placeholder="Password" required>
+                <input type="password" class="login-input" name="password" placeholder="Password" required>
             </div>
 
             <div class="log-group">
@@ -34,14 +33,13 @@
             </div>
 
 
-            <div class="log-group-submit">
-                <button type="submit">로그인</button> <br>
-                계정이 없다면? <a th:href="@{/user/register}">회원가입</a>
-            </div>
+
+            <button type="submit" id="loginBtn">로그인</button> <br>
+            계정이 없다면? <a class="moveToRegister" th:href="@{/user/register}">회원가입</a>
+
 
         </form>
     </div>
 
-</div>
 </body>
 </html>

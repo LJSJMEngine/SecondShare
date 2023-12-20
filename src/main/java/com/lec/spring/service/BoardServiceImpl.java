@@ -36,7 +36,7 @@ public class BoardServiceImpl implements BoardService {
     private int WRITE_PAGES;
     @Value("${app.pagination.page_rows}")
     private int PAGE_ROWS;
-    @Value("${app.upload.path}")
+    @Value("${app.img.path}")
     private String uploadDir;
 
     private UserRepository userRepository;

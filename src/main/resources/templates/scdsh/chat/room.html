@@ -28,9 +28,6 @@
     <div class="col-md-12">
         <label for="post_id">게시판 id:</label>
         <input type="text" class="form-control" id="post_id" name="post_id" th:value="${RoomData.post_id}" readonly>
-        <label for="seller_id">구매자 id:</label>
-        <input type="text" class="form-control" id="seller_id" name="seller_id" th:value="${RoomData.seller_id}"
-               readonly>
         <label for="buyer_id">판매자 id:</label>
         <input type="text" class="form-control" id="buyer_id" name="buyer_id" th:value="${RoomData.buyer_id}" readonly>
     </div>
@@ -38,7 +35,7 @@
 <div id="main-content" class="container">
     <div class="row">
         <div class="col-md-6">
-            <form class="form-inline">
+            <form class="form-inline" >
                 <div class="form-group">
                     <button id="disconnect" class="btn btn-default" type="button" >Disconnect
                     </button>
@@ -51,7 +48,7 @@
 <div id="chat container" class="container">
     <div class="row">
         <div class="col-md-6">
-            <form class="form">
+            <form class="form"  onsubmit="return false;">
                 <input type="text" class="form-control" id="chatInput" placeholder="채팅 입력" name="chatInput">
                 <button type="button" id="sendChat" class="btn btn-outline-dark">입력</button>
 

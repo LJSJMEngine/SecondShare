@@ -14,7 +14,6 @@ public class ChatRoom {
     //post_id, seller_id, buyer_id 세 값이 없으면 채팅방 생성이 불가능.
     private int room_id;
     private int post_id;
-    private int seller_id;
     private int buyer_id;
 
 
@@ -42,7 +41,7 @@ public class ChatRoom {
         switch (initType)
         {
             case POSTTRADE,NONE -> {
-                roomName = post_id + "#" + seller_id + "#" + buyer_id;
+                roomName = post_id + "#" + buyer_id;
 
             }
         }

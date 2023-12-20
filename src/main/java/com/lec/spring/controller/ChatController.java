@@ -69,7 +69,13 @@ public class ChatController {
     public String RoomCreate(@Valid ChatRoom cRoom, Model model) {
         System.out.println("PostData : " + cRoom);
 
-        cRoom = chatService.createRoom(cRoom);
+        ChatRoom newRoom = chatService.findRoomByPostAndBuyer(cRoom.getPost_id(),cRoom.getBuyer_id());
+        if(newRoom == null)
+        {
+            cRoom = chatService.createRoom(cRoom);
+        }
+        else
+            cRoom = newRoom;
         System.out.println("DBInsert : " + cRoom);
         model.addAttribute("RoomData",cRoom);
         return "chat/room";

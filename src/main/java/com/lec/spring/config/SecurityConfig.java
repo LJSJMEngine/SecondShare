@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -20,13 +22,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer(){
-        return web -> web.ignoring().anyRequest();
-    }
-
-    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+                .csrf(csrf -> csrf.disable())
+
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/board/detail/**").authenticated()
                         .requestMatchers("/board/write/**", "/board/modify/**", "/board/delete/**", "/mypage/**", "/user/userpage/**").hasAnyRole("MEMBER", "ADMIN")
@@ -37,6 +36,9 @@ public class SecurityConfig {
                         .loginPage("/user/login")
                         .loginProcessingUrl("/user/login")
                         .defaultSuccessUrl("/")
+
+                        .usernameParameter("username")
+                        .passwordParameter("password")
 
                         .successHandler(new CustomLoginSuccessHandler("/main"))
                         .failureHandler(new CustomLoginFailureHandler())

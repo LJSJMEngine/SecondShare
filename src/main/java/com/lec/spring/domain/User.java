@@ -34,6 +34,7 @@ public class User {
     @JsonIgnore
     private List<Authority> authorities = new ArrayList<>();
 
+
     // 마이페이지 - 프로필 수정
     private String newPassword;
     private String newPhoneNumber;
@@ -67,4 +68,13 @@ public class User {
     public void setMyPosts(List<Post.MyPosts> myPosts) {
         this.myPosts = myPosts;
     }
+
+    // 메인페이지 - 로그인시 사용사 username 불러오기
+    public static class CurrentUser {
+        private String username;
+        public CurrentUser(String username) {
+            this.username = username;
+        }
+    }
 }
+
