@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    $("#idChkButton").click(function() {
+    $("#idChkButton").click(function(event) {
+        event.preventDefault();
         var username = $("#username").val();
 
         if(username == '' || username.length == 0) {
@@ -8,7 +9,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url : './register',
+            url : '/user/register',
             data : {
                 username : username
             },
@@ -19,9 +20,11 @@ $(document).ready(function() {
                     $("#label1").css("color", "green").text("사용 가능한 ID 입니다.");
                 } else {
                     $("#label1").css("color", "red").text("이미 사용중인 ID 입니다.");
-                    $("#id").val('');
+                    $("#username").val('');
                 }
             }
+
+
         });
 
     });

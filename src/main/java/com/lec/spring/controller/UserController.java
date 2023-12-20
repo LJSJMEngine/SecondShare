@@ -80,19 +80,14 @@ public class UserController {
     @PostMapping("/register")
     @ResponseBody
     public ResponseEntity<Boolean> confirmId(String id) {
-        boolean result = true;
-
-        if (id.trim().isEmpty()) {
-            result = false; // 공백
-        } else {
-            if (memberService.selectId(id)) {
-                result = false; // 아이디 중복
-            } else {
-                result = true;  // 사용 가능
-            }
+        if (id == null || id.trim().isEmpty()) {
+            return new ResponseEntity<>(false, HttpStatus.OK); // Null or empty ID
         }
+
+        boolean result = !memberService.selectId(id); // ID is not empty, check for duplication
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
 
 
 //    @Autowired
