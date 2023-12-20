@@ -11,7 +11,7 @@ import com.lec.spring.domain.Heart;
 
 import java.util.List;
 @Mapper
-public interface    PostRepository {
+public interface PostRepository {
 
     int save(Post post);
 
@@ -41,16 +41,10 @@ public interface    PostRepository {
 
 
     // 마이페이지 - 최신 판매글
+    // 메인페이지 - 최신 판매글
     List<Map<String, Object>> findLatestPostsWithUsername();
 
-    // 마이페이지 - 관심 판매글 (사용자 아이디로 가져오기)
-    List<Long> findLikedPostIdsByUsername(@Param("username") String username);
-
-    // 마이페이지 - 관심 판매글 (판매글 아이디로 가져오기)
-    List<Map<String, Object>> findPostsByIds(List<Long> postIds);
-
-    // 마이페이지 - 관심 판매글
-    Long findUserIdByUsername(@Param("username") String username);
+    // 메인페이지 - 관심 판매글
 
 
 }

@@ -26,7 +26,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/board/detail/**").authenticated()
+                        .requestMatchers(
+                                "/board/detail/**",
+                                "/mypage/**").authenticated()
                         .requestMatchers(
                                 "/board/write/**",
                                 "/board/update/**",
