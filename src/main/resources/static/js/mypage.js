@@ -20,15 +20,19 @@ function confirmDeleteAccount() {
 }
 
 function deleteAccountRequest() {
-    var currentUsername = "USER1"; // 실제 사용자 아이디를 가져오도록 수정
-    var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+    // 현재 로그인된 사용자 아이디 가져오기
+    var currentUsernameElement = document.getElementById("username");
+    var currentUsername = currentUsernameElement ? currentUsernameElement.value : null;
+
+    /*var currentUsername = "USER1";
+    var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");*/
 
     // 서버로 회원 탈퇴 요청 보내기
     fetch('/mypage/deleteAccount', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
+            'Content-Type': 'application/json'
+            /*'X-CSRF-TOKEN': csrfToken*/
         },
         body: JSON.stringify({
             username: currentUsername
@@ -37,8 +41,7 @@ function deleteAccountRequest() {
     .then(response => response.text())
     .then(result => {
         alert(result);
-        // 회원 탈퇴가 성공적으로 이루어졌을 때 추가적으로 수행해야 하는 로직을 여기에 추가
-        // 예: location.href = '/logout'; // 로그아웃 페이지로 이동
+        location.href = '/user/logout';
     })
     .catch(error => {
         console.error('에러:', error);
@@ -61,31 +64,38 @@ function enablePasswordChangeForm() {
 // 2) 새로운 비밀번호 저장 함수
 function saveNewPassword() {
     var newPassword = document.getElementById("newPassword").value;
-    var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+    var currentUsername = document.getElementById("username").getAttribute("data-username");
+
+    /*var newPassword = document.getElementById("newPassword").value;
+    var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");*/
 
     // 비밀번호 유효성 검사 (원하는 규칙에 따라 구현)
     if (!isValidPassword(newPassword)) {
-        displayPasswordMessages("비밀번호는 최소 8자 이상이어야 하며, 영문 대소문자, 숫자, 특수문자를 최소한 하나씩 포함해야 합니다.", null);
+        displayPasswordMessages("비밀번호는 문자, 숫자, 특수문자의 조합으로 8자 이상 22자 이하로 입력해주세요.", null);
         return;
     }
 
     // 서버로 비밀번호 저장 요청 보내기
     var url = '/mypage/updatePassword';
     var data = {
-        newPassword: newPassword
+        newPassword: newPassword,
+        username: currentUsername
     };
 
     fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
+            'Content-Type': 'application/json'
+            /*'X-CSRF-TOKEN': csrfToken*/
         },
         body: JSON.stringify(data)
     })
     .then(response => response.text())
     .then(result => {
         displayPasswordMessages(null, result);
+        document.getElementById("passwordChangeForm").style.display = "none";
+        var passwordElement = document.getElementById("password");
+        passwordElement.value = newPassword;
     })
     .catch(error => {
         console.error('에러:', error);
@@ -102,7 +112,9 @@ function enablePhoneNMChangeForm() {
 // 2) 새로운 핸드폰 번호 저장 함수
 function saveNewPhoneNumber() {
     var newPhoneNumber = document.getElementById("newPhoneNumber").value;
-    var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+    var currentUsername = document.getElementById("username").getAttribute("data-username");
+
+    /*var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");*/
 
     // 핸드폰 번호 유효성 검사 (원하는 규칙에 따라 구현)
     if (!isValidPhoneNumber(newPhoneNumber)) {
@@ -113,20 +125,24 @@ function saveNewPhoneNumber() {
     // 서버로 핸드폰 번호 저장 요청 보내기
     var url = '/mypage/updatePhoneNumber';
     var data = {
-        newPhoneNumber: newPhoneNumber
+        newPhoneNumber: newPhoneNumber,
+        username: currentUsername
     };
 
     fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
+            'Content-Type': 'application/json'
+            /*'X-CSRF-TOKEN': csrfToken*/
         },
         body: JSON.stringify(data)
     })
     .then(response => response.text())
     .then(result => {
         displayPhoneNMMessages(null, result);
+        document.getElementById("phoneNMChangeForm").style.display = "none";
+        var phoneNMElement = document.getElementById("phoneNM");
+        phoneNMElement.value = newPhoneNumber;
     })
     .catch(error => {
         console.error('에러:', error);
@@ -143,7 +159,9 @@ function enableEmailChangeForm() {
 // 2) 새로운 이메일 저장 함수
 function saveNewEmailAddress() {
     var newEmailAddress = document.getElementById("newEmailAddress").value;
-    var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+    var currentUsername = document.getElementById("username").getAttribute("data-username");
+
+    /*var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");*/
 
     // 이메일 유효성 검사 (원하는 규칙에 따라 구현)
     if (!isValidEmailAddress(newEmailAddress)) {
@@ -154,20 +172,24 @@ function saveNewEmailAddress() {
     // 서버로 이메일 저장 요청 보내기
     var url = '/mypage/updateEmailAddress';
     var data = {
-        newEmailAddress: newEmailAddress
+        newEmailAddress: newEmailAddress,
+        username: currentUsername
     };
 
     fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
+            'Content-Type': 'application/json'
+            /*'X-CSRF-TOKEN': csrfToken*/
         },
         body: JSON.stringify(data)
     })
     .then(response => response.text())
     .then(result => {
         displayEmailMessages(null, result);
+        document.getElementById("emailChangeForm").style.display = "none";
+        var emailAddressElement = document.getElementById("email");
+        emailAddressElement.value = newEmailAddress;
     })
     .catch(error => {
         console.error('에러:', error);
@@ -225,7 +247,7 @@ function displayEmailMessages(errorMessage, successMessage) {
 
 // 마이페이지 - 비밀번호 유효성 검사 함수
 function isValidPassword(password) {
-    var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    var passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,22}$/;
     return passwordRegex.test(password);
 }
 
@@ -251,18 +273,23 @@ function confirmDeleteAllMyPosts() {
 }
 
 function deleteAllMyPostsRequest() {
-    var currentId = 2; // 2L 대신에 2를 사용
-    var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+    var currentIdElement = document.getElementById("username");
+    var currentId = currentIdElement.getAttribute("data-id");
+
+    // TODO
+
+    /*var currentId = 2;
+    var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");*/
 
     // 서버로 전체 삭제 요청 보내기
     fetch('/mypage/deleteAllMyPosts', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
+            'Content-Type': 'application/json'
+            /*'X-CSRF-TOKEN': csrfToken*/
         },
         body: JSON.stringify({
-            id: currentId,
+            id: currentId
         }),
     })
     .then(response => response.text())

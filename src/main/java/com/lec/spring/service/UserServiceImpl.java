@@ -94,12 +94,13 @@ public class UserServiceImpl implements UserService{
         if (!isValidPassword(newPassword)) {
             throw new IllegalArgumentException("유효하지 않은 비밀번호 형식입니다.");
         }
-        userRepository.updatePassword(newPassword, username);
+        String hashedPassword = passwordEncoder.encode(newPassword);
+        userRepository.updatePassword(hashedPassword, username);
     }
 
     private boolean isValidPassword(String password) {
-        // 예: 최소 8자, 영문 대소문자, 숫자, 특수문자 포함
-        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        // 최소 8자, 최대 22자 영문, 숫자, 특수문자 포함
+        String passwordRegex = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,22}$";
         return password.matches(passwordRegex);
     }
 

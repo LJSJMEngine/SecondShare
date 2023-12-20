@@ -16,7 +16,7 @@
 
     <!-- 환영 메세지 (로그인 시에만) -->
     <div th:if="${currentUser != null}">
-        <h2 th:text="'안녕하세요, ' + ${currentUser.username} + '님! 환영합니다.'"></h2>
+        <h2 th:text="'안녕하세요, ' + ${#authentication.principal.username} + '님! 환영합니다.'"></h2>
     </div>
 
     <br>
@@ -65,19 +65,19 @@
         <!-- 관심 판매글 목록 -->
         <h2>관심 판매글</h2>
         <!--로그인 했을 때-->
-        <div th:if="${currentUser != null}">
+<!--        <div th:if="${currentUser != null}">
             <ul class="article-album">
-                <!-- 관심 판매글이 있을 때 -->
+                &lt;!&ndash; 관심 판매글이 있을 때 &ndash;&gt;
                 <th:block th:if="${not #lists.isEmpty(likedPosts)}">
                     <li th:each="likedPost : ${likedPosts}">
-                        <!-- 판매글 대표 이미지 -->
+                        &lt;!&ndash; 판매글 대표 이미지 &ndash;&gt;
                         <a th:href="@{'/board/detail/' + ${likedPost.post_id}}" class="album-img"
                            onclick="clickLink(event, '${likedPost.post_id}')">
                             <div class="image-container">
-                                <!-- 대표 이미지가 있을 때 -->
+                                &lt;!&ndash; 대표 이미지가 있을 때 &ndash;&gt;
                                 <img th:if="${likedPost != null and (likedPost['filename'] != null or likedPost['attachment_filename'] != null)}"
                                      th:src="${likedPost['filename'] != null ? likedPost['filename'] : likedPost['attachment_filename']}" />
-                                <!-- 대표 이미지가 없을 때 -->
+                                &lt;!&ndash; 대표 이미지가 없을 때 &ndash;&gt;
                                 <img th:unless="${likedPost != null and (likedPost['filename'] != null or likedPost['attachment_filename'] != null)}"
                                      src="/img/sample.jpg" width="200" height="200" alt="img">
                                 <span class="list-i-selling">
@@ -86,25 +86,25 @@
                             </div>
                         </a>
                         <dl>
-                            <!-- 판매글 제목 -->
+                            &lt;!&ndash; 판매글 제목 &ndash;&gt;
                             <dt>
                                 <a th:href="@{'/board/detail/' + ${likedPost.post_id}}" th:text="${likedPost.subject}"
                                    class="subject"
                                    onclick="clickLink(event, '${likedPost.post_id}')"></a>
                             </dt>
-                            <!-- 판매글 가격 -->
+                            &lt;!&ndash; 판매글 가격 &ndash;&gt;
                             <dd th:text="${#numbers.formatDecimal(likedPost.price, 0, 'COMMA', 0, 'POINT') + '원'}"
                                 class="price"></dd>
-                            <!-- 판매글 작성자명 -->
+                            &lt;!&ndash; 판매글 작성자명 &ndash;&gt;
                             <dd th:text="${likedPost.username}" class="name"></dd>
-                            <!-- 판매글 작성일 & 조회수 -->
+                            &lt;!&ndash; 판매글 작성일 & 조회수 &ndash;&gt;
                             <dd class="date_cnt">
                                 <span th:text="${#temporals.format(likedPost.regDate, 'MM/dd')}" class="regDate"></span>
                                 <span th:text="'조회 ' + ${likedPost.viewCnt}" class="viewCnt"></span>
                             </dd>
                         </dl>
                     </li>
-                </th:block>
+                </th:block>-->
 
                 <!-- 관심 판매글이 없을 때 -->
                 <th:block th:unless="${not #lists.isEmpty(likedPosts)}">
@@ -122,7 +122,7 @@
 </div>
 
 
-
+</div>
 
 </body>
 </html>
