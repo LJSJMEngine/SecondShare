@@ -14,16 +14,28 @@
         /* <![CDATA[ */
         var RoomData = /*[[${RoomData}]]*/;
         /*]]>*/
-
+        /* <![CDATA[ */
+        var postData = /*[[${PostData}]]*/;
+        /*]]>*/
         /* <![CDATA[ */
         var MessageList = /*[[${MessageList}]]*/;
         /*]]>*/
+
+        /* <![CDATA[ */
+        var currentUser = /*[[${currentUser}]]*/;
+        /*]]>*/
+
+        /* <![CDATA[ */
+        var otherUser = /*[[${otherUser}]]*/;
+        /*]]>*/
+
     </script>
     <script th:src="@{/js/chatroom.js}"></script>
 
 </head>
 <body>
-<h3 th:if="${RoomData}">[[${RoomData.subject}]]</h3>
+<h3 th:if="${RoomData}"> 현재 방 이름 : [[${RoomData.subject}]]</h3>
+<h3 th:if="${RoomData}"> 현재 접속중인 나는 누구? : [[${currentUser.name}]]</h3>
 <!-- 내용 수정 필수. -->
 <div class="container-full">
     <div class="row justify-content-between">
@@ -37,15 +49,8 @@
                                     <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
                                 </a>
                                 <div class="chat-about">
-                                    <h6 class="m-b-0">Aiden Chavez</h6>
-                                    <small>Last seen: 2 hours ago</small>
+                                    <h6 class="m-b-0">[[${otherUser.name}]]</h6>
                                 </div>
-                            </div>
-                            <div class="col-lg-6 hidden-sm text-right">
-                                <a href="javascript:void(0);" class="btn btn-outline-secondary"><i class="fa fa-camera"></i></a>
-                                <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="fa fa-image"></i></a>
-                                <a href="javascript:void(0);" class="btn btn-outline-info"><i class="fa fa-cogs"></i></a>
-                                <a href="javascript:void(0);" class="btn btn-outline-warning"><i class="fa fa-question"></i></a>
                             </div>
                         </div>
                     </div>
@@ -57,7 +62,7 @@
                     </div>
                     <div class="chat-message clearfix">
                         <div class="input-group mb-0">
-                            <input type="text" class="form-control" id="chatInput" placeholder="채팅을 입력해주세요" name="chatInput">
+                            <textarea type="text" class="form-control" id="chatInput" rows="2" placeholder="채팅을 입력해주세요" name="chatInput"></textarea>
                             <button class="sendButton input-group-text"id="sendChat">
                                 <div class="fa fa-send sendImg"></div>
                             </button>
