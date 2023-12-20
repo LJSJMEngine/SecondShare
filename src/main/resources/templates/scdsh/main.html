@@ -34,7 +34,7 @@
                              th:src="${post['filename'] != null ? post['filename'] : post['attachment_filename']}" />
                         <!-- 대표 이미지가 없을 때 -->
                         <img th:unless="${post != null and (post['filename'] != null or post['attachment_filename'] != null)}"
-                             src="/img/sample.jpg" />
+                             src="/sample.jpg" />
                         <span class="list-i-selling">
                             <i th:class="${post.status == 0} ? 'status selling' : 'status sold-out'"></i>
                         </span>
@@ -79,7 +79,7 @@
                                      th:src="${likedPost['filename'] != null ? likedPost['filename'] : likedPost['attachment_filename']}" />
                                 &lt;!&ndash; 대표 이미지가 없을 때 &ndash;&gt;
                                 <img th:unless="${likedPost != null and (likedPost['filename'] != null or likedPost['attachment_filename'] != null)}"
-                                     src="/img/sample.jpg" width="200" height="200" alt="img">
+                                     src="/sample.jpg" width="200" height="200" alt="img">
                                 <span class="list-i-selling">
                             <i th:class="${likedPost.status == 0} ? 'status selling' : 'status sold-out'"></i>
                         </span>
