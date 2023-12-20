@@ -10,8 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -29,30 +33,36 @@ public class MyPageController {
     }
 
     @GetMapping("/home")
-    public String showMyPage(Model model) {
+    public String showMyPage(Model model, Principal principal) {
         // 현재 로그인한 사용자의 정보 가져오기
-        // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // String username = auth.getName();
-        // model.addAttribute("userProfile", userService.getUserByUsername(username));
-        String currentUsername = "USER1";
+        String currentUsername = principal.getName();
         User userProfile = userService.getUserByUsername(currentUsername);
         model.addAttribute("userProfile", userProfile);
+
+        /*String currentUsername = "USER1";
+        User userProfile = userService.getUserByUsername(currentUsername);
+        model.addAttribute("userProfile", userProfile);*/
 
         return "mypage/home";
     }
 
     @GetMapping("/view")
-    public String showViewPage(Model model) {
-        String currentUsername = "USER1";
+    public String showViewPage(Model model, Principal principal) {
+        String currentUsername = principal.getName();
         User userProfile = userService.getUserByUsername(currentUsername);
         model.addAttribute("userProfile", userProfile);
+
+        /*String currentUsername = "USER1";
+        User userProfile = userService.getUserByUsername(currentUsername);
+        model.addAttribute("userProfile", userProfile);*/
 
         return "mypage/view";
     }
 
     @PostMapping("/deleteAccount")
-    public ResponseEntity<String> deleteAccount() {
-        String currentUsername = "USER1"; // 실제 사용자 아이디를 가져오도록 수정
+    public ResponseEntity<String> deleteAccount(Principal principal) {
+        String currentUsername = principal.getName();
+        /*String currentUsername = "USER1";*/
 
         try {
             userService.deleteAccount(currentUsername);
@@ -65,18 +75,24 @@ public class MyPageController {
     }
 
     @GetMapping("/modify")
-    public String showModifyPage(Model model) {
-        String currentUsername = "USER1";
+    public String showModifyPage(Model model, Principal principal) {
+        String currentUsername = principal.getName();
         User userProfile = userService.getUserByUsername(currentUsername);
         model.addAttribute("userProfile", userProfile);
+
+        /*String currentUsername = "USER1";
+        User userProfile = userService.getUserByUsername(currentUsername);
+        model.addAttribute("userProfile", userProfile);*/
 
         return "mypage/modify";
     }
 
     @PostMapping("/updatePassword")
-    public ResponseEntity<String> updatePassword(@RequestBody Map<String, String> requestBody) {
+    public ResponseEntity<String> updatePassword(@RequestBody Map<String, String> requestBody, Principal principal) {
         String newPassword = requestBody.get("newPassword");
-        String currentUsername = "USER1";  // 여기서 실제 사용자 아이디를 가져와야 함
+        String currentUsername = principal.getName();
+
+        /*String currentUsername = "USER1";*/
 
         try {
             userService.updatePassword(newPassword, currentUsername);
@@ -89,9 +105,11 @@ public class MyPageController {
     }
 
     @PostMapping("/updatePhoneNumber")
-    public ResponseEntity<String> updatePhoneNumber(@RequestBody Map<String, String> requestBody) {
+    public ResponseEntity<String> updatePhoneNumber(@RequestBody Map<String, String> requestBody, Principal principal) {
         String newPhoneNumber = requestBody.get("newPhoneNumber");
-        String currentUsername = "USER1";  // 여기서 실제 사용자 아이디를 가져와야 함
+        String currentUsername = principal.getName();
+
+        /*String currentUsername = "USER1";*/
 
         try {
             userService.updatePhoneNumber(newPhoneNumber, currentUsername);
@@ -104,9 +122,11 @@ public class MyPageController {
     }
 
     @PostMapping("/updateEmailAddress")
-    public ResponseEntity<String> updateEmailAddress(@RequestBody Map<String, String> requestBody) {
+    public ResponseEntity<String> updateEmailAddress(@RequestBody Map<String, String> requestBody, Principal principal) {
         String newEmailAddress = requestBody.get("newEmailAddress");
-        String currentUsername = "USER1";  // 여기서 실제 사용자 아이디를 가져와야 함
+        String currentUsername = principal.getName();
+
+        /*String currentUsername = "USER1";*/
 
         try {
             userService.updateEmailAddress(newEmailAddress, currentUsername);
@@ -119,19 +139,26 @@ public class MyPageController {
     }
 
     @GetMapping("/myPosts")
-    public String myPosts(Model model) {
-        Long currentUserId = 2L;  // 임시 설정
+    public String myPosts(Model model, Principal principal) {
+        String currentUsername = principal.getName();
+        User userProfile = userService.getUserByUsername(currentUsername);
+        model.addAttribute("userProfile", userProfile);
 
+        List<Post.MyPosts> myPosts = userService.showMyPosts(userProfile.getId());
+        long statusOneCount = myPosts.stream().filter(post -> post.getStatus() == 1).count();
+
+        /*Long currentUserId = 2L;
         User userProfile = userService.getUserById(currentUserId);
         model.addAttribute("userProfile", userProfile);
 
         List<Post.MyPosts> myPosts = userService.showMyPosts(currentUserId);
-        long statusOneCount = myPosts.stream().filter(post -> post.getStatus() == 1).count();
+        long statusOneCount = myPosts.stream().filter(post -> post.getStatus() == 1).count();*/
 
         model.addAttribute("myPosts", myPosts);
         model.addAttribute("statusOneCount", statusOneCount);
 
-        List<Review.MyReceivedReviews> myReceivedReviews = reviewService.findReviewsByUserId(Math.toIntExact(currentUserId));
+        List<Review.MyReceivedReviews> myReceivedReviews = reviewService.findReviewsByUserId(Math.toIntExact(userProfile.getId()));
+        /*List<Review.MyReceivedReviews> myReceivedReviews = reviewService.findReviewsByUserId(Math.toIntExact(currentUserId));*/
 
         model.addAttribute("myReceivedReviews", myReceivedReviews);
 
@@ -139,18 +166,26 @@ public class MyPageController {
     }
 
     @PostMapping("/myPostsData")
-    public ResponseEntity<List<Post.MyPosts>> showMyPostsData() {
-        // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // User user = (User) auth.getPrincipal();
-        Long userId = 2L; // 임시 설정
-        List<Post.MyPosts> myPosts = userService.showMyPosts(userId); // (user.getId)
+    public ResponseEntity<List<Post.MyPosts>> showMyPostsData(Principal principal) {
+        String currentUsername = principal.getName();
+        User user = userService.getUserByUsername(currentUsername);
+        Long userId = user.getId();
+
+        List<Post.MyPosts> myPosts = userService.showMyPosts(userId);
+
+        /*Long userId = 2L;
+        List<Post.MyPosts> myPosts = userService.showMyPosts(userId);*/
 
         return ResponseEntity.ok(myPosts);
     }
 
     @PostMapping("/deleteAllMyPosts")
-    public ResponseEntity<String> deleteAllMyPosts() {
-        Long currentId = 2L;
+    public ResponseEntity<String> deleteAllMyPosts(Principal principal) {
+        String currentUsername = principal.getName();
+        User user = userService.getUserByUsername(currentUsername);
+        Long currentId = user.getId();
+
+        /*Long currentId = 2L;*/
 
         try {
             userService.deleteAllMyPosts(currentId);

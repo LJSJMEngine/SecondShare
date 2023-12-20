@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <!--<meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel="stylesheet" href="/css/mypage.css">
 </head>
 <body>
 
-<div th:if="${userProfile != null}">
+<div th:if="${#authentication.principal != null}">
 
     <!-- 나의 판매글 목록 -->
     <section id="myPosts">
@@ -63,7 +63,7 @@
 
 </div>
 
-<div th:if="${userProfile == null}">
+<div th:if="${#authentication.principal == null}">
     <p>사용자 프로필을 찾을 수 없습니다.</p>
 </div>
 

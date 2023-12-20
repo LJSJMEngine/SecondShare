@@ -36,6 +36,13 @@ public class MainController {
         List<Map<String, Object>> latestPosts = postService.getLatestPostsWithUsernameAndImgPath();
         model.addAttribute("latestPosts", latestPosts);
 
+        // 로그인한 경우에만 관심 판매글 가져오기
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            // 관심 판매글 가져오기 (이미지 경로 및 작성자 사용자명 추가)
+            // model.addAttribute("likedPosts", likedPosts);
+        }
+
         return "main";
     }
 
@@ -45,10 +52,6 @@ public class MainController {
             String username = authentication.getName();
             User.CurrentUser currentUser = new User.CurrentUser(username);
             model.addAttribute("currentUser", currentUser);
-
-            // 관심 판매글 가져오기 (이미지 경로 추가)
-            List<Map<String, Object>> likedPosts = postService.getLikedPostsWithUsernameAndImgPath(username);
-            model.addAttribute("likedPosts", likedPosts);
         }
     }
 }
