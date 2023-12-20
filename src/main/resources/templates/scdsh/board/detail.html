@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<script th:unless="${post}">
+    alert("해당 정보가 삭제되거나 없습니다");
+    history.back();
+</script>
+
+<th:block th:if="${post}" th:with="logged_user=${#authentication.principal.user}">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+    <script th:src="@{/js/detail.js}"></script>
+
+    <script th:inline="javascript">
+        // 댓글 작성시 필요
+        const logged_id = [[${logged_id}]];
+    </script>
+
+    <title>조회</title>
 </head>
 <body>
+    <div>
+        <h2>조회</h2>
+        <hr>
+        <span>작성자:</span>
+        <span>작성일:</span>
+        <span>조회수: </span>
+    </div>
+
+    <div>상품 이미지</div>
 
 </body>
+</th:block>
 </html>

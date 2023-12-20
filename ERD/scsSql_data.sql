@@ -14,8 +14,8 @@ DELETE FROM s1_chatroom;
 ALTER TABLE s1_chatroom AUTO_INCREMENT = 1;
 DELETE FROM s1_comment;
 ALTER TABLE s1_comment AUTO_INCREMENT = 1;
-DELETE FROM s1_like;
-ALTER TABLE s1_like AUTO_INCREMENT = 1;
+DELETE FROM s1_heart;
+ALTER TABLE s1_heart AUTO_INCREMENT = 1;
 DELETE FROM s1_location;
 ALTER TABLE s1_location AUTO_INCREMENT = 1;
 DELETE FROM s1_notice;
@@ -86,6 +86,7 @@ INSERT INTO s1_user (username, password, name, phoneNM, email, registDate, statu
 ('USER59', '1234', '회원49', '010-9999-0000', 'user49@gmail.com', NOW(), 0),
 ('USER50', '1234', '회원50', '010-9999-0000', 'user50@gmail.com', NOW(), 0)
 ;
+
 INSERT INTO s1_user_authority VALUES
 (1, 1),
 (1, 2),
@@ -182,4 +183,23 @@ INSERT INTO s1_category (name) VALUES
 
 
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS loopInsert$$
+ 
+CREATE PROCEDURE loopInsert()
+BEGIN
+    DECLARE i INT DEFAULT 1;        
+    WHILE i <= 500 DO
+     
+    INSERT INTO s1_user(username, password, name, phoneNM, email, status) 
+      VALUES (concat('id',i), concat('1234qwer',i), concat('이름',i), concat('010-1234-', i), concat(i, '@naver.com'), 0);
+      SET i = i + 1;
+     
+     INSERT INTO s1_post (user_id, subject, contents) 
+     VALUES (i, concat('제목',i), concat('내용',i))
+;
+    END WHILE;
+END$$
+DELIMITER $$
 
+CALL loopInsert;

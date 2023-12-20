@@ -49,10 +49,10 @@ SELECT * FROM s1_category;
         , c.name "c_name"
         , c.id "c_id"
         FROM s1_post p, s1_user u  ,s1_attachment a , s1_category c
-        WHERE p.user_id = u.id	
+        WHERE p.user_id = u.id
         AND p.category_id = c.id
        	AND LOWER(p.subject) LIKE LOWER(CONCAT('%', "", '%'))
         AND LOWER(c.id) LIKE LOWER(CONCAT('%', 1, '%'))
-        
-    	
+
+
 

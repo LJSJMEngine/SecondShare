@@ -5,7 +5,6 @@ import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AuthorityRepository;
 import com.lec.spring.repository.UserRepository;
-import com.lec.spring.util.U;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +18,7 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     private UserRepository userRepository;
     private AuthorityRepository authorityRepository;
 
@@ -27,11 +27,12 @@ public class UserServiceImpl implements UserService{
     public UserServiceImpl(SqlSession sqlSession) {
         userRepository = sqlSession.getMapper(UserRepository.class);
         authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
+        System.out.println(getClass().getName() + "() 생성");
     }
 
     @Override
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username.toUpperCase());
     }
 
     @Override
@@ -41,13 +42,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean idExist(String username) {
-        User user = findByUsername(username);
+        User user = findByUsername(username.toUpperCase());
         return (user != null);
     }
 
     @Override
     public int register(User user) {
-        user.setUsername(user.getUsername());
+        user.setUsername(user.getUsername().toUpperCase());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.join(user);
 

@@ -15,5 +15,6 @@ public class Attachment {
     private String sourcename;
     private String filename;
     private boolean isImage;
+    private boolean isspImg;
 
 }

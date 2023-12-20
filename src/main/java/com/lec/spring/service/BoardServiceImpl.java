@@ -26,7 +26,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +37,7 @@ public class BoardServiceImpl implements BoardService {
     private int WRITE_PAGES;
     @Value("${app.pagination.page_rows}")
     private int PAGE_ROWS;
-    @Value("${app.img.path}")
+    @Value("${app.upload.path}")
     private String uploadDir;
 
     private UserRepository userRepository;
@@ -139,6 +138,7 @@ public class BoardServiceImpl implements BoardService {
 
             if (file != null){
                 file.setPost_id(postId);
+                file.setIsspImg(true);
                 attachmentRepository.save(file);
             }
         }
@@ -194,6 +194,7 @@ public class BoardServiceImpl implements BoardService {
         postRepository.incViewCnt(id);
         Post post = postRepository.findByPostId(id);
 
+        // TODO
 
         return post;
     }
