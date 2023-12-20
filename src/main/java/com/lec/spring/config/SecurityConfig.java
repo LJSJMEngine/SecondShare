@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -14,12 +16,15 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder encoder() {
+//        System.out.println("PasswordEncoder bean 생성");
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+                .csrf(csrf -> csrf.disable())
+
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/board/detail/**").authenticated()
                         .requestMatchers(
@@ -33,6 +38,9 @@ public class SecurityConfig {
                         .loginPage("/user/login")
                         .loginProcessingUrl("/user/login")
                         .defaultSuccessUrl("/")
+
+                        .usernameParameter("username")
+                        .passwordParameter("password")
 
                         .successHandler(new CustomLoginSuccessHandler("/main"))
                         .failureHandler(new CustomLoginFailureHandler())

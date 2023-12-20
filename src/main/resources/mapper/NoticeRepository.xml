@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.NoticeRepository">
+    <sql id="SELECT_NOTICE">
+        SELECT
+        id,
+        user_id,
+        status,
+        status_name,
+        contents,
+        readChk
+        FROM
+        s1_notice
+        WHERE
+        1 = 1
+    </sql>
+
+    <select id="findByUserId" resultType="com.lec.spring.domain.Notice">
+        <include refid="SELECT_NOTICE"/>
+        AND user_id = #{user_id}
+    </select>
+    <select id="checkView">
+        <!--업데이트 readChk True -->
+    </select>
+    <insert id="createNotice" flushCache="true" parameterType="com.lec.spring.domain.Notice"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO s1_notice
+        (user_id, status, status_name, contents, readChk)
+        VALUES
+        (#{user_id}, #{status}, #{status_name}, #{contents}, false)
+    </insert>
+    <!--chatMessage -->
+
+</mapper>

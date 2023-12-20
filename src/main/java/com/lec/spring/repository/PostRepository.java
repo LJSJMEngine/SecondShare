@@ -1,14 +1,16 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.Post;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 import com.lec.spring.domain.Heart;
 
 import java.util.List;
-
+@Mapper
 public interface    PostRepository {
 
     int save(Post post);
@@ -23,12 +25,11 @@ public interface    PostRepository {
 
     int delete(Post post);
 
-    List<Post> search(@Param("keyword") String keyword, @Param("type") String type);
+    List<Post> search(@Param("keyword") String keyword);
 
     // 페이징 from 부터 rows 개 만큼
     List<Post> selectFromRow(int from, int rows);
 
-    //전체 글 개수
     int countAll();
 
     // 검색 결과의 전체 개수
@@ -39,11 +40,17 @@ public interface    PostRepository {
                                     @Param("from") int from, @Param("rows") int rows);
 
 
+    // 마이페이지 - 최신 판매글
+    List<Map<String, Object>> findLatestPostsWithUsername();
 
-    // 메인페이지 - 최신 판매글
-    List<Post> findLatestPosts();
+    // 마이페이지 - 관심 판매글 (사용자 아이디로 가져오기)
+    List<Long> findLikedPostIdsByUsername(@Param("username") String username);
 
-    // 메인페이지 - 관심 판매글
-/*    List<Post> findLikedPosts();*/
+    // 마이페이지 - 관심 판매글 (판매글 아이디로 가져오기)
+    List<Map<String, Object>> findPostsByIds(List<Long> postIds);
+
+    // 마이페이지 - 관심 판매글
+    Long findUserIdByUsername(@Param("username") String username);
+
 
 }

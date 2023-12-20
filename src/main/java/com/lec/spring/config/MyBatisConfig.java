@@ -20,7 +20,6 @@ public class MyBatisConfig {
         // Mapper 위치 지정
         sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/**/*.xml"));
 
-        // MyBatis 설정 추가 가능
         return sessionFactory.getObject();
     }
 

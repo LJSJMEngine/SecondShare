@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import java.util.List;
@@ -29,38 +31,21 @@ public class ChatController {
     @Autowired
     private final ChatService chatService;
 
+    @MessageMapping("/roomUpdateDate")
+    public void lastUpdateDate(ChatMessage message) {
+        // lastUpdateDate 업데이트해야함.
+        System.out.println("MESSAGE SEND : lastUpdateDate");
 
-    @RequestMapping("chatDebug")
-    public void chatDebug()
-    {}
-
-    @RequestMapping("chatTest")
-    public String chatListView(Model model) {
-
-        for (ChatRoom room : chatService.findAllRoom()) {
-            System.out.println(room.getRoom_id() + " " + room.getSubject());
-            System.out.println(room);
-        }
-        model.addAttribute("chatName", 1);
-
-        return "chat/chatTest";
-    }
-
-    @RequestMapping("room")
-    public void roomtest() {
-    }
-
-    @RequestMapping("roomdetail")
-    public void roomdetail() {
-    }
-
-    @PostMapping("roomdetail")
-    public void PostRoomDetail(@Valid ChatRoom roomData, Model model) {
-        model.addAttribute("roomInfo", roomData);
+        Timestamp currentDate = java.sql.Timestamp.valueOf(LocalDateTime.now());
+        chatService.updateRoomLastDate(message.getRoom_id(), currentDate);
 
 
     }
 
+    @MessageMapping("/roomUpdateState")
+    public void roomUpdateState(ChatMessage message){
+
+    }
     @RequestMapping("roomDebug")
     public String RoomDebug() {
         return "chat/roomDebug";
@@ -78,6 +63,8 @@ public class ChatController {
             cRoom = newRoom;
         System.out.println("DBInsert : " + cRoom);
         model.addAttribute("RoomData",cRoom);
+
+        model.addAttribute("MessageList",chatService.findMessageFromRoomId(cRoom.getRoom_id()));
         return "chat/room";
     }
 }
