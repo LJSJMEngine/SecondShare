@@ -59,7 +59,6 @@ INSERT INTO s1_category (name) VALUES
 
 /* 게시물 정보 영역 */
 
-<<<<<<<<< Temporary merge branch 1
 INSERT INTO s1_category (name) VALUES
 ('생활용품'),
 ('가전제품')
@@ -104,16 +103,10 @@ INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
 (1, 'face01.png', 'face01.png')
 ;
 
-<<<<<<<<< Temporary merge branch 1
 /* 카테고리 설정 */
 
 
-=========
->>>>>>>>> Temporary merge branch 2
 /* 채팅 정보 영역 */
-INSERT INTO s1_chatroom (subject,post_id ,buyer_id, seller_id) VALUES
-('채팅방 이름', 3, 1, 2)
-;
 
 
 
