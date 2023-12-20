@@ -21,8 +21,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public boolean selectId(String id) {
+    public boolean selectUsername(String username) {
         log.info("Service :: selectId..............");
-        return memberMapper.selectId(id);
+        return memberMapper.selectUsername(username);
     }
 }
