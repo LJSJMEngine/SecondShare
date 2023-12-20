@@ -173,10 +173,11 @@
             AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 6, '%'))
         </if>
-    </select>
-
         ORDER BY p.post_id DESC
         LIMIT #{from}, #{rows}
+    </select>
+
+
     <!-- 메인페이지 - 최신 판매글 -->
     <select id="findLatestPostsWithUsername" resultType="map">
         SELECT
