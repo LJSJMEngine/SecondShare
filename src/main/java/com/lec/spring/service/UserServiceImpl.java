@@ -94,7 +94,8 @@ public class UserServiceImpl implements UserService{
         if (!isValidPassword(newPassword)) {
             throw new IllegalArgumentException("유효하지 않은 비밀번호 형식입니다.");
         }
-        userRepository.updatePassword(newPassword, username);
+        String hashedPassword = passwordEncoder.encode(newPassword);
+        userRepository.updatePassword(hashedPassword, username);
     }
 
     private boolean isValidPassword(String password) {

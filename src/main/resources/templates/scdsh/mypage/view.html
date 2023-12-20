@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/mypage.css">
 </head>
 <body>
-<div th:if="${userProfile != null}">
+<div th:if="${userProfile != null}" data-username="${userProfile.username}">
     <form class="showMyPage" th:action="@{/mypage/modify}" method="post">
         <span class="label">
             <label class="input" for="username">아이디:</label>
