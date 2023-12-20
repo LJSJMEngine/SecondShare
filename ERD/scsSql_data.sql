@@ -101,12 +101,12 @@ BEGIN
     DECLARE i INT DEFAULT 1;        
     WHILE i <= 500 DO
      
-    INSERT INTO s1_user(username, password, name, phoneNM, email, status) 
-      VALUES (concat('id',i), concat('1234qwer',i), concat('이름',i), concat('010-1234-', i), concat(i, '@naver.com'), 0);
+    INSERT INTO s1_user(username, password, name, phoneNM, email, registDate, status) 
+      VALUES (concat('id',i), concat('1234qwer',i), concat('이름',i), concat('010-1234-', i), concat(i, '@naver.com'), NOW(), 0);
       SET i = i + 1;
      
-     INSERT INTO s1_post (user_id, subject, contents) 
-     VALUES (i, concat('제목',i), concat('내용',i))
+     INSERT INTO s1_post (user_id, subject, price, contents,regDate, category_id) 
+     VALUES (i, concat('제목',i), i * 2500 , concat('내용',i), NOW(),1)
 ;
     END WHILE;
 END$$
