@@ -7,5 +7,4 @@ import java.util.List;
 public interface CategoryRepository {
     int save(Category category);
     List<Category> findAll();
-    Category findByName(String name);
 }

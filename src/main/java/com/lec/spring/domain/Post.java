@@ -12,8 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class Post {
-
-    private Long post_id;
+    private Long post_id;// 글 번호
     private Long user_id;
     private Long category_id;
     private String subject;
@@ -24,6 +23,10 @@ public class Post {
     private LocalDateTime regDate;
 
     private User user;
+
+    private  Category category;
+
+    private  Attachment attachment;
 
     // 마이페이지 - 내 판매물품
     @Data

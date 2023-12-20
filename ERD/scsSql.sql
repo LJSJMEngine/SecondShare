@@ -123,7 +123,7 @@ CREATE TABLE s1_post
 	contents longtext,
 	price int,
 	viewCnt int DEFAULT 0,
-	status int,
+	status int DEFAULT 0,
 	regDate datetime,
 	sampleImg int,
 	PRIMARY KEY (post_id)
@@ -175,8 +175,18 @@ ALTER TABLE s1_user_authority
 	ON DELETE CASCADE
 ;
 
+ALTER TABLE s1_post
+ADD CONSTRAINT s1_post_ibfk_1
+FOREIGN KEY (category_id) REFERENCES s1_category(id)
+ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE s1_post
+<<<<<<<<< Temporary merge branch 1
+=========
+DROP FOREIGN KEY s1_post_ibfk_1;
+
+ALTER TABLE s1_post
+>>>>>>>>> Temporary merge branch 2
 	ADD FOREIGN KEY (category_id)
 	REFERENCES s1_category (id)
 	ON UPDATE RESTRICT
@@ -310,5 +320,6 @@ ALTER TABLE s1_user_authority
 	ON UPDATE RESTRICT
 	ON DELETE CASCADE
 ;
+
 
 

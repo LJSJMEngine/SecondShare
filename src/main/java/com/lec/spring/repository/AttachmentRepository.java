@@ -13,6 +13,8 @@ public interface AttachmentRepository {
 
     List<Attachment> findByPost(Long post_id);
 
+    List<Attachment> findAll();
+
     // 특정 첨부파일 하나 select
     Attachment findById(Long id);
 

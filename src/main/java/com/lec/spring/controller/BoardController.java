@@ -6,8 +6,6 @@ import com.lec.spring.domain.PostValidator;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.BoardService;
 import com.lec.spring.service.CategoryService;
-import com.lec.spring.service.PostService;
-import com.lec.spring.service.UserService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,40 +25,22 @@ import java.util.Map;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-
-    @Autowired
-    private UserService userService;
     @Autowired
     private BoardService boardService;
-    @Autowired
-    private PostService postService;
-    @Autowired
-    private CategoryService categoryService;
+
 
     @GetMapping("/list")
     public String list(@RequestParam(required = false) String type,
                        @RequestParam(required = false) String keyword,
+                       Integer page,
                        Model model) {
         List<Post> list;
 
-        if ("subject".equals(type)) {
-            list = boardService.search(keyword);
-        } else if ("category".equals(type)) {
-            // Assuming category names are unique
-            Category category = categoryService.getCategoryByName(keyword);
-            if (category != null) {
-                list = boardService.searchByCategory(category.getName());
-            } else {
-                list = boardService.list();
-            }
-        } else {
-            list = boardService.list();
-        }
+        boardService.list(page, model, type, keyword);
 
-        List<Category> categories = categoryService.getAllCategories();
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("type", type);
 
-        model.addAttribute("list", list);
-        model.addAttribute("categories", categories);
         return "board/list";
     }
 
@@ -146,7 +126,7 @@ public class BoardController {
             @RequestParam("post_id") Long post_id,
             @RequestParam("user_id") Long user_id,
             String content
-    ){
+            ){
         return "/board/review";
     }
 
@@ -161,11 +141,13 @@ public class BoardController {
         System.out.println("initBinder() 호출");
         binder.setValidator(new PostValidator());
     }
+//    @GetMapping("review")
 
     @PostMapping("/pageRows")
     public String pageRows(Integer page, Integer pageRows){
         U.getSession().setAttribute("pageRows", pageRows);
         return "redirect:/board/list?page=" + page;
     }
+
 
 }
