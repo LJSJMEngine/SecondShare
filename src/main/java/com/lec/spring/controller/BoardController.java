@@ -2,17 +2,21 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.Category;
 import com.lec.spring.domain.Post;
+import com.lec.spring.domain.PostValidator;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.BoardService;
 import com.lec.spring.service.CategoryService;
 import com.lec.spring.service.PostService;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Indexed;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -24,18 +28,14 @@ import java.util.Map;
 @RequestMapping("/board")
 public class BoardController {
 
-    private UserService userService;
-    private BoardService boardService;
-    private PostService postService;
-    private CategoryService categoryService;
-
     @Autowired
-    public BoardController(UserService userService, BoardService boardService, PostService postService, CategoryService categoryService){
-        this.userService = userService;
-        this.boardService = boardService;
-        this.postService = postService;
-        this.categoryService = categoryService;
-    }
+    private UserService userService;
+    @Autowired
+    private BoardService boardService;
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/list")
     public String list(@RequestParam(required = false) String type,
@@ -80,7 +80,9 @@ public class BoardController {
         if (result.hasErrors()){
             redirectAttrs.addFlashAttribute("user", post.getUser());
             redirectAttrs.addFlashAttribute("subject", post.getSubject());
-            redirectAttrs.addFlashAttribute("content", post.getContents());
+            redirectAttrs.addFlashAttribute("category_id", post.getCategory_id());
+            redirectAttrs.addFlashAttribute("contents", post.getContents());
+            redirectAttrs.addFlashAttribute("price", post.getPrice());
 
             List<FieldError> errList = result.getFieldErrors();
             for (FieldError err : errList){
@@ -91,31 +93,22 @@ public class BoardController {
         }
 
         model.addAttribute("result", boardService.write(post, files));
-        return "/writeOk";
+        return "board/writeOk";
     }
 
-//    @GetMapping("/detail/{id}")
-//    public String detail(@PathVariable Long id, Model model){
-//        model.addAttribute("post" ,boardService.detail(id));
-//        return "board/detail";
-//    }
-    @RequestMapping("/detail")
-    public String detail(Model model){
-        Long currenUserId = 1L;
-        Long currenPostId = 1L;
-
-        User userProfile = userService.getUserById(currenUserId);
-
-
-        model.addAttribute("post" ,boardService.detail(currenPostId));
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable Long id, Model model){
+        model.addAttribute("post" , boardService.detail(id));
         return "board/detail";
     }
-    @GetMapping("modify/{id}")
-    public String  modify(@PathVariable Long id, Model model){
-        Post post = boardService.selectByPostId(id);
+
+    @GetMapping("modify/{post_id}")
+    public String  modify(@PathVariable Long post_id, Model model){
+        Post post = boardService.selectByPostId(post_id);
         model.addAttribute("post", post);
         return "board/modify";
     }
+
     @PostMapping("modify")
     public String modifyOk(
             @RequestParam Map<String, MultipartFile> files
@@ -129,7 +122,9 @@ public class BoardController {
         if (result.hasErrors()){
 
             redirectAttrs.addFlashAttribute("subject", post.getSubject());
-            redirectAttrs.addFlashAttribute("content", post.getContents());
+            redirectAttrs.addFlashAttribute("category_id", post.getCategory_id());
+            redirectAttrs.addFlashAttribute("contents", post.getContents());
+            redirectAttrs.addFlashAttribute("price", post.getPrice());
 
             List<FieldError> errList = result.getFieldErrors();
             for(FieldError err : errList){
@@ -159,6 +154,18 @@ public class BoardController {
     public String deleteOk(Long post_id, Model model){
         model.addAttribute("result", boardService.deleteByPostId(post_id));
         return "board/deleteOk";
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        System.out.println("initBinder() 호출");
+        binder.setValidator(new PostValidator());
+    }
+
+    @PostMapping("/pageRows")
+    public String pageRows(Integer page, Integer pageRows){
+        U.getSession().setAttribute("pageRows", pageRows);
+        return "redirect:/board/list?page=" + page;
     }
 
 }

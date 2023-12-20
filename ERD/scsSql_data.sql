@@ -50,6 +50,7 @@ INSERT INTO s1_user_authority VALUES
 
 INSERT INTO s1_category (name) VALUES
 ('생활용품'),
+('패션의류'),
 ('가전제품'),
 ('스포츠용품'),
 ('도서/음반/DVD'),
@@ -88,9 +89,7 @@ INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
 ;
 
 /* 채팅 정보 영역 */
-
-
 INSERT INTO s1_chatroom (subject,post_id ,buyer_id, seller_id) VALUES
-('채팅방 이름', 3,1,2)
+('채팅방 이름', 3, 1, 2)
 ;
 

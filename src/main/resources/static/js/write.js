@@ -1,5 +1,5 @@
 $(function(){
-    // [추가] 버튼 누르면 첨부피일 추가
+    // [추가] 버튼 누르면 첨부파일 추가
     var i = 0;
     $("#btnAdd").click(function(){
         $("#files").append(`
@@ -11,7 +11,8 @@ $(function(){
     });
 
     // Summernote 추가
-    $("#content").summernote({
+    $("#contents").summernote({
         height: 300,
+
     });
 });

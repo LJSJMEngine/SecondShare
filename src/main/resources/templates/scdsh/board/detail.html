@@ -27,19 +27,18 @@
         const logged_id = [[${logged_id}]];
     </script>
 
-    <!--<title>[[$post.subject]]</title>-->
-    <title>상세페이지</title>
+    <title>[[$post.subject]]</title>
 </head>
+
 <body>
+    <!-- 헤더 부분 -->
+
     <div>
-        <h2>상품</h2>
-<!--        <span th:text="${myPost.status == 0 ? '판매중' : '판매완료'}"></span><h2>[[$[post.subject]]]</h2>-->
+        <span th:text="${myPost.status == 0 ? '판매중' : '판매완료'}"></span><h2>[[$[post.subject]]]</h2>
         <div>
-            <form name="frmDelete" th:action="@{/user/userpage}" method="post">
-                <input type="hidden" name="id" th:value="${post.id}">
-            </form>
-            <span>작성일:</span>
-            <span>조회수: </span>
+            <span>작성자: </span><span th:href="@{/user/userpage/${post.user_id}}}" th:text="${post.user.name}"></span>
+            <span>작성일: [[${#temporals.format(post.regDate, 'yyyy년 MM월 dd일)}]]</span>
+            <span>조회수: [[${post.viewCnt}]]</span>
             <!-- 좋아요 공간 -->
         </div>
 
@@ -51,10 +50,17 @@
             </form>
 
             <div>
-                <div th:utext="${post.content}"></div>
+                <label>제목: </label>
+                <div th:utext="${post.subject}"></div>
 
+                <label>내용: </label>
+                <div th:utext="${post.content}"></div>
+            </div>
+
+            <div>
+                <label>첨부 사진:</label>
                 <div th:each="attachment : ${post.fileList}" th:if="${attachment.image}">
-                        <img th:src="@{'upload/' + ${attachment.filename}}">
+                        <img th:src="@{'/upload/' + ${attachment.filename}}" class="img-thumbnail" alt="Cinque Terre">
                 </div>
             </div>
 
