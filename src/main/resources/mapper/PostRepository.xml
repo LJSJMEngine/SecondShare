@@ -6,11 +6,11 @@
 <mapper namespace="com.lec.spring.repository.PostRepository">
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Post"
-            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+            useGeneratedKeys="true" keyColumn="id" keyProperty="post_id">
         INSERT INTO s1_post
-        (user_id, subject, content, price, category_id)
+        (user_id, category_id, subject, contents, price, regDate)
         VALUES
-        ( #{user.id}, #{subject}, #{content}, #{price}, #{category_id})
+        (#{user.id}, #{category_id}, #{subject}, #{contents}, #{price}, NOW())
     </insert>
 
     <update id="incViewCnt" flushCache="true">
@@ -32,6 +32,10 @@
         , p.category_id "p_category_id"
         , u.id "u_id"
         , u.username "u_username"
+        , u.name "u_name"
+        , u.email "u_email"
+        FROM s1_post p, s1_user u
+        WHERE p.user_id = u.id
         , a.sourcename "a_sourcename"
         , a.filename "a_filename"
         , a.id "a_id"
@@ -77,7 +81,7 @@
 
     <select id="findByPostId" resultType="com.lec.spring.domain.Post">
         <include refid="SELECT_BASE"/>
-            AND p.post_id = #{p.post_id}
+        AND post_id = #{post_id}
     </select>
 
     <select id="findAll" resultMap="mapPost">
@@ -90,7 +94,7 @@
     <update id="modify" flushCache="true"
             parameterType="com.lec.spring.domain.Post">
         UPDATE s1_post
-        SET subject = #{subject}, content = #{content}, price = #{price}, delStatus = #{delStatus}
+        SET subject = #{subject}, contents = #{contents}, price = #{price}, delStatus = #{delStatus}
         WHERE post_id = #{post_id}
     </update>
 
@@ -179,11 +183,10 @@
 
 
     <!-- 메인페이지 - 최신 판매글 -->
-    <select id="findLatestPostsWithUsername" resultType="java.util.Map">
+    <select id="findLatestPostsWithUsername" resultType="map">
         SELECT
-        p.*
-        , u.username
-        , a.filename AS attachment_filename
+            p.*, u.username
+            , a.filename AS attachment_filename
         FROM s1_post p
         JOIN s1_user u ON p.user_id = u.id
         LEFT JOIN s1_attachment a ON p.post_id = a.post_id

@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Post {
     private Long post_id;// 글 번호
     private Long user_id;
+    private Long category_id;
     private String subject;
     private String contents;
-    private int category_id;
     private int viewCnt;
     private int status;
-    private  int price;
+    private Long price;
     private LocalDateTime regDate;
 
     private User user;

@@ -4,6 +4,7 @@ import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AuthorityRepository;
+import com.lec.spring.repository.PostRepository;
 import com.lec.spring.repository.UserRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService{
     private PasswordEncoder passwordEncoder;
 
     private UserRepository userRepository;
+    private PostRepository postRepository;
     private AuthorityRepository authorityRepository;
 
 
@@ -68,6 +70,7 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findById(id);
         return authorityRepository.findByUser(user);
     }
+
 
     // 마이페이지 - 프로필 보기, 프로필 수정
     @Override
@@ -159,6 +162,16 @@ public class UserServiceImpl implements UserService{
             myPosts.clear();    // myPosts 삭제
             userRepository.deleteAllMyPostsByUserId(id);    // 사용자의 모든 판매글 삭제
         }
+    }
+
+    @Override
+    public boolean authenticateUser(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            // 사용자가 존재하고, 입력한 비밀번호가 저장된 비밀번호와 일치하는 경우
+            return true; // 로그인 성공
+        }
+        return false; // 로그인 실패
     }
 
 

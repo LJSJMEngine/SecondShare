@@ -15,35 +15,61 @@
     <script th:src="@{/js/write.js}"></script>
 </head>
 <body>
-<div class="" >
-    <h2>상품 등록하기</h2>
+
+<!-- 헤더 삽입 예정 -->
+<div></div>
+
+<div th:with="user=${#authentication.principal.user}">
+    <h3>판매글 작성하기</h3>
+    <hr>
     <form th:action="@{/board/write}" method="post" enctype="multipart/form-data">
         <div >
-            <label class="input" for="subject">제목:</label>
+            <label>작성자:</label>
+            <span>[[${user.name}]]</span>
+        </div>
+
+        <div >
+            <label class="input">카테고리:</label>
+            <select id="category_id" name="category_id">
+                <option th:value="0">=카테고리 선택=</option>
+                <option th:value="1">생활용품</option>
+                <option th:value="2">패션의류</option>
+                <option th:value="3">가전제품</option>
+                <option th:value="3">가전제품</option>
+                <option th:value="4">스포츠용품</option>
+                <option th:value="5">도서/음반/DVD</option>
+                <option th:value="6">문구/오피스</option>
+            </select>
+            <span class="text-danger" th:if="${error_category_id}" th:utext="${error_category_id}"></span>
+        </div>
+
+        <div >
+            <label class="input" for="subject">제목:</label><br>
             <input type="text" id="subject" name="subject" placeholder="상품의 이름을 적어주세요" th:value="${subject}">
             <span class="text-danger" th:if="${error_subject}" th:utext="${error_subject}"></span>
         </div>
 
         <div >
-            <label>작성자:</label>
-            <span></span>
+            <label class="input" for="price">가격:</label><br>
+            <input type="number" id="price" name="price" th:value="${price}" th:text="원">
+            <span class="text-danger" th:if="${error_price}" th:utext="${error_price}"></span>
         </div>
 
         <div >
-            <label for="content">내용:</label>
-            <textarea rows="5" id="content" placeholder="내용을 입력하세요" name="content" th:utext="${content}"></textarea>
+            <label for="contents">내용:</label><br>
+            <textarea rows="5" id="contents" placeholder="내용을 입력하세요" name="contents" th:utext="${contents}"></textarea>
         </div>
 
         <div >
-            <label>제품 사진:</label>
-            <div id="sampleimg">
-                <input class="form-control col-xs-3" type="file" name="upfile${0}"/>
-            </div>
-
-            <label>추가 사진:</label>
             <div id="files">
+                <label>상품 사진:</label><br>
+                <input class="form-control col-xs-3" type="file" name="upfile${0}"/>
+                <br>
+                <label>추가 사진:</label>
 
             </div>
+
+
             <button type="button" id="btnAdd">추가</button>
         </div>
 

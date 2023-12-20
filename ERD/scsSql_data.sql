@@ -185,17 +185,17 @@ INSERT INTO s1_category (name) VALUES
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS loopInsert$$
- 
+
 CREATE PROCEDURE loopInsert()
 BEGIN
-    DECLARE i INT DEFAULT 1;        
+    DECLARE i INT DEFAULT 1;
     WHILE i <= 500 DO
-     
-    INSERT INTO s1_user(username, password, name, phoneNM, email, status) 
+
+    INSERT INTO s1_user(username, password, name, phoneNM, email, status)
       VALUES (concat('id',i), concat('1234qwer',i), concat('이름',i), concat('010-1234-', i), concat(i, '@naver.com'), 0);
       SET i = i + 1;
-     
-     INSERT INTO s1_post (user_id, subject, contents) 
+
+     INSERT INTO s1_post (user_id, subject, contents)
      VALUES (i, concat('제목',i), concat('내용',i))
 ;
     END WHILE;

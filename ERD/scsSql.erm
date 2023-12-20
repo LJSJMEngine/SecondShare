@@ -28,7 +28,7 @@
 	<settings>
 		<database>MySQL</database>
 		<capital>false</capital>
-		<table_style>funny</table_style>
+		<table_style></table_style>
 		<notation></notation>
 		<notation_level>0</notation_level>
 		<notation_expand_group>true</notation_expand_group>

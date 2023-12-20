@@ -15,9 +15,9 @@ public interface PostRepository {
 
     int save(Post post);
 
-    Post findByPostId(Long id);
+    Post findByPostId(Long post_id);
 
-    int incViewCnt(Long id);
+    int incViewCnt(Long post_id);
 
     List<Post> findAll();
 

@@ -5,6 +5,7 @@ import com.lec.spring.domain.Post;
 import com.lec.spring.repository.CategoryRepository;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AttachmentRepository;
+import com.lec.spring.repository.CategoryRepository;
 import com.lec.spring.repository.PostRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.util.U;
@@ -126,7 +127,7 @@ public class BoardServiceImpl implements BoardService {
         return cnt;
     }
 
-    private void addFile(Map<String, MultipartFile> files, Long postId) {
+    private void addFile(Map<String, MultipartFile> files, Long post_id) {
         if (files == null) return;
 
         for (Map.Entry<String, MultipartFile> e : files.entrySet()){
@@ -137,7 +138,7 @@ public class BoardServiceImpl implements BoardService {
             Attachment file = upload(e.getValue());
 
             if (file != null){
-                file.setPost_id(postId);
+                file.setPost_id(post_id);
                 file.setIsspImg(true);
                 attachmentRepository.save(file);
             }
@@ -149,14 +150,14 @@ public class BoardServiceImpl implements BoardService {
 
         // 담김 파일 없으면 무시
         String originalFilename = multipartFile.getOriginalFilename();
-        if (originalFilename == null || originalFilename.length() == 0) return  null;
+        if (originalFilename == null || originalFilename.length() == 0) return null;
 
         String sourceName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         String fileName = sourceName;
 
-        File fil = new File(uploadDir, fileName);
+        File file = new File(uploadDir, fileName);
 
-        if (fil.exists()) {
+        if (file.exists()) {
             int pos = fileName.lastIndexOf(".");
             if (pos > -1) {
                 String name = fileName.substring(0, pos);
@@ -190,18 +191,22 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public Post detail(Long id) {
-        postRepository.incViewCnt(id);
-        Post post = postRepository.findByPostId(id);
+    public Post detail(Long post_id) {
+        postRepository.incViewCnt(post_id);
+        Post post = postRepository.findByPostId(post_id);
 
-        // TODO
+        if (post != null){
+            List<Attachment> fileList = attachmentRepository.findByPost(post.getPost_id());
+            setImage(fileList);
+            post.setFileList(fileList);
+        }
 
         return post;
     }
 
     @Override
-    public Post selectByPostId(Long id) {
-        Post post = postRepository.findByPostId(id);
+    public Post selectByPostId(Long post_id) {
+        Post post = postRepository.findByPostId(post_id);
 
         if (post != null){
             List<Attachment> fileList = attachmentRepository.findByPost(post.getPost_id());
@@ -221,7 +226,7 @@ public class BoardServiceImpl implements BoardService {
             try {
                 imgData = ImageIO.read(f);
             } catch (IOException e) {
-                System.out.println("파일이 존재하지 않음" + f.getAbsolutePath() + "[" + e.getMessage() + "]");
+                System.out.println("파일이 존재하지 않음: " + f.getAbsolutePath() + "[" + e.getMessage() + "]");
             }
 
             if (imgData != null) attachment.setImage(true);
@@ -267,13 +272,13 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public int deleteByPostId(Long id){
+    public int deleteByPostId(Long post_id){
         int result = 0;
 
-        Post post = postRepository.findByPostId(id);
+        Post post = postRepository.findByPostId(post_id);
         if (post != null){
 
-            List<Attachment> fileList = attachmentRepository.findByPost(id);
+            List<Attachment> fileList = attachmentRepository.findByPost(post_id);
             if (fileList != null && fileList.size() > 0){
                 for (Attachment file : fileList){
                     delFile(file);

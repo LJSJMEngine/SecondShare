@@ -27,19 +27,57 @@
         const logged_id = [[${logged_id}]];
     </script>
 
-    <title>조회</title>
+    <title>[[$post.subject]]</title>
 </head>
+
 <body>
+    <!-- 헤더 부분 -->
+
     <div>
-        <h2>조회</h2>
+        <span th:text="${myPost.status == 0 ? '판매중' : '판매완료'}"></span><h2>[[$[post.subject]]]</h2>
+        <div>
+            <span>작성자: </span><span th:href="@{/user/userpage/${post.user_id}}}" th:text="${post.user.name}"></span>
+            <span>작성일: [[${#temporals.format(post.regDate, 'yyyy년 MM월 dd일)}]]</span>
+            <span>조회수: [[${post.viewCnt}]]</span>
+            <!-- 좋아요 공간 -->
+        </div>
+
         <hr>
-        <span>작성자:</span>
-        <span>작성일:</span>
-        <span>조회수: </span>
+
+        <section>
+            <form name="frmDelete" th:action="@{/board/delete}" method="post">
+                <input type="hidden" name="id" th:value="${post.id}">
+            </form>
+
+            <div>
+                <label>제목: </label>
+                <div th:utext="${post.subject}"></div>
+
+                <label>내용: </label>
+                <div th:utext="${post.content}"></div>
+            </div>
+
+            <div>
+                <label>첨부 사진:</label>
+                <div th:each="attachment : ${post.fileList}" th:if="${attachment.image}">
+                        <img th:src="@{'/upload/' + ${attachment.filename}}" class="img-thumbnail" alt="Cinque Terre">
+                </div>
+            </div>
+
+            <!-- 버튼 부분 -->
+            <div >
+                <a class="btn btn-outline-dark" th:href="@{'/board/modify' + ${post.post_id}}" th:if="${logged_user.id == post.user.id}">수정</a>
+                <button type="button" id="btnDel" th:if="${logged_user.id == post.user.id}">삭제</button>
+                <a class="btn btn-outline-dark" th:href="TODO" th:if="${logged_user.id != post.user.id}">1:1 채팅하기</a>
+                <button type="button" id="status" th:if="${logged_user.id == post.user.id}">거래완료</button>
+                <button type="button" onclick="history.back()">돌아가기</button>
+            </div>
+
+            <!-- 댓글 부분 -->
+            <th:block th:insert="~{board/comment::comment}"></th:block>
+
+        </section>
     </div>
-
-    <div>상품 이미지</div>
-
 </body>
 </th:block>
 </html>
