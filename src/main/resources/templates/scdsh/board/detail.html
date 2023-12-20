@@ -27,19 +27,51 @@
         const logged_id = [[${logged_id}]];
     </script>
 
-    <title>조회</title>
+    <!--<title>[[$post.subject]]</title>-->
+    <title>상세페이지</title>
 </head>
 <body>
     <div>
-        <h2>조회</h2>
+        <h2>상품</h2>
+<!--        <span th:text="${myPost.status == 0 ? '판매중' : '판매완료'}"></span><h2>[[$[post.subject]]]</h2>-->
+        <div>
+            <form name="frmDelete" th:action="@{/user/userpage}" method="post">
+                <input type="hidden" name="id" th:value="${post.id}">
+            </form>
+            <span>작성일:</span>
+            <span>조회수: </span>
+            <!-- 좋아요 공간 -->
+        </div>
+
         <hr>
-        <span>작성자:</span>
-        <span>작성일:</span>
-        <span>조회수: </span>
+
+        <section>
+            <form name="frmDelete" th:action="@{/board/delete}" method="post">
+                <input type="hidden" name="id" th:value="${post.id}">
+            </form>
+
+            <div>
+                <div th:utext="${post.content}"></div>
+
+                <div th:each="attachment : ${post.fileList}" th:if="${attachment.image}">
+                        <img th:src="@{'upload/' + ${attachment.filename}}">
+                </div>
+            </div>
+
+            <!-- 버튼 부분 -->
+            <div >
+                <a class="btn btn-outline-dark" th:href="@{'/board/modify' + ${post.post_id}}" th:if="${logged_user.id == post.user.id}">수정</a>
+                <button type="button" id="btnDel" th:if="${logged_user.id == post.user.id}">삭제</button>
+                <a class="btn btn-outline-dark" th:href="TODO" th:if="${logged_user.id != post.user.id}">1:1 채팅하기</a>
+                <button type="button" id="status" th:if="${logged_user.id == post.user.id}">거래완료</button>
+                <button type="button" onclick="history.back()">돌아가기</button>
+            </div>
+
+            <!-- 댓글 부분 -->
+            <th:block th:insert="~{board/comment::comment}"></th:block>
+
+        </section>
     </div>
-
-    <div>상품 이미지</div>
-
 </body>
 </th:block>
 </html>

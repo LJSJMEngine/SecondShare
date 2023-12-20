@@ -2,8 +2,11 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.Category;
 import com.lec.spring.domain.Post;
+import com.lec.spring.domain.User;
 import com.lec.spring.service.BoardService;
 import com.lec.spring.service.CategoryService;
+import com.lec.spring.service.PostService;
+import com.lec.spring.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,12 +23,19 @@ import java.util.Map;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-    @Autowired
+
+    private UserService userService;
     private BoardService boardService;
-
+    private PostService postService;
+    private CategoryService categoryService;
 
     @Autowired
-    private CategoryService categoryService;
+    public BoardController(UserService userService, BoardService boardService, PostService postService, CategoryService categoryService){
+        this.userService = userService;
+        this.boardService = boardService;
+        this.postService = postService;
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("/list")
     public String list(@RequestParam(required = false) String type,
@@ -84,9 +94,20 @@ public class BoardController {
         return "/writeOk";
     }
 
-    @GetMapping("/detail/{id}")
-    public String detail(@PathVariable Long id, Model model){
-        model.addAttribute("post" ,boardService.detail(id));
+//    @GetMapping("/detail/{id}")
+//    public String detail(@PathVariable Long id, Model model){
+//        model.addAttribute("post" ,boardService.detail(id));
+//        return "board/detail";
+//    }
+    @RequestMapping("/detail")
+    public String detail(Model model){
+        Long currenUserId = 1L;
+        Long currenPostId = 1L;
+
+        User userProfile = userService.getUserById(currenUserId);
+
+
+        model.addAttribute("post" ,boardService.detail(currenPostId));
         return "board/detail";
     }
     @GetMapping("modify/{id}")
@@ -122,11 +143,22 @@ public class BoardController {
         return "/modifyOk";
     }
 
+    @GetMapping("/review")
+    public void review(){}
+
+    @PostMapping("/review")
+    public String reviewOk(
+            @RequestParam("post_id") Long post_id,
+            @RequestParam("user_id") Long user_id,
+            String content
+            ){
+        return "/board/review";
+    }
+
     @PostMapping("/delete")
     public String deleteOk(Long post_id, Model model){
         model.addAttribute("result", boardService.deleteByPostId(post_id));
         return "board/deleteOk";
     }
 
-//    @GetMapping("review")
 }

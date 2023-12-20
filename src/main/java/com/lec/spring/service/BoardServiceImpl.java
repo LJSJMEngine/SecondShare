@@ -4,6 +4,7 @@ import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AttachmentRepository;
+import com.lec.spring.repository.CategoryRepository;
 import com.lec.spring.repository.PostRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.util.U;
@@ -40,6 +41,7 @@ public class BoardServiceImpl implements BoardService {
 
     private UserRepository userRepository;
     private PostRepository postRepository;
+    private CategoryRepository categoryRepository;
     private AttachmentRepository attachmentRepository;
 
 

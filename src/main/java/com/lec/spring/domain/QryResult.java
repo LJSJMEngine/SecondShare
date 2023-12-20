@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Category {
-    private Long categoryid;
-    private String name;
+public class QryResult {
+    int count;      // 결과값
+    String status;  // 결과 메세지
 }

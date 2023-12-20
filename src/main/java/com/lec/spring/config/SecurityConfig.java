@@ -38,9 +38,6 @@ public class SecurityConfig {
                         .loginProcessingUrl("/user/login")
                         .defaultSuccessUrl("/")
 
-                        .usernameParameter("username")
-                        .passwordParameter("password")
-
                         .successHandler(new CustomLoginSuccessHandler("/main"))
                         .failureHandler(new CustomLoginFailureHandler())
                 )

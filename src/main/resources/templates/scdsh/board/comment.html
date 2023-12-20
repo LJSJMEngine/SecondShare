@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<th:blaock th:fragment="comment">
+
+    <div>
+        <label>댓글: <span id="cmt_cnt"> 개</span></label>
+
+        <div sec:authorize="hasAnyRole('ADMIN','MEMBER')">
+<!--            <label th:if="${logged_user.id != post.user.id}">[[${logged_user.name}]]</label>-->
+            <input type="text" id="input_comment" placeholder="댓글을 남겨보세요">
+            <button type="button" id="btn_comment">등록</button>
+        </div>
+
+        <table id="cmt_table">
+            <thead>
+            <tr>
+                <th style="width: 16.66%">작성자</th>
+                <th>내용</th>
+                <th style="width: 16.66%">작성일</th>
+            </tr>
+            </thead>
+            <tbody id="cmt_list"></tbody>
+        </table>
+    </div>
+
+</th:blaock>
+
+</html>
