@@ -103,7 +103,7 @@ public class BoardController {
     }
 
     @GetMapping("modify/{post_id}")
-    public String  modify(@PathVariable Long post_id, Model model){
+    public String modify(@PathVariable Long post_id, Model model){
         Post post = boardService.selectByPostId(post_id);
         model.addAttribute("post", post);
         return "board/modify";
