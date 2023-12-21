@@ -64,7 +64,6 @@ CREATE TABLE s1_chatroom
 	room_id int NOT NULL AUTO_INCREMENT,
 	post_id int NOT NULL,
 	buyer_id int NOT NULL,
-	seller_id int,
 	createDate datetime,
 	lastUpdateDate datetime,
 	subject varchar(50) NOT NULL,

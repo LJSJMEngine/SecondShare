@@ -29,18 +29,38 @@
         , p.viewCnt "p_viewCnt"
         , p.regDate "p_regDate"
         , p.status "p_status"
+        , p.category_id "p_category_id"
         , u.id "u_id"
         , u.username "u_username"
         , u.name "u_name"
         , u.email "u_email"
-        FROM s1_post p, s1_user u
+        , a.sourcename "a_sourcename"
+        , a.filename "a_filename"
+        , a.id "a_id"
+        , c.id "c_id"
+        , c.name "c_name"
+        FROM s1_post p, s1_user u  ,s1_attachment a, s1_category c
         WHERE p.user_id = u.id
     </sql>
+
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>
         <result column="u_username" property="username"/>
-        <result column="u_registDate" property="registDate"/>
+        <result column="u_regdate" property="regDate"/>
     </resultMap>
+
+
+    <resultMap id="mapCategory" type="com.lec.spring.domain.Category">
+        <result column="c_id" property="id"/>
+        <result column="c_name" property="name"/>
+    </resultMap>
+
+    <resultMap id="mapAttachment" type="com.lec.spring.domain.Attachment">
+        <result column="a_id" property="id"/>
+        <result column="a_sourcename" property="sourcename"/>
+        <result column="a_filecename" property="filecename"/>
+    </resultMap>
+
 
     <resultMap id="mapPost" type="com.lec.spring.domain.Post">
         <result column="p_post_id" property="post_id"/>
@@ -52,8 +72,10 @@
         <result column="p_viewCnt" property="viewCnt"/>
         <result column="p_regDate" property="regDate"/>
         <result column="p_status" property="status"/>
-<!--        <result column="p_goodCnt" property="goodCnt"/>-->
+        <result column="p_category_id" property="category_id"/>
         <collection property="user" resultMap="mapUser"/>
+        <collection property="category" resultMap="mapCategory"/>
+        <collection property="attachment" resultMap="mapAttachment"/>
     </resultMap>
 
     <select id="findByPostId" resultType="com.lec.spring.domain.Post">
@@ -75,25 +97,86 @@
         WHERE post_id = #{post_id}
     </update>
 
-    <!-- search -->
-    <select id="search" resultMap="mapPost" parameterType="String">
-        SELECT
-        p.post_id "p_post_id"
-        , p.user_id "p_user_id"
-        , p.subject "p_subject"
-        , p.contents "p_contents"
-        , p.price "p_price"
-        , p.viewCnt "p_viewCnt"
-        , p.regDate "p_regDate"
-        , p.status "p_status"
-        , u.id "u_id"
-        , u.username "u_username"
-        FROM s1_post p, s1_user u
-        <where>
-            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
-        </where>
+    <!-- 페이징 용 쿼리 -->
+    <select id="selectFromRow" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
         ORDER BY p.post_id DESC
+        LIMIT #{param1}, #{param2}
     </select>
+
+    <select id="countAll" resultType="int">
+        SELECT count(*) FROM s1_post
+    </select>
+
+
+    <select id="countSearchResults" resultType="int">
+        SELECT COUNT(*) FROM s1_post p ,s1_category c
+        WHERE
+        p.category_id = c.id
+        <if test ="type == '제목'">
+          AND  LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+        </if>
+        <if test="type == '생활용품'">
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 1, '%'))
+        </if>
+        <if test="type == '패션의류'">
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 2, '%'))
+        </if>
+        <if test="type == '가전제품'">
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 3, '%'))
+        </if>
+        <if test="type == '스포츠용품'">
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 4, '%'))
+        </if>
+        <if test="type == '도서/음반/DVD'">
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 5, '%'))
+        </if>
+        <if test="type == '문구/오피스'">
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 6, '%'))
+        </if>
+
+
+    </select>
+
+    <select id="searchWithPagination" resultMap="mapPost" parameterType="map">
+        <include refid="SELECT_BASE"/>
+        <if test ="type == '제목'">
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+        </if>
+        <if test="type == '생활용품'">
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 1, '%'))
+        </if>
+        <if test="type == '패션의류'">
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 2, '%'))
+        </if>
+        <if test="type == '가전제품'">
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 3, '%'))
+        </if>
+        <if test="type == '스포츠용품'">
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 4, '%'))
+        </if>
+        <if test="type == '도서/음반/DVD'">
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 5, '%'))
+        </if>
+        <if test="type == '문구/오피스'">
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 6, '%'))
+        </if>
+        ORDER BY p.post_id DESC
+        LIMIT #{from}, #{rows}
+    </select>
+
 
     <!-- 메인페이지 - 최신 판매글 -->
     <select id="findLatestPostsWithUsername" resultType="map">
@@ -107,6 +190,11 @@
         WHERE 1=1
         ORDER BY p.regDate DESC LIMIT 5;
     </select>
+
+    <!-- 메인페이지 - 관심 판매글 (사용자 아이디로 가져오기) -->
+    <select id="getLikedPostIds" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT post_id FROM s1_like
+        WHERE user_id = #{userId} AND likeChk = 1
 
     <!-- 메인페이지 - 관심 판매글 -->
     <select id="findLikedPostIdsByUsername" resultType="java.lang.Long">
