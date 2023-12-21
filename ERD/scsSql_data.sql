@@ -89,3 +89,24 @@ INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
 ;
 
 /* 채팅 정보 영역 */
+
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS loopInsert$$
+ 
+CREATE PROCEDURE loopInsert()
+BEGIN
+    DECLARE i INT DEFAULT 1;        
+    WHILE i <= 500 DO
+     
+    INSERT INTO s1_user(username, password, name, phoneNM, email, registDate, status) 
+      VALUES (concat('id',i), concat('1234qwer',i), concat('이름',i), concat('010-1234-', i), concat(i, '@naver.com'), NOW(), 0);
+      SET i = i + 1;
+     
+     INSERT INTO s1_post (user_id, subject, price, contents, status, regDate, category_id) 
+     VALUES (i, concat('제목',i), i * 2500 , concat('내용',i), 0, NOW(),1)
+INSERT INTO s1_chatroom (subject,post_id ,buyer_id, seller_id) VALUES
+('채팅방 이름', 3, 1, 2)
+;
+
