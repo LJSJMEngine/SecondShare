@@ -34,14 +34,15 @@
         , u.username "u_username"
         , u.name "u_name"
         , u.email "u_email"
-        , a.sourcename "a_sourcename"
-        , a.filename "a_filename"
-        , a.id "a_id"
+        ,COALESCE(a.sourcename, '이미지 없음') "a_sourcename"
+        ,COALESCE(a.filename, '이미지 없음') "a_filename"
+        ,  COALESCE(a.id, 0) "a_id"
         , c.id "c_id"
         , c.name "c_name"
         FROM s1_post p, s1_user u  ,s1_attachment a, s1_category c
         WHERE p.user_id = u.id
         AND p.category_id = c.id
+        AND a.post_id = p.post_id OR a.id = 0
     </sql>
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>

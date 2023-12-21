@@ -33,65 +33,28 @@ INSERT INTO s1_authority (name) VALUES
 ('ROLE_ADMIN'), ('ROLE_MEMBER')
 ;
 
-
 INSERT INTO s1_user (username, password, name, phoneNM, email, registDate, status) VALUES
-('ADMIN1', '$2a$10$53OEi/JukSMPr3z5RQBFH.z0TCYSUDPtxf1/8caRyRVdDNdHA9QHi', '관리자1', '010-1111-2222', 'admin1@gmail.com', NOW(), 0),
+('ADMIN1', '$2a$10$6gVaMy7.lbezp8bGRlV2fOArmA3WAk2EHxSKxncnzs28/m3DXPyA2', '관리자1', '010-1111-2222', 'admin1@gmail.com', NOW(), 0),
 ('USER1', '$2a$10$6gVaMy7.lbezp8bGRlV2fOArmA3WAk2EHxSKxncnzs28/m3DXPyA2', '회원1', '010-3333-4444', 'user1@gmail.com', NOW(), 0),
-('USER2', '$2a$10$7LTnvLaczZbEL0gabgqgfezQPr.xOtTab2NAF/Yt4FrvTSi0Y29Xa', '회원2', '010-5555-6666', 'user2@gmail.com', NOW(), 0),
+('USER2', '2a$10$7LTnvLaczZbEL0gabgqgfezQPr.xOtTab2NAF/Yt4FrvTSi0Y29Xa', '회원2', '010-5555-6666', 'user2@gmail.com', NOW(), 0),
 ('USER3', '1234', '회원3', '010-7777-8888', 'user3@gmail.com', NOW(), 0),
-('USER4', '1234', '회원4', '010-9999-0000', 'user4@gmail.com', NOW(), 0),
-('USER5', '1234', '회원5', '010-9999-0000', 'user5@gmail.com', NOW(), 0),
-('USER6', '1234', '회원6', '010-9999-0000', 'user6@gmail.com', NOW(), 0),
-('USER7', '1234', '회원7', '010-9999-0000', 'user7@gmail.com', NOW(), 0),
-('USER8', '1234', '회원8', '010-9999-0000', 'user8@gmail.com', NOW(), 0),
-('USER9', '1234', '회원9', '010-9999-0000', 'user9@gmail.com', NOW(), 0),
-('USER10', '1234', '회원10', '010-9999-0000', 'user10@gmail.com', NOW(), 0),
-('USER11', '1234', '회원11', '010-9999-0000', 'user11@gmail.com', NOW(), 0),
-('USER12', '1234', '회원12', '010-9999-0000', 'user12@gmail.com', NOW(), 0),
-('USER13', '1234', '회원13', '010-9999-0000', 'user13@gmail.com', NOW(), 0),
-('USER14', '1234', '회원14', '010-9999-0000', 'user14@gmail.com', NOW(), 0),
-('USER15', '1234', '회원15', '010-9999-0000', 'user15@gmail.com', NOW(), 0),
-('USER16', '1234', '회원16', '010-9999-0000', 'user16@gmail.com', NOW(), 0),
-('USER17', '1234', '회원17', '010-9999-0000', 'user17@gmail.com', NOW(), 0),
-('USER18', '1234', '회원18', '010-9999-0000', 'user18@gmail.com', NOW(), 0),
-('USER19', '1234', '회원19', '010-9999-0000', 'user19@gmail.com', NOW(), 0),
-('USER20', '1234', '회원20', '010-9999-0000', 'user20@gmail.com', NOW(), 0),
-('USER21', '1234', '회원21', '010-9999-0000', 'user21@gmail.com', NOW(), 0),
-('USER22', '1234', '회원22', '010-9999-0000', 'user22@gmail.com', NOW(), 0),
-('USER23', '1234', '회원23', '010-9999-0000', 'user23@gmail.com', NOW(), 0),
-('USER24', '1234', '회원24', '010-9999-0000', 'user24@gmail.com', NOW(), 0),
-('USER25', '1234', '회원25', '010-9999-0000', 'user25@gmail.com', NOW(), 0),
-('USER26', '1234', '회원26', '010-9999-0000', 'user26@gmail.com', NOW(), 0),
-('USER27', '1234', '회원27', '010-9999-0000', 'user27@gmail.com', NOW(), 0),
-('USER28', '1234', '회원28', '010-9999-0000', 'user28@gmail.com', NOW(), 0),
-('USER29', '1234', '회원29', '010-9999-0000', 'user29@gmail.com', NOW(), 0),
-('USER30', '1234', '회원30', '010-9999-0000', 'user30@gmail.com', NOW(), 0),
-('USER31', '1234', '회원31', '010-9999-0000', 'user31@gmail.com', NOW(), 0),
-('USER32', '1234', '회원32', '010-9999-0000', 'user32@gmail.com', NOW(), 0),
-('USER33', '1234', '회원33', '010-9999-0000', 'user33@gmail.com', NOW(), 0),
-('USER34', '1234', '회원34', '010-9999-0000', 'user34@gmail.com', NOW(), 0),
-('USER35', '1234', '회원35', '010-9999-0000', 'user35@gmail.com', NOW(), 0),
-('USER36', '1234', '회원36', '010-9999-0000', 'user36@gmail.com', NOW(), 0),
-('USER37', '1234', '회원37', '010-9999-0000', 'user37@gmail.com', NOW(), 0),
-('USER38', '1234', '회원38', '010-9999-0000', 'user38@gmail.com', NOW(), 0),
-('USER39', '1234', '회원39', '010-9999-0000', 'user39@gmail.com', NOW(), 0),
-('USER40', '1234', '회원40', '010-9999-0000', 'user40@gmail.com', NOW(), 0),
-('USER41', '1234', '회원41', '010-9999-0000', 'user41@gmail.com', NOW(), 0),
-('USER42', '1234', '회원42', '010-9999-0000', 'user42@gmail.com', NOW(), 0),
-('USER43', '1234', '회원43', '010-9999-0000', 'user43@gmail.com', NOW(), 0),
-('USER44', '1234', '회원44', '010-9999-0000', 'user44@gmail.com', NOW(), 0),
-('USER45', '1234', '회원45', '010-9999-0000', 'user45@gmail.com', NOW(), 0),
-('USER46', '1234', '회원46', '010-9999-0000', 'user46@gmail.com', NOW(), 0),
-('USER47', '1234', '회원47', '010-9999-0000', 'user47@gmail.com', NOW(), 0),
-('USER48', '1234', '회원48', '010-9999-0000', 'user48@gmail.com', NOW(), 0),
-('USER59', '1234', '회원49', '010-9999-0000', 'user49@gmail.com', NOW(), 0),
-('USER50', '1234', '회원50', '010-9999-0000', 'user50@gmail.com', NOW(), 0)
+('USER4', '1234', '회원4', '010-9999-0000', 'user4@gmail.com', NOW(), 0)
 ;
 
 INSERT INTO s1_user_authority VALUES
 (1, 1),
 (1, 2),
-(2, 2)
+(2, 2),
+(3, 2)
+;
+
+INSERT INTO s1_category (name) VALUES
+('생활용품'),
+('패션의류'),
+('가전제품'),
+('스포츠용품'),
+('도서/음반/DVD'),
+('문구/오피스')
 ;
 
 /* 게시물 정보 영역 */
@@ -99,54 +62,11 @@ INSERT INTO s1_user_authority VALUES
 INSERT INTO s1_post (user_id, subject, contents, price, status, regDate, category_id) VALUES
 (1, '제목1', '내용1', 20000, 0, NOW(), 1),
 (2, '제목2', '내용2', 15000, 1, NOW(), 2),
-(3, '제목3', '내용3', 20000, 1, NOW(), 3),
-(4, '제목4', '내용4', 15000, 0, NOW(), 4),
-(5, '제목5', '내용5', 20000, 1, NOW(), 5),
-(6, '제목6', '내용6', 15000, 1, NOW(), 6),
-(7, '제목7', '내용7', 15000, 0, NOW(), 1),
-(8, '제목8', '내용7', 15000, 0, NOW(), 2),
-(9, '제목9', '내용7', 15000, 0, NOW(), 3),
-(10, '제목10', '내용7', 15000, 0, NOW(), 4),
-(11, '제목11', '내용7', 15000, 0, NOW(), 5),
-(12, '제목12', '내용7', 15000, 0, NOW(), 6),
-(13, '제목13', '내용7', 15000, 0, NOW(), 1),
-(14, '제목14', '내용7', 15000, 0, NOW(), 2),
-(15, '제목15', '내용7', 15000, 1, NOW(), 3),
-(16, '제목16', '내용7', 15000, 1, NOW(), 4),
-(17, '제목17', '내용7', 15000, 0, NOW(), 5),
-(18, '제목18', '내용7', 15000, 0, NOW(), 6),
-(19, '제목19', '내용7', 15000, 0, NOW(), 1),
-(20, '제목20', '내용7', 15000, 0, NOW(), 2),
-(21, '제목21', '내용7', 15000, 1, NOW(), 3),
-(22, '제목22', '내용7', 15000, 1, NOW(), 4),
-(23, '제목23', '내용7', 15000, 0, NOW(), 5),
-(24, '제목24', '내용7', 15000, 0, NOW(), 6),
-(25, '제목25', '내용7', 15000, 0, NOW(), 1),
-(26, '제목26', '내용7', 15000, 0, NOW(), 2),
-(27, '제목27', '내용7', 15000, 0, NOW(), 3),
-(28, '제목28', '내용7', 15000, 0, NOW(), 4),
-(29, '제목29', '내용7', 15000, 0, NOW(), 5),
-(30, '제목30', '내용7', 15000, 0, NOW(), 6),
-(31, '제목31', '내용7', 15000, 1, NOW(), 1),
-(32, '제목32', '내용7', 15000, 1, NOW(), 2),
-(33, '제목33', '내용7', 15000, 0, NOW(), 3),
-(34, '제목34', '내용7', 15000, 0, NOW(), 4),
-(35, '제목35', '내용7', 15000, 1, NOW(), 5),
-(36, '제목36', '내용7', 15000, 1, NOW(), 6),
-(37, '제목37', '내용7', 15000, 0, NOW(), 1),
-(38, '제목38', '내용7', 15000, 0, NOW(), 2),
-(39, '제목39', '내용7', 15000, 0, NOW(), 3),
-(40, '제목40', '내용7', 15000, 0, NOW(), 4),
-(41, '제목41', '내용7', 15000, 0, NOW(), 5),
-(42, '제목42', '내용7', 15000, 0, NOW(), 6),
-(43, '제목43', '내용7', 15000, 0, NOW(), 1),
-(44, '제목44', '내용7', 15000, 0, NOW(), 2),
-(45, '제목45', '내용7', 15000, 1, NOW(), 3),
-(46, '제목46', '내용7', 15000, 1, NOW(), 4),
-(47, '제목47', '내용7', 15000, 0, NOW(), 5),
-(48, '제목48', '내용7', 15000, 0, NOW(), 6),
-(49, '제목49', '내용7', 15000, 0, NOW(), 1),
-(50, '제목50', '내용7', 15000, 0, NOW(), 2)
+(2, '제목3', '내용3', 20000, 1, NOW(), 3),
+(2, '제목4', '내용4', 15000, 0, NOW(), 4),
+(2, '제목5', '내용5', 20000, 0, NOW(), 5),
+(2, '제목6', '내용6', 15000, 0, NOW(), 2),
+(3, '제목7', '내용7', 15000, 0, NOW(), 4)
 ;
 
 INSERT INTO s1_comment (user_id, post_id, content) VALUES
@@ -165,42 +85,11 @@ INSERT INTO s1_review (user_id, post_id, reviewChk, content) VALUES
 ;
 
 INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
-(1, 'face01.png', 'face01.png')
-;
-
-/* 카테고리 설정 */
-
-INSERT INTO s1_category (name) VALUES
-('생활용품'),
-('패션의류'),
-('가전제품'),
-('스포츠용품'),
-('도서/음반/DVD'),
-('문구/오피스')
+(1, 'smple.png', 'smple.png')
 ;
 
 /* 채팅 정보 영역 */
-
-
-
-
-DELIMITER $$
-DROP PROCEDURE IF EXISTS loopInsert$$
-
-CREATE PROCEDURE loopInsert()
-BEGIN
-    DECLARE i INT DEFAULT 1;
-    WHILE i <= 500 DO
-
-    INSERT INTO s1_user(username, password, name, phoneNM, email, status)
-      VALUES (concat('id',i), concat('1234qwer',i), concat('이름',i), concat('010-1234-', i), concat(i, '@naver.com'), 0);
-      SET i = i + 1;
-
-     INSERT INTO s1_post (user_id, subject, contents)
-     VALUES (i, concat('제목',i), concat('내용',i))
+INSERT INTO s1_chatroom (subject,post_id ,buyer_id, seller_id) VALUES
+('채팅방 이름', 3, 1, 2)
 ;
-    END WHILE;
-END$$
-DELIMITER $$
 
-CALL loopInsert;

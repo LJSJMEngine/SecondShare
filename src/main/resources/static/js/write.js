@@ -7,6 +7,7 @@ $(function(){
                <input class="form-control col-xs-3" type="file" name="upfile${i + 1}"/>
                <button type="button" class="btn btn-outline-danger" onclick="$(this).parent().remove()">삭제</button>
             </div>`);
+
     i++;
     });
 

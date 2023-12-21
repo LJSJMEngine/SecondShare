@@ -25,8 +25,8 @@ CREATE TABLE s1_attachment
 (
 	id int NOT NULL AUTO_INCREMENT,
 	post_id int NOT NULL,
-	sourcename varchar(100) NOT NULL,
-	filename varchar(100) NOT NULL,
+	sourcename varchar(100), 
+	filename varchar(100), 
 	PRIMARY KEY (id)
 );
 
@@ -63,8 +63,8 @@ CREATE TABLE s1_chatroom
 (
 	room_id int NOT NULL AUTO_INCREMENT,
 	post_id int NOT NULL,
-	seller_id int NOT NULL,
 	buyer_id int NOT NULL,
+	seller_id int,
 	createDate datetime,
 	lastUpdateDate datetime,
 	subject varchar(50) NOT NULL,
@@ -242,14 +242,6 @@ ALTER TABLE s1_review
 
 ALTER TABLE s1_chatMessage
 	ADD FOREIGN KEY (sender_id)
-	REFERENCES s1_user (id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE s1_chatroom
-	ADD FOREIGN KEY (seller_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
