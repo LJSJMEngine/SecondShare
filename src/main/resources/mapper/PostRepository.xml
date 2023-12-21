@@ -22,12 +22,14 @@
     <sql id="SELECT_BASE">
         SELECT
         p.post_id "p_post_id"
+        , p.user_id "p_user_id"
         , p.subject "p_subject"
         , p.contents "p_contents"
         , p.price "p_price"
         , p.viewCnt "p_viewCnt"
         , p.regDate "p_regDate"
         , p.status "p_status"
+        , p.goodCnt "p_goodCnt"
         , u.id "u_id"
         , u.username "u_username"
         , u.name "u_name"
@@ -35,7 +37,6 @@
         FROM s1_post p, s1_user u
         WHERE p.user_id = u.id
     </sql>
-
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>
         <result column="u_username" property="username"/>
@@ -52,6 +53,8 @@
         <result column="p_viewCnt" property="viewCnt"/>
         <result column="p_regDate" property="regDate"/>
         <result column="p_status" property="status"/>
+        <result column="p_goodCnt" property="goodCnt"/>
+        <result column="p_tags" property="tags"/>
         <collection property="user" resultMap="mapUser"/>
     </resultMap>
 
@@ -85,6 +88,7 @@
         , p.viewCnt "p_viewCnt"
         , p.regDate "p_regDate"
         , p.status "p_status"
+        , p.goodCnt "p_goodCnt"
         , u.id "u_id"
         , u.username "u_username"
         FROM s1_post p, s1_user u
@@ -97,8 +101,9 @@
     <!-- 메인페이지 - 최신 판매글 -->
     <select id="findLatestPostsWithUsername" resultType="map">
         SELECT
-            p.*, u.username
-            , a.filename AS attachment_filename
+        p.*
+        , u.username
+        , a.filename AS attachment_filename
         FROM s1_post p
         JOIN s1_user u ON p.user_id = u.id
         LEFT JOIN s1_attachment a ON p.post_id = a.post_id
