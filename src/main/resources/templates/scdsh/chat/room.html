@@ -15,7 +15,7 @@
         var RoomData = /*[[${RoomData}]]*/;
         /*]]>*/
         /* <![CDATA[ */
-        var postData = /*[[${PostData}]]*/;
+        var PostData = /*[[${PostData}]]*/;
         /*]]>*/
         /* <![CDATA[ */
         var MessageList = /*[[${MessageList}]]*/;
@@ -73,6 +73,24 @@
 
         </div>
         <div class="col-3">
+
+            <dl>
+                <!-- 판매글 제목 -->
+                <dt>
+                    <a th:href="@{'/board/detail/' + ${PostData.post_id}}" th:text="${PostData.subject}" class="subject"
+                       onclick="clickLink(event, '${PostData.post_id}')"></a>
+                </dt>
+                <!-- 판매글 가격 -->
+                <dd th:text="${#numbers.formatDecimal(PostData.price, 0, 'COMMA', 0, 'POINT') + '원'}"
+                    class="price"></dd>
+                <!-- 판매글 작성자명 -->
+                <dd th:text="${PostData.user.name}" class="name"></dd>
+                <!-- 판매글 작성일 & 조회수 -->
+                <dd class="date_cnt">
+                    <span th:text="${#temporals.format(PostData.regDate, 'MM/dd')}" class="regDate"></span>
+                    <span th:text="'조회 ' + ${PostData.viewCnt}" class="viewCnt"></span>
+                </dd>
+            </dl>
 
             <div id="plist" class="row people-list">
                 <div class="input-group">
