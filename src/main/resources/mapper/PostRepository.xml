@@ -29,7 +29,6 @@
         , p.viewCnt "p_viewCnt"
         , p.regDate "p_regDate"
         , p.status "p_status"
-        , p.goodCnt "p_goodCnt"
         , u.id "u_id"
         , u.username "u_username"
         , u.name "u_name"
@@ -53,8 +52,7 @@
         <result column="p_viewCnt" property="viewCnt"/>
         <result column="p_regDate" property="regDate"/>
         <result column="p_status" property="status"/>
-        <result column="p_goodCnt" property="goodCnt"/>
-        <result column="p_tags" property="tags"/>
+<!--        <result column="p_goodCnt" property="goodCnt"/>-->
         <collection property="user" resultMap="mapUser"/>
     </resultMap>
 
@@ -88,7 +86,6 @@
         , p.viewCnt "p_viewCnt"
         , p.regDate "p_regDate"
         , p.status "p_status"
-        , p.goodCnt "p_goodCnt"
         , u.id "u_id"
         , u.username "u_username"
         FROM s1_post p, s1_user u
