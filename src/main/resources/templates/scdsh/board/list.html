@@ -45,7 +45,7 @@
         <tr th:each="post : ${list}">
             <dl>
                 <a th:href="@{'/board/detail/' + ${post.post_id}}">
-                    <img th:src="@{/img/${post.attachment.sourcename}" alt="Image" /></a>
+                    <img th:src="@{/img/{imageName}(imageName=${post.attachment.sourcename})}" alt="Image" /></a>
                 <dt><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></dt>
                 <dt th:text="${post.price}"></dt>
                 <dt><a th:href="@{'/board/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></dt>
@@ -54,7 +54,7 @@
                 <dt>
                 <span th:text="'작성일:'+${#temporals.format(post.regDate, 'yyyy-MM-dd')}"></span>
                 </dt>
-                </dl>
+            </dl>
         </tr>
         </tbody>
     </table>

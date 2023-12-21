@@ -41,12 +41,13 @@
         , c.name "c_name"
         FROM s1_post p, s1_user u  ,s1_attachment a, s1_category c
         WHERE p.user_id = u.id
+        AND p.category_id = c.id
     </sql>
 
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>
         <result column="u_username" property="username"/>
-        <result column="u_regdate" property="regDate"/>
+        <result column="u_registDate" property="regDate"/>
     </resultMap>
 
 
@@ -58,7 +59,7 @@
     <resultMap id="mapAttachment" type="com.lec.spring.domain.Attachment">
         <result column="a_id" property="id"/>
         <result column="a_sourcename" property="sourcename"/>
-        <result column="a_filecename" property="filecename"/>
+        <result column="a_filename" property="filename"/>
     </resultMap>
 
 
@@ -80,12 +81,12 @@
 
     <select id="findByPostId" resultType="com.lec.spring.domain.Post">
         <include refid="SELECT_BASE"/>
-        AND post_id = #{post_id}
+        AND p.post_id = #{post_id}
     </select>
 
     <select id="findAll" resultMap="mapPost">
         <include refid="SELECT_BASE"/>
-        ORDER BY post_id DESC
+        ORDER BY p.post_id DESC
     </select>
 
     <!--  delStatus 글을 삭제했을경우 완전히 삭제되면 안되니
@@ -140,8 +141,6 @@
             AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 6, '%'))
         </if>
-
-
     </select>
 
     <select id="searchWithPagination" resultMap="mapPost" parameterType="map">
@@ -195,6 +194,7 @@
     <select id="getLikedPostIds" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT post_id FROM s1_like
         WHERE user_id = #{userId} AND likeChk = 1
+    </select>
 
     <!-- 메인페이지 - 관심 판매글 -->
     <select id="findLikedPostIdsByUsername" resultType="java.lang.Long">

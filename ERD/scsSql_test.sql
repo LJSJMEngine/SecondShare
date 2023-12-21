@@ -25,9 +25,7 @@ SELECT * FROM s1_user;
 
 SELECT * FROM s1_post;
 
-
-
-SELECT * FROM s1_post;
+SELECT * FROM s1_post WHERE category_id = 1;
 
 SELECT * FROM s1_category;
 
