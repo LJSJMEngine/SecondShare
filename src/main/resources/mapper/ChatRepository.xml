@@ -60,11 +60,6 @@
         SET roomState = #{roomState}
         WHERE post_id = #{post_id}
     </update>
-
-    <select id="getSampleImg" flushCache="true" resultType="com.lec.spring.domain.Attachment" parameterType="int" >
-
-        SELECT * FROM s1_attachment WHERE id = #{id} ORDER BY id LIMIT 1
-    </select>
     <!--chatMessage -->
 
     <!--

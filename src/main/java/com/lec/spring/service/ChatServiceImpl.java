@@ -1,7 +1,10 @@
 package com.lec.spring.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lec.spring.domain.*;
+import com.lec.spring.domain.ChatMessage;
+import com.lec.spring.domain.ChatRoom;
+import com.lec.spring.domain.Post;
+import com.lec.spring.domain.User;
 import com.lec.spring.repository.ChatRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -83,11 +86,6 @@ public class ChatServiceImpl implements ChatService{
     @Override
     public User getUser(int user_id) {
         return chatRepo.getUser(user_id);
-    }
-
-    @Override
-    public Attachment getSampleImg(int id) {
-        return chatRepo.getSampleImg(id);
     }
 
 }

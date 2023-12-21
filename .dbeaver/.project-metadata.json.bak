@@ -1,1 +1,0 @@
-{"resources":{"ERD/scsSql.sql":{"default-datasource":"mysql8-18c814de999-472746d81d146f90","default-catalog":"seconddb"},"ERD/scsSql_test.sql":{"default-datasource":"mysql8-18c814de999-472746d81d146f90","default-catalog":"seconddb"}}}
