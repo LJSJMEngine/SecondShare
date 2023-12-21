@@ -2,7 +2,7 @@ let stompClient;
 let roomId = RoomData.room_id;
 let isInitFlag = false;
 let chatArrayLog = new Array();
-
+console.log(PostData.user);
 $(function () {
     stompClient = new StompJs.Client({
         brokerURL: 'ws://localhost:8093/ws-stomp'
