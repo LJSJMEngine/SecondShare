@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,7 +17,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder encoder() {
-//        System.out.println("PasswordEncoder bean 생성");
+        System.out.println("PasswordEncoder bean 생성");
         return new BCryptPasswordEncoder();
     }
 
@@ -27,10 +28,8 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/board/detail/**").authenticated()
-                        .requestMatchers(
-                                "/board/write/**",
-                                "/board/update/**",
-                                "/board/delete/**").hasAnyRole("ADMIN", "MEMBER")
+                        .requestMatchers("/board/write/**", "/board/modify/**", "/mypage/**", "/user/userpage/**").hasAnyRole("MEMBER", "ADMIN")
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .anyRequest().permitAll()
                 )
 

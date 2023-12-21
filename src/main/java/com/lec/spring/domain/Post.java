@@ -15,10 +15,12 @@ public class Post {
 
     private Long post_id;
     private Long user_id;
+    private Long category_id;
     private String subject;
     private String contents;
     private int viewCnt;
     private int status;
+    private Long price;
     private LocalDateTime regDate;
 
     private User user;

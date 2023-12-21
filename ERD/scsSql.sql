@@ -5,16 +5,15 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS s1_attachment;
 DROP TABLE IF EXISTS s1_user_authority;
 DROP TABLE IF EXISTS s1_authority;
-DROP TABLE IF EXISTS s1_post_category;
-DROP TABLE IF EXISTS s1_category;
 DROP TABLE IF EXISTS s1_chatMessage;
 DROP TABLE IF EXISTS s1_chatroom;
 DROP TABLE IF EXISTS s1_comment;
-DROP TABLE IF EXISTS s1_like;
-DROP TABLE IF EXISTS s1_location;
-DROP TABLE IF EXISTS s1_notice;
+DROP TABLE IF EXISTS s1_heart;
 DROP TABLE IF EXISTS s1_review;
 DROP TABLE IF EXISTS s1_post;
+DROP TABLE IF EXISTS s1_category;
+DROP TABLE IF EXISTS s1_location;
+DROP TABLE IF EXISTS s1_notice;
 DROP TABLE IF EXISTS s1_user;
 
 
@@ -43,7 +42,7 @@ CREATE TABLE s1_authority
 CREATE TABLE s1_category
 (
 	id int NOT NULL AUTO_INCREMENT,
-	c_type varchar(40) NOT NULL,
+	name varchar(40) NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -65,6 +64,7 @@ CREATE TABLE s1_chatroom
 	room_id int NOT NULL AUTO_INCREMENT,
 	post_id int NOT NULL,
 	buyer_id int NOT NULL,
+	seller_id int,
 	createDate datetime,
 	lastUpdateDate datetime,
 	subject varchar(50) NOT NULL,
@@ -85,10 +85,12 @@ CREATE TABLE s1_comment
 );
 
 
-CREATE TABLE s1_like
+CREATE TABLE s1_heart
 (
-	id int NOT NULL,
-	post_id int NOT NULL
+	id int NOT NULL AUTO_INCREMENT,
+	user_id int NOT NULL,
+	post_id int NOT NULL,
+	PRIMARY KEY (id)
 );
 
 
@@ -117,20 +119,15 @@ CREATE TABLE s1_post
 (
 	post_id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
+	category_id int NOT NULL,
 	subject varchar(200) NOT NULL,
 	contents longtext,
 	price int,
 	viewCnt int DEFAULT 0,
-	status int,
+	status int DEFAULT 0,
 	regDate datetime,
+	sampleImg int,
 	PRIMARY KEY (post_id)
-);
-
-
-CREATE TABLE s1_post_category
-(
-	post_id int NOT NULL,
-	tag_id int NOT NULL
 );
 
 
@@ -155,7 +152,6 @@ CREATE TABLE s1_user
 	email varchar(100) NOT NULL,
 	age int,
 	registDate datetime,
-	birth varchar(20),
 	status int,
 	PRIMARY KEY (id),
 	UNIQUE (username),
@@ -180,9 +176,16 @@ ALTER TABLE s1_user_authority
 	ON DELETE CASCADE
 ;
 
+ALTER TABLE s1_post
+ADD CONSTRAINT s1_post_ibfk_1
+FOREIGN KEY (category_id) REFERENCES s1_category(id)
+ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE s1_post_category
-	ADD FOREIGN KEY (tag_id)
+ALTER TABLE s1_post
+DROP FOREIGN KEY s1_post_ibfk_1;
+
+ALTER TABLE s1_post
+	ADD FOREIGN KEY (category_id)
 	REFERENCES s1_category (id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
@@ -221,15 +224,7 @@ ALTER TABLE s1_comment
 ;
 
 
-ALTER TABLE s1_like
-	ADD FOREIGN KEY (post_id)
-	REFERENCES s1_post (post_id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE s1_post_category
+ALTER TABLE s1_heart
 	ADD FOREIGN KEY (post_id)
 	REFERENCES s1_post (post_id)
 	ON UPDATE RESTRICT
@@ -269,8 +264,8 @@ ALTER TABLE s1_comment
 ;
 
 
-ALTER TABLE s1_like
-	ADD FOREIGN KEY (id)
+ALTER TABLE s1_heart
+	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT

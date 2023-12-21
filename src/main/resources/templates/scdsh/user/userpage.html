@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" href="/css/mypage.css">
 </head>
 <body>
 
-</body>
-</html>
+<div th:if="${}">
+
+    <section id="userPosts">
+
+        <h3 th:text="${user.name} + '님 프로필'"></h3>
+
+        <span th:text="'이름(닉네임): ' + ${user.name}"></span><br>
+        <span th:text="'가입일: ' + ${#temporals.format(user.registDate, 'yyyy년 MM월 dd일')}"></span>
+
+    </section>
+
+</div>

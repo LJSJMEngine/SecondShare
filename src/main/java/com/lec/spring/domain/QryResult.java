@@ -9,12 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Attachment {
-    private Long id;
-    private Long post_id;
-    private String sourcename;
-    private String filename;
-    private boolean isImage;
-    private boolean isspImg;
-
+public class QryResult {
+    int count;      // 결과값
+    String status;  // 결과 메세지
 }
