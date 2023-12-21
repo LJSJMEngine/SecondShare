@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/list.css">
     <title>목록 페이지</title>
 </head>
 <h2>게시물 목록</h2>
@@ -14,11 +15,12 @@
 <div class="mb-3 mt-3 clearfix">
     <span class="float-start me-2">[[${type}]]/[[${keyword}]] 검색:[[${cnt}]]개</span>
     <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
+
 </div>
 <!-- 페이징 헤더 -->
-<a th:href="@{/board/write}"><button class="btn-outline-primary mr-3">글쓰기</button></a>
+<a th:href="@{/board/write}"><button class="btn-outline-primary mr-3">판매글 작성하기</button></a>
 <div>
-    <form id="search" name="search" method="GET" >
+    <form id="search" name="search" method="GET"  class="search">
         <select name="type">
             <option value="제목" th:selected="${type == '제목'}">제목</option>
             <option value="생활용품" th:selected="${type == '생활용품'}">생활용품</option>
@@ -39,25 +41,20 @@
 <!-- 목록 -->
     <table class="table table-hover">
         <thead class="table-success">
-        <th>제목</th>
-        <th>작성자</th>
-        <th>가격</th>
-        <th>카테고리</th>
-        <th>판매상품</th>
-        <th>판매상태</th>
-        <th>작성일</th>
-        <th>좋아요 갯수</th>
         <tbody>
         <tr th:each="post : ${list}">
-            <td><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></td>
-            <td><a th:href="@{'/board/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></td>
-            <td th:text="${post.price}"></td>
-            <td th:text="${post.category.name}"></td>
-            <td><a th:href="@{'/board/detail/' + ${post.post_id}}">
-                <img th:src="@{/upload/{imageName}(imageName=${post.attachment.sourcename})} "style="width:50px" alt="Image" />
-            </a></td>
-            <td th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></td>
-            <td><span th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
+            <dl>
+                <a th:href="@{'/board/detail/' + ${post.post_id}}">
+                    <img th:src="@{/img/${post.attachment.sourcename}" alt="Image" /></a>
+                <dt><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></dt>
+                <dt th:text="${post.price}"></dt>
+                <dt><a th:href="@{'/board/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></dt>
+                <dt th:text="${post.category.name}"></dt>
+                <dt th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></dt>
+                <dt>
+                <span th:text="'작성일:'+${#temporals.format(post.regDate, 'yyyy-MM-dd')}"></span>
+                </dt>
+                </dl>
         </tr>
         </tbody>
     </table>
