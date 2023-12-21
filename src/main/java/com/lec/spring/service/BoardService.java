@@ -17,12 +17,12 @@ public interface BoardService {
 
     int write(Post post, Map<String, MultipartFile> files);
 
-    Post detail(Long id);
+    Post detail(Long post_id);
 
-    Post selectByPostId(Long id);
+    Post selectByPostId(Long post_id);
 
     int modify(Post post, Map<String, MultipartFile> files, Long [] delfile);
 
-    int deleteByPostId(Long id);
+    int deleteByPostId(Long post_id);
 
 }

@@ -6,11 +6,11 @@
 <mapper namespace="com.lec.spring.repository.PostRepository">
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Post"
-            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+            useGeneratedKeys="true" keyColumn="id" keyProperty="post_id">
         INSERT INTO s1_post
-        (user_id, subject, content, price)
+        (user_id, category_id, subject, contents, price, regDate)
         VALUES
-        ( #{user.id}, #{subject}, #{content}, #{price})
+        (#{user.id}, #{category_id}, #{subject}, #{contents}, #{price}, NOW())
     </insert>
 
     <update id="incViewCnt" flushCache="true">
@@ -32,18 +32,21 @@
         , p.goodCnt "p_goodCnt"
         , u.id "u_id"
         , u.username "u_username"
+        , u.name "u_name"
+        , u.email "u_email"
         FROM s1_post p, s1_user u
-        WHERE p.post_id = u.id
+        WHERE p.user_id = u.id
     </sql>
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>
         <result column="u_username" property="username"/>
-        <result column="u_regdate" property="regDate"/>
+        <result column="u_registDate" property="registDate"/>
     </resultMap>
 
     <resultMap id="mapPost" type="com.lec.spring.domain.Post">
         <result column="p_post_id" property="post_id"/>
         <result column="p_user_id" property="user_id"/>
+        <result column="p_category_id" property="category_id"/>
         <result column="p_subject" property="subject"/>
         <result column="p_contents" property="contents"/>
         <result column="p_price" property="price"/>
@@ -70,7 +73,7 @@
     <update id="modify" flushCache="true"
             parameterType="com.lec.spring.domain.Post">
         UPDATE s1_post
-        SET subject = #{subject}, content = #{content}, price = #{price}, delStatus = #{delStatus}
+        SET subject = #{subject}, contents = #{contents}, price = #{price}, delStatus = #{delStatus}
         WHERE post_id = #{post_id}
     </update>
 
@@ -96,7 +99,7 @@
     </select>
 
     <!-- 메인페이지 - 최신 판매글 -->
-    <select id="findLatestPostsWithUsername" resultType="java.util.Map">
+    <select id="findLatestPostsWithUsername" resultType="map">
         SELECT
         p.*
         , u.username
@@ -108,10 +111,20 @@
         ORDER BY p.regDate DESC LIMIT 5;
     </select>
 
-    <!-- 메인페이지 - 관심 판매글 (사용자 아이디로 가져오기) -->
-    <select id="getLikedPostIds" parameterType="java.lang.String" resultType="java.lang.Integer">
-        SELECT post_id FROM s1_like
-        WHERE user_id = #{userId} AND likeChk = 1
+    <!-- 메인페이지 - 관심 판매글 -->
+    <select id="findLikedPostIdsByUsername" resultType="java.lang.Long">
+        SELECT
+            l.post_id
+            , p.*
+            , u.username
+            , a.filename
+        FROM s1_heart l
+        JOIN s1_post p ON l.post_id = p.post_id
+        JOIN s1_user u ON p.user_id = u.id
+        LEFT JOIN s1_attachment a ON p.post_id = a.post_id
+        WHERE
+            u.username = #{username}
+        ORDER BY l.id DESC LIMIT 5;
     </select>
 
     <!-- 사용자 ID 가져오기 -->

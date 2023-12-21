@@ -64,6 +64,7 @@ CREATE TABLE s1_chatroom
 	room_id int NOT NULL AUTO_INCREMENT,
 	post_id int NOT NULL,
 	buyer_id int NOT NULL,
+	seller_id int,
 	createDate datetime,
 	lastUpdateDate datetime,
 	subject varchar(50) NOT NULL,
@@ -123,7 +124,7 @@ CREATE TABLE s1_post
 	contents longtext,
 	price int,
 	viewCnt int DEFAULT 0,
-	status int,
+	status int DEFAULT 0,
 	regDate datetime,
 	sampleImg int,
 	PRIMARY KEY (post_id)
@@ -175,6 +176,13 @@ ALTER TABLE s1_user_authority
 	ON DELETE CASCADE
 ;
 
+ALTER TABLE s1_post
+ADD CONSTRAINT s1_post_ibfk_1
+FOREIGN KEY (category_id) REFERENCES s1_category(id)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE s1_post
+DROP FOREIGN KEY s1_post_ibfk_1;
 
 ALTER TABLE s1_post
 	ADD FOREIGN KEY (category_id)
@@ -234,14 +242,6 @@ ALTER TABLE s1_review
 
 ALTER TABLE s1_chatMessage
 	ADD FOREIGN KEY (sender_id)
-	REFERENCES s1_user (id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE s1_chatroom
-	ADD FOREIGN KEY (buyer_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT

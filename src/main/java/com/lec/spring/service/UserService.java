@@ -21,6 +21,9 @@ public interface UserService {
     // id에 따른 사용자의 권한
     List<Authority> selectAuthById(Long id);
 
+    // 다른 유저 페이지
+
+
     // 마이페이지 - 프로필 보기, 프로필 수정, 판매물품
     User getUserByUsername(String username);
     User getUserById(Long id);
@@ -31,5 +34,6 @@ public interface UserService {
     List<Post.MyPosts> showMyPosts(Long id);
     void deleteAllMyPosts(Long id);
 
+    boolean authenticateUser(String username, String password);
 }
 
