@@ -1,9 +1,6 @@
 package com.lec.spring.repository;
 
-import com.lec.spring.domain.ChatMessage;
-import com.lec.spring.domain.ChatRoom;
-import com.lec.spring.domain.Post;
-import com.lec.spring.domain.User;
+import com.lec.spring.domain.*;
 import jakarta.annotation.PostConstruct;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,5 +25,8 @@ public interface ChatRepository {
     List<ChatMessage> findMessageFromRoomId(int room_id);
 
     User getUser(int user_id);
+
+    Attachment getSampleImg(int id);
+
 
 }
