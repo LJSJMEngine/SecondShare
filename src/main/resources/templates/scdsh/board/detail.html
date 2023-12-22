@@ -53,8 +53,8 @@
         <section>
 
             <form name="chatConnect" th:action="@{/chat/roomConnect}" method="post">
-                <input type="hidden" id="post_id" name="post_id" th:value="${post.post_id}">
-                <input type="hidden" id="buyer_id" name="buyer_id" th:value="${logged_user.id}">
+                <input type="hidden" id="postId" name="postId" th:value="${post.post_id}">
+                <input type="hidden" id="buyerId" name="buyerId" th:value="${logged_user.id}">
             </form>
 
             <form name="frmDelete" th:action="@{/board/delete}" method="post">
@@ -95,7 +95,7 @@
             <div >
                 <a class="btn btn-outline-dark" th:href="@{'/board/modify/' + ${post.post_id}}" th:if="${logged_user.id == post.user.id}">수정</a>
                 <button type="button" id="btnDel" th:if="${logged_user.id == post.user.id}">삭제</button>
-                <a class="btn btn-outline-dark" id="roomConnect" th:href="@{/chat/roomConnect}" th:if="${logged_user.id != post.user.id}">1:1 채팅하기</a>
+                <button type="button btn-outline-dark" id="roomConnect" th:if="${logged_user.id != post.user.id}">1:1 채팅하기</button>
                 <button type="button" id="chkTrade" th:href="@{'/board/chkTrade}" th:if="${logged_user.id == post.user.id}">거래완료</button>
                 <a class="btn btn-outline-dark" th:href="@{/board/list(page=${session.page})}">목록</a>
             </div>
