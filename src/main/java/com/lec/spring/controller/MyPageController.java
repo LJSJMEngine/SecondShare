@@ -1,8 +1,12 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.config.PrincipalDetails;
+import com.lec.spring.domain.EmailAuthRequestDto;
 import com.lec.spring.domain.Post;
 import com.lec.spring.domain.Review;
 import com.lec.spring.domain.User;
+import com.lec.spring.service.EmailService;
+import com.lec.spring.service.PostService;
 import com.lec.spring.service.ReviewService;
 import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,23 +27,22 @@ public class MyPageController {
 
     private final UserService userService;
     private final ReviewService reviewService;
+    @Autowired
+    private PostService postService;
 
     @Autowired
-    public MyPageController(UserService userService, ReviewService reviewService) {
+    public MyPageController(UserService userService, ReviewService reviewService, EmailService emailService) {
         this.userService = userService;
         this.reviewService = reviewService;
+        this.emailService = emailService;
     }
 
     @GetMapping("/home")
     public String showMyPage(Model model, Principal principal) {
-        // 현재 로그인한 사용자의 정보 가져오기
         String currentUsername = principal.getName();
         User userProfile = userService.getUserByUsername(currentUsername);
         model.addAttribute("userProfile", userProfile);
-
-        /*String currentUsername = "USER1";
-        User userProfile = userService.getUserByUsername(currentUsername);
-        model.addAttribute("userProfile", userProfile);*/
+        model.addAttribute("containerRightPage", "/mypage/view");
 
         return "mypage/home";
     }
@@ -52,17 +53,12 @@ public class MyPageController {
         User userProfile = userService.getUserByUsername(currentUsername);
         model.addAttribute("userProfile", userProfile);
 
-        /*String currentUsername = "USER1";
-        User userProfile = userService.getUserByUsername(currentUsername);
-        model.addAttribute("userProfile", userProfile);*/
-
         return "mypage/view";
     }
 
     @PostMapping("/deleteAccount")
     public ResponseEntity<String> deleteAccount(Principal principal) {
         String currentUsername = principal.getName();
-        /*String currentUsername = "USER1";*/
 
         try {
             userService.deleteAccount(currentUsername);
@@ -80,10 +76,6 @@ public class MyPageController {
         User userProfile = userService.getUserByUsername(currentUsername);
         model.addAttribute("userProfile", userProfile);
 
-        /*String currentUsername = "USER1";
-        User userProfile = userService.getUserByUsername(currentUsername);
-        model.addAttribute("userProfile", userProfile);*/
-
         return "mypage/modify";
     }
 
@@ -91,8 +83,6 @@ public class MyPageController {
     public ResponseEntity<String> updatePassword(@RequestBody Map<String, String> requestBody, Principal principal) {
         String newPassword = requestBody.get("newPassword");
         String currentUsername = principal.getName();
-
-        /*String currentUsername = "USER1";*/
 
         try {
             userService.updatePassword(newPassword, currentUsername);
@@ -109,8 +99,6 @@ public class MyPageController {
         String newPhoneNumber = requestBody.get("newPhoneNumber");
         String currentUsername = principal.getName();
 
-        /*String currentUsername = "USER1";*/
-
         try {
             userService.updatePhoneNumber(newPhoneNumber, currentUsername);
             return ResponseEntity.ok("핸드폰 번호가 성공적으로 변경되었습니다.");
@@ -121,22 +109,53 @@ public class MyPageController {
         }
     }
 
-    @PostMapping("/updateEmailAddress")
-    public ResponseEntity<String> updateEmailAddress(@RequestBody Map<String, String> requestBody, Principal principal) {
+    private EmailService emailService;
+
+    @PostMapping("/sendConfirmationCode")
+    public ResponseEntity<String> sendConfirmationCode(@RequestBody Map<String, String> requestBody, Principal principal) {
         String newEmailAddress = requestBody.get("newEmailAddress");
         String currentUsername = principal.getName();
 
-        /*String currentUsername = "USER1";*/
+        try {
+            // 새로운 이메일로 인증 코드 전송
+            String confirmationCode = emailService.sendEmail(newEmailAddress);
+            String notificationMessage = "새로운 이메일 주소로 인증 코드가 전송되었습니다.";
+            return ResponseEntity.ok(notificationMessage);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            // 예외 로그 출력
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이메일 변경 중 오류가 발생했습니다.");
+        }
+    }
+
+    @PostMapping("/verifyEmailAddress")
+    public ResponseEntity<String> verifyEmailAddress(@RequestBody Map<String, String> requestBody, Principal principal) {
+        String confirmationCodeFromUser = requestBody.get("confirmationCode");
+        String newEmailAddress = requestBody.get("newEmailAddress");
+
+        String currentUsername = principal.getName();
 
         try {
-            userService.updateEmailAddress(newEmailAddress, currentUsername);
-            return ResponseEntity.ok("이메일이 성공적으로 변경되었습니다.");
+            // 사용자가 입력한 확인 코드를 검증
+            boolean isCodeValid = emailService.verifyConfirmationCode(newEmailAddress, confirmationCodeFromUser);
+
+            if (isCodeValid) {
+                // 확인 코드가 유효하면 이메일 변경
+                userService.updateEmailAddress(newEmailAddress, currentUsername);
+                return ResponseEntity.ok("이메일이 성공적으로 변경되었습니다.");
+            } else {
+                // 확인 코드가 일치하지 않으면 오류 응답
+                return ResponseEntity.badRequest().body("올바르지 않은 인증 코드 입니다. 다시 작성해 주세요.");
+            }
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이메일 변경 중 오류가 발생했습니다.");
         }
     }
+
 
     @GetMapping("/myPosts")
     public String myPosts(Model model, Principal principal) {
@@ -146,13 +165,6 @@ public class MyPageController {
 
         List<Post.MyPosts> myPosts = userService.showMyPosts(userProfile.getId());
         long statusOneCount = myPosts.stream().filter(post -> post.getStatus() == 1).count();
-
-        /*Long currentUserId = 2L;
-        User userProfile = userService.getUserById(currentUserId);
-        model.addAttribute("userProfile", userProfile);
-
-        List<Post.MyPosts> myPosts = userService.showMyPosts(currentUserId);
-        long statusOneCount = myPosts.stream().filter(post -> post.getStatus() == 1).count();*/
 
         model.addAttribute("myPosts", myPosts);
         model.addAttribute("statusOneCount", statusOneCount);
@@ -173,27 +185,18 @@ public class MyPageController {
 
         List<Post.MyPosts> myPosts = userService.showMyPosts(userId);
 
-        /*Long userId = 2L;
-        List<Post.MyPosts> myPosts = userService.showMyPosts(userId);*/
-
         return ResponseEntity.ok(myPosts);
     }
 
-    @PostMapping("/deleteAllMyPosts")
-    public ResponseEntity<String> deleteAllMyPosts(Principal principal) {
-        String currentUsername = principal.getName();
-        User user = userService.getUserByUsername(currentUsername);
-        Long currentId = user.getId();
+    @PostMapping("/deleteMyPosts")
+    public ResponseEntity<String> deleteMyPosts(@RequestBody Map<String, List<Long>> requestBody) {
+        List<Long> selectedPosts = requestBody.get("selectedPosts");
 
-        /*Long currentId = 2L;*/
-
-        try {
-            userService.deleteAllMyPosts(currentId);
-            return ResponseEntity.ok("모든 판매글이 성공적으로 삭제되었습니다.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 전체 삭제 중 오류가 발생했습니다.");
+        if (selectedPosts != null && !selectedPosts.isEmpty()) {
+            postService.deleteMyPosts(selectedPosts);
+            return ResponseEntity.ok("삭제가 완료되었습니다.");
+        } else {
+            return ResponseEntity.badRequest().body("삭제할 항목을 선택해주세요.");
         }
     }
 

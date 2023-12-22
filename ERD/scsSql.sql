@@ -311,4 +311,3 @@ ALTER TABLE s1_user_authority
 ;
 
 
-

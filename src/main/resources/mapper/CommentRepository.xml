@@ -34,8 +34,8 @@
             u.registDate "u_registDate",
         FROM s1_comment c, s1_user u
         WHERE
-            c.user_id = u.id
-            AND c.post_id = #{post_id}
+        c.user_id = u.id
+        AND c.post_id = #{post_id}
         ORDER BY c.id DESC
     </select>
 
