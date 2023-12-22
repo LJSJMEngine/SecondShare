@@ -81,7 +81,7 @@
     </update>
 
     <select id="showMyPosts" parameterType="long" resultType="com.lec.spring.domain.Post$MyPosts">
-        SELECT p.subject, p.status, p.regDate
+        SELECT p.post_id, p.subject, p.status, p.regDate
         FROM s1_post p
         JOIN s1_user u ON p.user_id = u.id
         WHERE u.id = #{id}

@@ -318,7 +318,7 @@ function isValidEmailAddress(email) {
 }*/
 
 /*
-function deleteSelectedPosts() {
+function deleteselectedPostIds() {
     var selectedPostIds = [];
     $('.postCheckbox:checked').each(function () {
         selectedPostIds.push($(this).attr('data-post-id'));
@@ -328,7 +328,7 @@ function deleteSelectedPosts() {
 
 // 체크박스가 변경될 때마다 실행
 $('.postCheckbox').on('change', function() {
-    var selectedIds = deleteSelectedPosts();
+    var selectedIds = deleteselectedPostIds();
     console.log(selectedIds);
 });
 */
@@ -353,7 +353,7 @@ $('.postCheckbox').on('change', function() {
     });*/
 
     // Fetch API를 사용하여 서버로 데이터 전송
-    /*fetch('/mypage/deleteSelectedPosts', {
+    /*fetch('/mypage/deleteselectedPostIds', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -376,15 +376,15 @@ $('.postCheckbox').on('change', function() {
     });*/
 /*}*/
 
-function deleteSelectedPosts() {
-    var selectedPosts = [];
-    document.querySelectorAll('input[name="selectedPosts"]:checked').forEach(function (checkbox) {
-        selectedPosts.push(checkbox.value);
+function deleteselectedPostIds() {
+    var selectedPostIds = [];
+    document.querySelectorAll('input[name="selectedPostIds"]:checked').forEach(function (checkbox) {
+        selectedPostIds.push(checkbox.value);
     });
 
-    console.log("Selected Posts:", selectedPosts);
+    console.log("Selected PostIds:", selectedPostIds);
 
-    if (selectedPosts.length === 0) {
+    if (selectedPostIds.length === 0) {
         alert("삭제할 항목을 선택해주세요.");
         return;
     }
@@ -395,7 +395,7 @@ function deleteSelectedPosts() {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ selectedPosts: selectedPosts }),
+        body: JSON.stringify({ selectedPostIds: selectedPostIds }),
     })
     .then(response => {
             if (response.ok) {

@@ -164,14 +164,12 @@ public class MyPageController {
         model.addAttribute("userProfile", userProfile);
 
         List<Post.MyPosts> myPosts = userService.showMyPosts(userProfile.getId());
-        long statusOneCount = myPosts.stream().filter(post -> post.getStatus() == 1).count();
-
         model.addAttribute("myPosts", myPosts);
+
+        long statusOneCount = myPosts.stream().filter(post -> post.getStatus() == 1).count();
         model.addAttribute("statusOneCount", statusOneCount);
 
         List<Review.MyReceivedReviews> myReceivedReviews = reviewService.findReviewsByUserId(Math.toIntExact(userProfile.getId()));
-        /*List<Review.MyReceivedReviews> myReceivedReviews = reviewService.findReviewsByUserId(Math.toIntExact(currentUserId));*/
-
         model.addAttribute("myReceivedReviews", myReceivedReviews);
 
         return "mypage/myPosts";
@@ -190,10 +188,10 @@ public class MyPageController {
 
     @PostMapping("/deleteMyPosts")
     public ResponseEntity<String> deleteMyPosts(@RequestBody Map<String, List<Long>> requestBody) {
-        List<Long> selectedPosts = requestBody.get("selectedPosts");
+        List<Long> selectedPostIds = requestBody.get("selectedPostIds");
 
-        if (selectedPosts != null && !selectedPosts.isEmpty()) {
-            postService.deleteMyPosts(selectedPosts);
+        if (selectedPostIds != null && !selectedPostIds.isEmpty()) {
+            postService.deleteMyPosts(selectedPostIds);
             return ResponseEntity.ok("삭제가 완료되었습니다.");
         } else {
             return ResponseEntity.badRequest().body("삭제할 항목을 선택해주세요.");

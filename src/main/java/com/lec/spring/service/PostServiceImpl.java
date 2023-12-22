@@ -32,8 +32,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public void deleteMyPosts(List<Long> selectedPosts) {
-        postRepository.deletePostsByIds(selectedPosts);
+    public void deleteMyPosts(List<Long> selectedPostIds) {
+        postRepository.deletePostsByIds(selectedPostIds);
     }
 
     // 마이페이지 - 최신 판매글
