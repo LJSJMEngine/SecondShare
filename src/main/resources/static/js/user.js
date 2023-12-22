@@ -14,7 +14,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url : '/user/register',
+            url : '/user/register/username',
             data : {
                 username : username
             },
@@ -65,9 +65,9 @@ $(document).ready(function() {
         var emailRegExp = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-z]+$/;
 
         if (!emailRegExp.test(email)) {
-            $("#label4").css("color", "red").html("<br>이메일 형식에 맞지 않습니다.");
+            $("#label5").css("color", "red").html("<br>이메일 형식에 맞지 않습니다.");
         } else {
-            $("#label4").css("color", "limegreen").html("<br>사용 가능한 이메일입니다.");
+            $("#label5").css("color", "limegreen").html("<br>사용 가능한 이메일입니다.");
         }
     });
 
@@ -86,7 +86,7 @@ $(document).ready(function() {
             return false;
         }
 
-        if (isUsernameValidated == false) {
+        if (!isUsernameValidated) {
             alert("아이디 중복확인을 해주세요.")
             event.preventDefault();
             return false;
@@ -129,7 +129,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: '/user/register',
+            url: '/user/register/sms',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({phoneNumber: phoneNum}),
@@ -144,6 +144,22 @@ $(document).ready(function() {
     });
 
 
+    $("#smsChkButton").click(function() {
+        var certificationNumber = $("#verifyNM").val();
+
+        $.ajax({
+            url: '/user/register/verify',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ randomNumber: certificationNumber }),
+            success: function(response) {
+                $("#label4").css("color", "limegreen").html("<br>" + response);
+            },
+            error: function(xhr, status, error) {
+                $("#label4").css("color", "red").html("<br>Error: " + xhr.responseText);
+            }
+        });
+    });
 
 });
 
