@@ -23,6 +23,8 @@ public interface PostRepository {
 
     int modify(Post post);
 
+    int chPostStatus(Long id);
+
     int delete(Post post);
 
     // 마이페이지 - 내 판매글 삭제하기

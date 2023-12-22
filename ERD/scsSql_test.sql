@@ -108,4 +108,19 @@ SELECT
         FROM s1_post p, s1_user u
         WHERE p.user_id = u.id
         AND post_id = 8
+SELECT
+            c.id AS "c_id",
+            c.content AS "c_content",
+            c.regdate AS "c_regdate",
+            c.post_id AS "c_post_id",
+            u.id AS "u_id",
+            u.username AS "u_username",
+            u.name AS "u_name",
+            u.email AS "u_email",
+            u.registDate AS "u_registDate"
+        FROM s1_comment c
+        LEFT JOIN s1_user u ON c.user_id = u.id
+        LEFT JOIN s1_post p ON c.post_id = p.post_id
+        WHERE c.post_id = 1
+        ORDER BY c.id DESC
         ;

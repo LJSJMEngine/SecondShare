@@ -43,8 +43,8 @@
         <thead class="table-success">
         <tbody>
         <tr th:each="post : ${list}">
-            <dl>
-                <a th:href="@{'/board/detail/' + ${post.post_id}}">
+            <dl th:if="${post.status} < 2">
+                <a th:href="@{'/board/detail/' + ${post.post_id}}"></a>
                 <img th:if="${post.attachment != '이미지없음' and post.attachment.sourcename != '이미지없음'}" th:src="@{/upload/{imageName}(imageName=${post.attachment.sourcename})}" style="width:100px" />
                 <img th:if="${post.attachment == '이미지없음' or post.attachment.sourcename == '이미지없음'}" src="/img/sample.jpg" style="width:100px" alt="Sample Image" />
                 <dt><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></dt>

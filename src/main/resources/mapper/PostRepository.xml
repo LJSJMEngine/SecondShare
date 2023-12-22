@@ -13,6 +13,12 @@
         (#{user.id}, #{category_id}, #{subject}, #{contents}, #{price}, NOW())
     </insert>
 
+    <update id="chPostStatus" flushCache="true">
+        UPDATE s1_post
+        SET status = 2
+        WHERE post_id = #{post_id}
+    </update>
+
     <update id="incViewCnt" flushCache="true">
         UPDATE s1_post
         SET viewCnt = viewCnt + 1
@@ -90,8 +96,7 @@
         ORDER BY p.post_id DESC
     </select>
 
-    <!--  delStatus 글을 삭제했을경우 완전히 삭제되면 안되니
-    회원탈퇴의 경우와 같이 비활성화 column boolean임  -->
+    <!-- 글삭제 버튼을 누를 경우, status 값이 2로 변경 됨. -->
     <update id="modify" flushCache="true"
             parameterType="com.lec.spring.domain.Post">
         UPDATE s1_post
@@ -112,8 +117,8 @@
 
     <select id="countSearchResults" resultType="int">
         SELECT COUNT(*) FROM s1_post p ,s1_category c
-        WHERE
-        p.category_id = c.id
+        WHERE p.category_id = c.id
+        AND p.status != 2
         <if test ="type == '제목'">
           AND  LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         </if>
@@ -234,5 +239,9 @@
         </foreach>
     </delete>
 
+    <delete id="delete" flushCache="true"
+            parameterType="com.lec.spring.domain.Post">
+        DELETE FROM s1_post FROM post_id = #{post_id}
+    </delete>
 
 </mapper>

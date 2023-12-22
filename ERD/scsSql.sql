@@ -54,7 +54,7 @@ CREATE TABLE s1_chatMessage
 	room_id int NOT NULL,
 	content text,
 	checkedContent boolean,
-	createDate datetime,
+	createDate datetime DEFAULT now(),
 	PRIMARY KEY (chat_id)
 );
 
@@ -79,7 +79,7 @@ CREATE TABLE s1_comment
 	user_id int NOT NULL,
 	post_id int NOT NULL,
 	content longtext NOT NULL,
-	regdate datetime,
+	regdate datetime DEFAULT now(),
 	PRIMARY KEY (id)
 );
 
@@ -124,7 +124,7 @@ CREATE TABLE s1_post
 	price int,
 	viewCnt int DEFAULT 0,
 	status int DEFAULT 0,
-	regDate datetime,
+	regDate datetime DEFAULT now(),
 	sampleImg int,
 	PRIMARY KEY (post_id)
 );
@@ -149,8 +149,7 @@ CREATE TABLE s1_user
 	name varchar(20) NOT NULL,
 	phoneNM varchar(20) NOT NULL,
 	email varchar(100) NOT NULL,
-	age int,
-	registDate datetime,
+	registDate datetime DEFAULT now(),
 	status int,
 	PRIMARY KEY (id),
 	UNIQUE (username),

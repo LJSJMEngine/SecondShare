@@ -127,9 +127,19 @@ public class BoardController {
         return "/board/review";
     }
 
+    @GetMapping("/chkTrade")
+    public void chkTrade(){}
+
+    @PostMapping("/chkTrade")
+    public String chkTradeOk(){
+
+        return "/board/chkTradeOk";
+    }
+
     @PostMapping("/delete")
-    public String deleteOk(Long id, Model model){
-        model.addAttribute("result", boardService.deleteByPostId(id));
+    public String deleteOk(Long post_id, Model model) {
+        int result = boardService.chStatus(post_id);
+        model.addAttribute("result", result);
         return "board/deleteOk";
     }
 
