@@ -85,5 +85,5 @@ INSERT INTO s1_review (user_id, post_id, reviewChk, content) VALUES
 ;
 
 INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
-(1, 'smple.png', 'smple.png')
+(1, 'sample.jpg', 'sample.jpg')
 ;
