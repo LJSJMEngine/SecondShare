@@ -23,18 +23,13 @@ ORDER BY id DESC;
 
 
 SELECT * FROM s1_user;
-
-
-
-SELECT * FROM s1_post;	
-SELECT * FROM s1_attachment;	
-
-
-
+SELECT * FROM s1_post;
+SELECT * FROM s1_attachment;
 SELECT * FROM s1_heart;
+SELECT * FROM s1_category;
+SELECT * FROM s1_comment;
 
-SELECT * FROM s1_user_authority;
-
+SELECT * FROM s1_post WHERE category_id = 1;
 
 
 SELECT
@@ -61,7 +56,36 @@ SELECT
         LEFT JOIN  s1_category c
         ON p.category_id = c.id
         LEFT JOIN  s1_attachment a
-        ON a.post_id =  p.post_id     
-		
-		
-			
+        ON a.post_id =  p.post_id
+        
+        SELECT
+        p.post_id "p_post_id"
+        , p.user_id "p_user_id"
+        , p.subject "p_subject"
+        , p.contents "p_contents"
+        , p.price "p_price"
+        , p.viewCnt "p_viewCnt"
+        , p.regDate "p_regDate"
+        , p.status "p_status"
+        , p.category_id "p_category_id"
+        , u.id "u_id"
+        , u.username "u_username"
+        , u.name "u_name"
+        , u.email "u_email"
+        , COALESCE(a.sourcename, '이미지없음') "a_sourcename"
+        , COALESCE(a.filename, '이미지없음') "a_filename"
+        , COALESCE(a.id, 0) "a_id"
+        , c.id "c_id"
+        , c.name "c_name"
+        FROM s1_post p
+        LEFT JOIN  s1_user u
+        ON p.user_id = u.id
+        LEFT JOIN  s1_category c
+        ON p.category_id = c.id
+        LEFT JOIN  s1_attachment a
+        ON a.post_id =  p.post_id
+        ORDER BY p.post_id DESC
+        ;
+
+
+

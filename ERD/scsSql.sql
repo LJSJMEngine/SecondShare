@@ -80,7 +80,6 @@ CREATE TABLE s1_comment
 	post_id int NOT NULL,
 	content longtext NOT NULL,
 	regdate datetime,
-	soldCheck int,
 	PRIMARY KEY (id)
 );
 

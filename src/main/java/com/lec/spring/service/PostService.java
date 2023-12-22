@@ -1,5 +1,7 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.Post;
+
 import java.util.List;
 import java.util.Map;
 

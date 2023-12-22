@@ -21,36 +21,33 @@
 
     <sql id="SELECT_BASE">
         SELECT
-        p.post_id "p_post_id"
-        , p.user_id "p_user_id"
-        , p.subject "p_subject"
-        , p.contents "p_contents"
-        , p.price "p_price"
-        , p.viewCnt "p_viewCnt"
-        , p.regDate "p_regDate"
-        , p.status "p_status"
-        , p.category_id "p_category_id"
-        , u.id "u_id"
-        , u.username "u_username"
-        , u.name "u_name"
-        , u.email "u_email"
-        ,COALESCE(a.sourcename, '이미지없음') "a_sourcename"
-        ,COALESCE(a.filename, '이미지없음') "a_filename"
-        ,  COALESCE(a.id, 0) "a_id"
-        , c.id "c_id"
-        , c.name "c_name"
+        p.post_id AS p_post_id,
+        ANY_VALUE(p.user_id) AS p_user_id,
+        ANY_VALUE(p.subject) AS p_subject,
+        ANY_VALUE(p.contents) AS p_contents,
+        ANY_VALUE(p.price) AS p_price,
+        ANY_VALUE(p.viewCnt) AS p_viewCnt,
+        ANY_VALUE(p.regDate) AS p_regDate,
+        ANY_VALUE(p.status) AS p_status,
+        ANY_VALUE(p.category_id) AS p_category_id,
+        ANY_VALUE(u.id) AS u_id,
+        ANY_VALUE(u.username) AS u_username,
+        ANY_VALUE(u.name) AS u_name,
+        ANY_VALUE(u.email) AS u_email,
+        COALESCE(ANY_VALUE(a.sourcename), '이미지없음') AS a_sourcename,
+        ANY_VALUE(c.id) AS c_id,
+        ANY_VALUE(c.name) AS c_name
         FROM s1_post p
-        LEFT JOIN  s1_user u
-        ON p.user_id = u.id
-        LEFT JOIN  s1_category c
-        ON p.category_id = c.id
-        LEFT JOIN  s1_attachment a
-        ON a.post_id =  p.category_id
+        LEFT JOIN s1_user u ON p.user_id = u.id
+        LEFT JOIN s1_category c ON p.category_id = c.id
+        LEFT JOIN s1_attachment a ON a.post_id = p.post_id
     </sql>
 
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>
         <result column="u_username" property="username"/>
+        <result column="u_name" property="name"/>
+        <result column="u_email" property="email"/>
         <result column="u_registDate" property="regDate"/>
     </resultMap>
 
@@ -83,13 +80,15 @@
         <collection property="attachment" resultMap="mapAttachment"/>
     </resultMap>
 
-    <select id="findByPostId" resultType="com.lec.spring.domain.Post">
+    <select id="findByPostId" resultMap="mapPost">
         <include refid="SELECT_BASE"/>
-        AND p.post_id = #{post_id}
+        WHERE p.post_id = #{post_id}
+        GROUP BY p.post_id
     </select>
 
     <select id="findAll" resultMap="mapPost">
         <include refid="SELECT_BASE"/>
+        GROUP BY p.post_id
         ORDER BY p.post_id DESC
     </select>
 
@@ -98,7 +97,7 @@
     <update id="modify" flushCache="true"
             parameterType="com.lec.spring.domain.Post">
         UPDATE s1_post
-        SET subject = #{subject}, contents = #{contents}, price = #{price}, delStatus = #{delStatus}
+        SET subject = #{subject}, contents = #{contents}, price = #{price}, category_id = #{category_id}, status = #{status}
         WHERE post_id = #{post_id}
     </update>
 
@@ -113,13 +112,12 @@
         SELECT count(*) FROM s1_post
     </select>
 
-
     <select id="countSearchResults" resultType="int">
         SELECT COUNT(*) FROM s1_post p ,s1_category c
         WHERE
         p.category_id = c.id
         <if test ="type == '제목'">
-          AND  LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND  LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         </if>
         <if test="type == '생활용품'">
             AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
@@ -156,7 +154,7 @@
         <if test="type == '생활용품'">
             WHERE
             LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
-             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 1, '%'))
+            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 1, '%'))
         </if>
         <if test="type == '패션의류'">
             WHERE
@@ -165,24 +163,25 @@
         </if>
         <if test="type == '가전제품'">
             WHERE
-             LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 3, '%'))
         </if>
         <if test="type == '스포츠용품'">
             WHERE
-             LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 4, '%'))
         </if>
         <if test="type == '도서/음반/DVD'">
             WHERE
-             LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 5, '%'))
         </if>
         <if test="type == '문구/오피스'">
             WHERE
-             LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 6, '%'))
         </if>
+        GROUP BY p.post_id
         ORDER BY p.post_id DESC
         LIMIT #{from}, #{rows}
     </select>
@@ -210,16 +209,16 @@
     <!-- 메인페이지 - 관심 판매글 -->
     <select id="findLikedPostIdsByUsername" resultType="java.lang.Long">
         SELECT
-            l.post_id
-            , p.*
-            , u.username
-            , a.filename
+        l.post_id
+        , p.*
+        , u.username
+        , a.filename
         FROM s1_heart l
         JOIN s1_post p ON l.post_id = p.post_id
         JOIN s1_user u ON p.user_id = u.id
         LEFT JOIN s1_attachment a ON p.post_id = a.post_id
         WHERE
-            u.username = #{username}
+        u.username = #{username}
         ORDER BY l.id DESC LIMIT 5;
     </select>
 

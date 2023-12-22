@@ -66,21 +66,20 @@ public class BoardServiceImpl implements BoardService {
         if (page == null) page = 1;   // 디폴트 1 page
         if (page < 1) page = 1;
 
-        // 페이징
-        // writePages: 한 [페이징] 당 몇개의 페이지가 표시되나
-        // pageRows: 한 '페이지'에 몇개의 글을 리스트 할 것인가?
+        // paging
         HttpSession session = U.getSession();
         Integer writePages = (Integer) session.getAttribute("writePages");
         if (writePages == null) writePages = WRITE_PAGES;  // 만약 session 에 없으면 기본값으로 동작
         Integer pageRows = (Integer) session.getAttribute("pageRows");
         if (pageRows == null) pageRows = PAGE_ROWS; // 만약 session 에 없으면 기본값으로 동작
         session.setAttribute("page", page);  // 현재 페이지 번호 -> session 에 저장
+
         long cnt;
-        List<Post> list;
         int totalPage;
         int startPage;
         int endPage;
 
+        List<Post> list;
 
             // 검색 결과 목록 조회
             cnt = postRepository.countSearchResults(keyword,type);
@@ -99,6 +98,7 @@ public class BoardServiceImpl implements BoardService {
         model.addAttribute("page", page); // 현재 페이지
         model.addAttribute("totalPage", totalPage);  // 총 '페이지' 수
         model.addAttribute("pageRows", pageRows);  // 한 '페이지' 에 표시할 글 개수
+
         model.addAttribute("url", U.getRequest().getRequestURI());  // 목록 url
         model.addAttribute("writePages", writePages); // [페이징] 에 표시할 숫자 개수
         model.addAttribute("startPage", startPage);  // [페이징] 에 표시할 시작 페이지
@@ -127,7 +127,7 @@ public class BoardServiceImpl implements BoardService {
         return cnt;
     }
 
-    private void addFile(Map<String, MultipartFile> files, Long post_id) {
+    private void addFile(Map<String, MultipartFile> files, Long id) {
         if (files == null) return;
 
         for (Map.Entry<String, MultipartFile> e : files.entrySet()){
@@ -138,7 +138,7 @@ public class BoardServiceImpl implements BoardService {
             Attachment file = upload(e.getValue());
 
             if (file != null){
-                file.setPost_id(post_id);
+                file.setPost_id(id);
                 file.setIsspImg(true);
                 attachmentRepository.save(file);
             }
@@ -191,11 +191,11 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public Post detail(Long post_id) {
-        postRepository.incViewCnt(post_id);
-        Post post = postRepository.findByPostId(post_id);
+    public Post detail(Long id) {
+        postRepository.incViewCnt(id);
+        Post post = postRepository.findByPostId(id);
 
-        if (post != null){
+        if (post != null){  // <- 여기서 null 뜸
             List<Attachment> fileList = attachmentRepository.findByPost(post.getPost_id());
             setImage(fileList);
             post.setFileList(fileList);
@@ -205,8 +205,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Post selectByPostId(Long post_id) {
-        Post post = postRepository.findByPostId(post_id);
+    public Post selectByPostId(Long id) {
+        Post post = postRepository.findByPostId(id);
 
         if (post != null){
             List<Attachment> fileList = attachmentRepository.findByPost(post.getPost_id());
@@ -238,7 +238,7 @@ public class BoardServiceImpl implements BoardService {
                       Map<String, MultipartFile> files,
                       Long [] delfile) {
 
-        int result = postRepository.update(post);
+        int result = postRepository.modify(post);
 
         addFile(files, post.getPost_id());
 

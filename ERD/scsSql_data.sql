@@ -89,7 +89,7 @@ INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
 ;
 
 /* 채팅 정보 영역 */
-INSERT INTO s1_chatroom (subject,post_id ,buyer_id, seller_id) VALUES
-('채팅방 이름', 3, 1, 2)
+INSERT INTO s1_chatroom (subject,post_id ,buyer_id) VALUES
+('채팅방 이름', 3, 1)
 ;
 
