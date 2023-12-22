@@ -27,7 +27,7 @@
                 </thead>
                 <tbody>
                 <!-- 판매글 목록 데이터를 동적으로 추가 -->
-                <tr th:each="myPost : ${myPosts}">
+                <tr th:each="myPost : ${myPosts}" th:if="${myPost.status != 2}">
                     <td><input type="checkbox" th:value="${myPost.post_id}" name="selectedPostIds" data-></td>
                     <td><span id="subject" th:text="${myPost.subject}"></span></td>
                     <td><span th:text="${myPost.status == 0 ? '판매중' : (myPost.status == 1 ? '판매완료' : '삭제')}"></span></span></td>
@@ -36,11 +36,12 @@
                 </tbody>
             </table>
             <br>
+
             <!-- 선택된 판매글을 담을 hidden input -->
             <input type="hidden" id="selectedPostIdsInput" name="selectedPostIds">
 
             <!-- 삭제 버튼 -->
-            <button type="button" onclick="deleteselectedPostIds()">삭제</button>
+            <button type="button" onclick="deleteSelectedPostIds()">삭제</button>
         </form>
 
     </section>

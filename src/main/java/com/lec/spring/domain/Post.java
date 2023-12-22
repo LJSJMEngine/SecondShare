@@ -23,9 +23,7 @@ public class Post {
     private LocalDateTime regDate;
 
     private User user;
-
     private  Category category;
-
     private  Attachment attachment;
 
     // 마이페이지 - 내 판매물품

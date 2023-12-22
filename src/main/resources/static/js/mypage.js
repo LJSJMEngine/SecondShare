@@ -308,75 +308,8 @@ function isValidEmailAddress(email) {
     return emailRegex.test(email);
 }
 
-// 마이페이지 - 판매물품 전체 삭제
-/*function confirmDeleteAllMyPosts() {
-    var confirmDelete = confirm("정말 모든 판매글을 삭제하시겠습니까?");
-    if (confirmDelete) {
-        // 전체 삭제 요청 보내기
-        deleteAllMyPostsRequest();
-    }
-}*/
-
-/*
-function deleteselectedPostIds() {
-    var selectedPostIds = [];
-    $('.postCheckbox:checked').each(function () {
-        selectedPostIds.push($(this).attr('data-post-id'));
-    });
-    return selectedPostIds;
-}
-
-// 체크박스가 변경될 때마다 실행
-$('.postCheckbox').on('change', function() {
-    var selectedIds = deleteselectedPostIds();
-    console.log(selectedIds);
-});
-*/
-
-
-
-
-
-    /*// 선택한 게시물의 ID를 담을 배열
-    var selectedPostIds = [];
-
-    // 체크된 체크박스를 찾아서 ID를 배열에 추가
-    $('.postCheckbox:checked').each(function () {
-        var postId = $(this).val();
-        selectedPostIds.push(Number(postId));
-    });*/
-
-/*    // 각 체크박스에서 data-postid 값을 읽어와 배열에 추가
-    $('.postCheckbox:checked').each(function () {
-        var postId = $(this).data('postid');
-        selectedPostIds.push(Number(postId));
-    });*/
-
-    // Fetch API를 사용하여 서버로 데이터 전송
-    /*fetch('/mypage/deleteselectedPostIds', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(selectedPostIds)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP 오류! 상태: ${response.status}`);
-        }
-        return response.text();
-    })
-    .then(data => {
-        // 삭제 성공한 경우
-        alert("판매글이 성공적으로 삭제되었습니다.");
-    })
-    .catch(error => {
-        // 삭제 실패한 경우
-        alert("판매글 삭제 중 오류가 발생했습니다.");
-    });*/
-/*}*/
-
-function deleteselectedPostIds() {
+// 마이페이지 - 내 판매글 삭제
+function deleteSelectedPostIds() {
     var selectedPostIds = [];
     document.querySelectorAll('input[name="selectedPostIds"]:checked').forEach(function (checkbox) {
         selectedPostIds.push(checkbox.value);
@@ -385,7 +318,7 @@ function deleteselectedPostIds() {
     console.log("Selected PostIds:", selectedPostIds);
 
     if (selectedPostIds.length === 0) {
-        alert("삭제할 항목을 선택해주세요.");
+        alert("변경할 항목을 선택해주세요.");
         return;
     }
 
@@ -395,7 +328,9 @@ function deleteselectedPostIds() {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ selectedPostIds: selectedPostIds }),
+        body: JSON.stringify({
+            selectedPostIds: selectedPostIds,
+        }),
     })
     .then(response => {
             if (response.ok) {
@@ -411,6 +346,7 @@ function deleteselectedPostIds() {
         })
         .catch(error => {
             console.error('Error:', error);
-            alert("삭제 실패했습니다.");
+            alert("삭제를 실패했습니다.");
         });
 }
+
