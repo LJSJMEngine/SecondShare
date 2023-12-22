@@ -42,8 +42,8 @@
     <insert id="save" flushCache="true"
             parameterType="com.lec.spring.domain.Comment"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO s1_comment (user_id, post_id, content)
-        VALUES (#{user.id}, #{post_id}, #{content})
+        INSERT INTO s1_comment (user_id, post_id, content, regdate)
+        VALUES (#{user.id}, #{post_id}, #{content}, NOW())
     </insert>
 
     <delete id="deleteById" flushCache="true">

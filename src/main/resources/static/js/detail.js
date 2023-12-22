@@ -50,6 +50,12 @@ $(function(){
         })
     });
 
+    window.onload = function(){
+        document.getElementById("chkTrade").onclick = function(){
+            window.open("/board/chkTrade", "", "width=500px,height=350px,top=200px,left=200px;");
+        }
+    }
+
 });
 
 // 특정 글의 댓글 목록 불러오기
@@ -107,7 +113,7 @@ function buildComment(result){
 // 댓글 삭제 기능
 function addDelete(){
     // 현재 글의 id
-    const id = $("input[name='id']")
+    const id = $("input[name='id']");
 
     $("[data-cmtdel-id]").click(function(){
         if(!confirm("댓글을 삭제하시겠습니까?")) return;
