@@ -127,7 +127,7 @@ public class BoardController {
         return "/board/review";
     }
 
-    @GetMapping("/chkTrade")
+    @RequestMapping("/chkTrade")
     public void chkTrade(){}
 
     @PostMapping("/chkTrade")

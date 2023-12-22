@@ -30,7 +30,7 @@ $(function(){
 
         // 댓글 값 전달
         const data = {
-            "post_id": id,
+            "id": id,
             "user_id": logged_id,
             "content": content,
         };
