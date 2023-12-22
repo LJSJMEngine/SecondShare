@@ -2,6 +2,7 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.User;
 //import com.lec.spring.domain.UserValidator;
+import com.lec.spring.service.BoardService;
 import com.lec.spring.service.MemberService;
 import com.lec.spring.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -88,7 +89,11 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-
+    @GetMapping("/userpage/{id}")
+    public String userpage(@PathVariable Long id, Model model){
+        model.addAttribute("user" , userService.userpage(id));
+        return "user/userpage";
+    }
 
 //    @Autowired
 //    UserValidator userValidator;
@@ -97,6 +102,7 @@ public class UserController {
 //    public void initBinder(WebDataBinder binder) {
 //        binder.setValidator(userValidator);
 //    }
+
 
 
 
