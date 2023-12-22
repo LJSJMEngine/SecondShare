@@ -52,4 +52,3 @@ SELECT
         WHERE p.user_id = u.id
         AND post_id = 8
         ;
-

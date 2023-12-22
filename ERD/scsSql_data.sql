@@ -59,20 +59,6 @@ INSERT INTO s1_category (name) VALUES
 
 /* 게시물 정보 영역 */
 
-INSERT INTO s1_category (name) VALUES
-('생활용품'),
-('가전제품')
-;
-
-INSERT INTO s1_post (user_id, subject, contents, price, status, regDate, category_id) VALUES
-(1, '제목1', '내용1', 20000, 0, NOW(), 1),
-(2, '제목2', '내용2', 15000, 1, NOW(), 1),
-(2, '제목3', '내용3', 20000, 1, NOW(), 1),
-(2, '제목4', '내용4', 15000, 0, NOW(), 1),
-(2, '제목5', '내용5', 20000, 0, NOW(), 1),
-(2, '제목6', '내용6', 15000, 0, NOW(), 1),
-(3, '제목7', '내용7', 15000, 0, NOW(), 1)
-=========
 INSERT INTO s1_post (user_id, subject, contents, price, status, regDate, category_id) VALUES
 (1, '제목1', '내용1', 20000, 0, NOW(), 1),
 (2, '제목2', '내용2', 15000, 1, NOW(), 2),
@@ -81,7 +67,6 @@ INSERT INTO s1_post (user_id, subject, contents, price, status, regDate, categor
 (2, '제목5', '내용5', 20000, 0, NOW(), 5),
 (2, '제목6', '내용6', 15000, 0, NOW(), 2),
 (3, '제목7', '내용7', 15000, 0, NOW(), 4)
->>>>>>>>> Temporary merge branch 2
 ;
 
 INSERT INTO s1_comment (user_id, post_id, content) VALUES
@@ -103,31 +88,7 @@ INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
 (1, 'face01.png', 'face01.png')
 ;
 
-/* 카테고리 설정 */
-
-
 /* 채팅 정보 영역 */
-
-
-
-
-DELIMITER $$
-DROP PROCEDURE IF EXISTS loopInsert$$
-
-CREATE PROCEDURE loopInsert()
-BEGIN
-    DECLARE i INT DEFAULT 1;
-    WHILE i <= 500 DO
-
-    INSERT INTO s1_user(username, password, name, phoneNM, email, registDate, status)
-      VALUES (concat('id',i), concat('1234qwer',i), concat('이름',i), concat('010-1234-', i), concat(i, '@naver.com'), NOW(), 0);
-      SET i = i + 1;
-
-     INSERT INTO s1_post (user_id, subject, price, contents,regDate, category_id)
-     VALUES (i, concat('제목',i), i * 2500 , concat('내용',i), NOW(),1)
+INSERT INTO s1_chatroom (subject,post_id ,buyer_id, seller_id) VALUES
+('채팅방 이름', 3, 1, 2)
 ;
-    END WHILE;
-END$$
-DELIMITER $$
-
-CALL loopInsert;

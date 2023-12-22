@@ -64,6 +64,7 @@ CREATE TABLE s1_chatroom
 	room_id int NOT NULL AUTO_INCREMENT,
 	post_id int NOT NULL,
 	buyer_id int NOT NULL,
+	seller_id int,
 	createDate datetime,
 	lastUpdateDate datetime,
 	subject varchar(50) NOT NULL,
@@ -79,7 +80,6 @@ CREATE TABLE s1_comment
 	post_id int NOT NULL,
 	content longtext NOT NULL,
 	regdate datetime,
-	soldCheck int,
 	PRIMARY KEY (id)
 );
 
@@ -181,12 +181,9 @@ FOREIGN KEY (category_id) REFERENCES s1_category(id)
 ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE s1_post
-<<<<<<<<< Temporary merge branch 1
-=========
 DROP FOREIGN KEY s1_post_ibfk_1;
 
 ALTER TABLE s1_post
->>>>>>>>> Temporary merge branch 2
 	ADD FOREIGN KEY (category_id)
 	REFERENCES s1_category (id)
 	ON UPDATE RESTRICT
@@ -244,14 +241,6 @@ ALTER TABLE s1_review
 
 ALTER TABLE s1_chatMessage
 	ADD FOREIGN KEY (sender_id)
-	REFERENCES s1_user (id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE s1_chatroom
-	ADD FOREIGN KEY (buyer_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
