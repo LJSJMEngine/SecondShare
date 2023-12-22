@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.parameters.P;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UserRepository {
@@ -45,8 +46,8 @@ public interface UserRepository {
     List<Post.MyPosts> showMyPosts(Long id);
 
     // 마이페이지 - 판매물품 전체 삭제
-    void deleteAllMyPostsByUserId(
+/*    void deleteAllMyPostsByUserId(
             @Param("id") Long id
-    );
+    );*/
 
 }

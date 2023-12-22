@@ -87,9 +87,9 @@
         WHERE u.id = #{id}
     </select>
 
-    <update id="deleteAllMyPostsByUserId" parameterType="long">
+<!--    <update id="deleteAllMyPostsByUserId" parameterType="long">
         DELETE FROM s1_post
         WHERE user_id = #{id}
-    </update>
+    </update>-->
 
 </mapper>

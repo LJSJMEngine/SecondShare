@@ -204,5 +204,14 @@
         SELECT id FROM s1_user WHERE username = #{username}
     </select>
 
+    <!-- 마이페이지 - 내 판매글 삭제하기 -->
+    <delete id="deletePostsByIds" flushCache="true" parameterType="java.util.List">
+        DELETE FROM s1_post
+        WHERE post_id IN
+        <foreach collection="postIds" item="postId" open="(" separator="," close=")">
+            #{postId}
+        </foreach>
+    </delete>
+
 
 </mapper>

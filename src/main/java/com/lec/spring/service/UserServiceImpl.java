@@ -5,17 +5,17 @@ import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AuthorityRepository;
 import com.lec.spring.repository.UserRepository;
-import com.lec.spring.util.U;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -147,18 +147,5 @@ public class UserServiceImpl implements UserService{
             return Collections.emptyList(); // 빈 리스트 반환
         }
     }
-
-    @Override
-    public void deleteAllMyPosts(Long id) {
-        User user = userRepository.findById(id);
-
-        if (user != null) {
-            List<Post.MyPosts> myPosts = user.getMyPosts();
-
-            myPosts.clear();    // myPosts 삭제
-            userRepository.deleteAllMyPostsByUserId(id);    // 사용자의 모든 판매글 삭제
-        }
-    }
-
 
 }

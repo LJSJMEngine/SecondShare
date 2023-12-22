@@ -43,6 +43,12 @@ dependencies {
 	implementation 'net.nurigo:javaSDK:2.2'
 	implementation 'org.json:json:20230618'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.4.10'
+
+	//spring email
+	implementation 'org.springframework.boot:spring-boot-starter-mail:3.0.5'
+	implementation 'org.springframework:spring-context:6.0.7'
+	implementation 'org.springframework:spring-context-support:6.0.7'
+	implementation 'com.sun.mail:jakarta.mail:2.0.1'
 }
 
 tasks.named('bootBuildImage') {

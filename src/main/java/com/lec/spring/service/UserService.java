@@ -32,7 +32,7 @@ public interface UserService {
     void updatePhoneNumber(String newPhoneNumber, String username);
     void updateEmailAddress(String newEmailAddress, String username);
     List<Post.MyPosts> showMyPosts(Long id);
-    void deleteAllMyPosts(Long id);
+    /*void deleteAllMyPosts(Long id);*/
 
 }
 

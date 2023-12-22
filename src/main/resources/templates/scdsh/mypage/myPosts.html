@@ -4,39 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/mypage.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
-<div th:if="${userProfile != null}" data-username="${userProfile.username}" data-id="${userProfile.id}">
+<div th:if="${userProfile != null}" data-username="${userProfile.username}" data-id="${userProfile.}">
+    <!--<input type="hidden" id="currentUserId" th:value="${userProfile.id}" />-->
     <!-- 나의 판매글 목록 -->
     <section id="myPosts">
 
         <h3 th:text="'총 판매글 ' + ${myPosts.size()} + ' 건 | 거래 성공 ' + ${statusOneCount} + ' 건'"></h3>
 
-        <table class="myPostsList">
-            <thead>
-            <tr>
-                <th>제목</th>
-                <th>거래상태</th>
-                <th>작성일</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- 판매글 목록 데이터를 동적으로 추가 -->
-            <tr th:each="myPost : ${myPosts}">
-                <td><span id="subject" th:text="${myPost.subject}"></span></td>
-                <td><span id="status" th:text="${myPost.status == 0 ? '판매중' : '판매완료'}"></span></td>
-                <td><span id="regDate" th:text="${#temporals.format(myPost.regDate, 'yyyy년 MM월 dd일 HH시 mm분')}"></span></span></td>
-            </tr>
-            </tbody>
-        </table>
+        <form th:action="@{/mypage/deleteMyPosts}" method="post" id="deleteForm">
+            <table class="myPostsList">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>제목</th>
+                    <th>거래상태</th>
+                    <th>작성일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- 판매글 목록 데이터를 동적으로 추가 -->
+                <tr th:each="myPost : ${myPosts}">
+                    <td><input type="checkbox" th:value="${myPost.post_id}" name="selectedPosts" data-></td>
+                    <td><span id="subject" th:text="${myPost.subject}"></span></td>
+                    <td><span th:text="${myPost.status == 0 ? '판매중' : (myPost.status == 1 ? '판매완료' : '삭제')}"></span></span></td>
+                    <td><span id="regDate" th:text="${#temporals.format(myPost.regDate, 'yyyy년 MM월 dd일 HH시 mm분')}"></span></span></td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <!-- 선택된 판매글을 담을 hidden input -->
+            <input type="hidden" id="selectedPostsInput" name="selectedPosts">
 
-        <br>
+            <!-- 삭제 버튼 -->
+            <button type="button" onclick="deleteSelectedPosts()">삭제</button>
+        </form>
 
-        <!-- 판매글 전체 삭제 버튼 -->
-        <button class="delete-myPosts-btn" onclick="confirmDeleteAllMyPosts()">판매글 전체 삭제</button>
+        <!-- 삭제 버튼 -->
+        <!--<button type="submit" class="delete-myPosts-btn">삭제</button>-->
+        <!--<button class="delete-myPosts-btn" onclick="deleteSelectedPosts()">판매글 삭제</button>-->
+
     </section>
-
     <br><br><br>
 
     <!-- 받은 리뷰 -->
@@ -45,7 +56,8 @@
         <h3 th:text="'받은 리뷰 ' + ${myReceivedReviews.size()} + ' 건'"></h3>
 
         <!-- 리뷰를 박스로 표시 -->
-        <div th:each="myReceivedReview : ${myReceivedReviews}" th:class="${'reviewBox status-' + myReceivedReview.reviewChk}">
+        <div th:each="myReceivedReview : ${myReceivedReviews}"
+             th:class="${'reviewBox status-' + myReceivedReview.reviewChk}">
             <!-- 리뷰 확인 -->
             <div class="reviewStatus">
                 <!--<span th:text="${myReceivedReview.reviewChk}"></span>-->
