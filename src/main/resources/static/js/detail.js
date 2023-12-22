@@ -1,5 +1,8 @@
 $(function(){
 
+    $("#roomConnect").click(function()){
+        $("form[name='chatConnect']").submit();
+    }
     // 글 삭제 버튼
     $("#btnDel").click(function(){
         let answer = confirm("게시글을 삭제하시겠습니까?");

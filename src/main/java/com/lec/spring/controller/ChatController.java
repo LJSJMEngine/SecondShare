@@ -33,8 +33,6 @@ public class ChatController {
     @Autowired
     private final ChatService chatService;
 
-    @Autowired
-    private final PostService postService;
 
 
     @MessageMapping("/roomUpdateDate")
@@ -54,6 +52,41 @@ public class ChatController {
     public String RoomDebug() {
         return "chat/roomDebug";
     }
+    @PostMapping("roomConnect")
+    public String roomConnect(
+            @RequestParam("postId") int post_id,
+            @RequestParam("buyerId") int buyer_id,
+            Model model,
+            Authentication authentication)
+    {
+        PrincipalDetails pDetails = (PrincipalDetails)authentication.getPrincipal();
+        User currentUser = pDetails.getUser();
+        Post postData = chatService.getPostData(post_id);
+        int myId = Math.toIntExact(currentUser.getId());
+
+        User seller = chatService.getUser(Math.toIntExact(postData.getUser_id()));
+        User buyer = chatService.getUser(buyer_id);
+
+        String sellerFlag;
+
+        if(seller == null || buyer == null) {
+            //notice ( 채팅방 에러 )
+            System.out.println("[CHATCONTROLLER, ROOMCONNECT] : 구매자 혹은 판매자 ID가 없습니다.");
+            return "redirect:/main";
+        }
+        else if(seller.getId() != myId || buyer.getId() != myId){
+            System.out.println("[CHATCONTROLLER, ROOMCONNECT] : 거래에 관련 없는 유저가 접속해있습니다.");
+            return "redirect:/main";
+        }
+
+        sellerFlag = seller.getId() == myId ? "SELLER" : "BUYER";
+
+        model.addAttribute("postId",post_id);
+        model.addAttribute("buyerId",buyer_id);
+        model.addAttribute("sellerId",seller.getId());
+        model.addAttribute("sellerFlag",sellerFlag);
+        return "chat/roomConnect";
+    }
     @PostMapping("room")
     public String RoomCreate(@Valid ChatRoom cRoom, Model model, Authentication authentication) {
         System.out.println("PostData : " + cRoom);
@@ -63,23 +96,8 @@ public class ChatController {
         User otherUser;
         User seller;
         Post postData = chatService.getPostData(cRoom.getPost_id());
-        int myId = Math.toIntExact(currentUser.getId());
 
-        if(myId == chatService.getPostData(cRoom.getPost_id()).getUser_id()) { //지금 접속하고 있는 사람이 판매자인가?
-            // 현재 접속자 : 판매자, 채팅 상대방 : 구매자
-            seller = currentUser;
-            if(cRoom.getBuyer_id() == myId) { // 내가 내 물건을 살 순 없다!
-                return "redirect:/chat/roomDebug/";
-            }
-            otherUser = chatService.getUser(cRoom.getBuyer_id());
 
-        }
-        else {
-            // 현재 접속자 : 구매자, 채팅 상대방 : 판매자
-            otherUser = chatService.getUser(Math.toIntExact(chatService.getPostData(cRoom.getPost_id()).getUser_id()));
-            seller = otherUser;
-            cRoom.setBuyer_id(myId);
-        }
         ChatRoom newRoom = chatService.findRoomByPostAndBuyer(cRoom.getPost_id(),cRoom.getBuyer_id());
         if(newRoom == null)
         {
@@ -90,7 +108,6 @@ public class ChatController {
 
 
 
-        postData.setUser(seller);
         System.out.println("DBInsert : " + cRoom);
         Attachment mainImg = chatService.getSampleImg(Math.toIntExact(postData.getPost_id()));
         model.addAttribute("MainImg", mainImg); // 이미지 정보
@@ -98,7 +115,7 @@ public class ChatController {
         model.addAttribute("PostData",postData); // 게시물 정보
         model.addAttribute("MessageList",chatService.findMessageFromRoomId(cRoom.getRoom_id())); // 이전 메세지 정보  *필요 없어보임
         model.addAttribute("currentUser",currentUser); // 현재 유저에 대한 정보
-        model.addAttribute("otherUser",otherUser); // 상대 유저에 대한 정보
+        //model.addAttribute("otherUser",otherUser); // 상대 유저에 대한 정보
         return "chat/room";
     }
 }
