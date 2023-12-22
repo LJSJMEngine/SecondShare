@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -29,6 +30,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Service
@@ -195,7 +197,7 @@ public class BoardServiceImpl implements BoardService {
         postRepository.incViewCnt(id);
         Post post = postRepository.findByPostId(id);
 
-        if (post != null){  // <- 여기서 null 뜸
+        if (post != null){
             List<Attachment> fileList = attachmentRepository.findByPost(post.getPost_id());
             setImage(fileList);
             post.setFileList(fileList);
@@ -270,6 +272,21 @@ public class BoardServiceImpl implements BoardService {
             System.out.println("파일이 존재하지 않음");
         }
     }
+
+    @Override
+    public int chStatus(Long id){
+        Post post = postRepository.findByPostId(id);
+        if (post != null) {
+           if (post.getStatus() < 2) {
+
+               postRepository.chPostStatus(id);
+           }
+           return 1;
+        } else {
+           return 0;
+        }
+    }
+
 
     @Override
     public int deleteByPostId(Long post_id){

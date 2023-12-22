@@ -1,4 +1,5 @@
 $(function(){
+
     // 글 삭제 버튼
     $("#btnDel").click(function(){
         let answer = confirm("게시글을 삭제하시겠습니까?");
@@ -20,13 +21,13 @@ $(function(){
 
         if(!content){
             alert("댓글을 입력해주세요!");
-            $("input_comment").focus();
+            $("#input_comment").focus();
             return;
         }
 
         // 댓글 값 전달
-        const date = {
-            "post_id": post_id,
+        const data = {
+            "post_id": id,
             "user_id": logged_id,
             "content": content,
         };
@@ -59,7 +60,7 @@ function loadComment(post_id){
         cache: false,
         success: function(data, status){
             if(status == "success"){
-                if(data.status != "OK"){
+                if(data.status !== "OK"){
                     alert(data.status);
                     return;
                 }
@@ -68,7 +69,7 @@ function loadComment(post_id){
 
                 addDelete();
             }
-        }
+        },
     });
 }
 

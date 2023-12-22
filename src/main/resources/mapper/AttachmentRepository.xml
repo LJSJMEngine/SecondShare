@@ -28,7 +28,7 @@
     <select id="findByPost" resultType="com.lec.spring.domain.Attachment">
         <include refid="SELECT"/>
         AND
-            post_id = #{param1}
+            post_id = #{post_id}
         ORDER BY id ASC
     </select>
 

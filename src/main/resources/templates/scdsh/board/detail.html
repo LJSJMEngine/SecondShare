@@ -4,11 +4,17 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <script th:unless="${post}">
-    alert("해당 게시글이 삭제되거나 없습니다");
+    alert("해당 게시글은 삭제되었거나 없습니다");
     history.back();
 </script>
 
 <th:block th:if="${post}" th:with="logged_user=${#authentication.principal.user}">
+
+    <script th:if="${post.status == 2}">
+        alert("해당 게시글은 삭제되었거나 없습니다");
+        history.back();
+    </script>
+
 
 <head>
     <meta charset="utf-8">
@@ -46,7 +52,7 @@
 
         <section>
             <form name="frmDelete" th:action="@{/board/delete}" method="post">
-                <input type="hidden" name="post_id" th:value="${post.post_id}">
+                <input type="hidden" id="id" name="post_id" th:value="${post.post_id}">
             </form>
 
             <div>

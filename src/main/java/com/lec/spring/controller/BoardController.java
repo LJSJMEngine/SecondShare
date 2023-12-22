@@ -128,8 +128,9 @@ public class BoardController {
     }
 
     @PostMapping("/delete")
-    public String deleteOk(Long id, Model model){
-        model.addAttribute("result", boardService.deleteByPostId(id));
+    public String deleteOk(Long post_id, Model model) {
+        int result = boardService.chStatus(post_id);
+        model.addAttribute("result", result);
         return "board/deleteOk";
     }
 
