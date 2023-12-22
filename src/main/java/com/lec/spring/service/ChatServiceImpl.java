@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.spring.domain.*;
+import com.lec.spring.repository.AttachmentRepository;
 import com.lec.spring.repository.ChatRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +22,12 @@ import java.util.*;
 public class ChatServiceImpl implements ChatService{
 
     private ChatRepository chatRepo;
+    private AttachmentRepository attRepo;
 
     @Autowired
     public ChatServiceImpl(SqlSession sqlss) {
         this.chatRepo = sqlss.getMapper(ChatRepository.class);
+        this.attRepo = sqlss.getMapper(AttachmentRepository.class);
         System.out.println("chatService Init");
 
     }
@@ -77,7 +80,13 @@ public class ChatServiceImpl implements ChatService{
 
     @Override
     public Post getPostData(int post_id) {
-        return chatRepo.getPostData(post_id);
+
+        List<Attachment> fileList = attRepo.findByPost((long) post_id);
+        Post result =chatRepo.getPostData(post_id);
+        result.setFileList(fileList);
+
+        return result;
+
     }
 
     @Override
