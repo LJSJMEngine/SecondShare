@@ -16,7 +16,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder encoder() {
-//        System.out.println("PasswordEncoder bean 생성");
+        System.out.println("PasswordEncoder bean 생성");
         return new BCryptPasswordEncoder();
     }
 
@@ -26,13 +26,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/board/detail/**",
-                                "/mypage/**").authenticated()
-                        .requestMatchers(
-                                "/board/write/**",
-                                "/board/update/**",
-                                "/board/delete/**").hasAnyRole("ADMIN", "MEMBER")
+                        .requestMatchers("/board/detail/**").authenticated()
+                        .requestMatchers("/board/write/**", "/board/modify/**", "/mypage/**", "/user/userpage/**").hasAnyRole("MEMBER", "ADMIN")
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .anyRequest().permitAll()
                 )
 

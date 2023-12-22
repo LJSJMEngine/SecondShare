@@ -85,10 +85,5 @@ INSERT INTO s1_review (user_id, post_id, reviewChk, content) VALUES
 ;
 
 INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
-(1, 'face01.png', 'face01.png')
-;
-
-/* 채팅 정보 영역 */
-INSERT INTO s1_chatroom (subject,post_id ,buyer_id, seller_id) VALUES
-('채팅방 이름', 3, 1, 2)
+(1, 'smple.png', 'smple.png')
 ;

@@ -16,7 +16,7 @@ public interface BoardService {
 
     int write(Post post, Map<String, MultipartFile> files);
 
-    Post detail(Long post_id);
+    Post detail(Long id);
 
     Post selectByPostId(Long post_id);
 

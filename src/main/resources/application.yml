@@ -63,10 +63,6 @@ app:
   upload:
     path: upload
 
-  # img setting
-  img:
-    path: img
-
 
 # coolsms 문자 인증
 coolsms:

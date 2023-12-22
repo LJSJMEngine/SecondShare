@@ -37,6 +37,7 @@ public class Post {
         private String subject;
         private int status;
         private LocalDateTime regDate;
+        private String spImg;
     }
 
     // 첨부파일

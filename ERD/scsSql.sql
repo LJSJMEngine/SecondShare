@@ -25,8 +25,8 @@ CREATE TABLE s1_attachment
 (
 	id int NOT NULL AUTO_INCREMENT,
 	post_id int NOT NULL,
-	sourcename varchar(100) NOT NULL,
-	filename varchar(100) NOT NULL,
+	sourcename varchar(100), 
+	filename varchar(100), 
 	PRIMARY KEY (id)
 );
 

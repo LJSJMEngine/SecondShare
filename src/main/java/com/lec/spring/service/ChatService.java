@@ -1,9 +1,6 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.ChatMessage;
-import com.lec.spring.domain.ChatRoom;
-import com.lec.spring.domain.Post;
-import com.lec.spring.domain.User;
+import com.lec.spring.domain.*;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.sql.Timestamp;
@@ -31,6 +28,8 @@ public interface ChatService {
     Post getPostData(int post_id);
 
     User getUser(int user_id);
+
+    Attachment getSampleImg(int id);
 
 
 }

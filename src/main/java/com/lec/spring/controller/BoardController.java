@@ -30,18 +30,15 @@ public class BoardController {
 
 
     @GetMapping("/list")
-    public String list(@RequestParam(required = false) String type,
+    public void list(@RequestParam(required = false) String type,
                        @RequestParam(required = false) String keyword,
                        Integer page,
                        Model model) {
-        List<Post> list;
-
         boardService.list(page, model, type, keyword);
 
         model.addAttribute("keyword", keyword);
         model.addAttribute("type", type);
 
-        return "board/list";
     }
 
 
@@ -82,14 +79,14 @@ public class BoardController {
         return "board/detail";
     }
 
-    @GetMapping("modify/{post_id}")
+    @GetMapping("/modify/{post_id}")
     public String modify(@PathVariable Long post_id, Model model){
         Post post = boardService.selectByPostId(post_id);
         model.addAttribute("post", post);
         return "board/modify";
     }
 
-    @PostMapping("modify")
+    @PostMapping("/modify")
     public String modifyOk(
             @RequestParam Map<String, MultipartFile> files
             , Long [] delfile
@@ -111,11 +108,11 @@ public class BoardController {
                 redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
 
-            return "redirect:/board/update/" + post.getPost_id();
+            return "redirect:/board/modify/" + post.getPost_id();
         }
 
         model.addAttribute("result", boardService.modify(post, files, delfile));
-        return "/modifyOk";
+        return "board/modifyOk";
     }
 
     @GetMapping("/review")
@@ -131,8 +128,8 @@ public class BoardController {
     }
 
     @PostMapping("/delete")
-    public String deleteOk(Long post_id, Model model){
-        model.addAttribute("result", boardService.deleteByPostId(post_id));
+    public String deleteOk(Long id, Model model){
+        model.addAttribute("result", boardService.deleteByPostId(id));
         return "board/deleteOk";
     }
 

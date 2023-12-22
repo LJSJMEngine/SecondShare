@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 
 public interface MemberMapper {
-    public boolean selectId(String id);
+    public boolean selectUsername(String username);
 }

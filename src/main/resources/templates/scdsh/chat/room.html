@@ -15,7 +15,7 @@
         var RoomData = /*[[${RoomData}]]*/;
         /*]]>*/
         /* <![CDATA[ */
-        var postData = /*[[${PostData}]]*/;
+        var PostData = /*[[${PostData}]]*/;
         /*]]>*/
         /* <![CDATA[ */
         var MessageList = /*[[${MessageList}]]*/;
@@ -38,7 +38,7 @@
 <h3 th:if="${RoomData}"> 현재 접속중인 나는 누구? : [[${currentUser.name}]]</h3>
 <!-- 내용 수정 필수. -->
 <div class="container-full">
-    <div class="row justify-content-between">
+    <div class="row ">
         <div class="col">
             <div class="card chat-app">
                 <div class="chat">
@@ -72,26 +72,42 @@
             </div>
 
         </div>
-        <div class="col-3">
 
-            <div id="plist" class="row people-list">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-search"></i></span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Search...">
-                </div>
-                <ul class="list-unstyled chat-list mt-2 mb-0">
-                    <li class="clearfix">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
-                        <div class="about">
-                            <div class="name">Vincent Porter</div>
-                            <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>
-                        </div>
-                    </li>
-                </ul>
+        <ul class="col-lg-auto card w-25">
+        <!-- 판매글 대표 이미지 -->
+            <h2 class ="card-title text-sm-center mt-2"
+                th:text="${PostData.subject}"></h2>
+            <div class="image-container">
+                <!-- 대표 이미지가 있을 때 -->
+                <img class="card-img-top" th:if="${ PostData != null and MainImg != null }"
+                     th:src="'/' + ${MainImg.filename}" />
+                <!-- 대표 이미지가 없을 때 -->
+                <img class="card-img-top" th:unless="${PostData != null and MainImg != null }"
+                     src="/img/sample.jpg" />
+                <span class="list-i-selling">
+                        <i th:class="${PostData.status == 0} ? 'status selling' : 'status sold-out'"></i>
+                    </span>
             </div>
-        </div>
+
+            <div class="card-body">
+                <!-- 판매글 제목 -->
+                <h2>
+                    <a th:href="@{'/board/detail/' + ${PostData.post_id}}" th:text="${PostData.subject}" class="col subject"
+                       onclick="clickLink(event, '${PostData.post_id}')"></a>
+                </h2>
+
+                <!-- 판매글 작성일 & 조회수 -->
+                <div class="col date-cnt">
+                    <span th:text="${#temporals.format(PostData.regDate, 'MM/dd')}" class="regDate"></span>
+                    <span th:text="'조회 ' + ${PostData.viewCnt}" class="viewCnt"></span>
+                </div>
+                <!-- 판매글 작성자명 -->
+                <div class="col" th:text="${PostData.user.name}" ></div>
+                <!-- 판매글 가격 -->
+                <h5 class="col mt-3 border-top"></h5>
+                <h3 class="col mt-3 price" th:text="${#numbers.formatDecimal(PostData.price, 0, 'COMMA', 0, 'POINT') + '원'}"></h3>
+            </div>
+        </ul>
     </div>
 </div>
 </body>
