@@ -6,8 +6,6 @@ import com.lec.spring.domain.PostValidator;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.BoardService;
 import com.lec.spring.service.CategoryService;
-import com.lec.spring.service.PostService;
-import com.lec.spring.service.UserService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,41 +25,20 @@ import java.util.Map;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-
-    @Autowired
-    private UserService userService;
     @Autowired
     private BoardService boardService;
-    @Autowired
-    private PostService postService;
-    @Autowired
-    private CategoryService categoryService;
+
 
     @GetMapping("/list")
-    public String list(@RequestParam(required = false) String type,
+    public void list(@RequestParam(required = false) String type,
                        @RequestParam(required = false) String keyword,
+                       Integer page,
                        Model model) {
-        List<Post> list;
+        boardService.list(page, model, type, keyword);
 
-        if ("subject".equals(type)) {
-            list = boardService.search(keyword);
-        } else if ("category".equals(type)) {
-            // Assuming category names are unique
-            Category category = categoryService.getCategoryByName(keyword);
-            if (category != null) {
-                list = boardService.searchByCategory(category.getName());
-            } else {
-                list = boardService.list();
-            }
-        } else {
-            list = boardService.list();
-        }
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("type", type);
 
-        List<Category> categories = categoryService.getAllCategories();
-
-        model.addAttribute("list", list);
-        model.addAttribute("categories", categories);
-        return "board/list";
     }
 
 
@@ -102,14 +79,14 @@ public class BoardController {
         return "board/detail";
     }
 
-    @GetMapping("modify/{post_id}")
+    @GetMapping("/modify/{post_id}")
     public String modify(@PathVariable Long post_id, Model model){
         Post post = boardService.selectByPostId(post_id);
         model.addAttribute("post", post);
         return "board/modify";
     }
 
-    @PostMapping("modify")
+    @PostMapping("/modify")
     public String modifyOk(
             @RequestParam Map<String, MultipartFile> files
             , Long [] delfile
@@ -131,11 +108,11 @@ public class BoardController {
                 redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
 
-            return "redirect:/board/update/" + post.getPost_id();
+            return "redirect:/board/modify/" + post.getPost_id();
         }
 
         model.addAttribute("result", boardService.modify(post, files, delfile));
-        return "/modifyOk";
+        return "board/modifyOk";
     }
 
     @GetMapping("/review")
@@ -151,8 +128,8 @@ public class BoardController {
     }
 
     @PostMapping("/delete")
-    public String deleteOk(Long post_id, Model model){
-        model.addAttribute("result", boardService.deleteByPostId(post_id));
+    public String deleteOk(Long id, Model model){
+        model.addAttribute("result", boardService.deleteByPostId(id));
         return "board/deleteOk";
     }
 
@@ -161,11 +138,13 @@ public class BoardController {
         System.out.println("initBinder() 호출");
         binder.setValidator(new PostValidator());
     }
+//    @GetMapping("review")
 
     @PostMapping("/pageRows")
     public String pageRows(Integer page, Integer pageRows){
         U.getSession().setAttribute("pageRows", pageRows);
         return "redirect:/board/list?page=" + page;
     }
+
 
 }

@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AttachmentServiceImpl implements AttachmentService {
 
@@ -20,4 +22,14 @@ public class AttachmentServiceImpl implements AttachmentService {
     public Attachment findById(Long id) {
         return attachmentRepository.findById(id);
     }
+
+    @Override
+    public List<Attachment> getAttachments() {
+        return attachmentRepository.findAll();
+    }
 }
+
+
+
+
+

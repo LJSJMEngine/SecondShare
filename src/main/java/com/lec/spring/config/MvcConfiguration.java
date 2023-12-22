@@ -16,7 +16,7 @@ public class MvcConfiguration implements WebMvcConfigurer {
 
         // 첨부파일 경로 설정
         registry
-                .addResourceHandler("/img/**")
+                .addResourceHandler("/upload/**")
                 .addResourceLocations("file:" + uploadDir + "/")
                 ;
     }

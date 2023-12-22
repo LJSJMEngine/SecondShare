@@ -1,6 +1,6 @@
 # 서버 포트
 server:
-  port: 8093
+  port: 8080
 
 spring:
   output:
@@ -43,10 +43,6 @@ app:
   # upload setting
   upload:
     path: upload
-
-  # img setting
-  img:
-    path: img
 
 
 # coolsms 문자 인증

@@ -1,6 +1,6 @@
 $(function(){
     // 글 삭제 버튼
-    $('#btnDel').click(function(){
+    $("#btnDel").click(function(){
         let answer = confirm("게시글을 삭제하시겠습니까?");
         if(answer){
             $("form[name='frmDelete']").submit();
@@ -26,16 +26,16 @@ $(function(){
 
         // 댓글 값 전달
         const date = {
-            "post_id" = post_id,
-            "user_id" = logged_id,
-            "content" = content,
+            "post_id": post_id,
+            "user_id": logged_id,
+            "content": content,
         };
 
         $.ajax({
             url: "/comment/write",
             type: "POST",
             data: data,
-            cache: false.
+            cache: false,
             success: function(data, status){
                 if(status == "success"){
                     if(data.status !== "OK"){
@@ -48,12 +48,13 @@ $(function(){
             }
         })
     });
+
 });
 
 // 특정 글의 댓글 목록 불러오기
 function loadComment(post_id){
     $.ajax({
-        url: "comment/list?id=" + post_id,
+        url: "/comment/list?id=" + post_id,
         type: "GET",
         cache: false,
         success: function(data, status){

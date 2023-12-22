@@ -9,7 +9,7 @@
         <label>댓글: <span id="cmt_cnt"> 개</span></label>
 
         <div sec:authorize="hasAnyRole('ADMIN','MEMBER')">
-<!--            <label th:if="${logged_user.id != post.user.id}">[[${logged_user.name}]]</label>-->
+            <label th:if="${logged_user.id != post.user.id}">[[${logged_user.name}]]</label>
             <input type="text" id="input_comment" placeholder="댓글을 남겨보세요">
             <button type="button" id="btn_comment">등록</button>
         </div>
