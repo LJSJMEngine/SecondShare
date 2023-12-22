@@ -27,6 +27,7 @@ public class UserController {
     //test001
     @Autowired
     private UserService userService;
+    @Autowired
     private MemberService memberService;
 
     @GetMapping("/login")
@@ -79,12 +80,12 @@ public class UserController {
 
     @PostMapping("/register")
     @ResponseBody
-    public ResponseEntity<Boolean> confirmId(String id) {
-        if (id == null || id.trim().isEmpty()) {
-            return new ResponseEntity<>(false, HttpStatus.OK); // Null or empty ID
+    public ResponseEntity<Boolean> confirmId(String username) {
+        if (username == null || username.trim().isEmpty()) {
+            return new ResponseEntity<>(false, HttpStatus.OK);
         }
 
-        boolean result = !memberService.selectId(id); // ID is not empty, check for duplication
+        boolean result = !memberService.selectUsername(username);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
