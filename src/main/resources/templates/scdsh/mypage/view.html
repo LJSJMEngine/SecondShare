@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/mypage.css">
 </head>
 <body>
+<div th:fragment="content">
 <div th:if="${userProfile != null}" data-username="${userProfile.username}">
     <form class="showMyPage" th:action="@{/mypage/modify}" method="post">
         <span class="label">
@@ -48,6 +49,7 @@
 
 <div th:if="${userProfile == null}">
     <p>사용자 프로필을 찾을 수 없습니다.</p>
+</div>
 </div>
 </body>
 </html>

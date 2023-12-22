@@ -60,9 +60,16 @@
         <span class="label" id="emailChangeForm" style="display: none;">
             <label class="input" for="newEmailAddress">새로운 이메일:</label>
             <input class="answer" type="text" id="newEmailAddress" name="newEmailAddress"/>
-            <button class="modify" type="button" onclick="saveNewEmailAddress()">저장</button>
+            <button class="modify" type="button" onclick="sendConfirmationCode()">인증 코드 전송</button>
             <p id="EmailErrorMessage" style="color: red;"></p>
             <p id="EmailSuccessMessage" style="color: green;"></p>
+        </span>
+        <span class="label" id="confirmationCodeForm" style="display: none;">
+            <label class="input" for="confirmationCode">인증 코드:</label>
+            <input class="answer" type="text" id="confirmationCode" name="confirmationCode"/>
+            <button class="modify" type="button" onclick="verifyEmailAddress()">인증 코드 확인</button>
+            <p id="ConfirmationCodeErrorMessage" style="color: red;"></p>
+            <p id="ConfirmationCodeSuccessMessage" style="color: green;"></p>
         </span>
 
         <span class="label">

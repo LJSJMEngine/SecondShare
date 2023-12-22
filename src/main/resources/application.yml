@@ -2,6 +2,9 @@
 server:
   port: 8093
 
+  error:
+    include-stacktrace: always
+
 spring:
   output:
     ansi:
@@ -29,6 +32,22 @@ spring:
       name: user
       password: 1234
 
+  # Naver smtp server 사용
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: devsmko@naver.com
+    password: Tnals123!
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: false
+          auth: true
+          ssl:
+            trust: smtp.naver.com
+            enable: true
+
 #MyBatis
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
@@ -44,10 +63,6 @@ app:
   upload:
     path: upload
 
-  # img setting
-  img:
-    path: img
-
 
 # coolsms 문자 인증
 coolsms:
@@ -56,8 +71,6 @@ coolsms:
     secret: "QNLN3IVMM14AP1WRFGWL9F9JDKM3ITF9"
     fromnumber: "010-7797-9285"
 
-logging:
-  level:
-    org:
-      springframework:
-        web: DEBUG
+#logging:
+#  level:
+#    org.springframework: DEBUG

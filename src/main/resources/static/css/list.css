@@ -1,0 +1,27 @@
+.search{
+        padding: 0.5rem 15rem;
+        border-radius: 50px;
+        font-size: 1.0rem;
+        color:#fff;
+        font-family: inherit;
+        margin-top: 5px;
+        margin-left: 105px;
+}
+
+.album-img {
+    display: block;
+    position: relative;
+    text-align: center;
+}
+
+.post-container {
+    width: 100%;
+    text-align: center;
+}
+
+dl {
+    display: inline-block;
+    width: 15%;
+    margin: 25px;
+    vertical-align: top;
+}

@@ -65,7 +65,7 @@ public class ChatController {
         Post postData = chatService.getPostData(cRoom.getPost_id());
         int myId = Math.toIntExact(currentUser.getId());
 
-        if(myId == chatService.getUser(cRoom.getPost_id()).getId()) { //지금 접속하고 있는 사람이 판매자인가?
+        if(myId == chatService.getPostData(cRoom.getPost_id()).getUser_id()) { //지금 접속하고 있는 사람이 판매자인가?
             // 현재 접속자 : 판매자, 채팅 상대방 : 구매자
             seller = currentUser;
             if(cRoom.getBuyer_id() == myId) { // 내가 내 물건을 살 순 없다!

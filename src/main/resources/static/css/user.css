@@ -8,24 +8,22 @@
 
 .register h1 {
     text-align: center;
-    outline: 1px solid red;
-
 }
 
 .regForm {
-    outline: 1px solid orange;
+    outline: 3px solid #333;
+    border-radius: 5px;
     padding: 8px;
 }
 
 .reg-group {
     font-size: 20px;
-    outline: 1px solid yellow;
     margin-left: 250px;
 }
 
 .reg-group p {
-    /* display: none; */
-    /* float: right; */
+    display: none;
+    float: right;
 }
 
 .reg-group input.reg-input {
@@ -45,6 +43,15 @@
     cursor: pointer;
 }
 
+.reg-group #idChkButton {
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
 .joinBottom {
     text-align: center;
 }
@@ -55,57 +62,52 @@
     height: 40px;
     font-size: 20px;
     border-radius: 5px;
-    border: 1px solid #333;
+    border: 1px solid #007bff;
     background-color: #007bff;
     color: white;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
-
-
-
-
-/* 이하 수정 필요 (js 보면서 확인) */
-
-.reg-group p.red {
+[id^="label"] {
     font-size: 13px;
+}
+
+.must {
     color: red;
 }
 
-.reg-group p.green {
-    font-size: 13px;
-    color: limegreen;
-}
+
+
 
 
 
 
 /* -------------- 로그인 페이지 ---------------- */
 
-
 .login h1 {
     text-align: center;
-    outline: 1px solid red;
 }
 
 .loginForm {
-    outline: 1px solid orange;
-    padding: 8px;
+    outline: 3px solid #333;
+    border-radius: 5px;
+    padding: 10px;
     width: 1000px;
-    height: 1500px;
+    height: 450px;
     margin: auto;
 }
 
 .log-group {
     font-size: 20px;
-    outline: 1px solid yellow;
     text-align: center;
 }
 
 .log-group input.login-input {
     border-radius: 3px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    outline: 2px solid #333;
+    margin-top: 10px;
+    margin-bottom: 7px;
     width: 550px;
     height: 40px;
 }
@@ -116,20 +118,24 @@ div.remember {
 
 #loginBtn {
     border-radius: 5px;
-    width: 200px;
-    height: 30px;
+    width: 250px;
+    height: 40px;
     background-color: #007bff;
     border: 1px solid #007bff;
+    font-size: 20px;
     cursor: pointer;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
+.log-group-submit {
+    text-align: center;
+    margin-top: 15px;
+}
 
-.moveToRegister a {
+.log-group-submit a {
     color: #333;
     font-weight: bold;
 }
 
-
-.log-group input {
-    cursor: pointer;
-}

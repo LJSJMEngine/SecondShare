@@ -79,11 +79,12 @@
                 th:text="${PostData.subject}"></h2>
             <div class="image-container">
                 <!-- 대표 이미지가 있을 때 -->
-                <img class="card-img-top" th:if="${ PostData != null and MainImg != null }"
-                     th:src="'/' + ${MainImg.filename}" />
+                <img class="card-img-top" th:if="${ PostData != null and PostData.fileList != null }"
+                     th:src= "@{'/upload/' + ${PostData.fileList[0].filename}}"/>
+
                 <!-- 대표 이미지가 없을 때 -->
-                <img class="card-img-top" th:unless="${PostData != null and MainImg != null }"
-                     src="/img/sample.jpg" />
+                <img class="card-img-top" th:unless="${PostData != null and PostData.fileList != null  }"
+                     src="/upload/sample.jpg" />
                 <span class="list-i-selling">
                         <i th:class="${PostData.status == 0} ? 'status selling' : 'status sold-out'"></i>
                     </span>

@@ -1,8 +1,9 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.Post;
-import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
+    import com.lec.spring.domain.Post;
+    import org.springframework.security.core.parameters.P;
+    import org.springframework.ui.Model;
+    import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -11,13 +12,11 @@ public interface BoardService {
 
     List<Post> list();
 
-    List<Post> list(Model model);
-    List<Post> search(String keyword);
-    List<Post> searchByCategory(String keyword);
+    List<Post> list(Integer page, Model model, String keyword , String type);
 
     int write(Post post, Map<String, MultipartFile> files);
 
-    Post detail(Long post_id);
+    Post detail(Long id);
 
     Post selectByPostId(Long post_id);
 
