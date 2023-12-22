@@ -37,7 +37,7 @@ SELECT * FROM s1_user_authority;
 
 
 
- SELECT
+SELECT
         p.post_id "p_post_id"
         , p.user_id "p_user_id"
         , p.subject "p_subject"
@@ -51,14 +51,17 @@ SELECT * FROM s1_user_authority;
         , u.username "u_username"
         , u.name "u_name"
         , u.email "u_email"
-        , a.sourcename "a_sourcename"
-        , a.filename "a_filename"
-        , a.id "a_id"
-        , a.post_id "a_post_id"
+        ,COALESCE(a.sourcename, '이미지없음') "a_sourcename"
+        ,COALESCE(a.filename, '이미지없음') "a_filename"
         , c.id "c_id"
         , c.name "c_name"
-        FROM s1_post p, s1_user u  ,s1_attachment a, s1_category c 
-      	WHERE  
-      	AND  a.post_id = p.post_id   
-        AND  p.category_id = c.id 
-
+        FROM s1_post p
+        LEFT JOIN  s1_user u
+        ON p.user_id = u.id
+        LEFT JOIN  s1_category c
+        ON p.category_id = c.id
+        LEFT JOIN  s1_attachment a
+        ON a.post_id =  p.post_id     
+		
+		
+			

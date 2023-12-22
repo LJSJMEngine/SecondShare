@@ -34,15 +34,18 @@
         , u.username "u_username"
         , u.name "u_name"
         , u.email "u_email"
-        ,COALESCE(a.sourcename, '이미지 없음') "a_sourcename"
-        ,COALESCE(a.filename, '이미지 없음') "a_filename"
+        ,COALESCE(a.sourcename, '이미지없음') "a_sourcename"
+        ,COALESCE(a.filename, '이미지없음') "a_filename"
         ,  COALESCE(a.id, 0) "a_id"
         , c.id "c_id"
         , c.name "c_name"
-        FROM s1_post p, s1_user u  ,s1_attachment a, s1_category c
-        WHERE p.user_id = u.id
-        AND p.category_id = c.id
-        AND a.post_id = p.post_id OR a.id = 0
+        FROM s1_post p
+        LEFT JOIN  s1_user u
+        ON p.user_id = u.id
+        LEFT JOIN  s1_category c
+        ON p.category_id = c.id
+        LEFT JOIN  s1_attachment a
+        ON a.post_id =  p.category_id
     </sql>
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>
@@ -150,30 +153,37 @@
     <select id="searchWithPagination" resultMap="mapPost" parameterType="map">
         <include refid="SELECT_BASE"/>
         <if test ="type == '제목'">
-            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            WHERE
+            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         </if>
         <if test="type == '생활용품'">
-            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
-            AND LOWER(c.id) LIKE LOWER(CONCAT('%', 1, '%'))
+            WHERE
+            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 1, '%'))
         </if>
         <if test="type == '패션의류'">
-            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            WHERE
+            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 2, '%'))
         </if>
         <if test="type == '가전제품'">
-            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            WHERE
+             LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 3, '%'))
         </if>
         <if test="type == '스포츠용품'">
-            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            WHERE
+             LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 4, '%'))
         </if>
         <if test="type == '도서/음반/DVD'">
-            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            WHERE
+             LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 5, '%'))
         </if>
         <if test="type == '문구/오피스'">
-            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            WHERE
+             LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 6, '%'))
         </if>
         ORDER BY p.post_id DESC
