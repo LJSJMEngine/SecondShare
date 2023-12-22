@@ -121,6 +121,10 @@ overflow: hidden;
 .sendButton:Hover {
 background: #ffff90;
 }
+.chat-history {
+overflow-y:auto;
+height:540px;
+}
 .chat .chat-history .message-data-time {
     color: #434651;
     padding-left: 6px
@@ -135,43 +139,16 @@ background: #ffff90;
     display: inline-block;
     position: relative
 }
-
-.chat .chat-history .message:after {
-    bottom: 50%;
-    Right: 0%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-left-color: #fff;
-    border-width: 10px;
-    margin-left: 0px
-}
-
 .chat .chat-history .my-message {
-    background: #efefef
+    background: #e8f1f3;
 }
 
-.chat .chat-history .my-message:after {
-    bottom: 50%;
-    left: 0%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    border-right-color: #efefef;
-    position: absolute;
-    pointer-events: none;
-    border-width: 10px;
-    margin-left: -18px
-}
 
 .chat .chat-history .other-message {
-    background: #e8f1f3;
+    background: #efefef;
     text-align: right
 }
+
 
 .chat .chat-history .other-message:after {
     border-left-color: #e8f1f3;

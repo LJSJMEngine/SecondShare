@@ -23,7 +23,7 @@
     </select>
     <select id="findMessageFromRoomId" parameterType="int" resultType="com.lec.spring.domain.ChatMessage">
         <include refid="SELECT_MESSAGE"/>
-        AND room_id = #{room_id} ORDER BY chat_id
+        AND room_id = #{room_id} ORDER BY createDate
     </select>
 
     <insert id="createMessage" flushCache="true" parameterType="com.lec.spring.domain.ChatMessage"

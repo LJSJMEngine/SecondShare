@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.spring.domain.ChatMessage;
 import com.lec.spring.domain.ChatRoom;
 import com.lec.spring.domain.Post;
+import com.lec.spring.domain.User;
 import com.lec.spring.repository.ChatRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +50,7 @@ public class ChatServiceImpl implements ChatService{
 
         cRoom.instanciate(ChatRoom.CREATETYPE.POSTTRADE);
         Post p = chatRepo.getPostData(cRoom.getPost_id());
-        cRoom.setSubject(p.getSubject());
+        cRoom.setSubject(p.getSubject() + " 게시글의 채팅방");
         chatRepo.createChatRoom(cRoom);
 
         System.out.println("[SECONDSHARE] Chat : CreateSuccessRoom");
@@ -59,6 +61,7 @@ public class ChatServiceImpl implements ChatService{
     {
         return chatRepo.findRoomByPostAndBuyer(Post_id,Buyer_id);
     }
+
 
     @Override
     public void updateRoomState(int post_id, int roomState) {
@@ -73,6 +76,16 @@ public class ChatServiceImpl implements ChatService{
     public void updateRoomLastDate(int room_id, Timestamp lastUpdateDate)
     {
         chatRepo.updateRoomLastDate(room_id,lastUpdateDate);
+    }
+
+    @Override
+    public Post getPostData(int post_id) {
+        return chatRepo.getPostData(post_id);
+    }
+
+    @Override
+    public User getUser(int user_id) {
+        return chatRepo.getUser(user_id);
     }
 
 }

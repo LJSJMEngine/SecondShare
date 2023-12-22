@@ -29,10 +29,9 @@
             c.post_id "c_post_id",
             u.id "u_id",
             u.username "u_username",
-            u.password "u_password",
             u.name "u_name",
             u.email "u_email",
-            u.regdate "u_regdate",
+            u.registDate "u_registDate",
         FROM s1_comment c, s1_user u
         WHERE
             c.user_id = u.id

@@ -28,11 +28,12 @@ public class ChatMessageController {
         return  message;
     }
     @MessageMapping("/init")
-    public void chatInit(ChatMessage message) {
+    public void chatInit(ChatMessage message) throws InterruptedException {
 
         List<ChatMessage> messageList = messageService.findMessageFromRoomId(message.getRoom_id());
         for (ChatMessage msg : messageList) {
             messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoom_id(),msg);
+            Thread.sleep(10);
 
         }
     }
