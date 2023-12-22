@@ -34,8 +34,6 @@ public class BoardController {
                        @RequestParam(required = false) String keyword,
                        Integer page,
                        Model model) {
-        List<Post> list;
-
         boardService.list(page, model, type, keyword);
 
         model.addAttribute("keyword", keyword);

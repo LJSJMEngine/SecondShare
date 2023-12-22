@@ -7,6 +7,7 @@ SELECT * FROM s1_authority ORDER BY id DESC;
 SELECT * FROM s1_notice ORDER BY id DESC;
 SELECT * FROM s1_chatroom  ORDER BY room_id DESC;
 SELECT * FROM s1_chatMessage  ORDER BY room_id DESC;
+SELECT * FROM s1_category  ORDER BY id DESC;
 
 SELECT
 	id,
@@ -23,13 +24,20 @@ ORDER BY id DESC;
 
 SELECT * FROM s1_user;
 
-SELECT * FROM s1_post;
 
-SELECT * FROM s1_post WHERE category_id = 1;
 
-SELECT * FROM s1_category;
+SELECT * FROM s1_post;	
+SELECT * FROM s1_attachment;	
 
-  SELECT
+
+
+SELECT * FROM s1_heart;
+
+SELECT * FROM s1_user_authority;
+
+
+
+SELECT
         p.post_id "p_post_id"
         , p.user_id "p_user_id"
         , p.subject "p_subject"
@@ -41,16 +49,19 @@ SELECT * FROM s1_category;
         , p.category_id "p_category_id"
         , u.id "u_id"
         , u.username "u_username"
-        , a.sourcename "a_sourcename"
-        , a.filename "a_filename"
-        , a.id "a_id"
-        , c.name "c_name"
+        , u.name "u_name"
+        , u.email "u_email"
+        ,COALESCE(a.sourcename, '이미지없음') "a_sourcename"
+        ,COALESCE(a.filename, '이미지없음') "a_filename"
         , c.id "c_id"
-        FROM s1_post p, s1_user u  ,s1_attachment a , s1_category c
-        WHERE p.user_id = u.id
-        AND p.category_id = c.id
-       	AND LOWER(p.subject) LIKE LOWER(CONCAT('%', "", '%'))
-        AND LOWER(c.id) LIKE LOWER(CONCAT('%', 1, '%'))
-
-
-
+        , c.name "c_name"
+        FROM s1_post p
+        LEFT JOIN  s1_user u
+        ON p.user_id = u.id
+        LEFT JOIN  s1_category c
+        ON p.category_id = c.id
+        LEFT JOIN  s1_attachment a
+        ON a.post_id =  p.post_id     
+		
+		
+			
