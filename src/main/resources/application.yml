@@ -9,7 +9,7 @@ spring:
 
   redis:
     host: localhost
-    post: 6379
+    port: 6379
 
 
   #thymeleaf

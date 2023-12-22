@@ -118,5 +118,32 @@ $(document).ready(function() {
         }
     });
 
+
+    // 인증번호 전송
+    $("#smsButton").click(function() {
+        var phoneNum = $("#phoneNM").val();
+
+        if (phoneNum === '') {
+            alert("전화번호를 입력하세요.");
+            return;
+        }
+
+        $.ajax({
+            url: '/user/register',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({phoneNumber: phoneNum}),
+            success: function(response) {
+                alert(response);
+            },
+            error: function(xhr, status, error) {
+                alert("문자 전송 중 오류가 발생했습니다.")
+            }
+        });
+
+    });
+
+
+
 });
 
