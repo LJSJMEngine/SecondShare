@@ -84,6 +84,15 @@ INSERT INTO s1_review (user_id, post_id, reviewChk, content) VALUES
 (2, 6, 1, '저렴해요')
 ;
 
-INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
-(1, 'sample.jpg', 'sample.jpg')
+INSERT INTO s1_attachment (post_id, sourcename, filename, isImage, isSampleImg) VALUES
+(1, 'img_avatar1.png', 'img_avatar1.png', TRUE, TRUE),
+(1, 'img_avatar2.png', 'img_avatar2.png', TRUE, FALSE),
+(1, 'img_avatar3.png', 'img_avatar3.png', TRUE, FALSE),
+(2, 'img_avatar4.png', 'img_avatar4.png', TRUE, TRUE),
+(3, 'img_avatar5.png', 'img_avatar5.png', TRUE, TRUE),
+(4, 'img_avatar6.png', 'img_avatar6.png', TRUE, TRUE)
 ;
+
+UPDATE s1_post
+SET sampleImg = 1
+WHERE post_id IN (SELECT post_id FROM s1_attachment WHERE isSampleImg = TRUE);

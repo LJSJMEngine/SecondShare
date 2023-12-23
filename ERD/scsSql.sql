@@ -26,7 +26,9 @@ CREATE TABLE s1_attachment
 	id int NOT NULL AUTO_INCREMENT,
 	post_id int NOT NULL,
 	sourcename varchar(100), 
-	filename varchar(100), 
+	filename varchar(100),
+	isImage boolean NOT NULL,	-- 이미지 파일이면 TRUE, 아니면 FALSE
+	isSampleImg boolean NOT NULL,	-- 대표이미지면 TRUE, 아니면 FALSE
 	PRIMARY KEY (id)
 );
 
@@ -125,7 +127,7 @@ CREATE TABLE s1_post
 	viewCnt int DEFAULT 0,
 	status int DEFAULT 0,
 	regDate datetime,
-	sampleImg int,
+	sampleImg int NOT NULL DEFAULT 0,		-- sampleImg 가 없으면 0, 있으면 1
 	PRIMARY KEY (post_id)
 );
 

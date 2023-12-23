@@ -10,11 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Attachment {
+
     private Long id;
     private Long post_id;
     private String sourcename;
     private String filename;
-    private boolean isImage;
-    private boolean isspImg;
+    private boolean isImage;        // 이미지 파일이면 true, 아니면 false
+    private boolean isSampleImg;    // 대표 이미지면 true, 아니면 false
 
 }
