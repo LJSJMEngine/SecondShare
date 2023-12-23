@@ -1,5 +1,6 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 //import com.lec.spring.domain.UserValidator;
 import com.lec.spring.service.BoardService;
@@ -89,9 +90,13 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+
+    // 유저 페이지
     @GetMapping("/userpage/{id}")
-    public String userpage(@PathVariable Long id, Model model){
+    public String userpage(@PathVariable Long id ,Model model){
+        List<Post> userPosts = userService.findUserPosts(id);
         model.addAttribute("user" , userService.userpage(id));
+        model.addAttribute("userPosts", userPosts);
         return "user/userpage";
     }
 

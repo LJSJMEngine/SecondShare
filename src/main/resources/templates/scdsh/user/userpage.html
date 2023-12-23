@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:if="${user}" th:with="logged_user=${#authentication.principal.user}"><th:block th:if="${user}" th:with="logged_user=${#authentication.principal.user}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,26 +9,32 @@
     <link rel="stylesheet" href="/css/mypage.css">
 </head>
 <body>
+<h2>유저 페이지</h2>
 
-<div th:if="${}">
 
     <section id="userPosts">
 
-        <h3 th:text="${user.name} + '님 프로필'"></h3>
+        <h2 th:text="${user.username} + '님 프로필'"></h2>
 
         <span th:text="'이름(닉네임): ' + ${user.name}"></span><br>
         <span th:text="'가입일: ' + ${#temporals.format(user.registDate, 'yyyy년 MM월 dd일')}"></span>
 
-        <table class="table table-hover">
-            <thead class="table-success">
-            <th>제목</th>
-            <th>거래상태</th>
-            <th>작성일</th>
-            <tbody>
+        <br>
+        <table border="1">
+            <thead>
             <tr>
+                <th>#</th>
+                <th>제목</th>
+                <th>상태</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${userPosts}">
+                <td th:text="${post.post_id}"></td>
                 <td><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></td>
                 <td th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></td>
-                <td><span th:text="${#temporals.format(post.user.regDate, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
+                <td th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd')}"></td>
             </tr>
             </tbody>
         </table>

@@ -224,6 +224,11 @@
     <select id="findUserIdByUsername" resultType="java.lang.Long">
         SELECT id FROM s1_user WHERE username = #{username}
     </select>
-
+    <!-- 유저페이지 ID 값 가져오기    -->
+        <select id="findPostById" resultMap="mapPost">
+            <include refid="SELECT_BASE"/>
+            WHERE p.post_id = #{id}
+            GROUP BY p.post_id
+        </select>
 
 </mapper>

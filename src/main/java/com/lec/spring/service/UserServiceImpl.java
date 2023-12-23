@@ -179,4 +179,10 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findById(id);
         return user;
     }
+    @Override
+    public List<Post> findUserPosts(Long id) {
+        return userRepository.findPostsByUserId(id);
+    }
+
+
 }

@@ -26,7 +26,7 @@ public class User {
     @JsonIgnore
     private LocalDateTime registDate;   // 가입일자
     private int status;  // 회원 상태 (활성화 / 비활성화)
-
+    private List<Post> userpost;; //유저 페이지
 
     // 회원 권한
     @Builder.Default

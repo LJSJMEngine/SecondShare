@@ -290,4 +290,13 @@ public class BoardServiceImpl implements BoardService {
 
         return result;
     }
+
+
+    // 유저 페이지
+    @Override
+    public List<Post> findPostsByUserId(Long userId, Model model) {
+        List<Post> userpost = userRepository.findPostsByUserId(userId);
+        model.addAttribute("userPosts", userpost);
+        return userpost;
+    }
 }

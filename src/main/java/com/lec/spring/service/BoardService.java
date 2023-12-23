@@ -24,4 +24,6 @@ public interface BoardService {
 
     int deleteByPostId(Long post_id);
 
+    List<Post> findPostsByUserId(Long userId, Model model);
+
 }

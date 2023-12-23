@@ -23,6 +23,7 @@ public interface UserService {
 
     // 다른 유저 페이지
     User userpage(Long id);
+    List<Post> findUserPosts(Long id);
 
     // 마이페이지 - 프로필 보기, 프로필 수정, 판매물품
     User getUserByUsername(String username);

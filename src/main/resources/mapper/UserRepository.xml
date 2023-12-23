@@ -90,4 +90,8 @@
         WHERE user_id = #{id}
     </update>
 
+<!--    유저페이지-->
+    <select id="findPostsByUserId" resultType="com.lec.spring.domain.Post">
+        SELECT * FROM s1_post WHERE user_id = #{userId}
+    </select>
 </mapper>

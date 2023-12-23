@@ -21,6 +21,10 @@ public interface UserRepository {
 
     int update(User user);
 
+    // 유저 페이지
+    int userpage(User user);
+    List<Post> findPostsByUserId(Long id);
+
     // 마이페이지 - 프로필 수정
     void updatePassword(
             @Param("newPassword") String newPassword,
