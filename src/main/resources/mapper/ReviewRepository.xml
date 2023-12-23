@@ -18,4 +18,13 @@
         WHERE
             u.id = #{userId}
     </select>
+
+    <insert id="save" parameterType="com.lec.spring.domain.Review"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO s1_review
+        (user_id, post_id, reviewChk, content)
+        VALUES
+        (
+
+    </insert>
 </mapper>

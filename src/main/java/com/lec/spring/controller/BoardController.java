@@ -124,7 +124,7 @@ public class BoardController {
             @RequestParam("user_id") Long user_id,
             String content
             ){
-        return "/board/review";
+        return "/board/reviewOk";
     }
 
     @PostMapping("/chkTrade")

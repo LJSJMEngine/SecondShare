@@ -14,15 +14,19 @@
 
     <script th:src="@{/js/review.js}"></script>
 <body>
-    <form th:action="@{/board/review}" method="POST">
-        <h2>거래 리뷰 작성</h2>
-        <hr>
+<div th:with="user=${#authentication.principal.user}">
+    <h2>거래 리뷰 작성</h2>
+    <hr>
+    <form th:action="@{/board/review}" method="post">
         <span>님과의 거래 경험은 어떠셨나요?</span>
-
+            <input type="radio" id="rate1" th:value="${reviewChk}" value="1"><span>별로에요</span>
+            <input type="radio" id="rate2" th:value="${reviewChk}" value="2"><span>만족해요</span>
+            <input type="radio" id="rate3" th:value="${reviewChk}" value="3"><span>최고에요</span>
         <hr>
         <span>님에게 감사인사를 남겨보세요</span>
         <p>작성한 내용은 상대방 프로필에 공개됩니다</p>
         <textarea rows="5" id="content" placeholder="내용을 입력하세요" name="content" th:utext="${content}"></textarea>
     </form>
+</div>
 </body>
 </html>
