@@ -156,12 +156,8 @@ function enableEmailChangeForm() {
     document.getElementById("email").readOnly = true;
 }
 
-// 2) 새로운 이메일 저장 함수
-function saveNewEmailAddress() {
+function sendConfirmationCode() {
     var newEmailAddress = document.getElementById("newEmailAddress").value;
-    var currentUsername = document.getElementById("username").getAttribute("data-username");
-
-    /*var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");*/
 
     // 이메일 유효성 검사 (원하는 규칙에 따라 구현)
     if (!isValidEmailAddress(newEmailAddress)) {
@@ -169,30 +165,79 @@ function saveNewEmailAddress() {
         return;
     }
 
-    // 서버로 이메일 저장 요청 보내기
-    var url = '/mypage/updateEmailAddress';
+    // 서버로 확인 코드 전송 요청 보내기
+    var url = '/mypage/sendConfirmationCode';
     var data = {
-        newEmailAddress: newEmailAddress,
-        username: currentUsername
+        newEmailAddress: newEmailAddress
     };
 
     fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-            /*'X-CSRF-TOKEN': csrfToken*/
         },
         body: JSON.stringify(data)
     })
     .then(response => response.text())
     .then(result => {
         displayEmailMessages(null, result);
+        // 저장해 둔 이메일 주소 업데이트
+        window.newEmailAddress = newEmailAddress;
         document.getElementById("emailChangeForm").style.display = "none";
+        document.getElementById("confirmationCodeForm").style.display = "block";
+    })
+    .catch(error => {
+        // 실패 메시지를 에러 메시지로 변경
+        displayEmailMessages(ConfirmationCodeErrorMessage, null);
+
+        // 사용자가 잘못 적은 인증번호를 지우고 커서를 폼에 다시 올림
+        document.getElementById("confirmationCode").value = "";
+        document.getElementById("confirmationCode").focus();
+    });
+}
+
+// 3) 인증 확인 함수
+function verifyEmailAddress() {
+    var confirmationCode = document.getElementById("confirmationCode").value;
+
+    // 서버로 확인 코드 검증 요청 보내기
+    var url = '/mypage/verifyEmailAddress';
+    var data = {
+        confirmationCode: confirmationCode,
+        newEmailAddress: window.newEmailAddress // 저장해 둔 이메일 주소 사용
+    };
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            return response.text().then(error => Promise.reject(error));
+        }
+    })
+    .then(result => {
+        displayEmailMessages(null, result);
+        document.getElementById("ConfirmationCodeErrorMessage").innerText = ""; // 성공 시 에러 메시지 초기화
+        document.getElementById("confirmationCodeForm").style.display = "none";
         var emailAddressElement = document.getElementById("email");
-        emailAddressElement.value = newEmailAddress;
+        emailAddressElement.value = window.newEmailAddress; // 저장해 둔 이메일 주소 사용
     })
     .catch(error => {
         console.error('에러:', error);
+
+        // 실패 메시지를 에러 메시지로 변경
+        displayEmailMessages(null, null);
+        document.getElementById("ConfirmationCodeErrorMessage").innerText = error;
+
+        // 사용자가 잘못 적은 인증번호를 지우고 커서를 폼에 다시 올림
+        document.getElementById("confirmationCode").value = "";
+        document.getElementById("confirmationCode").focus();
     });
 }
 
@@ -264,39 +309,108 @@ function isValidEmailAddress(email) {
 }
 
 // 마이페이지 - 판매물품 전체 삭제
-function confirmDeleteAllMyPosts() {
+/*function confirmDeleteAllMyPosts() {
     var confirmDelete = confirm("정말 모든 판매글을 삭제하시겠습니까?");
     if (confirmDelete) {
         // 전체 삭제 요청 보내기
         deleteAllMyPostsRequest();
     }
+}*/
+
+/*
+function deleteSelectedPosts() {
+    var selectedPostIds = [];
+    $('.postCheckbox:checked').each(function () {
+        selectedPostIds.push($(this).attr('data-post-id'));
+    });
+    return selectedPostIds;
 }
 
-function deleteAllMyPostsRequest() {
-    var currentIdElement = document.getElementById("username");
-    var currentId = currentIdElement.getAttribute("data-id");
+// 체크박스가 변경될 때마다 실행
+$('.postCheckbox').on('change', function() {
+    var selectedIds = deleteSelectedPosts();
+    console.log(selectedIds);
+});
+*/
 
-    // TODO
 
-    /*var currentId = 2;
-    var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");*/
 
-    // 서버로 전체 삭제 요청 보내기
-    fetch('/mypage/deleteAllMyPosts', {
+
+
+    /*// 선택한 게시물의 ID를 담을 배열
+    var selectedPostIds = [];
+
+    // 체크된 체크박스를 찾아서 ID를 배열에 추가
+    $('.postCheckbox:checked').each(function () {
+        var postId = $(this).val();
+        selectedPostIds.push(Number(postId));
+    });*/
+
+/*    // 각 체크박스에서 data-postid 값을 읽어와 배열에 추가
+    $('.postCheckbox:checked').each(function () {
+        var postId = $(this).data('postid');
+        selectedPostIds.push(Number(postId));
+    });*/
+
+    // Fetch API를 사용하여 서버로 데이터 전송
+    /*fetch('/mypage/deleteSelectedPosts', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-            /*'X-CSRF-TOKEN': csrfToken*/
         },
-        body: JSON.stringify({
-            id: currentId
-        }),
+        body: JSON.stringify(selectedPostIds)
     })
-    .then(response => response.text())
-    .then(result => {
-        alert(result);
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP 오류! 상태: ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(data => {
+        // 삭제 성공한 경우
+        alert("판매글이 성공적으로 삭제되었습니다.");
     })
     .catch(error => {
-        console.error('에러:', error);
+        // 삭제 실패한 경우
+        alert("판매글 삭제 중 오류가 발생했습니다.");
+    });*/
+/*}*/
+
+function deleteSelectedPosts() {
+    var selectedPosts = [];
+    document.querySelectorAll('input[name="selectedPosts"]:checked').forEach(function (checkbox) {
+        selectedPosts.push(checkbox.value);
     });
+
+    console.log("Selected Posts:", selectedPosts);
+
+    if (selectedPosts.length === 0) {
+        alert("삭제할 항목을 선택해주세요.");
+        return;
+    }
+
+    // Fetch 요청
+    fetch("/mypage/deleteMyPosts", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ selectedPosts: selectedPosts }),
+    })
+    .then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('삭제 실패');
+            }
+        })
+        .then(data => {
+            console.log(data);
+            alert("삭제가 완료되었습니다.");
+            loadContent('myPosts');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("삭제 실패했습니다.");
+        });
 }

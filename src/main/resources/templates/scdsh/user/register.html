@@ -2,33 +2,30 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/css/user.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/user.css">
     <script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
     <script th:src="@{/js/user.js}"></script>
     <title>회원가입</title>
 </head>
 <body>
 
-
-
-<!--
-    1. 메세지 hidden 옵션
-    2. 중복 확인 미완성
--->
-
 <div id="register-wrapper">
 
-    <div class="register">
-        <h1>Second Share <br> 회원가입</h1>
-    </div>
 
-    <hr><br>
 
     <div class="regForm">
         <form th:action="@{/user/register}" method="POST" name="frm">
 
+            <div class="register">
+                <h1>Join the Second Share!</h1>
+            </div>
+
+            <hr><br>
+
             <div class="reg-group">
-                아이디 <br><input type="text" class="reg-input" id="username" name="username" placeholder="아이디를 입력하세요" th:value="${username}" autofocus>
+                아이디 <span class="must">*</span>
+                <br><input type="text" class="reg-input" id="username" name="username" placeholder="아이디를 입력하세요" th:value="${username}" autofocus>
                 <input type="button" class="button" id="idChkButton" name="idChkButton" value="중복확인">
 
                 <label id="label1"></label>
@@ -36,21 +33,25 @@
             </div>
             <br>
             <div class="reg-group">
-                비밀번호 <br><input type="text" class="reg-input" id="password" name="password" placeholder="8~22자리 / 영문 + 숫자 + 특수문자 포함">
-                <p class="red">비밀번호 형식에 맞지 않습니다.</p>
+                비밀번호 <span class="must">*</span>
+                <br><input type="password" class="reg-input" id="password" name="password" placeholder="8~22자리 / 영문 + 숫자 + 특수문자 포함 (대소문자 구분 X)">
+                <label id="label2"></label>
             </div>
             <br>
             <div class="reg-group">
-                비밀번호 확인 <br><input type="text" class="reg-input" id="passwordChk" name="passwordChk" placeholder="비밀번호 확인" th:value="${passwordChk}">
-                <p class="red">비밀번호가 일치하지 않습니다.</p>
+                비밀번호 확인 <span class="must">*</span>
+                <br><input type="password" class="reg-input" id="passwordChk" name="passwordChk" placeholder="비밀번호 확인">
+                <label id="label3"></label>
             </div>
             <br>
             <div class="reg-group">
-                이름 <br><input type="text" class="reg-input" id="name" name="name" placeholder="이름을 입력하세요" th:value="${name}">
+                이름 <span class="must">*</span>
+                <br><input type="text" class="reg-input" id="name" name="name" placeholder="이름을 입력하세요" th:value="${name}">
             </div>
             <br>
             <div class="reg-group">
-                전화번호 <br><input type="text" class="reg-input" id="phoneNM" name="phoneNM" placeholder="전화번호를 입력하세요" th:value="${phoneNM}">
+                전화번호 <span class="must">*</span>
+                <br><input type="text" class="reg-input" id="phoneNM" name="phoneNM" placeholder="전화번호를 입력하세요" th:value="${phoneNM}">
                 <input type="button" class="button" id="smsButton" name="smsButton" value="인증번호 전송">
             </div>
             <br>
@@ -62,16 +63,19 @@
             </div>
             <br>
             <div class="reg-group">
-                이메일 <br><input type="text" class="reg-input" id="email" name="email" placeholder="email@secondshare.com" th:value="${email}">
+                이메일 <span class="must">*</span>
+                <br><input type="text" class="reg-input" id="email" name="email" placeholder="email@secondshare.com" th:value="${email}">
+                <label id="label4"></label>
             </div>
 
 
-            <br><br><hr>
+            <br><br><hr><br>
 
             <div class="joinBottom">
-                <button type="submit" id="joinBtn" disabled=true>회원가입</button> <br>
+                <button type="submit" id="joinBtn">회원가입</button> <br>
                 계정이 있다면? <a th:href="@{/user/login}">로그인</a>
             </div>
+            <br>
 
 
         </form>

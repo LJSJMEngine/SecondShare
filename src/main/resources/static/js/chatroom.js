@@ -2,7 +2,7 @@ let stompClient;
 let roomId = RoomData.room_id;
 let isInitFlag = false;
 let chatArrayLog = new Array();
-
+console.log(PostData.user);
 $(function () {
     stompClient = new StompJs.Client({
         brokerURL: 'ws://localhost:8093/ws-stomp'
@@ -113,10 +113,15 @@ function calculateLaterDate(subDate){
     var today = new Date();
     console.log(dateValue);
     var day = today - dateValue;
+    var hour = Math.ceil(day / (1000 * 60 * 60)) - 1;
     day = Math.ceil(day / (1000 * 60 * 60 * 24)) - 1;
     var calcDate = new Date(today - dateValue);
     console.log(day);
-    if(day > 30)
+    if(hour < 0.5)
+        day = "방금";
+    else if(hour < 24)
+        day = hour +"시간 전";
+    else if(day > 30)
         day = dateValue.getFullYear() + ". " (dateValue.getMonth() + 1) + ". " + dateValue.getDate();
     else if(day == 0)
         day = "오늘";
@@ -129,5 +134,5 @@ function calculateLaterDate(subDate){
     var hourStr = dateValue.getHours() / 10 > 1 ? dateValue.getHours() : "0" + dateValue.getHours();
     var minStr = dateValue.getMinutes() / 10 > 1 ? dateValue.getMinutes() : "0" + dateValue.getMinutes();
 
-    return Time = hourStr + ":" + minStr + " " + day;
+    return Time = day + " " + hourStr + ":" + minStr;
 }

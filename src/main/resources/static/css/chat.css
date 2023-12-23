@@ -237,3 +237,21 @@ height:540px;
         overflow-x: auto
     }
 }
+
+
+
+.article-album {
+    list-style: none;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: space-between;
+}
+
+.list-i-selling {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 35%;
+}

@@ -14,8 +14,10 @@
             email "email",
             registDate "registDate",
             status "status"
-        FROM s1_user
-        WHERE 1 = 1
+        FROM
+            s1_user
+        WHERE
+            1 = 1
     </sql>
 
     <select id="findById" resultType="com.lec.spring.domain.User">
@@ -85,10 +87,10 @@
         WHERE u.id = #{id}
     </select>
 
-    <update id="deleteAllMyPostsByUserId" parameterType="long">
+<!--    <update id="deleteAllMyPostsByUserId" parameterType="long">
         DELETE FROM s1_post
         WHERE user_id = #{id}
-    </update>
+    </update>-->
 
 <!--    유저페이지-->
     <select id="findPostsByUserId" resultType="com.lec.spring.domain.Post">

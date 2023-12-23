@@ -186,7 +186,7 @@
 
 
     <!-- 메인페이지 - 최신 판매글 -->
-    <select id="findLatestPostsWithUsername" resultType="map">
+    <select id="findLatestPostsWithUsername" resultType="java.util.Map">
         SELECT
         p.*
         , u.username
@@ -224,6 +224,16 @@
     <select id="findUserIdByUsername" resultType="java.lang.Long">
         SELECT id FROM s1_user WHERE username = #{username}
     </select>
+
+    <!-- 마이페이지 - 내 판매글 삭제하기 -->
+    <delete id="deletePostsByIds" flushCache="true" parameterType="java.util.List">
+        DELETE FROM s1_post
+        WHERE post_id IN
+        <foreach collection="postIds" item="postId" open="(" separator="," close=")">
+            #{postId}
+        </foreach>
+    </delete>
+
     <!-- 유저페이지 ID 값 가져오기    -->
         <select id="findPostById" resultMap="mapPost">
             <include refid="SELECT_BASE"/>

@@ -15,9 +15,9 @@ public interface PostRepository {
 
     int save(Post post);
 
-    Post findByPostId(Long post_id);
+    Post findByPostId(Long id);
 
-    int incViewCnt(Long post_id);
+    int incViewCnt(Long id);
 
     List<Post> findAll();
 
@@ -25,7 +25,8 @@ public interface PostRepository {
 
     int delete(Post post);
 
-
+    // 마이페이지 - 내 판매글 삭제하기
+    void deletePostsByIds(@Param("postIds") List<Long> postIds);
 
     // 페이징 from 부터 rows 개 만큼
     int countAll();
