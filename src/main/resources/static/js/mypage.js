@@ -118,7 +118,7 @@ function saveNewPhoneNumber() {
 
     // 핸드폰 번호 유효성 검사 (원하는 규칙에 따라 구현)
     if (!isValidPhoneNumber(newPhoneNumber)) {
-        displayPhoneNMMessages("유효하지 않은 핸드폰 번호 형식입니다. (예. 010-0000-0000)", null);
+        displayPhoneNMMessages("유효하지 않은 핸드폰 번호 형식입니다. (예. 01012345678)", null);
         return;
     }
 
@@ -298,7 +298,7 @@ function isValidPassword(password) {
 
 // 마이페이지 - 핸드폰 번호 유효성 검사 함수
 function isValidPhoneNumber(phoneNumber) {
-    var phoneRegex = /^\d{3}-\d{4}-\d{4}$/;
+    var phoneRegex = /^\d{11}$/;
     return phoneRegex.test(phoneNumber);
 }
 

@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean isValidPhoneNumber(String phoneNumber) {
-        String phoneRegex = "^\\d{3}-\\d{4}-\\d{4}$";
+        String phoneRegex = "^\\d{11}$";
         return phoneNumber.matches(phoneRegex);
     }
 

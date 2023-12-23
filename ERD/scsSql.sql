@@ -150,7 +150,7 @@ CREATE TABLE s1_user
 	phoneNM varchar(20) NOT NULL,
 	email varchar(100) NOT NULL,
 	age int,
-	registDate datetime,
+	registDate datetime DEFAULT NOW(),
 	status int,
 	PRIMARY KEY (id),
 	UNIQUE (username),
