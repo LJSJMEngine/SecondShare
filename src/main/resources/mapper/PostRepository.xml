@@ -104,7 +104,6 @@
         ORDER BY p.post_id DESC
     </select>
 
-    <!-- 글삭제 버튼을 누를 경우, status 값이 2로 변경 됨. -->
     <update id="modify" flushCache="true"
             parameterType="com.lec.spring.domain.Post">
         UPDATE s1_post
@@ -128,7 +127,7 @@
         WHERE p.category_id = c.id
         AND p.status != 2
         <if test ="type == '제목'">
-            AND  LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+          AND  LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         </if>
         <if test="type == '생활용품'">
             AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
@@ -199,7 +198,7 @@
 
 
     <!-- 메인페이지 - 최신 판매글 -->
-    <select id="findLatestPostsWithUsername" resultType="map">
+    <select id="findLatestPostsWithUsername" resultType="java.util.Map">
         SELECT
         p.*
         , u.username
@@ -237,6 +236,15 @@
     <select id="findUserIdByUsername" resultType="java.lang.Long">
         SELECT id FROM s1_user WHERE username = #{username}
     </select>
+
+    <!-- 마이페이지 - 내 판매글 삭제하기 -->
+    <delete id="deletePostsByIds" flushCache="true" parameterType="java.util.List">
+        DELETE FROM s1_post
+        WHERE post_id IN
+        <foreach collection="postIds" item="postId" open="(" separator="," close=")">
+            #{postId}
+        </foreach>
+    </delete>
 
     <delete id="delete" flushCache="true"
             parameterType="com.lec.spring.domain.Post">
