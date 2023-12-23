@@ -57,8 +57,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int register(User user) {
-        user.setUsername(user.getUsername().toUpperCase());
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         userRepository.join(user);
 
         Authority authority = authorityRepository.findByName("ROLE_MEMBER");
@@ -77,7 +78,6 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id);
         return authorityRepository.findByUser(user);
     }
-
 
     // 마이페이지 - 프로필 보기, 프로필 수정
     @Override
@@ -157,6 +157,11 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
             return Collections.emptyList(); // 빈 리스트 반환
         }
+    }
+
+    @Override
+    public Long findUserIdByUsername(String username) {
+        return userRepository.findUserIdByUsername(username);
     }
 
 

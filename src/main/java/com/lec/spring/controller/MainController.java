@@ -1,7 +1,9 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.PostService;
+import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,12 @@ import java.util.Map;
 public class MainController {
 
     private final PostService postService;
+    private final UserService userService;
 
     @Autowired
-    public MainController(PostService postService) {
+    public MainController(PostService postService, UserService userService) {
         this.postService = postService;
+        this.userService = userService;
     }
 
     @RequestMapping("/")
@@ -39,8 +43,10 @@ public class MainController {
         // 로그인한 경우에만 관심 판매글 가져오기
         if (authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
+            Long userId = userService.findUserIdByUsername(username);
             // 관심 판매글 가져오기 (이미지 경로 및 작성자 사용자명 추가)
-            // model.addAttribute("likedPosts", likedPosts);
+            List<Map<String, Object>> likedPosts = postService.findLikedPostsByUserId(userId);
+            model.addAttribute("likedPosts", likedPosts);
         }
 
         return "main";
@@ -54,4 +60,6 @@ public class MainController {
             model.addAttribute("currentUser", currentUser);
         }
     }
+
+
 }

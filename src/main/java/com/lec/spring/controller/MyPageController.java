@@ -1,14 +1,12 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.DTO.UserDto;
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.domain.EmailAuthRequestDto;
 import com.lec.spring.domain.Post;
 import com.lec.spring.domain.Review;
 import com.lec.spring.domain.User;
-import com.lec.spring.service.EmailService;
-import com.lec.spring.service.PostService;
-import com.lec.spring.service.ReviewService;
-import com.lec.spring.service.UserService;
+import com.lec.spring.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,14 +25,18 @@ public class MyPageController {
 
     private final UserService userService;
     private final ReviewService reviewService;
+    private final EmailService emailService;
+    private final MessageService messageService;
     @Autowired
     private PostService postService;
 
+
     @Autowired
-    public MyPageController(UserService userService, ReviewService reviewService, EmailService emailService) {
+    public MyPageController(UserService userService, ReviewService reviewService, EmailService emailService, MessageService messageService) {
         this.userService = userService;
         this.reviewService = reviewService;
         this.emailService = emailService;
+        this.messageService = messageService;
     }
 
     @GetMapping("/home")
@@ -94,22 +96,44 @@ public class MyPageController {
         }
     }
 
-    @PostMapping("/updatePhoneNumber")
-    public ResponseEntity<String> updatePhoneNumber(@RequestBody Map<String, String> requestBody, Principal principal) {
+    @PostMapping("/sendConfirmationCodeSMS")
+    public ResponseEntity<String> sendConfirmationCodeSMS(@RequestBody Map<String, String> requestBody, Principal principal) {
         String newPhoneNumber = requestBody.get("newPhoneNumber");
         String currentUsername = principal.getName();
 
         try {
-            userService.updatePhoneNumber(newPhoneNumber, currentUsername);
-            return ResponseEntity.ok("핸드폰 번호가 성공적으로 변경되었습니다.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            // SMS 발송
+            messageService.sendSMS(newPhoneNumber);
+
+            return ResponseEntity.ok("인증번호가 발송되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("SMS 발송 중 오류가 발생했습니다.");
+        }
+    }
+
+    @PostMapping("/verifyPhoneNumber")
+    public ResponseEntity<String> verifyPhoneNumber(@RequestBody Map<String, String> requestBody, Principal principal) {
+        String newPhoneNumber = requestBody.get("newPhoneNumber");
+        String confirmationCodeSMS = requestBody.get("confirmationCodeSMS");
+        String currentUsername = principal.getName();
+
+        try {
+            // SMS 인증 검증
+            UserDto.SmsCertificationDto requestDto = new UserDto.SmsCertificationDto();
+            requestDto.setPhoneNumber(newPhoneNumber);
+            requestDto.setRandomNumber(confirmationCodeSMS);
+
+            if (messageService.isVerificationSuccessful(requestDto)) {
+                // 인증 성공 시 핸드폰 번호 업데이트
+                userService.updatePhoneNumber(newPhoneNumber, currentUsername);
+                return ResponseEntity.ok("핸드폰 번호가 성공적으로 변경되었습니다.");
+            } else {
+                return ResponseEntity.badRequest().body("인증번호가 올바르지 않습니다.");
+            }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("핸드폰 번호 변경 중 오류가 발생했습니다.");
         }
     }
-
-    private EmailService emailService;
 
     @PostMapping("/sendConfirmationCode")
     public ResponseEntity<String> sendConfirmationCode(@RequestBody Map<String, String> requestBody, Principal principal) {
@@ -164,14 +188,12 @@ public class MyPageController {
         model.addAttribute("userProfile", userProfile);
 
         List<Post.MyPosts> myPosts = userService.showMyPosts(userProfile.getId());
-        long statusOneCount = myPosts.stream().filter(post -> post.getStatus() == 1).count();
-
         model.addAttribute("myPosts", myPosts);
+
+        long statusOneCount = myPosts.stream().filter(post -> post.getStatus() == 1).count();
         model.addAttribute("statusOneCount", statusOneCount);
 
         List<Review.MyReceivedReviews> myReceivedReviews = reviewService.findReviewsByUserId(Math.toIntExact(userProfile.getId()));
-        /*List<Review.MyReceivedReviews> myReceivedReviews = reviewService.findReviewsByUserId(Math.toIntExact(currentUserId));*/
-
         model.addAttribute("myReceivedReviews", myReceivedReviews);
 
         return "mypage/myPosts";
@@ -190,10 +212,10 @@ public class MyPageController {
 
     @PostMapping("/deleteMyPosts")
     public ResponseEntity<String> deleteMyPosts(@RequestBody Map<String, List<Long>> requestBody) {
-        List<Long> selectedPosts = requestBody.get("selectedPosts");
+        List<Long> selectedPostIds = requestBody.get("selectedPostIds");
 
-        if (selectedPosts != null && !selectedPosts.isEmpty()) {
-            postService.deleteMyPosts(selectedPosts);
+        if (selectedPostIds != null && !selectedPostIds.isEmpty()) {
+            postService.deleteMyPosts(selectedPostIds);
             return ResponseEntity.ok("삭제가 완료되었습니다.");
         } else {
             return ResponseEntity.badRequest().body("삭제할 항목을 선택해주세요.");

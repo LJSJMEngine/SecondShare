@@ -3,6 +3,7 @@ package com.lec.spring.controller;
 import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 //import com.lec.spring.domain.UserValidator;
+import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.BoardService;
 import com.lec.spring.service.MemberService;
 import com.lec.spring.service.UserService;
@@ -37,11 +38,6 @@ public class UserController {
     public void login(Model model){}
 
 
-    @PostMapping("/login")
-    public void loginProcess(){
-        System.out.println("이게 뜨면 안됨");
-    }
-
     @PostMapping("/loginError")
     public String loginError(){
         return "user/login";
@@ -55,33 +51,8 @@ public class UserController {
     @GetMapping("/register")
     public void register(){}
 
-//    @PostMapping("/register")
-//    public String registerOk(
-//            @Valid User user,
-//            BindingResult result,
-//            Model model,
-//            RedirectAttributes redirectAttributes
-//            ){
-//
-//        if (result.hasErrors()) {
-//            redirectAttributes.addFlashAttribute("username", user.getUsername());
-//            redirectAttributes.addFlashAttribute("name", user.getName());
-//            redirectAttributes.addFlashAttribute("email", user.getEmail());
-//
-//            List<FieldError> errorList = result.getFieldErrors();
-//            for (FieldError error : errorList) {
-//                redirectAttributes.addFlashAttribute("error", error.getCode());
-//                break;
-//            }
-//            return "redirect:/user/register";
-//        }
-//
-//        int count = userService.register(user);
-//        model.addAttribute("result", count);
-//        return "/user/registerOk";
-//    }
 
-    @PostMapping("/register")
+    @PostMapping("/register/username")
     @ResponseBody
     public ResponseEntity<Boolean> confirmId(String username) {
         if (username == null || username.trim().isEmpty()) {
@@ -92,6 +63,12 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping("/register")
+    public String registerOk(User user, Model model) {
+        int submit = userService.register(user);
+        model.addAttribute("result", submit);
+        return "/user/registerOk";
+    }
 
     // 유저 페이지
     @GetMapping("/userpage/{id}")
@@ -107,18 +84,5 @@ public class UserController {
         U.getSession().setAttribute("pageRows", pageRows);
         return "redirect:/user/userpage?page=" + page;
     }
-
-    // 유저 페이지
-
-//    @Autowired
-//    UserValidator userValidator;
-
-//    @InitBinder
-//    public void initBinder(WebDataBinder binder) {
-//        binder.setValidator(userValidator);
-//    }
-
-
-
 
 }

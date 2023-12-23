@@ -92,16 +92,17 @@
     </update>
 
     <select id="showMyPosts" parameterType="long" resultType="com.lec.spring.domain.Post$MyPosts">
-        SELECT p.subject, p.status, p.regDate
+        SELECT p.post_id, p.subject, p.status, p.regDate
         FROM s1_post p
         JOIN s1_user u ON p.user_id = u.id
         WHERE u.id = #{id}
     </select>
 
-<!--    <update id="deleteAllMyPostsByUserId" parameterType="long">
-        DELETE FROM s1_post
-        WHERE user_id = #{id}
-    </update>-->
+    <select id="findUserIdByUsername" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT id
+        FROM s1_user
+        WHERE username = #{username}
+    </select>
 
 <!--    유저페이지-->
     <!-- 페이징 용 쿼리 -->

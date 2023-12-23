@@ -25,40 +25,40 @@
 
     <div id="content-area" class="mainPosts">
         <h2>최신 판매글</h2>
+
         <ul class="article-album">
             <li th:each="post : ${latestPosts}">
                 <!-- 판매글 대표 이미지 -->
                 <a th:href="@{'/board/detail/' + ${post.post_id}}" class="album-img"
                    onclick="clickLink(event, '${post.post_id}')">
                     <div class="image-container">
-                        <!-- 대표 이미지가 있을 때 -->
-                        <img th:if="${post != null and (post['filename'] != null or post['attachment_filename'] != null)}"
-                             th:src="${post['filename'] != null ? post['filename'] : post['attachment_filename']}" />
-                        <!-- 대표 이미지가 없을 때 -->
-                        <img th:unless="${post != null and (post['filename'] != null or post['attachment_filename'] != null)}"
-                             src="/sample.jpg" />
+                        <!-- 대표 이미지 : 이미지파일(.jpg, .png, .gif) 이면 img_path 불러오고, 아니라면 /sample.jpg -->
+                        <img th:if="${post.img_path != null and #strings.endsWith(post.img_path, '.jpg') or #strings.endsWith(post.img_path, '.png') or #strings.endsWith(post.img_path, '.gif')}"
+                             th:src="@{'/upload/' + ${post.img_path}}" alt="이미지 파일이 아닙니다."/>
+                        <img th:unless="${post.img_path != null and #strings.endsWith(post.img_path, '.jpg') or #strings.endsWith(post.img_path, '.png') or #strings.endsWith(post.img_path, '.gif')}"
+                             th:src="@{/sample.jpg}" alt="이미지 파일이 아닙니다."/>
                         <span class="list-i-selling">
-                            <i th:class="${post.status == 0} ? 'status selling' : 'status sold-out'"></i>
-                        </span>
+                    <i th:class="${post.status == 0} ? 'status selling' : 'status sold-out'"></i>
+                </span>
                     </div>
+                    <dl>
+                        <!-- 판매글 제목 -->
+                        <dt>
+                            <a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}" class="subject"
+                               onclick="clickLink(event, '${post.post_id}')"></a>
+                        </dt>
+                        <!-- 판매글 가격 -->
+                        <dd th:text="${#numbers.formatDecimal(post.price, 0, 'COMMA', 0, 'POINT') + '원'}"
+                            class="price"></dd>
+                        <!-- 판매글 작성자명 -->
+                        <dd th:text="${post.username}" class="name"></dd>
+                        <!-- 판매글 작성일 & 조회수 -->
+                        <dd class="date_cnt">
+                            <span th:text="${#temporals.format(post.regDate, 'MM/dd')}" class="regDate"></span>
+                            <span th:text="'조회 ' + ${post.viewCnt}" class="viewCnt"></span>
+                        </dd>
+                    </dl>
                 </a>
-                <dl>
-                    <!-- 판매글 제목 -->
-                    <dt>
-                        <a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}" class="subject"
-                           onclick="clickLink(event, '${post.post_id}')"></a>
-                    </dt>
-                    <!-- 판매글 가격 -->
-                    <dd th:text="${#numbers.formatDecimal(post.price, 0, 'COMMA', 0, 'POINT') + '원'}"
-                        class="price"></dd>
-                    <!-- 판매글 작성자명 -->
-                    <dd th:text="${post.username}" class="name"></dd>
-                    <!-- 판매글 작성일 & 조회수 -->
-                    <dd class="date_cnt">
-                        <span th:text="${#temporals.format(post.regDate, 'MM/dd')}" class="regDate"></span>
-                        <span th:text="'조회 ' + ${post.viewCnt}" class="viewCnt"></span>
-                    </dd>
-                </dl>
             </li>
         </ul>
 
@@ -66,65 +66,61 @@
 
         <!-- 관심 판매글 목록 -->
         <h2>관심 판매글</h2>
+
         <!--로그인 했을 때-->
-<!--        <div th:if="${currentUser != null}">
-            <ul class="article-album">
-                &lt;!&ndash; 관심 판매글이 있을 때 &ndash;&gt;
-                <th:block th:if="${not #lists.isEmpty(likedPosts)}">
+        <div th:if="${currentUser != null}">
+
+            <!-- 관심 판매글이 있을 때 -->
+            <th:block th:if="${not #lists.isEmpty(likedPosts)}">
+                <ul class="article-album">
                     <li th:each="likedPost : ${likedPosts}">
-                        &lt;!&ndash; 판매글 대표 이미지 &ndash;&gt;
-                        <a th:href="@{'/board/detail/' + ${likedPost.post_id}}" class="album-img"
-                           onclick="clickLink(event, '${likedPost.post_id}')">
+                        <!-- 판매글 대표 이미지 -->
+                        <a th:href="@{'/board/detail/' + ${likedPost.post_id}}" class="album-img" onclick="clickLink(event, '${likedPost.post_id}')">
                             <div class="image-container">
-                                &lt;!&ndash; 대표 이미지가 있을 때 &ndash;&gt;
-                                <img th:if="${likedPost != null and (likedPost['filename'] != null or likedPost['attachment_filename'] != null)}"
-                                     th:src="${likedPost['filename'] != null ? likedPost['filename'] : likedPost['attachment_filename']}" />
-                                &lt;!&ndash; 대표 이미지가 없을 때 &ndash;&gt;
-                                <img th:unless="${likedPost != null and (likedPost['filename'] != null or likedPost['attachment_filename'] != null)}"
-                                     src="/sample.jpg" width="200" height="200" alt="img">
+                                <!-- 대표 이미지 : 이미지파일(.jpg, .png, .gif) 이면 img_path 불러오고, 아니라면 /sample.jpg -->
+                                <img th:if="${likedPost.img_path != null and #strings.endsWith(likedPost.img_path, '.jpg') or #strings.endsWith(likedPost.img_path, '.png') or #strings.endsWith(likedPost.img_path, '.gif')}"
+                                     th:src="@{'/upload/' + ${likedPost.img_path}}" alt="이미지 파일이 아닙니다."/>
+                                <img th:unless="${likedPost.img_path != null and #strings.endsWith(likedPost.img_path, '.jpg') or #strings.endsWith(likedPost.img_path, '.png') or #strings.endsWith(likedPost.img_path, '.gif')}"
+                                     src="/sample.jpg" alt="이미지 파일이 아닙니다."/>
                                 <span class="list-i-selling">
-                            <i th:class="${likedPost.status == 0} ? 'status selling' : 'status sold-out'"></i>
-                        </span>
+                                    <i th:class="${likedPost.status == 0} ? 'status selling' : 'status sold-out'"></i>
+                                </span>
                             </div>
-                        </a>
                         <dl>
-                            &lt;!&ndash; 판매글 제목 &ndash;&gt;
+                            <!-- 판매글 제목 -->
                             <dt>
-                                <a th:href="@{'/board/detail/' + ${likedPost.post_id}}" th:text="${likedPost.subject}"
-                                   class="subject"
-                                   onclick="clickLink(event, '${likedPost.post_id}')"></a>
+                                <a th:href="@{'/board/detail/' + ${likedPost.post_id}}" th:text="${likedPost.subject}" class="subject" onclick="clickLink(event, '${likedPost.post_id}')"></a>
                             </dt>
-                            &lt;!&ndash; 판매글 가격 &ndash;&gt;
-                            <dd th:text="${#numbers.formatDecimal(likedPost.price, 0, 'COMMA', 0, 'POINT') + '원'}"
-                                class="price"></dd>
-                            &lt;!&ndash; 판매글 작성자명 &ndash;&gt;
+                            <!-- 판매글 가격 -->
+                            <dd th:text="${#numbers.formatDecimal(likedPost.price, 0, 'COMMA', 0, 'POINT') + '원'}" class="price"></dd>
+                            <!-- 판매글 작성자명 -->
                             <dd th:text="${likedPost.username}" class="name"></dd>
-                            &lt;!&ndash; 판매글 작성일 & 조회수 &ndash;&gt;
+                            <!-- 판매글 작성일 & 조회수 -->
                             <dd class="date_cnt">
                                 <span th:text="${#temporals.format(likedPost.regDate, 'MM/dd')}" class="regDate"></span>
                                 <span th:text="'조회 ' + ${likedPost.viewCnt}" class="viewCnt"></span>
                             </dd>
                         </dl>
+                        </a>
                     </li>
-                </th:block>-->
+                </ul>
+            </th:block>
 
-                <!-- 관심 판매글이 없을 때 -->
-                <th:block th:unless="${not #lists.isEmpty(likedPosts)}">
-                    <p>관심 판매글이 없습니다.</p>
-                </th:block>
+            <!-- 관심 판매글이 없을 때 -->
+            <th:block th:unless="${not #lists.isEmpty(likedPosts)}">
+                <p>관심 판매글이 없습니다.</p>
+            </th:block>
 
             </ul>
         </div>
 
         <!--로그인 하지 않았을 때-->
         <div th:if="${currentUser == null}">
-            <p>로그인 후에 관심 판매글을 확인할 수 있습니다. <!--<a th:href="@{/user/login}">로그인</a></p>-->
+            <p>로그인 후에 관심 판매글을 확인할 수 있습니다.
         </div>
+
     </div>
 </div>
-
-
 </div>
-
 </body>
 </html>
