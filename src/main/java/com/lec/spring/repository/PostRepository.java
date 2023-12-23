@@ -25,6 +25,8 @@ public interface PostRepository {
 
     int chPostStatus(Long id);
 
+    int delStatus(Long id);
+
     int delete(Post post);
 
 

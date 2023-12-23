@@ -277,7 +277,7 @@ public class BoardServiceImpl implements BoardService {
     public int chStatus(Long id){
         Post post = postRepository.findByPostId(id);
         if (post != null) {
-           if (post.getStatus() < 2) {
+           if (post.getStatus() != 1) {
 
                postRepository.chPostStatus(id);
            }
@@ -287,6 +287,19 @@ public class BoardServiceImpl implements BoardService {
         }
     }
 
+    @Override
+    public int delStatus(Long id){
+        Post post = postRepository.findByPostId(id);
+        if (post != null) {
+            if (post.getStatus() < 2) {
+
+                postRepository.delStatus(id);
+            }
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 
     @Override
     public int deleteByPostId(Long post_id){

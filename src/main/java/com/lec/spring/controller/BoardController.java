@@ -127,18 +127,16 @@ public class BoardController {
         return "/board/review";
     }
 
-    @RequestMapping("/chkTrade")
-    public void chkTrade(){}
-
     @PostMapping("/chkTrade")
-    public String chkTradeOk(){
-
+    public String chkTradeOk(Long post_id, Model model){
+        int result = boardService.chStatus(post_id);
+        model.addAttribute("result", result);
         return "/board/chkTradeOk";
     }
 
     @PostMapping("/delete")
     public String deleteOk(Long post_id, Model model) {
-        int result = boardService.chStatus(post_id);
+        int result = boardService.delStatus(post_id);
         model.addAttribute("result", result);
         return "board/deleteOk";
     }

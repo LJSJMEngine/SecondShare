@@ -15,6 +15,12 @@
 
     <update id="chPostStatus" flushCache="true">
         UPDATE s1_post
+        SET status = 1
+        WHERE post_id = #{post_id}
+    </update>
+
+    <update id="delStatus" flushCache="true">
+        UPDATE s1_post
         SET status = 2
         WHERE post_id = #{post_id}
     </update>

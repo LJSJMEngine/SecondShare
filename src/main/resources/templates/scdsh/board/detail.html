@@ -55,6 +55,10 @@
                 <input type="hidden" id="id" name="post_id" th:value="${post.post_id}">
             </form>
 
+            <form name="chkTrade" th:action="@{/board/chkTrade}" method="post">
+                <input type="hidden" id="post_id" name="post_id" th:value="${post.post_id}">
+            </form>
+
             <div>
                 <label>제목: </label>
                 <span th:utext="${post.subject}"></span>
@@ -87,10 +91,10 @@
 
             <!-- 버튼 부분 -->
             <div >
-                <a class="btn btn-outline-dark" th:href="@{'/board/modify/' + ${post.post_id}}" th:if="${logged_user.id == post.user.id}">수정</a>
+                <a class="btn btn-outline-dark" th:href="@{'/board/modify/' + ${post.post_id}}" th:if="${logged_user.id == post.user.id} and ${post.status != 1}">수정</a>
                 <button type="button" id="btnDel" th:if="${logged_user.id == post.user.id}">삭제</button>
                 <a class="btn btn-outline-dark" th:href="TODO" th:if="${logged_user.id != post.user.id}">1:1 채팅하기</a>
-                <button type="button" id="chkTrade" th:href="@{'/board/chkTrade}" th:if="${logged_user.id == post.user.id}">거래완료</button>
+                <button type="button" id="chkTrade" th:href="@{'/board/chkTrade}" th:if="${logged_user.id == post.user.id} and ${post.status != 1}">거래완료</button>
                 <a class="btn btn-outline-dark" th:href="@{/board/list(page=${session.page})}">목록</a>
             </div>
 

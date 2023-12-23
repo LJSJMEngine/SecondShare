@@ -8,6 +8,14 @@ $(function(){
         }
     });
 
+    // 거래 확인 버튼
+    $("#chkTrade").click(function(){
+        let answer = confirm("거래를 완료하시겠습니까? \n거래가 완료되면 게시글의 거래가 종료되고, \n거래한 회원에게 알림이 갑니다.");
+        if(answer){
+            $("form[name='chkTrade']").submit();
+        }
+    });
+
     // 현재 글의 id
     const id = $("input[name='post_id']").val().trim();
 
@@ -49,12 +57,6 @@ $(function(){
             }
         })
     });
-
-    window.onload = function(){
-        document.getElementById("chkTrade").onclick = function(){
-            window.open("/board/chkTrade", "", "width=500px,height=350px,top=200px,left=200px;");
-        }
-    }
 
 });
 
