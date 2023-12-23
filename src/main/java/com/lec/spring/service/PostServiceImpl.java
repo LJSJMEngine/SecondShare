@@ -55,8 +55,6 @@ public class PostServiceImpl implements PostService {
             // 이미지 경로 생성 및 추가
             String imgPath = getFirstImgPathByPostId(postId);
             post.put("img_path", imgPath);
-            // String imgPath = "/upload/" + (post.get("filename") != null ? post.get("filename") : post.get("attachment_filename"));
-            // post.put("img_path", imgPath);
 
         }
 
@@ -80,12 +78,18 @@ public class PostServiceImpl implements PostService {
     public List<Map<String, Object>> findLikedPostsByUserId(Long userId) {
         List<Map<String, Object>> likedPosts = postRepository.findLikedPostsByUserId(userId);
 
+        // 중복된 post_id를 제거
+        likedPosts = likedPosts.stream()
+                .collect(Collectors.toMap(post -> post.get("post_id"), post -> post, (existing, replacement) -> existing))
+                .values().stream()
+                .collect(Collectors.toList());
+
         for (Map<String, Object> post : likedPosts) {
-            String username = (String) post.get("username");
+            Integer postId = (Integer) post.get("post_id");
             String attachmentFilename = (String) post.get("attachment_filename");
 
             // 이미지 경로 생성 및 추가
-            String imgPath = "/upload/" + (attachmentFilename != null ? attachmentFilename : post.get("filename"));
+            String imgPath = getFirstImgPathByPostId(postId);
             post.put("img_path", imgPath);
         }
 

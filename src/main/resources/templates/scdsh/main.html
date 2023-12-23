@@ -79,7 +79,7 @@
                             <div class="image-container">
                                 <!-- 대표 이미지 : 이미지파일(.jpg, .png, .gif) 이면 img_path 불러오고, 아니라면 /sample.jpg -->
                                 <img th:if="${likedPost.img_path != null and #strings.endsWith(likedPost.img_path, '.jpg') or #strings.endsWith(likedPost.img_path, '.png') or #strings.endsWith(likedPost.img_path, '.gif')}"
-                                     th:src="@{${likedPost.img_path}}" alt="이미지 파일이 아닙니다."/>
+                                     th:src="@{'/upload/' + ${likedPost.img_path}}" alt="이미지 파일이 아닙니다."/>
                                 <img th:unless="${likedPost.img_path != null and #strings.endsWith(likedPost.img_path, '.jpg') or #strings.endsWith(likedPost.img_path, '.png') or #strings.endsWith(likedPost.img_path, '.gif')}"
                                      src="/sample.jpg" alt="이미지 파일이 아닙니다."/>
                                 <span class="list-i-selling">

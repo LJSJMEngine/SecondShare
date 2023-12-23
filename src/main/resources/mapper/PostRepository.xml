@@ -220,7 +220,7 @@
         SELECT
             p.*,
             u.username as username,
-            a.filename as attachment_filename
+            MAX(a.filename) as attachment_filename
         FROM s1_post p
             JOIN s1_heart h ON p.post_id = h.post_id
             JOIN s1_user u ON p.user_id = u.id
@@ -228,7 +228,9 @@
         WHERE
             h.user_id = #{userId}
             AND h.is_active = TRUE
-        ORDER BY h.created_at DESC LIMIT 5;
+        GROUP BY p.post_id
+        ORDER BY MAX(h.created_at) DESC
+        LIMIT 5
     </select>
 
     <!-- 사용자 ID 가져오기 -->

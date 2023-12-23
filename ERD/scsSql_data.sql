@@ -89,7 +89,7 @@ INSERT INTO s1_attachment (post_id, sourcename, filename, isImage) VALUES
 (1, 'phone2.jpg', 'phone2.jpg', TRUE),
 (2, 'phone2.jpg', 'phone2.jpg', TRUE),
 (3, 'phone3.jpg', 'phone3.jpg', TRUE),
-(4, 'img_avatar1.png', 'img_avatar1.png', TRUE),
+(4, '첨부파일 샘플.txt', '첨부파일 샘플.txt', FALSE),
 (5, 'img_avatar2.png', 'img_avatar2.png', TRUE),
 (6, 'img_avatar3.png', 'img_avatar3.png', TRUE),
 (7, 'img_avatar4.png', 'img_avatar4.png', TRUE)
