@@ -186,15 +186,15 @@
 
 
     <!-- 메인페이지 - 최신 판매글 -->
-    <select id="findLatestPostsWithUsername" resultType="java.util.Map">
+    <select id="findLatestPostsWithUsernameAndSampleImg" resultType="java.util.Map">
         SELECT
-        p.*
-        , u.username
-        , a.filename AS attachment_filename
+            p.*
+            , u.username
+            , a.filename AS attachment_filename
         FROM s1_post p
-        JOIN s1_user u ON p.user_id = u.id
-        LEFT JOIN s1_attachment a ON p.post_id = a.post_id
-        WHERE 1=1
+            JOIN s1_user u ON p.user_id = u.id
+            LEFT JOIN s1_attachment a ON p.post_id = a.post_id
+        WHERE a.isImage IN (0, 1) AND a.isSampleImg = 1
         ORDER BY p.regDate DESC LIMIT 5;
     </select>
 

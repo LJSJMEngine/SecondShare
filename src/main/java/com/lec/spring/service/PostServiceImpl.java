@@ -39,15 +39,16 @@ public class PostServiceImpl implements PostService {
     // 마이페이지 - 최신 판매글
     @Override
     public List<Map<String, Object>> getLatestPostsWithUsernameAndImgPath() {
-        List<Map<String, Object>> latestPosts = postRepository.findLatestPostsWithUsername();
+        List<Map<String, Object>> latestPosts = postRepository.findLatestPostsWithUsernameAndSampleImg();
 
         for (Map<String, Object> post : latestPosts) {
             Integer postId = (Integer) post.get("post_id");
             String filename = (String) post.get("filename");
 
             // 이미지 경로 생성 및 추가
-            String imgPath = "/img/attachment/" + postId + "/" + filename;
+            String imgPath = "/upload/" + (post.get("filename") != null ? post.get("filename") : post.get("attachment_filename"));
             post.put("img_path", imgPath);
+
         }
 
         return latestPosts;

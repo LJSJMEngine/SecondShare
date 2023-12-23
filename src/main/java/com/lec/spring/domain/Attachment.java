@@ -18,4 +18,7 @@ public class Attachment {
     private boolean isImage;        // 이미지 파일이면 true, 아니면 false
     private boolean isSampleImg;    // 대표 이미지면 true, 아니면 false
 
+    public void setIsSampleImg(boolean isSampleImg) {
+        this.isSampleImg = isSampleImg;
+    }
 }

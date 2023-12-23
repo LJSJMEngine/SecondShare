@@ -127,7 +127,7 @@ CREATE TABLE s1_post
 	viewCnt int DEFAULT 0,
 	status int DEFAULT 0,
 	regDate datetime,
-	sampleImg int NOT NULL DEFAULT 0,		-- sampleImg 가 없으면 0, 있으면 1
+	sampleImg int NOT NULL DEFAULT 0,		-- 첨부파일 자체가 없으면 0, 첨부파일 (이미지, 텍스트 등 모든 형태)가 있으면 1
 	PRIMARY KEY (post_id)
 );
 

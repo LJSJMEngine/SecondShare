@@ -39,9 +39,8 @@ public interface PostRepository {
                                     @Param("from") int from, @Param("rows") int rows);
 
 
-    // 마이페이지 - 최신 판매글
     // 메인페이지 - 최신 판매글
-    List<Map<String, Object>> findLatestPostsWithUsername();
+    List<Map<String, Object>> findLatestPostsWithUsernameAndSampleImg();
 
     // 메인페이지 - 관심 판매글
 
