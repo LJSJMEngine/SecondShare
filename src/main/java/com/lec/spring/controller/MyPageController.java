@@ -190,6 +190,11 @@ public class MyPageController {
         List<Post.MyPosts> myPosts = userService.showMyPosts(userProfile.getId());
         model.addAttribute("myPosts", myPosts);
 
+        long statusZeroOneCount = myPosts.stream()
+                .filter(post -> post.getStatus() == 1 || post.getStatus() == 0)
+                .count();
+        model.addAttribute("statusZeroOneCount", statusZeroOneCount);
+
         long statusOneCount = myPosts.stream().filter(post -> post.getStatus() == 1).count();
         model.addAttribute("statusOneCount", statusOneCount);
 

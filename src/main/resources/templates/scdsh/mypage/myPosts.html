@@ -13,7 +13,7 @@
     <!-- 나의 판매글 목록 -->
     <section id="myPosts">
 
-        <h3 th:text="'총 판매글 ' + ${myPosts.size()} + ' 건 | 거래 성공 ' + ${statusOneCount} + ' 건'"></h3>
+        <h3 th:text="'총 판매글 ' + ${statusZeroOneCount} + ' 건 | 거래 성공 ' + ${statusOneCount} + ' 건'"></h3>
 
         <form th:action="@{/mypage/deleteMyPosts}" method="post" id="deleteForm">
             <table class="myPostsList">

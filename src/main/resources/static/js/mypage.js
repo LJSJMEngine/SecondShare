@@ -434,3 +434,17 @@ function deleteSelectedPostIds() {
         });
 }
 
+// myPage/myPostsData 데이터 가져오기
+$(document).ready(function() {
+    $.ajax({
+        type: "POST",
+        url: "/mypage/myPostsData",
+        success: function(data) {
+            // data를 이용하여 필요한 작업 수행
+            console.log(data);
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+});
