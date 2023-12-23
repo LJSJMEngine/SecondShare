@@ -28,7 +28,6 @@ CREATE TABLE s1_attachment
 	sourcename varchar(100), 
 	filename varchar(100),
 	isImage boolean NOT NULL,	-- 이미지 파일이면 TRUE, 아니면 FALSE
-	isSampleImg boolean NOT NULL,	-- 대표이미지면 TRUE, 아니면 FALSE
 	PRIMARY KEY (id)
 );
 

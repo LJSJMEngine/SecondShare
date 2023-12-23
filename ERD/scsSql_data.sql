@@ -84,19 +84,20 @@ INSERT INTO s1_review (user_id, post_id, reviewChk, content) VALUES
 (2, 6, 1, '저렴해요')
 ;
 
-INSERT INTO s1_attachment (post_id, sourcename, filename, isImage, isSampleImg) VALUES
-(1, 'phone1.jpg', 'phone1.jpg', TRUE, TRUE),
-(2, 'phone2.jpg', 'phone2.jpg', TRUE, TRUE),
-(3, 'phone3.jpg', 'phone3.jpg', TRUE, TRUE),
-(4, 'img_avatar1.png', 'img_avatar1.png', TRUE, TRUE),
-(5, 'img_avatar2.png', 'img_avatar2.png', TRUE, TRUE),
-(6, 'img_avatar3.png', 'img_avatar3.png', TRUE, TRUE),
-(7, 'img_avatar4.png', 'img_avatar4.png', TRUE, TRUE)
+INSERT INTO s1_attachment (post_id, sourcename, filename, isImage) VALUES
+(1, 'phone1.jpg', 'phone1.jpg', TRUE),
+(1, 'phone2.jpg', 'phone2.jpg', TRUE),
+(2, 'phone2.jpg', 'phone2.jpg', TRUE),
+(3, 'phone3.jpg', 'phone3.jpg', TRUE),
+(4, 'img_avatar1.png', 'img_avatar1.png', TRUE),
+(5, 'img_avatar2.png', 'img_avatar2.png', TRUE),
+(6, 'img_avatar3.png', 'img_avatar3.png', TRUE),
+(7, 'img_avatar4.png', 'img_avatar4.png', TRUE)
 ;
 
 UPDATE s1_post
 SET sampleImg = 1
-WHERE post_id IN (SELECT post_id FROM s1_attachment WHERE isSampleImg = TRUE)
+WHERE post_id IN (SELECT post_id FROM s1_attachment WHERE isImage = TRUE)
 ;
 
 INSERT INTO s1_heart (user_id, post_id, is_active, created_at)

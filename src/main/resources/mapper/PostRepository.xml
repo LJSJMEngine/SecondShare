@@ -188,15 +188,31 @@
     <!-- 메인페이지 - 최신 판매글 -->
     <select id="findLatestPostsWithUsernameAndSampleImg" resultType="java.util.Map">
         SELECT
-            p.*
-            , u.username
-            , a.filename AS attachment_filename
+            p.post_id,
+            p.user_id,
+            p.category_id,
+            p.subject,
+            p.contents,
+            p.price,
+            p.viewCnt,
+            p.status,
+            p.regDate,
+            p.sampleImg,
+            p.heart_count,
+            u.username,
+            MAX(a.filename) AS attachment_filename
         FROM s1_post p
             JOIN s1_user u ON p.user_id = u.id
             LEFT JOIN s1_attachment a ON p.post_id = a.post_id
-        WHERE
-            a.isImage IN (0, 1) AND a.isSampleImg = 1
+        GROUP BY p.post_id
         ORDER BY p.regDate DESC LIMIT 5;
+    </select>
+
+    <select id="getImagePathsByPostId" resultType="java.lang.String">
+        SELECT a.filename
+        FROM s1_attachment a
+        JOIN s1_post p ON a.post_id = p.post_id
+        WHERE p.post_id = #{postId}
     </select>
 
     <!-- 메인페이지 - 관심 판매글 (사용자 아이디로 가져오기) -->
@@ -212,8 +228,6 @@
         WHERE
             h.user_id = #{userId}
             AND h.is_active = TRUE
-            AND a.isImage IN (0, 1)
-            AND a.isSampleImg = 1
         ORDER BY h.created_at DESC LIMIT 5;
     </select>
 

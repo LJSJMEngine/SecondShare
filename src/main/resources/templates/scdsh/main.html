@@ -34,9 +34,9 @@
                     <div class="image-container">
                         <!-- 대표 이미지 : 이미지파일(.jpg, .png, .gif) 이면 img_path 불러오고, 아니라면 /sample.jpg -->
                         <img th:if="${post.img_path != null and #strings.endsWith(post.img_path, '.jpg') or #strings.endsWith(post.img_path, '.png') or #strings.endsWith(post.img_path, '.gif')}"
-                             th:src="@{${post.img_path}}" alt="이미지 파일이 아닙니다."/>
+                             th:src="@{'/upload/' + ${post.img_path}}" alt="이미지 파일이 아닙니다."/>
                         <img th:unless="${post.img_path != null and #strings.endsWith(post.img_path, '.jpg') or #strings.endsWith(post.img_path, '.png') or #strings.endsWith(post.img_path, '.gif')}"
-                             src="/sample.jpg" alt="이미지 파일이 아닙니다."/>
+                             th:src="@{/sample.jpg}" alt="이미지 파일이 아닙니다."/>
                         <span class="list-i-selling">
                     <i th:class="${post.status == 0} ? 'status selling' : 'status sold-out'"></i>
                 </span>

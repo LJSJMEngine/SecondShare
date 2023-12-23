@@ -42,6 +42,7 @@ public interface PostRepository {
 
     // 메인페이지 - 최신 판매글
     List<Map<String, Object>> findLatestPostsWithUsernameAndSampleImg();
+    List<String> getImagePathsByPostId(Integer postId);
 
     // 메인페이지 - 관심 판매글
     List<Map<String, Object>> findLikedPostsByUserId(@Param("userId") Long userId);
