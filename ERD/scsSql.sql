@@ -91,6 +91,9 @@ CREATE TABLE s1_heart
 	id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
 	post_id int NOT NULL,
+	is_active boolean DEFAULT FALSE,	-- 좋아요 클릭 시 TRUE
+	created_at datetime DEFAULT NOW(),	-- 좋아요 클릭 시간
+	updated_at datetime,	-- (혹시라도 취소했다가 다시 클릭 시) 좋아요 클릭 시간
 	PRIMARY KEY (id)
 );
 
@@ -128,6 +131,7 @@ CREATE TABLE s1_post
 	status int DEFAULT 0,
 	regDate datetime,
 	sampleImg int NOT NULL DEFAULT 0,		-- 첨부파일 자체가 없으면 0, 첨부파일 (이미지, 텍스트 등 모든 형태)가 있으면 1
+	heart_count int DEFAULT 0,
 	PRIMARY KEY (post_id)
 );
 

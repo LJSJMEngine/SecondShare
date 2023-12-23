@@ -15,4 +15,5 @@ public interface PostService {
     List<Map<String, Object>> getLatestPostsWithUsernameAndImgPath();
 
     // 메인페이지 - 관심 판매글
+    List<Map<String, Object>> findLikedPostsByUserId(Long userId);
 }

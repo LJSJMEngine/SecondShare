@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.lec.spring.domain.Heart;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 @Mapper
@@ -43,6 +44,7 @@ public interface PostRepository {
     List<Map<String, Object>> findLatestPostsWithUsernameAndSampleImg();
 
     // 메인페이지 - 관심 판매글
+    List<Map<String, Object>> findLikedPostsByUserId(@Param("userId") Long userId);
 
 
 }

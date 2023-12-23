@@ -87,4 +87,10 @@
         WHERE u.id = #{id}
     </select>
 
+    <select id="findUserIdByUsername" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT id
+        FROM s1_user
+        WHERE username = #{username}
+    </select>
+
 </mapper>

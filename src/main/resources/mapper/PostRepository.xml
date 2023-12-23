@@ -194,18 +194,31 @@
         FROM s1_post p
             JOIN s1_user u ON p.user_id = u.id
             LEFT JOIN s1_attachment a ON p.post_id = a.post_id
-        WHERE a.isImage IN (0, 1) AND a.isSampleImg = 1
+        WHERE
+            a.isImage IN (0, 1) AND a.isSampleImg = 1
         ORDER BY p.regDate DESC LIMIT 5;
     </select>
 
     <!-- 메인페이지 - 관심 판매글 (사용자 아이디로 가져오기) -->
-    <select id="getLikedPostIds" parameterType="java.lang.String" resultType="java.lang.Integer">
-        SELECT post_id FROM s1_like
-        WHERE user_id = #{userId} AND likeChk = 1
+    <select id="findLikedPostsByUserId" parameterType="java.lang.Long" resultType="java.util.Map">
+        SELECT
+            p.*,
+            u.username as username,
+            a.filename as attachment_filename
+        FROM s1_post p
+            JOIN s1_heart h ON p.post_id = h.post_id
+            JOIN s1_user u ON p.user_id = u.id
+            LEFT JOIN s1_attachment a ON p.post_id = a.post_id
+        WHERE
+            h.user_id = #{userId}
+            AND h.is_active = TRUE
+            AND a.isImage IN (0, 1)
+            AND a.isSampleImg = 1
+        ORDER BY h.created_at DESC LIMIT 5;
     </select>
 
     <!-- 메인페이지 - 관심 판매글 -->
-    <select id="findLikedPostIdsByUsername" resultType="java.lang.Long">
+    <!--<select id="findLikedPostIdsByUsername" resultType="java.lang.Long">
         SELECT
         l.post_id
         , p.*
@@ -218,7 +231,7 @@
         WHERE
         u.username = #{username}
         ORDER BY l.id DESC LIMIT 5;
-    </select>
+    </select>-->
 
     <!-- 사용자 ID 가져오기 -->
     <select id="findUserIdByUsername" resultType="java.lang.Long">

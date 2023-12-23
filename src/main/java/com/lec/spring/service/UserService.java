@@ -30,5 +30,6 @@ public interface UserService {
     void updateEmailAddress(String newEmailAddress, String username);
     List<Post.MyPosts> showMyPosts(Long id);
 
+    Long findUserIdByUsername(String username);
 }
 

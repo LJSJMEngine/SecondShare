@@ -44,4 +44,6 @@ public interface UserRepository {
     // 마이페이지 - 판매물품
     List<Post.MyPosts> showMyPosts(Long id);
 
+    // 메인페이지 - 내 관심물품
+    Long findUserIdByUsername(@Param("username") String username);
 }

@@ -35,8 +35,8 @@ INSERT INTO s1_authority (name) VALUES
 
 INSERT INTO s1_user (username, password, name, phoneNM, email, registDate, status) VALUES
 ('ADMIN1', '$2a$10$6gVaMy7.lbezp8bGRlV2fOArmA3WAk2EHxSKxncnzs28/m3DXPyA2', '관리자1', '01011112222', 'admin1@gmail.com', NOW(), 0),
-('USER1', '$2a$10$6gVaMy7.lbezp8bGRlV2fOArmA3WAk2EHxSKxncnzs28/m3DXPyA2', '회원1', '01033334444', 'user1@gmail.com', NOW(), 0),
-('USER2', '2a$10$7LTnvLaczZbEL0gabgqgfezQPr.xOtTab2NAF/Yt4FrvTSi0Y29Xa', '회원2', '01055556666', 'user2@gmail.com', NOW(), 0),
+('USER1', '$2a$10$7LTnvLaczZbEL0gabgqgfezQPr.xOtTab2NAF/Yt4FrvTSi0Y29Xa', '회원1', '01033334444', 'user1@gmail.com', NOW(), 0),
+('USER2', '$2a$10$53OEi/JukSMPr3z5RQBFH.z0TCYSUDPtxf1/8caRyRVdDNdHA9QHi', '회원2', '01055556666', 'user2@gmail.com', NOW(), 0),
 ('USER3', '1234', '회원3', '01077778888', 'user3@gmail.com', NOW(), 0),
 ('USER4', '1234', '회원4', '01099990000', 'user4@gmail.com', NOW(), 0)
 ;
@@ -85,17 +85,42 @@ INSERT INTO s1_review (user_id, post_id, reviewChk, content) VALUES
 ;
 
 INSERT INTO s1_attachment (post_id, sourcename, filename, isImage, isSampleImg) VALUES
-(1, 'img_avatar1.png', 'img_avatar1.png', TRUE, TRUE),
-(1, 'img_avatar2.png', 'img_avatar2.png', TRUE, FALSE),
-(1, 'img_avatar3.png', 'img_avatar3.png', TRUE, FALSE),
-(2, 'img_avatar4.png', 'img_avatar4.png', TRUE, TRUE),
-(3, 'img_avatar5.png', 'img_avatar5.png', TRUE, TRUE),
-(4, 'img_avatar6.png', 'img_avatar6.png', TRUE, TRUE),
-(5, '첨부파일 샘플.txt', '첨부파일 샘플.txt', FALSE, TRUE),
-(6, 'phone2.jpg', 'phone2.jpg', TRUE, TRUE),
-(7, 'phone3.jpg', 'phone3.jpg', TRUE, TRUE)
+(1, 'phone1.jpg', 'phone1.jpg', TRUE, TRUE),
+(2, 'phone2.jpg', 'phone2.jpg', TRUE, TRUE),
+(3, 'phone3.jpg', 'phone3.jpg', TRUE, TRUE),
+(4, 'img_avatar1.png', 'img_avatar1.png', TRUE, TRUE),
+(5, 'img_avatar2.png', 'img_avatar2.png', TRUE, TRUE),
+(6, 'img_avatar3.png', 'img_avatar3.png', TRUE, TRUE),
+(7, 'img_avatar4.png', 'img_avatar4.png', TRUE, TRUE)
 ;
 
 UPDATE s1_post
 SET sampleImg = 1
-WHERE post_id IN (SELECT post_id FROM s1_attachment WHERE isSampleImg = TRUE);
+WHERE post_id IN (SELECT post_id FROM s1_attachment WHERE isSampleImg = TRUE)
+;
+
+INSERT INTO s1_heart (user_id, post_id, is_active, created_at)
+VALUES 
+    (2, 1, TRUE, NOW()),
+    (2, 7, TRUE, NOW()),
+    (3, 1, TRUE, NOW()),
+    (3, 2, TRUE, NOW()),
+    (3, 3, TRUE, NOW()),
+    (3, 4, TRUE, NOW()),
+    (3, 5, TRUE, NOW()),
+    (3, 6, TRUE, NOW())
+   ;
+
+
+UPDATE s1_post
+SET heart_count = (
+    SELECT COUNT(*)
+    FROM s1_heart
+    WHERE s1_heart.post_id = s1_post.post_id
+    AND s1_heart.is_active = TRUE
+)
+WHERE s1_post.post_id IN (
+    SELECT post_id
+    FROM s1_heart
+    WHERE is_active = TRUE
+);

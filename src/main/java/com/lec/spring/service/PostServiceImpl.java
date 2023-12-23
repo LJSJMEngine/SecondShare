@@ -55,4 +55,19 @@ public class PostServiceImpl implements PostService {
     }
 
     // 마이페이지 - 관심 판매글
+    @Override
+    public List<Map<String, Object>> findLikedPostsByUserId(Long userId) {
+        List<Map<String, Object>> likedPosts = postRepository.findLikedPostsByUserId(userId);
+
+        for (Map<String, Object> post : likedPosts) {
+            String username = (String) post.get("username");
+            String attachmentFilename = (String) post.get("attachment_filename");
+
+            // 이미지 경로 생성 및 추가
+            String imgPath = "/upload/" + (attachmentFilename != null ? attachmentFilename : post.get("filename"));
+            post.put("img_path", imgPath);
+        }
+
+        return likedPosts;
+    }
 }

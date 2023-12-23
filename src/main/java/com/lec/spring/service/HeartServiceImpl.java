@@ -26,8 +26,8 @@ public class HeartServiceImpl implements HeartService {
 
     @Override
     public int addHeart(Heart heart) throws Exception {
-        User user = userRepository.findById(heart.getUser_id());
-        Post post = postRepository.findByPostId(heart.getPost_id());
+        User user = userRepository.findById((long) heart.getUser_id());
+        Post post = postRepository.findByPostId((long) heart.getPost_id());
 
 
         // TODO
