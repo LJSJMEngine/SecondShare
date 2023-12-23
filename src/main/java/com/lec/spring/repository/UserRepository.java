@@ -24,8 +24,8 @@ public interface UserRepository {
     int update(User user);
 
     // 유저 페이지
-    int userpage(User user);
-    List<Post> findPostsByUserId(Long id);
+    List<Post> selectFromRow(@Param("id") Long id,@Param("from")int from, @Param("rows")int rows); // 페이징
+    int userpostcountAll(@Param("userid") Long userid); //  상품 갯수
 
     // 마이페이지 - 프로필 수정
     void updatePassword(

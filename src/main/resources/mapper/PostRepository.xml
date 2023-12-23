@@ -99,17 +99,6 @@
         WHERE post_id = #{post_id}
     </update>
 
-    <!-- 페이징 용 쿼리 -->
-    <select id="selectFromRow" resultMap="mapPost">
-        <include refid="SELECT_BASE"/>
-        ORDER BY p.post_id DESC
-        LIMIT #{param1}, #{param2}
-    </select>
-
-    <select id="countAll" resultType="int">
-        SELECT count(*) FROM s1_post
-    </select>
-
     <select id="countSearchResults" resultType="int">
         SELECT COUNT(*) FROM s1_post p ,s1_category c
         WHERE
@@ -225,20 +214,5 @@
         SELECT id FROM s1_user WHERE username = #{username}
     </select>
 
-    <!-- 마이페이지 - 내 판매글 삭제하기 -->
-    <delete id="deletePostsByIds" flushCache="true" parameterType="java.util.List">
-        DELETE FROM s1_post
-        WHERE post_id IN
-        <foreach collection="postIds" item="postId" open="(" separator="," close=")">
-            #{postId}
-        </foreach>
-    </delete>
-
-    <!-- 유저페이지 ID 값 가져오기    -->
-        <select id="findPostById" resultMap="mapPost">
-            <include refid="SELECT_BASE"/>
-            WHERE p.post_id = #{id}
-            GROUP BY p.post_id
-        </select>
 
 </mapper>

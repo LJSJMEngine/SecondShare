@@ -6,6 +6,7 @@ import com.lec.spring.domain.User;
 import com.lec.spring.service.BoardService;
 import com.lec.spring.service.MemberService;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,12 +95,20 @@ public class UserController {
 
     // 유저 페이지
     @GetMapping("/userpage/{id}")
-    public String userpage(@PathVariable Long id ,Model model){
-        List<Post> userPosts = userService.findUserPosts(id);
-        model.addAttribute("user" , userService.userpage(id));
-        model.addAttribute("userPosts", userPosts);
+    public String userpage(@PathVariable Long id ,Model model, Integer page){
+        User user = userService.userpage(id);
+        model.addAttribute("user", user);
+        userService.findUserPosts(id,model,page);
         return "user/userpage";
     }
+
+    @PostMapping("/pageRows")
+    public String pageRows(Integer page, Integer pageRows){
+        U.getSession().setAttribute("pageRows", pageRows);
+        return "redirect:/user/userpage?page=" + page;
+    }
+
+    // 유저 페이지
 
 //    @Autowired
 //    UserValidator userValidator;

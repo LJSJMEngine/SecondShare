@@ -20,6 +20,17 @@
             1 = 1
     </sql>
 
+
+    <resultMap id="mapPost" type="com.lec.spring.domain.Post">
+        <result column="post_id" property="post_id"/>
+        <result column="subject" property="subject"/>
+        <result column="regDate" property="regDate"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+
+
+
     <select id="findById" resultType="com.lec.spring.domain.User">
         <include refid="SELECT"/>
         AND id = #{id}
@@ -93,7 +104,21 @@
     </update>-->
 
 <!--    유저페이지-->
-    <select id="findPostsByUserId" resultType="com.lec.spring.domain.Post">
-        SELECT * FROM s1_post WHERE user_id = #{userId}
+    <!-- 페이징 용 쿼리 -->
+    <select id="selectFromRow" resultMap="mapPost">
+        SELECT * FROM s1_post p
+        LEFT JOIN  s1_user u
+        ON p.user_id = u.id
+        WHERE u.id = #{id}
     </select>
+
+    <select id="userpostcountAll" parameterType="long" resultType="int">
+        SELECT COUNT(p.post_id)
+        FROM s1_post p
+        JOIN s1_user u ON p.user_id = u.id
+        WHERE u.id = #{userid}
+    </select>
+
+
+<!--   유저페이지 -->
 </mapper>
