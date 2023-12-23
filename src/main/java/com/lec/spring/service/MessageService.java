@@ -1,16 +1,12 @@
 package com.lec.spring.service;
 
 import com.lec.spring.DTO.UserDto;
-import com.lec.spring.domain.User;
 import com.lec.spring.repository.SmsCertification;
-import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -81,7 +77,7 @@ public class MessageService {
 
 
     // 인증 완료 검증
-    private boolean isVerificationSuccessful(UserDto.SmsCertificationDto requestDto) {
+    public boolean isVerificationSuccessful(UserDto.SmsCertificationDto requestDto) {
         return smsCertification.hasKey(requestDto.getPhoneNumber()) &&
                 smsCertification.getSmsCertification(requestDto.getPhoneNumber())
                         .equals(requestDto.getRandomNumber());

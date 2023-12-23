@@ -106,15 +106,99 @@ function saveNewPassword() {
 // 1) 핸드폰 번호 변경 폼 생성 함수
 function enablePhoneNMChangeForm() {
     document.getElementById("phoneNMChangeForm").style.display = "block";
+    document.getElementById('confirmationCodeFormSMS').style.display = 'none';
     document.getElementById("phoneNM").readOnly = true;
 }
 
-// 2) 새로운 핸드폰 번호 저장 함수
+// 2) 새로운 핸드폼 번호 입력 후 인증번호 요청
+function sendConfirmationCodeSMS() {
+    var newPhoneNumber = document.getElementById("newPhoneNumber").value;
+
+    if (!isValidPhoneNumber(newPhoneNumber)) {
+        displayPhoneNMMessages("유효하지 않은 전화번호 형식입니다. (예. 01012345678)", null);
+        return;
+    }
+
+    // 서버로 확인 코드 전송 요청 보내기
+    var url = '/mypage/sendConfirmationCodeSMS';
+    var data = {
+        newPhoneNumber: newPhoneNumber
+    };
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.text())
+    .then(result => {
+        displayPhoneNMMessages(null, result);
+        window.newPhoneNumber = newPhoneNumber;
+        document.getElementById("phoneNMChangeForm").style.display = "none";
+        document.getElementById("confirmationCodeFormSMS").style.display = "block";
+    })
+    .catch(error => {
+        displayPhoneNMMessages("ConfirmationCodeErrorMessageSMS", null);
+
+        document.getElementById("confirmationCodeSMS").value = "";
+        document.getElementById("confirmationCodeSMS").focus();
+    });
+}
+
+// 3) 인증 확인 함수
+function verifyPhoneNumber() {
+    var confirmationCodeSMS = document.getElementById("confirmationCodeSMS").value;
+
+    // 서버로 확인 코드 검증 요청 보내기
+    var url = '/mypage/verifyPhoneNumber';
+    var data = {
+        confirmationCodeSMS: confirmationCodeSMS,
+        newPhoneNumber: window.newPhoneNumber
+    };
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            return response.text().then(error => Promise.reject(error));
+        }
+    })
+    .then(result => {
+        displayPhoneNMMessages(null, result);
+        document.getElementById("ConfirmationCodeErrorMessageSMS").innerText = "";
+        document.getElementById("confirmationCodeFormSMS").style.display = "none";
+        var phoneNMElement = document.getElementById("phoneNM");
+        phoneNMElement.value = window.newPhoneNumber;
+    })
+    .catch(error => {
+        console.error('에러: ', error);
+
+        // 실패 메시지를 에러 메시지로 변경
+        displayPhoneNMMessages("ConfirmationCodeErrorMessageSMS", null);
+        document.getElementById("ConfirmationCodeErrorMessageSMS").innerText = error;
+
+        // 사용자가 잘못 적은 인증번호를 지우고 커서를 폼에 다시 올림
+        document.getElementById("confirmationCodeSMS").value = "";
+        document.getElementById("confirmationCodeSMS").focus();
+    });
+}
+
+
+/*// 2) 새로운 핸드폰 번호 저장 함수
 function saveNewPhoneNumber() {
     var newPhoneNumber = document.getElementById("newPhoneNumber").value;
     var currentUsername = document.getElementById("username").getAttribute("data-username");
 
-    /*var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");*/
+    *//*var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");*//*
 
     // 핸드폰 번호 유효성 검사 (원하는 규칙에 따라 구현)
     if (!isValidPhoneNumber(newPhoneNumber)) {
@@ -133,7 +217,7 @@ function saveNewPhoneNumber() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-            /*'X-CSRF-TOKEN': csrfToken*/
+            *//*'X-CSRF-TOKEN': csrfToken*//*
         },
         body: JSON.stringify(data)
     })
@@ -147,7 +231,7 @@ function saveNewPhoneNumber() {
     .catch(error => {
         console.error('에러:', error);
     });
-}
+}*/
 
 // 마이페이지 - 이메일 변경 기능
 // 1) 이메일 변경 폼 생성 함수
