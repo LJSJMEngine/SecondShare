@@ -1,6 +1,8 @@
 package com.lec.spring.repository;
 
+import com.lec.spring.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
 

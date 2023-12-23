@@ -1,15 +1,20 @@
 package com.lec.spring.service;
 
 import com.lec.spring.DTO.UserDto;
+import com.lec.spring.domain.User;
 import com.lec.spring.repository.SmsCertification;
+import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.HashMap;
 import java.util.Random;
+
 
 @Service
 //@RequiredArgsConstructor
@@ -57,8 +62,9 @@ public class MessageService {
         Message coolsms = new Message(apiKey, apiSecretKey);
 
         String randomNumber = createRandomNum();
+        String messageContent = "인증번호는 " + randomNumber + "입니다.";
 
-        HashMap<String, String> params = makeParams(phoneNum, randomNumber);
+        HashMap<String, String> params = makeParams(phoneNum, messageContent);
 
         try {
             JSONObject obj = new JSONObject(coolsms.send(params));
@@ -81,15 +87,7 @@ public class MessageService {
                         .equals(requestDto.getRandomNumber());
     }
 
-    public String verifySms(UserDto.SmsCertificationDto requestDto) {
-        if (!isVerificationSuccessful(requestDto)) {
-            throw new IllegalArgumentException("인증번호가 일치하지 않습니다.");
-        }
-        smsCertification.deleteSmsCertification(requestDto.getPhoneNumber());
-
-        return "인증 완료되었습니다.";
-    }
-
-
 
 }
+
+

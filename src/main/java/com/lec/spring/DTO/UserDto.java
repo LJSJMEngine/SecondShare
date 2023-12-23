@@ -1,7 +1,5 @@
 package com.lec.spring.DTO;
 
-import com.lec.spring.domain.User;
-
 public class UserDto {
 
     public static class SmsCertificationDto {
@@ -26,3 +24,4 @@ public class UserDto {
 
     }
 }
+

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@Log4j
 @AllArgsConstructor
 public class MemberServiceImpl implements MemberService{
 
@@ -22,7 +21,6 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public boolean selectUsername(String username) {
-        log.info("Service :: selectId..............");
         return memberMapper.selectUsername(username);
     }
 }
