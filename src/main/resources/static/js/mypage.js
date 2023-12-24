@@ -106,19 +106,103 @@ function saveNewPassword() {
 // 1) 핸드폰 번호 변경 폼 생성 함수
 function enablePhoneNMChangeForm() {
     document.getElementById("phoneNMChangeForm").style.display = "block";
+    document.getElementById('confirmationCodeFormSMS').style.display = 'none';
     document.getElementById("phoneNM").readOnly = true;
 }
 
-// 2) 새로운 핸드폰 번호 저장 함수
+// 2) 새로운 핸드폼 번호 입력 후 인증번호 요청
+function sendConfirmationCodeSMS() {
+    var newPhoneNumber = document.getElementById("newPhoneNumber").value;
+
+    if (!isValidPhoneNumber(newPhoneNumber)) {
+        displayPhoneNMMessages("유효하지 않은 전화번호 형식입니다. (예. 01012345678)", null);
+        return;
+    }
+
+    // 서버로 확인 코드 전송 요청 보내기
+    var url = '/mypage/sendConfirmationCodeSMS';
+    var data = {
+        newPhoneNumber: newPhoneNumber
+    };
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.text())
+    .then(result => {
+        displayPhoneNMMessages(null, result);
+        window.newPhoneNumber = newPhoneNumber;
+        document.getElementById("phoneNMChangeForm").style.display = "none";
+        document.getElementById("confirmationCodeFormSMS").style.display = "block";
+    })
+    .catch(error => {
+        displayPhoneNMMessages("ConfirmationCodeErrorMessageSMS", null);
+
+        document.getElementById("confirmationCodeSMS").value = "";
+        document.getElementById("confirmationCodeSMS").focus();
+    });
+}
+
+// 3) 인증 확인 함수
+function verifyPhoneNumber() {
+    var confirmationCodeSMS = document.getElementById("confirmationCodeSMS").value;
+
+    // 서버로 확인 코드 검증 요청 보내기
+    var url = '/mypage/verifyPhoneNumber';
+    var data = {
+        confirmationCodeSMS: confirmationCodeSMS,
+        newPhoneNumber: window.newPhoneNumber
+    };
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            return response.text().then(error => Promise.reject(error));
+        }
+    })
+    .then(result => {
+        displayPhoneNMMessages(null, result);
+        document.getElementById("ConfirmationCodeErrorMessageSMS").innerText = "";
+        document.getElementById("confirmationCodeFormSMS").style.display = "none";
+        var phoneNMElement = document.getElementById("phoneNM");
+        phoneNMElement.value = window.newPhoneNumber;
+    })
+    .catch(error => {
+        console.error('에러: ', error);
+
+        // 실패 메시지를 에러 메시지로 변경
+        displayPhoneNMMessages("ConfirmationCodeErrorMessageSMS", null);
+        document.getElementById("ConfirmationCodeErrorMessageSMS").innerText = error;
+
+        // 사용자가 잘못 적은 인증번호를 지우고 커서를 폼에 다시 올림
+        document.getElementById("confirmationCodeSMS").value = "";
+        document.getElementById("confirmationCodeSMS").focus();
+    });
+}
+
+
+/*// 2) 새로운 핸드폰 번호 저장 함수
 function saveNewPhoneNumber() {
     var newPhoneNumber = document.getElementById("newPhoneNumber").value;
     var currentUsername = document.getElementById("username").getAttribute("data-username");
 
-    /*var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");*/
+    *//*var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");*//*
 
     // 핸드폰 번호 유효성 검사 (원하는 규칙에 따라 구현)
     if (!isValidPhoneNumber(newPhoneNumber)) {
-        displayPhoneNMMessages("유효하지 않은 핸드폰 번호 형식입니다. (예. 010-0000-0000)", null);
+        displayPhoneNMMessages("유효하지 않은 핸드폰 번호 형식입니다. (예. 01012345678)", null);
         return;
     }
 
@@ -133,7 +217,7 @@ function saveNewPhoneNumber() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-            /*'X-CSRF-TOKEN': csrfToken*/
+            *//*'X-CSRF-TOKEN': csrfToken*//*
         },
         body: JSON.stringify(data)
     })
@@ -147,7 +231,7 @@ function saveNewPhoneNumber() {
     .catch(error => {
         console.error('에러:', error);
     });
-}
+}*/
 
 // 마이페이지 - 이메일 변경 기능
 // 1) 이메일 변경 폼 생성 함수
@@ -298,7 +382,7 @@ function isValidPassword(password) {
 
 // 마이페이지 - 핸드폰 번호 유효성 검사 함수
 function isValidPhoneNumber(phoneNumber) {
-    var phoneRegex = /^\d{3}-\d{4}-\d{4}$/;
+    var phoneRegex = /^\d{11}$/;
     return phoneRegex.test(phoneNumber);
 }
 
@@ -308,84 +392,17 @@ function isValidEmailAddress(email) {
     return emailRegex.test(email);
 }
 
-// 마이페이지 - 판매물품 전체 삭제
-/*function confirmDeleteAllMyPosts() {
-    var confirmDelete = confirm("정말 모든 판매글을 삭제하시겠습니까?");
-    if (confirmDelete) {
-        // 전체 삭제 요청 보내기
-        deleteAllMyPostsRequest();
-    }
-}*/
-
-/*
-function deleteSelectedPosts() {
+// 마이페이지 - 내 판매글 삭제
+function deleteSelectedPostIds() {
     var selectedPostIds = [];
-    $('.postCheckbox:checked').each(function () {
-        selectedPostIds.push($(this).attr('data-post-id'));
-    });
-    return selectedPostIds;
-}
-
-// 체크박스가 변경될 때마다 실행
-$('.postCheckbox').on('change', function() {
-    var selectedIds = deleteSelectedPosts();
-    console.log(selectedIds);
-});
-*/
-
-
-
-
-
-    /*// 선택한 게시물의 ID를 담을 배열
-    var selectedPostIds = [];
-
-    // 체크된 체크박스를 찾아서 ID를 배열에 추가
-    $('.postCheckbox:checked').each(function () {
-        var postId = $(this).val();
-        selectedPostIds.push(Number(postId));
-    });*/
-
-/*    // 각 체크박스에서 data-postid 값을 읽어와 배열에 추가
-    $('.postCheckbox:checked').each(function () {
-        var postId = $(this).data('postid');
-        selectedPostIds.push(Number(postId));
-    });*/
-
-    // Fetch API를 사용하여 서버로 데이터 전송
-    /*fetch('/mypage/deleteSelectedPosts', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(selectedPostIds)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP 오류! 상태: ${response.status}`);
-        }
-        return response.text();
-    })
-    .then(data => {
-        // 삭제 성공한 경우
-        alert("판매글이 성공적으로 삭제되었습니다.");
-    })
-    .catch(error => {
-        // 삭제 실패한 경우
-        alert("판매글 삭제 중 오류가 발생했습니다.");
-    });*/
-/*}*/
-
-function deleteSelectedPosts() {
-    var selectedPosts = [];
-    document.querySelectorAll('input[name="selectedPosts"]:checked').forEach(function (checkbox) {
-        selectedPosts.push(checkbox.value);
+    document.querySelectorAll('input[name="selectedPostIds"]:checked').forEach(function (checkbox) {
+        selectedPostIds.push(checkbox.value);
     });
 
-    console.log("Selected Posts:", selectedPosts);
+    console.log("Selected PostIds:", selectedPostIds);
 
-    if (selectedPosts.length === 0) {
-        alert("삭제할 항목을 선택해주세요.");
+    if (selectedPostIds.length === 0) {
+        alert("변경할 항목을 선택해주세요.");
         return;
     }
 
@@ -395,7 +412,9 @@ function deleteSelectedPosts() {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ selectedPosts: selectedPosts }),
+        body: JSON.stringify({
+            selectedPostIds: selectedPostIds,
+        }),
     })
     .then(response => {
             if (response.ok) {
@@ -411,6 +430,21 @@ function deleteSelectedPosts() {
         })
         .catch(error => {
             console.error('Error:', error);
-            alert("삭제 실패했습니다.");
+            alert("삭제를 실패했습니다.");
         });
 }
+
+// myPage/myPostsData 데이터 가져오기
+$(document).ready(function() {
+    $.ajax({
+        type: "POST",
+        url: "/mypage/myPostsData",
+        success: function(data) {
+            // data를 이용하여 필요한 작업 수행
+            console.log(data);
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+});

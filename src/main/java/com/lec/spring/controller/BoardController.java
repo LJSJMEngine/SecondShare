@@ -6,6 +6,7 @@ import com.lec.spring.domain.PostValidator;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.BoardService;
 import com.lec.spring.service.CategoryService;
+import com.lec.spring.service.HeartService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ import java.util.Map;
 public class BoardController {
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private HeartService heartService;
 
 
     @GetMapping("/list")
@@ -76,6 +80,11 @@ public class BoardController {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model){
         model.addAttribute("post" , boardService.detail(id));
+
+        // 좋아요 수 조회
+        int likeCount = heartService.countHeartsByPostId(Math.toIntExact(id));
+        model.addAttribute("likeCount", likeCount);
+
         return "board/detail";
     }
 

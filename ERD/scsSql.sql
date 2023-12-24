@@ -26,7 +26,8 @@ CREATE TABLE s1_attachment
 	id int NOT NULL AUTO_INCREMENT,
 	post_id int NOT NULL,
 	sourcename varchar(100), 
-	filename varchar(100), 
+	filename varchar(100),
+	isImage boolean NOT NULL,	-- 이미지 파일이면 TRUE, 아니면 FALSE
 	PRIMARY KEY (id)
 );
 
@@ -89,6 +90,9 @@ CREATE TABLE s1_heart
 	id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
 	post_id int NOT NULL,
+	is_active boolean DEFAULT FALSE,	-- 좋아요 클릭 시 TRUE
+	created_at datetime DEFAULT NOW(),	-- 좋아요 클릭 시간
+	updated_at datetime,				-- (다시 클릭 시) 좋아요 클릭 시간
 	PRIMARY KEY (id)
 );
 
@@ -126,7 +130,7 @@ CREATE TABLE s1_post
 	viewCnt int DEFAULT 0,
 	status int DEFAULT 0,
 	regDate datetime DEFAULT now(),
-	sampleImg int,
+	sampleImg int NOT NULL DEFAULT 0,		-- 첨부파일 자체가 없으면 0, 첨부파일 (이미지, 텍스트 등 모든 형태)가 있으면 1
 	PRIMARY KEY (post_id)
 );
 
@@ -206,7 +210,7 @@ ALTER TABLE s1_chatroom
 	ADD FOREIGN KEY (post_id)
 	REFERENCES s1_post (post_id)
 	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON DELETE CASCADE
 ;
 
 
@@ -221,16 +225,16 @@ ALTER TABLE s1_comment
 ALTER TABLE s1_heart
 	ADD FOREIGN KEY (post_id)
 	REFERENCES s1_post (post_id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
 ;
 
 
 ALTER TABLE s1_review
 	ADD FOREIGN KEY (post_id)
 	REFERENCES s1_post (post_id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
 ;
 
 
@@ -238,7 +242,7 @@ ALTER TABLE s1_chatMessage
 	ADD FOREIGN KEY (sender_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON DELETE CASCADE
 ;
 
 
@@ -246,7 +250,7 @@ ALTER TABLE s1_chatroom
 	ADD FOREIGN KEY (buyer_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON DELETE CASCADE
 ;
 
 
@@ -254,15 +258,15 @@ ALTER TABLE s1_comment
 	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON DELETE CASCADE
 ;
 
 
 ALTER TABLE s1_heart
 	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
 ;
 
 
@@ -270,7 +274,7 @@ ALTER TABLE s1_location
 	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON DELETE CASCADE
 ;
 
 
@@ -278,7 +282,7 @@ ALTER TABLE s1_notice
 	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON DELETE CASCADE
 ;
 
 
@@ -286,15 +290,15 @@ ALTER TABLE s1_post
 	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
 	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON DELETE CASCADE
 ;
 
 
 ALTER TABLE s1_review
 	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
 ;
 
 

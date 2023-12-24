@@ -34,11 +34,11 @@ INSERT INTO s1_authority (name) VALUES
 ;
 
 INSERT INTO s1_user (username, password, name, phoneNM, email, registDate, status) VALUES
-('ADMIN1', '$2a$10$6gVaMy7.lbezp8bGRlV2fOArmA3WAk2EHxSKxncnzs28/m3DXPyA2', '관리자1', '010-1111-2222', 'admin1@gmail.com', NOW(), 0),
-('USER1', '$2a$10$6gVaMy7.lbezp8bGRlV2fOArmA3WAk2EHxSKxncnzs28/m3DXPyA2', '회원1', '010-3333-4444', 'user1@gmail.com', NOW(), 0),
-('USER2', '2a$10$7LTnvLaczZbEL0gabgqgfezQPr.xOtTab2NAF/Yt4FrvTSi0Y29Xa', '회원2', '010-5555-6666', 'user2@gmail.com', NOW(), 0),
-('USER3', '1234', '회원3', '010-7777-8888', 'user3@gmail.com', NOW(), 0),
-('USER4', '1234', '회원4', '010-9999-0000', 'user4@gmail.com', NOW(), 0)
+('ADMIN1', '$2a$10$6gVaMy7.lbezp8bGRlV2fOArmA3WAk2EHxSKxncnzs28/m3DXPyA2', '관리자1', '01011112222', 'admin1@gmail.com', NOW(), 0),
+('USER1', '$2a$10$7LTnvLaczZbEL0gabgqgfezQPr.xOtTab2NAF/Yt4FrvTSi0Y29Xa', '회원1', '01033334444', 'user1@gmail.com', NOW(), 0),
+('USER2', '$2a$10$53OEi/JukSMPr3z5RQBFH.z0TCYSUDPtxf1/8caRyRVdDNdHA9QHi', '회원2', '01055556666', 'user2@gmail.com', NOW(), 0),
+('USER3', '1234', '회원3', '01077778888', 'user3@gmail.com', NOW(), 0),
+('USER4', '1234', '회원4', '01099990000', 'user4@gmail.com', NOW(), 0)
 ;
 
 INSERT INTO s1_user_authority VALUES
@@ -66,7 +66,7 @@ INSERT INTO s1_post (user_id, subject, contents, price, status, regDate, categor
 (2, '제목4', '내용4', 15000, 0, NOW(), 4),
 (2, '제목5', '내용5', 20000, 0, NOW(), 5),
 (2, '제목6', '내용6', 15000, 0, NOW(), 2),
-(3, '제목7', '내용7', 15000, 0, NOW(), 0)
+(3, '제목7', '내용7', 15000, 0, NOW(), 4)
 ;
 
 INSERT INTO s1_comment (user_id, post_id, content) VALUES
@@ -84,8 +84,15 @@ INSERT INTO s1_review (user_id, post_id, reviewChk, content) VALUES
 (2, 6, 1, '저렴해요')
 ;
 
-INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
-(1, 'smple.png', 'smple.png')
+INSERT INTO s1_attachment (post_id, sourcename, filename, isImage) VALUES
+(1, 'phone1.jpg', 'phone1.jpg', TRUE),
+(1, 'phone2.jpg', 'phone2.jpg', TRUE),
+(2, 'phone2.jpg', 'phone2.jpg', TRUE),
+(3, 'phone3.jpg', 'phone3.jpg', TRUE),
+(4, '첨부파일 샘플.txt', '첨부파일 샘플.txt', FALSE),
+(5, 'img_avatar2.png', 'img_avatar2.png', TRUE),
+(6, 'img_avatar3.png', 'img_avatar3.png', TRUE),
+(7, 'img_avatar4.png', 'img_avatar4.png', TRUE)
 ;
 
 INSERT INTO s1_notice (status, user_id, status_name, subject, contents) VALUES
@@ -93,3 +100,34 @@ INSERT INTO s1_notice (status, user_id, status_name, subject, contents) VALUES
 (1, 1, '공지', '공지1', '공지입니다'),
 (2, 1, '알림', '알림1', '알림입니다')
 ;
+
+UPDATE s1_post
+SET sampleImg = 1
+WHERE post_id IN (SELECT post_id FROM s1_attachment WHERE isImage = TRUE)
+;
+
+/*INSERT INTO s1_heart (user_id, post_id, is_active, created_at)
+VALUES
+    (2, 1, TRUE, NOW()),
+    (2, 7, TRUE, NOW()),
+    (3, 1, TRUE, NOW()),
+    (3, 2, TRUE, NOW()),
+    (3, 3, TRUE, NOW()),
+    (3, 4, TRUE, NOW()),
+    (3, 5, TRUE, NOW()),
+    (3, 6, TRUE, NOW())
+   ;*/
+
+
+/*UPDATE s1_post
+SET heart_count = (
+    SELECT COUNT(*)
+    FROM s1_heart
+    WHERE s1_heart.post_id = s1_post.post_id
+    AND s1_heart.is_active = TRUE
+)
+WHERE s1_post.post_id IN (
+    SELECT post_id
+    FROM s1_heart
+    WHERE is_active = TRUE
+);*/

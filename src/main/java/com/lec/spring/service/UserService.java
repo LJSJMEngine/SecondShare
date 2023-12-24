@@ -12,9 +12,6 @@ public interface UserService {
     User findByUsername (String username);
     User findById (Long id);
 
-    // 존재하는 id 인지 확인
-    boolean idExist(String username);
-
     // 회원 가입 (신규 등록)
     int register(User user);
 
@@ -32,7 +29,7 @@ public interface UserService {
     void updatePhoneNumber(String newPhoneNumber, String username);
     void updateEmailAddress(String newEmailAddress, String username);
     List<Post.MyPosts> showMyPosts(Long id);
-    /*void deleteAllMyPosts(Long id);*/
 
+    Long findUserIdByUsername(String username);
 }
 

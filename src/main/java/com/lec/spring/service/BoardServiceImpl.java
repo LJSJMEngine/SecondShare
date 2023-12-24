@@ -141,7 +141,7 @@ public class BoardServiceImpl implements BoardService {
 
             if (file != null){
                 file.setPost_id(id);
-                file.setIsspImg(true);
+                file.setIsSampleImg(true);
                 attachmentRepository.save(file);
             }
         }

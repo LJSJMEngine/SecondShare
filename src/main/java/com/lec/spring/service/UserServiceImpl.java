@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,16 +38,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
-    @Override
-    public boolean idExist(String username) {
-        User user = findByUsername(username);
-        return (user != null);
-    }
 
     @Override
     public int register(User user) {
-        user.setUsername(user.getUsername());
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         userRepository.join(user);
 
         Authority authority = authorityRepository.findByName("ROLE_MEMBER");
@@ -116,7 +111,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean isValidPhoneNumber(String phoneNumber) {
-        String phoneRegex = "^\\d{3}-\\d{4}-\\d{4}$";
+        String phoneRegex = "^\\d{11}$";
         return phoneNumber.matches(phoneRegex);
     }
 
@@ -146,6 +141,11 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
             return Collections.emptyList(); // 빈 리스트 반환
         }
+    }
+
+    @Override
+    public Long findUserIdByUsername(String username) {
+        return userRepository.findUserIdByUsername(username);
     }
 
 }

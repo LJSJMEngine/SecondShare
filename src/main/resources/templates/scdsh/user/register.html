@@ -57,15 +57,14 @@
             <br>
             <div class="reg-group">
                 <input type="text" class="reg-input" id="verifyNM" name="verfiyNM" placeholder="인증번호를 입력하세요" th:value="${verfiyNum}">
-                <input type="button" class="button" id="smsButton" name="smsButton" value="인증번호 확인">
-                <p class="red">인증번호가 맞지 않습니다. 다시 입력하세요.</p>
-                <p class="green">본인인증 완료</p>
+                <input type="button" class="button" id="smsChkButton" name="smsChkButton" value="인증번호 확인">
+                <label id="label4"></label>
             </div>
             <br>
             <div class="reg-group">
                 이메일 <span class="must">*</span>
                 <br><input type="text" class="reg-input" id="email" name="email" placeholder="email@secondshare.com" th:value="${email}">
-                <label id="label4"></label>
+                <label id="label5"></label>
             </div>
 
 

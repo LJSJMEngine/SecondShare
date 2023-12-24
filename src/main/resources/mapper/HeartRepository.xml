@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.HeartRepository">
+
+    <insert id="insertHeart" parameterType="com.lec.spring.domain.Heart">
+        INSERT INTO s1_heart
+            (user_id, post_id, is_active, created_at)
+        VALUES
+            (#{user_id}, #{post_id}, #{is_active}, #{created_at})
+    </insert>
+
+    <!-- 좋아요 취소 -->
+    <update id="updateHeart" parameterType="com.lec.spring.domain.Heart">
+        UPDATE s1_heart
+        SET
+            is_active = #{is_active},
+            updated_at = #{updated_at}
+        WHERE
+            user_id = #{user_id} AND post_id = #{post_id}
+    </update>
+
+    <!-- 특정 사용자의 좋아요 목록 조회 -->
+    <select id="findHeartsByUserId" parameterType="int" resultType="com.lec.spring.domain.Heart">
+        SELECT *
+        FROM s1_heart
+        WHERE user_id = #{user_id}
+    </select>
+
+    <!-- 특정 게시글의 좋아요 수 조회 -->
+    <select id="countHeartsByPostId" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM s1_heart
+        WHERE post_id = #{post_id} AND is_active = TRUE
+    </select>
+
+    <select id="findHeartByUserAndPost" parameterType="map" resultType="com.lec.spring.domain.Heart">
+        SELECT *
+        FROM s1_heart
+        WHERE user_id = #{user_id} AND post_id = #{post_id}
+    </select>
+
+</mapper>

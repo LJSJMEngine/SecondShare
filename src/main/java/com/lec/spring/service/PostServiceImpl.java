@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -32,26 +33,66 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public void deleteMyPosts(List<Long> selectedPosts) {
-        postRepository.deletePostsByIds(selectedPosts);
+    public void deleteMyPosts(List<Long> selectedPostIds) {
+        postRepository.updatePostStatus(selectedPostIds);
     }
 
     // 마이페이지 - 최신 판매글
     @Override
     public List<Map<String, Object>> getLatestPostsWithUsernameAndImgPath() {
-        List<Map<String, Object>> latestPosts = postRepository.findLatestPostsWithUsername();
+        List<Map<String, Object>> latestPosts = postRepository.findLatestPostsWithUsernameAndSampleImg();
+
+        // 중복된 post_id를 제거
+        latestPosts = latestPosts.stream()
+                .collect(Collectors.toMap(post -> post.get("post_id"), post -> post, (existing, replacement) -> existing))
+                .values().stream()
+                .collect(Collectors.toList());
 
         for (Map<String, Object> post : latestPosts) {
             Integer postId = (Integer) post.get("post_id");
-            String filename = (String) post.get("filename");
+             String filename = (String) post.get("filename");
 
             // 이미지 경로 생성 및 추가
-            String imgPath = "/img/attachment/" + postId + "/" + filename;
+            String imgPath = getFirstImgPathByPostId(postId);
             post.put("img_path", imgPath);
+
         }
 
         return latestPosts;
     }
 
+    private String getFirstImgPathByPostId(Integer postId) {
+        List<String> imagePaths = getImagePathsByPostId(postId);
+        if (!imagePaths.isEmpty()) {
+            return imagePaths.get(0);
+        }
+        return "/sample.jpg";
+    }
+
+    public List<String> getImagePathsByPostId(Integer postId) {
+        return postRepository.getImagePathsByPostId(postId);
+    }
+
     // 마이페이지 - 관심 판매글
+    @Override
+    public List<Map<String, Object>> findLikedPostsByUserId(Long userId) {
+        List<Map<String, Object>> likedPosts = postRepository.findLikedPostsByUserId(userId);
+
+        // 중복된 post_id를 제거
+        likedPosts = likedPosts.stream()
+                .collect(Collectors.toMap(post -> post.get("post_id"), post -> post, (existing, replacement) -> existing))
+                .values().stream()
+                .collect(Collectors.toList());
+
+        for (Map<String, Object> post : likedPosts) {
+            Integer postId = (Integer) post.get("post_id");
+            String attachmentFilename = (String) post.get("attachment_filename");
+
+            // 이미지 경로 생성 및 추가
+            String imgPath = getFirstImgPathByPostId(postId);
+            post.put("img_path", imgPath);
+        }
+
+        return likedPosts;
+    }
 }
