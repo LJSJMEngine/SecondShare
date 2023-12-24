@@ -11,4 +11,7 @@ public interface NoticeRepository {
 
     int createNotice(Notice notice);
 
+
+    // 어드민 페이지 - 공지 조회
+    Notice findAll();
 }

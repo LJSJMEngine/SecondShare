@@ -25,6 +25,8 @@ public interface BoardService {
 
     int chStatus(Long id);
 
+    int delStatus(Long id);
+
     int deleteByPostId(Long post_id);
 
 }

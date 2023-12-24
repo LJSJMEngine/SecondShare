@@ -72,5 +72,8 @@ public class User {
             this.username = username;
         }
     }
+
+    // 어드민 페이지 용
+
 }
 

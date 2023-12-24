@@ -6,6 +6,7 @@ import com.lec.spring.domain.PostValidator;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.BoardService;
 import com.lec.spring.service.CategoryService;
+import com.lec.spring.service.HeartService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ import java.util.Map;
 public class BoardController {
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private HeartService heartService;
 
 
     @GetMapping("/list")
@@ -76,6 +80,11 @@ public class BoardController {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model){
         model.addAttribute("post" , boardService.detail(id));
+
+        // 좋아요 수 조회
+        int likeCount = heartService.countHeartsByPostId(Math.toIntExact(id));
+        model.addAttribute("likeCount", likeCount);
+
         return "board/detail";
     }
 
@@ -124,21 +133,19 @@ public class BoardController {
             @RequestParam("user_id") Long user_id,
             String content
             ){
-        return "/board/review";
+        return "/board/reviewOk";
     }
 
-    @RequestMapping("/chkTrade")
-    public void chkTrade(){}
-
     @PostMapping("/chkTrade")
-    public String chkTradeOk(){
-
+    public String chkTradeOk(Long post_id, Model model){
+        int result = boardService.chStatus(post_id);
+        model.addAttribute("result", result);
         return "/board/chkTradeOk";
     }
 
     @PostMapping("/delete")
     public String deleteOk(Long post_id, Model model) {
-        int result = boardService.chStatus(post_id);
+        int result = boardService.delStatus(post_id);
         model.addAttribute("result", result);
         return "board/deleteOk";
     }

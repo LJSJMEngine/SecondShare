@@ -15,17 +15,8 @@ public class Notice {
     int user_id;
     int status;
     String status_name;
+    String subject;
     String content;
     boolean readChk;
-    // private int id;
-    // private int user_id;
-    // private int comment_id;
-    // private int post_id;
-    // private int review_id;
-    // private int type;
-    // private int status;
-    // private String contents;
-    // private boolean readChk;
-    // private LocalDateTime regDate;
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.lec.spring.domain.Heart;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 @Mapper
@@ -25,10 +26,12 @@ public interface PostRepository {
 
     int chPostStatus(Long id);
 
+    int delStatus(Long id);
+
     int delete(Post post);
 
     // 마이페이지 - 내 판매글 삭제하기
-    void deletePostsByIds(@Param("postIds") List<Long> postIds);
+    void updatePostStatus(@Param("postIds") List<Long> postIds);
 
     // 페이징 from 부터 rows 개 만큼
     int countAll();
@@ -41,11 +44,12 @@ public interface PostRepository {
                                     @Param("from") int from, @Param("rows") int rows);
 
 
-    // 마이페이지 - 최신 판매글
     // 메인페이지 - 최신 판매글
-    List<Map<String, Object>> findLatestPostsWithUsername();
+    List<Map<String, Object>> findLatestPostsWithUsernameAndSampleImg();
+    List<String> getImagePathsByPostId(Integer postId);
 
     // 메인페이지 - 관심 판매글
+    List<Map<String, Object>> findLikedPostsByUserId(@Param("userId") Long userId);
 
 
 }

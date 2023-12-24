@@ -8,12 +8,12 @@
 </head>
 <body>
 
-<div th:if="${userProfile != null}" data-username="${userProfile.username}" data-id="${userProfile.}">
+<div th:if="${userProfile != null}" data-username="${userProfile.username}" data-id="${userProfile.id}">
     <!--<input type="hidden" id="currentUserId" th:value="${userProfile.id}" />-->
     <!-- 나의 판매글 목록 -->
     <section id="myPosts">
 
-        <h3 th:text="'총 판매글 ' + ${myPosts.size()} + ' 건 | 거래 성공 ' + ${statusOneCount} + ' 건'"></h3>
+        <h3 th:text="'총 판매글 ' + ${statusZeroOneCount} + ' 건 | 거래 성공 ' + ${statusOneCount} + ' 건'"></h3>
 
         <form th:action="@{/mypage/deleteMyPosts}" method="post" id="deleteForm">
             <table class="myPostsList">
@@ -27,8 +27,8 @@
                 </thead>
                 <tbody>
                 <!-- 판매글 목록 데이터를 동적으로 추가 -->
-                <tr th:each="myPost : ${myPosts}">
-                    <td><input type="checkbox" th:value="${myPost.post_id}" name="selectedPosts" data-></td>
+                <tr th:each="myPost : ${myPosts}" th:if="${myPost.status != 2}">
+                    <td><input type="checkbox" th:value="${myPost.post_id}" name="selectedPostIds" data-></td>
                     <td><span id="subject" th:text="${myPost.subject}"></span></td>
                     <td><span th:text="${myPost.status == 0 ? '판매중' : (myPost.status == 1 ? '판매완료' : '삭제')}"></span></span></td>
                     <td><span id="regDate" th:text="${#temporals.format(myPost.regDate, 'yyyy년 MM월 dd일 HH시 mm분')}"></span></span></td>
@@ -36,16 +36,13 @@
                 </tbody>
             </table>
             <br>
+
             <!-- 선택된 판매글을 담을 hidden input -->
-            <input type="hidden" id="selectedPostsInput" name="selectedPosts">
+            <input type="hidden" id="selectedPostIdsInput" name="selectedPostIds">
 
             <!-- 삭제 버튼 -->
-            <button type="button" onclick="deleteSelectedPosts()">삭제</button>
+            <button type="button" onclick="deleteSelectedPostIds()">삭제</button>
         </form>
-
-        <!-- 삭제 버튼 -->
-        <!--<button type="submit" class="delete-myPosts-btn">삭제</button>-->
-        <!--<button class="delete-myPosts-btn" onclick="deleteSelectedPosts()">판매글 삭제</button>-->
 
     </section>
     <br><br><br>

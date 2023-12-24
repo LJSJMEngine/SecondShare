@@ -1,7 +1,6 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.DTO.UserDto;
-import com.lec.spring.domain.User;
 import com.lec.spring.repository.SmsCertification;
 import com.lec.spring.service.MessageService;
 import org.springframework.http.HttpStatus;
@@ -41,6 +40,5 @@ public class SmsController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 
 }

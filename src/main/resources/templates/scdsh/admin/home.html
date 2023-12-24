@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <title>관리자 페이지</title>
+</head>
+<body style="margin-bottom: 200px">
+<th:block th:insert="~{common/adminHeader::header}"></th:block>
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mt-1">공지사항</h4>
+                <a type="button" th:href="@{/admin/notice}" class="btn btn-secondary btn-sm float-end">관리</a>
+            </div>
+            <hr>
+            <div>
+                <table class="table table-sm table-hover">
+                    <thead class="table-secondary">
+                    <tr>
+                        <th>제목</th>
+                        <th>내용</th>
+                        <th>작성일</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                
+        </div>
+        <div class="col-lg-6">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mt-1">회원 관리</h4>
+                <a type="button" th:href="@{/admin/user}" class="btn btn-secondary btn-sm float-end">관리</a>
+            </div>
+            <hr>
+            <div>
+                <table class="table table-sm table-hover">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>회원이름(아이디)</th>
+                            <th>상태</th>
+                            <th>전화번호</th>
+                            <th>이메일</th>
+                            <th>가입일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="mt-1">게시글 관리</h4>
+            <a type="button" th:href="@{/admin/post}" class="btn btn-secondary btn-sm float-end">관리</a>
+        </div>
+        <hr>
+        <div>
+            <table class="table table-sm table-hover">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>게시글번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>가격</th>
+                        <th>조회수</th>
+                        <th>게시글상태</th>
+                        <th>작성일</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

@@ -4,7 +4,6 @@ import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +16,8 @@ public interface UserRepository {
 
     // 회원의 아이디로 user 정보 리턴
     User findByUsername(@Param("username") String username);
+
+    User findAll();
 
     // 신규 user 등록
     int join(User user);
@@ -45,9 +46,6 @@ public interface UserRepository {
     // 마이페이지 - 판매물품
     List<Post.MyPosts> showMyPosts(Long id);
 
-    // 마이페이지 - 판매물품 전체 삭제
-/*    void deleteAllMyPostsByUserId(
-            @Param("id") Long id
-    );*/
-
+    // 메인페이지 - 내 관심물품
+    Long findUserIdByUsername(@Param("username") String username);
 }

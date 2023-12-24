@@ -45,9 +45,16 @@
         <span class="label" id="phoneNMChangeForm" style="display: none;">
             <label class="input" for="newPhoneNumber">새로운 핸드폰 번호:</label>
             <input class="answer" type="text" id="newPhoneNumber" name="newPhoneNumber"/>
-            <button class="modify" type="button" onclick="saveNewPhoneNumber()">저장</button>
+            <button class="modify" type="button" onclick="sendConfirmationCodeSMS()">저장</button>
             <p id="phoneNMErrorMessage" style="color: red;"></p>
             <p id="phoneNMSuccessMessage" style="color: green;"></p>
+        </span>
+        <span class="label" id="confirmationCodeFormSMS" style="display: none;">
+            <label class="input" for="confirmationCodeSMS">인증 코드:</label>
+            <input class="answer" type="text" id="confirmationCodeSMS" name="confirmationCodeSMS"/>
+            <button class="modify" type="button" onclick="verifyPhoneNumber()">인증 코드 확인</button>
+            <p id="ConfirmationCodeErrorMessageSMS" style="color: red;"></p>
+            <p id="ConfirmationCodeSuccessMessageSMS" style="color: green;"></p>
         </span>
 
         <!--이메일 변경-->

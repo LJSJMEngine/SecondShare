@@ -4,13 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lec.spring.repository.CommentRepository">
-
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>
         <result column="u_username" property="username"/>
+        <result column="u_password" property="password"/>
         <result column="u_name" property="name"/>
         <result column="u_email" property="email"/>
-        <result column="u_registDate" property="registDate"/>
+        <result column="u_regdate" property="registDate"/>
     </resultMap>
 
     <resultMap id="mapComment" type="com.lec.spring.domain.Comment">

@@ -16,6 +16,7 @@ public class Review {
     private int user_id;
     private int post_id;
     private int reviewChk;
+    private int reviewRate;
     private String content;
 
     // 마이페이지 - 내가 받은 리뷰
