@@ -1,18 +1,33 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.Post;
 import com.lec.spring.service.BoardService;
+import com.lec.spring.service.NoticeService;
 import com.lec.spring.service.PostService;
+import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+    private UserService userService;
+    private PostService postService;
+    private NoticeService noticeService;
+
     @Autowired
-    private BoardService boardService;
+    public AdminController(UserService userService, PostService postService, NoticeService noticeService) {
+        this.userService = userService;
+        this.postService = postService;
+        this.noticeService = noticeService;
+    }
+
     @GetMapping("/home")
     public void home(){}
 
@@ -20,10 +35,10 @@ public class AdminController {
     public void user(){}
 
     @GetMapping("/post")
-    public void post(Model model, Long id ){
-
-
-        model.addAttribute("post" , boardService.post(id));
+    public String post(Model model,Long id) {
+        List<Post> adminlist = postService.findPost(id);
+        model.addAttribute("adminlist", adminlist);
+        return "admin/post";
     }
 
     @GetMapping("/notice")

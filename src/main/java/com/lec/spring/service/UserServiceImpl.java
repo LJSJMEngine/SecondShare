@@ -169,7 +169,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id);
         return user;
     }
-//    페이징
+
     @Override
     public List<Post> findUserPosts(Long id, Model model) {
         long cnt = userRepository.userpostcountAll(id);   // 글 목록 전체의 개수

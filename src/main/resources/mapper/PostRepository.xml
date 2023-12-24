@@ -256,4 +256,14 @@
         DELETE FROM s1_post FROM post_id = #{post_id}
     </delete>
 
+    <!-- 관리자 페이지 게시글   -->
+    <select id="findPost"  resultType="java.util.Map">
+        SELECT  p.*,
+        u.username as username
+        FROM s1_post p
+        LEFT JOIN  s1_user u
+        ON p.user_id = u.id
+    </select>
+
+
 </mapper>
