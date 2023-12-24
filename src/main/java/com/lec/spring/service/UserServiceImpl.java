@@ -39,16 +39,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
-    @Override
-    public boolean idExist(String username) {
-        User user = findByUsername(username);
-        return (user != null);
-    }
 
     @Override
     public int register(User user) {
-        user.setUsername(user.getUsername());
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         userRepository.join(user);
 
         Authority authority = authorityRepository.findByName("ROLE_MEMBER");

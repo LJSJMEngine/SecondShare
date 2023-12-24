@@ -14,7 +14,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url : '/user/register',
+            url : '/user/register/username',
             data : {
                 username : username
             },
@@ -65,9 +65,9 @@ $(document).ready(function() {
         var emailRegExp = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-z]+$/;
 
         if (!emailRegExp.test(email)) {
-            $("#label4").css("color", "red").html("<br>이메일 형식에 맞지 않습니다.");
+            $("#label5").css("color", "red").html("<br>이메일 형식에 맞지 않습니다.");
         } else {
-            $("#label4").css("color", "limegreen").html("<br>사용 가능한 이메일입니다.");
+            $("#label5").css("color", "limegreen").html("<br>사용 가능한 이메일입니다.");
         }
     });
 
@@ -86,7 +86,7 @@ $(document).ready(function() {
             return false;
         }
 
-        if (isUsernameValidated == false) {
+        if (!isUsernameValidated) {
             alert("아이디 중복확인을 해주세요.")
             event.preventDefault();
             return false;
@@ -117,6 +117,114 @@ $(document).ready(function() {
            return false;
         }
     });
+
+
+    // 인증번호 전송
+    $("#smsButton").click(function() {
+        var phoneNum = $("#phoneNM").val();
+
+        if (phoneNum === '') {
+            alert("전화번호를 입력하세요.");
+            return;
+        }
+
+        $.ajax({
+            url: '/user/register/sms',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({phoneNumber: phoneNum}),
+            success: function(response) {
+                alert(response);
+            },
+            error: function(xhr, status, error) {
+                alert("문자 전송 중 오류가 발생했습니다.")
+            }
+        });
+
+    });
+
+
+    $("#smsChkButton").click(function() {
+        var certificationNumber = $("#verifyNM").val();
+
+        $.ajax({
+            url: '/user/register/verify',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ randomNumber: certificationNumber }),
+            success: function(response) {
+                $("#label4").css("color", "limegreen").html("<br>" + response);
+            },
+            error: function(xhr, status, error) {
+                $("#label4").css("color", "red").html("<br>Error: " + xhr.responseText);
+            }
+        });
+    });
+
+
+
+    // -------------------------------------
+
+    // 아이디 저장
+    var key = getCookie("key");
+    $("#username").val(key);
+
+    // 페이지 로딩시, ID 체크 상태라면
+    if ($("#username").val() != '') {
+        $("#remember").prop("checked", true); // 체크 상태로 표시하기
+
+    }
+
+    $("#remember").change(function() {
+        if($("#remember").is(":checked")) {
+            setCookie("key", $("#username").val(), 7) // 7일간 쿠키 보관하기
+        } else {
+            deleteCookie("key");
+        }
+    });
+
+    // ID 저장하기를 누른 상태에서도 쿠키 저장
+    $("#username").keyup(function() {
+        if($("#remember").is(":checked")) {
+            setCookie("key", $("#username").val(), 7)
+        }
+    });
+
+    // 쿠키 저장
+    // 쿠키 생성 및 삭제의 역할
+    function setCookie(cookieName, value, exdays) {
+        var exdate = new Date();
+        exdate.setDate(exdate.getDate() + exdays);
+        var cookieValue = encodeURIComponent(value)
+                + ((exdays == null) ? "" : "; expires = " + exdate.toGMTstring());
+        document.cookie = cookieName + " = " + cookieValue;
+    }
+
+    // 쿠키 삭제
+    function deleteCookie(cookieName) {
+        var expireDate = new Date();
+        expireDate.setDate(expireDate.getDate() - 1);
+        document.cookie = cookieName + " = " + "; expires = " + expireDate.toGMTstring();
+    }
+
+    // 쿠키 가져오기
+    function getCookie(cookieName) {
+        cookieName = cookieName + " = ";
+        var cookieData = document.cookie;
+        var start = cookieData.indexOf(cookieName);
+        var cookieValue = '';
+        if (start != -1) {
+            start += cookieName.length;
+            var end = cookieData.indexOf(";", start);
+            if (end == -1) {
+                end = cookieData.length;
+            }
+            cookieValue = cookieData.substring(start, end);
+        }
+
+        return decodeURIComponent(cookieValue);
+
+    }
 
 });
 
