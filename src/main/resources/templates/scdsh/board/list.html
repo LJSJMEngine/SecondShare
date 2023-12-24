@@ -15,8 +15,7 @@
 
 <!-- 페이징 헤더 -->
 <div class="mb-3 mt-3 clearfix">
-    <span class="float-start me-2">[[${type}]]/[[${keyword}]] 검색:[[${cnt}]]개</span>
-    <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
+    <span class="float-start me-2">[[${type}]]  [[${keyword}]]/ 검색:[[${cnt}]]개</span>
 
 </div>
 <!-- 페이징 헤더 -->
@@ -30,16 +29,14 @@
         <tr th:each="post : ${list}">
             <dl>
                 <a th:href="@{'/board/detail/' + ${post.post_id}}">
-                <img th:if="${post.attachment != '이미지없음' and post.attachment.sourcename != '이미지없음'}" th:src="@{/upload/{imageName}(imageName=${post.attachment.sourcename})}" style="width:100px" />
-                <img th:if="${post.attachment == '이미지없음' or post.attachment.sourcename == '이미지없음'}" src="/upload/sample.jpg" style="width:100px" alt="Sample Image" />
+                    <img th:if="${post.attachment != '이미지없음' and post.attachment.sourcename != '이미지없음' and (post.attachment.sourcename.toLowerCase().endsWith('.jpg') or post.attachment.sourcename.toLowerCase().endsWith('.png'))}" th:src="@{/upload/{imageName}(imageName=${post.attachment.sourcename})}" style="width:100px" />
+                    <img th:if="${post.attachment == '이미지없음' or post.attachment.sourcename == '이미지없음' or !(post.attachment.sourcename.toLowerCase().endsWith('.jpg') or post.attachment.sourcename.toLowerCase().endsWith('.png'))}" src="/upload/sample.jpg" style="width:100px" alt="Sample Image" />
                 <dt><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></dt>
                 <dt th:text="${post.price}+'원'"></dt>
                 <dt><a th:href="@{'/user/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></dt>
                 <dt th:text="${post.category.name}"></dt>
                 <dt th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></dt>
-                <dt>
-                <span th:text="'작성일:'+${#temporals.format(post.regDate, 'yyyy-MM-dd')}"></span>
-                </dt>
+                <dt><span th:text="'작성일:'+${#temporals.format(post.regDate, 'yyyy-MM-dd')}"></span></dt>
             </dl>
         </tr>
         </tbody>

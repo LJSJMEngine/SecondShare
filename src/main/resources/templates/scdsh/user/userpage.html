@@ -20,12 +20,13 @@
         <span th:text="'가입일: ' + ${#temporals.format(user.registDate, 'yyyy년 MM월 dd일')}"></span>
 
         <br>
-        <span class="float-start" id="postcnt">총판매글:[[${cnt}]]개 | 거래 성공:</span>
+        <span class="float-start" id="postcnt">총판매글:[[${cnt}]]개 | 거래 성공:[[${statuscnt}]]개</span>
         <br>
+        <h5>최신 판매글</h5>
         <table border="1" id="post_table">
             <thead>
             <tr>
-                <th>#</th>
+                <th>게시글 id</th>
                 <th>제목</th>
                 <th>상태</th>
                 <th>작성일</th>
@@ -41,9 +42,8 @@
             </tr>
             </tbody>
         </table>
-        <a th:insert="~{board/pagination::pagination}">
-            <th:block th:insert="~{board/pagination::pagination}"></th:block>
-        </a>
+        <span class="float-start" id="postcnt">받은리뷰:</span>
+
 </body>
 </th:block>
 </section>

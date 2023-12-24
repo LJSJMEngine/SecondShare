@@ -35,6 +35,7 @@
         ANY_VALUE(u.name) AS u_name,
         ANY_VALUE(u.email) AS u_email,
         COALESCE(ANY_VALUE(a.sourcename), '이미지없음') AS a_sourcename,
+        ANY_VALUE(a.isImage) AS a_isImage,
         ANY_VALUE(c.id) AS c_id,
         ANY_VALUE(c.name) AS c_name
         FROM s1_post p
@@ -60,6 +61,7 @@
         <result column="a_id" property="id"/>
         <result column="a_sourcename" property="sourcename"/>
         <result column="a_filename" property="filename"/>
+        <result column="a_isImage" property="isImage"/>
     </resultMap>
 
 

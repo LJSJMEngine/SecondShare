@@ -72,17 +72,12 @@ public class UserController {
 
     // 유저 페이지
     @GetMapping("/userpage/{id}")
-    public String userpage(@PathVariable Long id ,Model model, Integer page){
+    public String userpage(@PathVariable Long id ,Model model){
         User user = userService.userpage(id);
         model.addAttribute("user", user);
-        userService.findUserPosts(id,model,page);
+        userService.findUserPosts(id,model);
         return "user/userpage";
     }
 
-    @PostMapping("/pageRows")
-    public String pageRows(Integer page, Integer pageRows){
-        U.getSession().setAttribute("pageRows", pageRows);
-        return "redirect:/user/userpage?page=" + page;
-    }
 
 }
