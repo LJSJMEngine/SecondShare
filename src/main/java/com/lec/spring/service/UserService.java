@@ -3,6 +3,7 @@ package com.lec.spring.service;
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -22,6 +23,10 @@ public interface UserService {
     List<User> getAllUsers();
 
     List<User> getLatestUser();
+
+    List<User> userList();
+
+    List<User> userList(Integer page, Model model, String type, String keyword);
 
     // 다른 유저 페이지
 

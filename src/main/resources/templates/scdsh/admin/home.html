@@ -48,7 +48,7 @@
                 <table class="table table-sm table-hover">
                     <thead class="table-secondary">
                         <tr>
-                            <th>회원이름</th>
+                            <th>회원이름(아이디)</th>
                             <th>상태</th>
                             <th>전화번호</th>
                             <th>이메일</th>
@@ -57,7 +57,7 @@
                     </thead>
                     <tbody>
                         <tr th:each="user : ${users}">
-                            <td th:text="${user.name}"></td>
+                            <td th:text="${user.name} + '(' + ${user.username} + ')'"></td>
                             <td th:text="${user.status == 0 ? '활동중' : '탈퇴'}"></td>
                             <td th:text="${user.phoneNM}"></td>
                             <td th:text="${user.email}"></td>

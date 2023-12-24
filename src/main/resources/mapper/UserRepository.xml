@@ -4,6 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lec.spring.repository.UserRepository">
+
+    <resultMap id="mapUser" type="com.lec.spring.domain.User">
+        <result column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="name" property="name"/>
+        <result column="email" property="email"/>
+        <result column="status" property="status"/>
+        <result column="registDate" property="registDate"/>
+    </resultMap>
+
     <sql id="SELECT">
         SELECT
             id "id",
@@ -47,6 +57,31 @@
         ORDER BY u.registDate DESC
         LIMIT 5
     </select>
+
+    <select id="countUserResult" resultType="int">
+        SELECT COUNT(*) FROM s1_user
+        <if test="type == '이름'">
+            WHERE LOWER(name) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+        </if>
+        <if test="type == '아이디'">
+            WHERE LOWER(username) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+        </if>
+        ORDER BY id DESC
+    </select>
+
+    <select id="searchWithPaging" resultMap="mapUser" parameterType="map">
+        <include refid="SELECT"/>
+        <if test="type == '이름'">
+            WHERE LOWER(name) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+        </if>
+        <if test="type == '아이디'">
+            WHERE LOWER(username) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+        </if>
+        ORDER BY id DESC
+        LIMIT #{from}, #{rows}
+    </select>
+
+
 
     <insert id="join"
             flushCache="true"

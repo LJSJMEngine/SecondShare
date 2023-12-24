@@ -7,11 +7,14 @@ import com.lec.spring.service.BoardService;
 import com.lec.spring.service.NoticeService;
 import com.lec.spring.service.PostService;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -46,11 +49,26 @@ public class AdminController {
     }
 
     @GetMapping("/user")
-    public void user(){}
+    public void user(
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String keyword,
+            Integer page,
+            Model model){
+        userService.userList(page, model, type, keyword);
+
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("type", type);
+    }
 
     @GetMapping("/post")
     public void post(){}
 
     @GetMapping("/notice")
     public void notice(){}
+
+    @PostMapping("/userPageRows")
+    public String userPageRows(Integer page, Integer pageRows){
+        U.getSession().setAttribute("pageRows", pageRows);
+        return "redirect:/admin/user?page=" + page;
+    }
 }

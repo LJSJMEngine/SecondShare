@@ -50,4 +50,13 @@ public interface UserRepository {
 
     // 메인페이지 - 내 관심물품
     Long findUserIdByUsername(@Param("username") String username);
+
+    // 어드민 페이지 회원 검색
+
+    // 검색 결과 전체 개수
+    int countUserResult(@Param("keyword") String keyword, @Param("type") String type);
+
+    // 결과를 페이징해서 가져오기
+    List<User> searchWithPaging(@Param("type") String type, @Param("keyword") String keyword,
+                                @Param("from") int from, @Param("rows") int rows);
 }

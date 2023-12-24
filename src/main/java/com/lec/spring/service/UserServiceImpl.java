@@ -5,10 +5,14 @@ import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AuthorityRepository;
 import com.lec.spring.repository.UserRepository;
+import com.lec.spring.util.U;
+import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +20,11 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Value("${app.pagination.write_pages}")
+    private int WRITE_PAGES;
+    @Value("${app.pagination.page_rows}")
+    private int PAGE_ROWS;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -74,6 +83,55 @@ public class UserServiceImpl implements UserService {
     public List<User> getLatestUser(){
         return userRepository.findLatestUser();
     }
+
+    @Override
+    public List<User> userList() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> userList(Integer page, Model model, String type, String keyword) {
+        if (page == null) page = 1;
+        if (page < 1) page = 1;
+
+        HttpSession session = U.getSession();
+        Integer writrPages = (Integer) session.getAttribute("writePages");
+        if (writrPages == null) writrPages = WRITE_PAGES;
+        Integer pageRows = (Integer) session.getAttribute("pageRows");
+        if (pageRows == null) pageRows = PAGE_ROWS;
+        session.setAttribute("page", page);
+
+        long cnt;
+        int totalPage;
+        int startPage;
+        int endPage;
+
+        List<User> list;
+
+            cnt = userRepository.countUserResult(keyword, type);
+            list = userRepository.searchWithPaging(keyword, type, (page - 1) * pageRows, pageRows);
+
+        totalPage = (int) Math.ceil(cnt / (double) pageRows);
+        startPage = (((page - 1) / writrPages) * writrPages) + 1;
+        endPage = startPage + writrPages - 1;
+
+        if (endPage >= totalPage) endPage = totalPage;
+
+        model.addAttribute("list", list);
+        model.addAttribute("cnt", cnt);
+        model.addAttribute("page", page);
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("pageRows", pageRows);
+
+        model.addAttribute("url", U.getRequest().getRequestURI());
+        model.addAttribute("writePages", writrPages);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return list;
+    }
+
+
 
     // 마이페이지 - 프로필 보기, 프로필 수정
     @Override
