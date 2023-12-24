@@ -45,7 +45,7 @@ public class UserController {
 
     @RequestMapping("/rejectAuth")
     public String rejectAuth(){
-        return "common/rejectAuth";
+        return "user/rejectAuth";
     }
 
     @GetMapping("/register")

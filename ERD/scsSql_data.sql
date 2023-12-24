@@ -100,8 +100,13 @@ SET sampleImg = 1
 WHERE post_id IN (SELECT post_id FROM s1_attachment WHERE isImage = TRUE)
 ;
 
+INSERT INTO s1_notice (status, user_id, status_name, subject, contents) VALUES
+(1, 1, '공지', '환영인사', '어서오세요!'),
+(1, 1, '공지', '공지1', '공지입니다'),
+(2, 1, '알림', '알림1', '알림입니다')
+;
 INSERT INTO s1_heart (user_id, post_id, is_active, created_at)
-VALUES 
+VALUES
     (2, 1, TRUE, NOW()),
     (2, 7, TRUE, NOW()),
     (3, 1, TRUE, NOW()),

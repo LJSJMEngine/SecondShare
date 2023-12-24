@@ -1,9 +1,18 @@
 $(function(){
+
     // 글 삭제 버튼
     $("#btnDel").click(function(){
         let answer = confirm("게시글을 삭제하시겠습니까?");
         if(answer){
             $("form[name='frmDelete']").submit();
+        }
+    });
+
+    // 거래 확인 버튼
+    $("#chkTrade").click(function(){
+        let answer = confirm("거래를 완료하시겠습니까? \n거래가 완료되면 게시글의 거래가 종료되고, \n거래한 회원에게 알림이 갑니다.");
+        if(answer){
+            $("form[name='chkTrade']").submit();
         }
     });
 
@@ -20,13 +29,13 @@ $(function(){
 
         if(!content){
             alert("댓글을 입력해주세요!");
-            $("input_comment").focus();
+            $("#input_comment").focus();
             return;
         }
 
         // 댓글 값 전달
-        const date = {
-            "post_id": post_id,
+        const data = {
+            "id": id,
             "user_id": logged_id,
             "content": content,
         };
@@ -59,7 +68,7 @@ function loadComment(post_id){
         cache: false,
         success: function(data, status){
             if(status == "success"){
-                if(data.status != "OK"){
+                if(data.status !== "OK"){
                     alert(data.status);
                     return;
                 }
@@ -68,7 +77,7 @@ function loadComment(post_id){
 
                 addDelete();
             }
-        }
+        },
     });
 }
 
@@ -106,7 +115,7 @@ function buildComment(result){
 // 댓글 삭제 기능
 function addDelete(){
     // 현재 글의 id
-    const id = $("input[name='id']")
+    const id = $("input[name='id']");
 
     $("[data-cmtdel-id]").click(function(){
         if(!confirm("댓글을 삭제하시겠습니까?")) return;

@@ -4,11 +4,17 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <script th:unless="${post}">
-    alert("해당 게시글이 삭제되거나 없습니다");
+    alert("해당 게시글은 삭제되었거나 없습니다");
     history.back();
 </script>
 
 <th:block th:if="${post}" th:with="logged_user=${#authentication.principal.user}">
+
+    <script th:if="${post.status == 2}">
+        alert("해당 게시글은 삭제되었거나 없습니다");
+        history.back();
+    </script>
+
 
 <head>
     <meta charset="utf-8">
@@ -24,7 +30,7 @@
 
     <script th:inline="javascript">
         // 댓글 작성시 필요
-        const logged_id = [[${logged_id}]];
+        const logged_id = [[${logged_user.id}]];
     </script>
 
     <title>[[${post.subject}]]</title>
@@ -46,7 +52,11 @@
 
         <section>
             <form name="frmDelete" th:action="@{/board/delete}" method="post">
-                <input type="hidden" name="post_id" th:value="${post.post_id}">
+                <input type="hidden" id="id" name="post_id" th:value="${post.post_id}">
+            </form>
+
+            <form name="chkTrade" th:action="@{/board/chkTrade}" method="post">
+                <input type="hidden" id="post_id" name="post_id" th:value="${post.post_id}">
             </form>
 
             <div>
@@ -81,10 +91,10 @@
 
             <!-- 버튼 부분 -->
             <div >
-                <a class="btn btn-outline-dark" th:href="@{'/board/modify/' + ${post.post_id}}" th:if="${logged_user.id == post.user.id}">수정</a>
+                <a class="btn btn-outline-dark" th:href="@{'/board/modify/' + ${post.post_id}}" th:if="${logged_user.id == post.user.id} and ${post.status != 1}">수정</a>
                 <button type="button" id="btnDel" th:if="${logged_user.id == post.user.id}">삭제</button>
                 <a class="btn btn-outline-dark" th:href="TODO" th:if="${logged_user.id != post.user.id}">1:1 채팅하기</a>
-                <button type="button" id="status" th:if="${logged_user.id == post.user.id}">거래완료</button>
+                <button type="button" id="chkTrade" th:href="@{'/board/chkTrade}" th:if="${logged_user.id == post.user.id} and ${post.status != 1}">거래완료</button>
                 <a class="btn btn-outline-dark" th:href="@{/board/list(page=${session.page})}">목록</a>
             </div>
 

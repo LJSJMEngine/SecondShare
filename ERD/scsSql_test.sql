@@ -42,5 +42,5 @@ SELECT * FROM s1_user_authority;
         FROM s1_post p
         JOIN s1_user u ON p.user_id = u.id
         WHERE u.id = #{userid}
-		AND p.status = 1     
+		AND p.status = 1
 

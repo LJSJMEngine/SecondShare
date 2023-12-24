@@ -30,4 +30,7 @@ public class NoticeServiceImpl implements NoticeService {
 
         return 0;
     }
+
+    // 어드민 페이지용
+
 }

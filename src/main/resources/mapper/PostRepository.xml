@@ -13,6 +13,18 @@
         (#{user.id}, #{category_id}, #{subject}, #{contents}, #{price}, NOW())
     </insert>
 
+    <update id="chPostStatus" flushCache="true">
+        UPDATE s1_post
+        SET status = 1
+        WHERE post_id = #{post_id}
+    </update>
+
+    <update id="delStatus" flushCache="true">
+        UPDATE s1_post
+        SET status = 2
+        WHERE post_id = #{post_id}
+    </update>
+
     <update id="incViewCnt" flushCache="true">
         UPDATE s1_post
         SET viewCnt = viewCnt + 1
@@ -43,6 +55,7 @@
         LEFT JOIN s1_category c ON p.category_id = c.id
         LEFT JOIN s1_attachment a ON a.post_id = p.post_id
     </sql>
+
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
         <result column="u_id" property="id"/>
         <result column="u_username" property="username"/>
@@ -75,6 +88,7 @@
         <result column="p_viewCnt" property="viewCnt"/>
         <result column="p_regDate" property="regDate"/>
         <result column="p_status" property="status"/>
+        <result column="p_category_id" property="category_id"/>
         <collection property="user" resultMap="mapUser"/>
         <collection property="category" resultMap="mapCategory"/>
         <collection property="attachment" resultMap="mapAttachment"/>
@@ -92,8 +106,6 @@
         ORDER BY p.post_id DESC
     </select>
 
-    <!--  delStatus 글을 삭제했을경우 완전히 삭제되면 안되니
-    회원탈퇴의 경우와 같이 비활성화 column boolean임  -->
     <update id="modify" flushCache="true"
             parameterType="com.lec.spring.domain.Post">
         UPDATE s1_post
@@ -103,10 +115,10 @@
 
     <select id="countSearchResults" resultType="int">
         SELECT COUNT(*) FROM s1_post p ,s1_category c
-        WHERE
-        p.category_id = c.id
+        WHERE p.category_id = c.id
+        AND p.status != 2
         <if test ="type == '제목'">
-          AND  LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND  LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         </if>
         <if test="type == '생활용품'">
             AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
@@ -239,5 +251,9 @@
         </foreach>
     </update>
 
+    <delete id="delete" flushCache="true"
+            parameterType="com.lec.spring.domain.Post">
+        DELETE FROM s1_post FROM post_id = #{post_id}
+    </delete>
 
 </mapper>

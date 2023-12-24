@@ -1,5 +1,8 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.service.BoardService;
+import com.lec.spring.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,17 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @GetMapping("/adminhome")
-    public void adminhome(){}
+    @GetMapping("/home")
+    public void home(){}
 
-    @GetMapping("/usermng")
-    public void usermng(){}
+    @GetMapping("/user")
+    public void user(){}
 
-    @GetMapping("/postmng")
-    public void postmng(){}
-
-    @GetMapping("/categorymng")
-    public void categorymng(){}
+    @GetMapping("/post")
+    public void post(){}
 
     @GetMapping("/notice")
     public void notice(){}
