@@ -12,6 +12,11 @@
 <body style="margin-bottom: 200px">
 <th:block th:insert="~{common/adminHeader::header}"></th:block>
 
-    <h1>공지 관리</h1>
+    <h1>회원 관리</h1>
+    <hr>
+    <div>
+        <label>회원 검색:</label>
+        <input type="text" id="id" placeholder="아이디를 입력해주세요" name="id" th:value="${id}">
+    </div>
 </body>
 </html>

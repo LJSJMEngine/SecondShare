@@ -66,7 +66,7 @@ INSERT INTO s1_post (user_id, subject, contents, price, status, regDate, categor
 (2, '제목4', '내용4', 15000, 0, NOW(), 4),
 (2, '제목5', '내용5', 20000, 0, NOW(), 5),
 (2, '제목6', '내용6', 15000, 0, NOW(), 2),
-(3, '제목7', '내용7', 15000, 0, NOW(), 4)
+(3, '제목7', '내용7', 15000, 0, NOW(), 0)
 ;
 
 INSERT INTO s1_comment (user_id, post_id, content) VALUES
@@ -86,4 +86,10 @@ INSERT INTO s1_review (user_id, post_id, reviewChk, content) VALUES
 
 INSERT INTO s1_attachment (post_id, sourcename, filename) VALUES
 (1, 'smple.png', 'smple.png')
+;
+
+INSERT INTO s1_notice (status, user_id, status_name, subject, contents) VALUES
+(1, 1, '공지', '환영인사', '어서오세요!'),
+(1, 1, '공지', '공지1', '공지입니다'),
+(2, 1, '알림', '알림1', '알림입니다')
 ;

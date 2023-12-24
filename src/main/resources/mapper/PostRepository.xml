@@ -127,7 +127,7 @@
         WHERE p.category_id = c.id
         AND p.status != 2
         <if test ="type == '제목'">
-          AND  LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND  LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         </if>
         <if test="type == '생활용품'">
             AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))

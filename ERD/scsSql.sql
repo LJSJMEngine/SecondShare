@@ -108,8 +108,9 @@ CREATE TABLE s1_notice
 	user_id int NOT NULL,
 	status int,
 	status_name varchar(50),
+	subject text,
 	contents text,
-	readChk boolean,
+	readChk boolean DEFAULT false,
 	PRIMARY KEY (id)
 );
 
@@ -175,19 +176,14 @@ ALTER TABLE s1_user_authority
 ;
 
 ALTER TABLE s1_post
-ADD CONSTRAINT s1_post_ibfk_1
-FOREIGN KEY (category_id) REFERENCES s1_category(id)
-ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE s1_post
-DROP FOREIGN KEY s1_post_ibfk_1;
-
-ALTER TABLE s1_post
 	ADD FOREIGN KEY (category_id)
 	REFERENCES s1_category (id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
+
+ALTER TABLE s1_post
+DROP FOREIGN KEY s1_post_ibfk_1;
 
 
 ALTER TABLE s1_chatMessage

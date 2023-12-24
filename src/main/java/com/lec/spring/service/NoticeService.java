@@ -10,4 +10,7 @@ public interface NoticeService {
 
     int createNotice(Notice notice);
 
+    // 어드민 페이지용
+
+
 }
