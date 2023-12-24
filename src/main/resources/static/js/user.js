@@ -161,5 +161,70 @@ $(document).ready(function() {
         });
     });
 
+
+
+    // -------------------------------------
+
+    // 아이디 저장
+    var key = getCookie("key");
+    $("#username").val(key);
+
+    // 페이지 로딩시, ID 체크 상태라면
+    if ($("#username").val() != '') {
+        $("#remember").prop("checked", true); // 체크 상태로 표시하기
+
+    }
+
+    $("#remember").change(function() {
+        if($("#remember").is(":checked")) {
+            setCookie("key", $("#username").val(), 7) // 7일간 쿠키 보관하기
+        } else {
+            deleteCookie("key");
+        }
+    });
+
+    // ID 저장하기를 누른 상태에서도 쿠키 저장
+    $("#username").keyup(function() {
+        if($("#remember").is(":checked")) {
+            setCookie("key", $("#username").val(), 7)
+        }
+    });
+
+    // 쿠키 저장
+    // 쿠키 생성 및 삭제의 역할
+    function setCookie(cookieName, value, exdays) {
+        var exdate = new Date();
+        exdate.setDate(exdate.getDate() + exdays);
+        var cookieValue = encodeURIComponent(value)
+                + ((exdays == null) ? "" : "; expires = " + exdate.toGMTstring());
+        document.cookie = cookieName + " = " + cookieValue;
+    }
+
+    // 쿠키 삭제
+    function deleteCookie(cookieName) {
+        var expireDate = new Date();
+        expireDate.setDate(expireDate.getDate() - 1);
+        document.cookie = cookieName + " = " + "; expires = " + expireDate.toGMTstring();
+    }
+
+    // 쿠키 가져오기
+    function getCookie(cookieName) {
+        cookieName = cookieName + " = ";
+        var cookieData = document.cookie;
+        var start = cookieData.indexOf(cookieName);
+        var cookieValue = '';
+        if (start != -1) {
+            start += cookieName.length;
+            var end = cookieData.indexOf(";", start);
+            if (end == -1) {
+                end = cookieData.length;
+            }
+            cookieValue = cookieData.substring(start, end);
+        }
+
+        return decodeURIComponent(cookieValue);
+
+    }
+
 });
 
