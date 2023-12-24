@@ -1,11 +1,13 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.Post;
+import com.lec.spring.domain.Review;
 import com.lec.spring.domain.User;
 //import com.lec.spring.domain.UserValidator;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.BoardService;
 import com.lec.spring.service.MemberService;
+import com.lec.spring.service.ReviewService;
 import com.lec.spring.service.UserService;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +35,9 @@ public class UserController {
     private UserService userService;
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping("/login")
     public void login(Model model){}
@@ -76,6 +81,8 @@ public class UserController {
         User user = userService.userpage(id);
         model.addAttribute("user", user);
         userService.findUserPosts(id,model);
+        List<Review> userReview = reviewService.findReview(Math.toIntExact(user.getId()));
+        model.addAttribute("userReview", userReview);
         return "user/userpage";
     }
 

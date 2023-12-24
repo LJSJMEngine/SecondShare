@@ -4,6 +4,7 @@ import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AuthorityRepository;
+import com.lec.spring.repository.ReviewRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpSession;
@@ -30,12 +31,14 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
     private AuthorityRepository authorityRepository;
+    private ReviewRepository reviewRepository;
 
 
     @Autowired
     public UserServiceImpl(SqlSession sqlSession) {
         userRepository = sqlSession.getMapper(UserRepository.class);
         authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
+        reviewRepository = sqlSession.getMapper(ReviewRepository.class);
         System.out.println(getClass().getName() + "() 생성");
     }
 

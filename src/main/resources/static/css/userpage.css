@@ -16,3 +16,45 @@
 
     .postcnt {
     }
+
+    /* 각 리뷰 박스 스타일 */
+    .reviewBox {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        padding: 10px;
+        box-sizing: border-box;
+        display: inline-block;
+    }
+
+    .reviewContainer {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .reviewBox {
+        width: 20%;
+        margin: 10px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .reviewStatus {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    /* reviewChk 별로 색상 다르게 */
+    .reviewBox.status-0 {
+        background-color: white;
+    }
+
+    .reviewBox.status-1 {
+        background-color: white;
+    }
+
+    .reviewBox.status-2 {
+        background-color: white;
+    }

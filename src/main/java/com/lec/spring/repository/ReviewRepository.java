@@ -12,4 +12,7 @@ public interface ReviewRepository {
     // 마이페이지 - 내 리뷰 보기
     List<Review.MyReceivedReviews> findReviewsByUserId(@Param("userId") int userId);
 
+    // 유저페이지 리뷰 보기
+    List<Review> findReview(@Param("userId") int userId);
+
 }

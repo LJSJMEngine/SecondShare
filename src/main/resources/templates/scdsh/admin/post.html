@@ -13,5 +13,26 @@
 <th:block th:insert="~{common/adminHeader::header}"></th:block>
 
     <h1>게시글 관리</h1>
+<table class="table table-hover">
+    <thead class="table-success">
+    <thead>
+    <tr>
+        <th>게시글 번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>판매 상태</th>
+        <th>작성일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post : ${adminlist}">
+        <td th:text="${post.post_id}"></td>
+        <td><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></td>
+        <td th:text="${post.user.username}"></td>
+        <td th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></td>
+        <td th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd')}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

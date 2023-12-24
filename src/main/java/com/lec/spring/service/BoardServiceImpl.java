@@ -321,4 +321,17 @@ public class BoardServiceImpl implements BoardService {
         return result;
     }
 
+    // 관리자 페이지
+
+    @Override
+    @Transactional
+    public Post post(Long id) {
+
+        Post adminlist = postRepository.findByPostId(id);
+
+
+        return adminlist;
+    }
+
+
 }

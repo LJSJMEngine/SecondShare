@@ -26,9 +26,9 @@
         <table border="1" id="post_table">
             <thead>
             <tr>
-                <th>게시글 id</th>
+                <th>게시글 번호</th>
                 <th>제목</th>
-                <th>상태</th>
+                <th>판매 상태</th>
                 <th>작성일</th>
             </tr>
             </thead>
@@ -38,11 +38,33 @@
                 <td><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></td>
                 <td th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></td>
                 <td th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd')}"></td>
-
             </tr>
             </tbody>
         </table>
-        <span class="float-start" id="postcnt">받은리뷰:</span>
+
+        <section id="userReview">
+
+            <h3 th:text="'받은 리뷰 ' + ${userReview.size()} + ' 건'"></h3>
+
+            <!-- 리뷰를 박스로 표시 -->
+            <div th:each="userReview : ${userReview}"
+                 th:class="${'reviewBox status-' + userReview.reviewChk}">
+                <!-- 리뷰 확인 -->
+                <div class="reviewStatus">
+                    <!--<span th:text="${myReceivedReview.reviewChk}"></span>-->
+                    <span th:text="${userReview.reviewChk == 0 ? '별로에요' : (userReview.reviewChk == 1 ? '만족해요' : (userReview.reviewChk == 2 ? '최고에요' : '알 수 없는 상태'))}"></span>
+                </div>
+                <!-- 리뷰 내용 -->
+                <div class="reviewContent">
+                    <span th:text="${userReview.content}"></span>
+                </div>
+            </div>
+        </section>
+        </tbody>
+
+
+
+        <input type="button" value="뒤로가기" onclick="history.back(-1)">
 
 </body>
 </th:block>

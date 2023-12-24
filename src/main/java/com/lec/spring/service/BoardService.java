@@ -29,5 +29,8 @@ public interface BoardService {
 
     int deleteByPostId(Long post_id);
 
+    //관리자 페이지 게시글
+    Post post(Long id);
+
 
 }
