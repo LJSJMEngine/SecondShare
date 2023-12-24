@@ -63,6 +63,8 @@ public class UserServiceImpl implements UserService {
         return authorityRepository.findByUser(user);
     }
 
+    // 어드민 페이지
+
     // 마이페이지 - 프로필 보기, 프로필 수정
     @Override
     public User getUserByUsername(String username) {

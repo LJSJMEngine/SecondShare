@@ -141,7 +141,8 @@ CREATE TABLE s1_review
 	user_id int NOT NULL,
 	post_id int NOT NULL,
 	reviewChk int NOT NULL,
-	content longtext NOT NULL,
+	reviewRate int NOT NULL,
+	content text,
 	PRIMARY KEY (id)
 );
 

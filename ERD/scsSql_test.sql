@@ -26,8 +26,10 @@ SELECT * FROM s1_user;
 SELECT * FROM s1_post;
 SELECT * FROM s1_attachment;
 SELECT * FROM s1_heart;
+SELECT * FROM s1_review;
 SELECT * FROM s1_notice;
 SELECT * FROM s1_category;
+SELECT * FROM s1_user_authority;
 
 SELECT * FROM s1_comment;
 

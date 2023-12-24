@@ -30,6 +30,15 @@
         AND username = #{username}
     </select>
 
+    <!-- 어드민을 제외한 모두를 검색 -->
+    <select id="findAll" resultType="com.lec.spring.domain.User">
+        SELECT *
+        FROM s1_user u
+        JOIN s1_user_authority a ON u.id = a.user_id
+        WHERE a.authority_id != 1
+        ORDER BY u.registDate DESC
+    </select>
+
     <insert id="join"
             flushCache="true"
             parameterType="com.lec.spring.domain.User"

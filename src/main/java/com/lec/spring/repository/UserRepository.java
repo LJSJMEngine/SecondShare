@@ -17,6 +17,8 @@ public interface UserRepository {
     // 회원의 아이디로 user 정보 리턴
     User findByUsername(@Param("username") String username);
 
+    User findAll();
+
     // 신규 user 등록
     int join(User user);
 

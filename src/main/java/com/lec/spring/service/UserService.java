@@ -18,6 +18,8 @@ public interface UserService {
     // id에 따른 사용자의 권한
     List<Authority> selectAuthById(Long id);
 
+    // 어드민 페이지
+
     // 다른 유저 페이지
 
 
