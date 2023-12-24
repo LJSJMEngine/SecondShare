@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -64,6 +65,15 @@ public class UserServiceImpl implements UserService {
     }
 
     // 어드민 페이지
+    @Override
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getLatestUser(){
+        return userRepository.findLatestUser();
+    }
 
     // 마이페이지 - 프로필 보기, 프로필 수정
     @Override

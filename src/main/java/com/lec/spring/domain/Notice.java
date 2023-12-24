@@ -16,7 +16,7 @@ public class Notice {
     int status;
     String status_name;
     String subject;
-    String content;
+    String contents;
     boolean readChk;
 
 }

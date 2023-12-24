@@ -59,3 +59,24 @@ SELECT
         WHERE p.post_id = 2
         AND p.status < 2
         GROUP BY p.post_id;
+        
+       SELECT *
+        FROM s1_user u
+        JOIN s1_user_authority a ON u.id = a.user_id
+        WHERE a.authority_id != 1
+        ORDER BY u.registDate DESC;
+        
+       SELECT
+        id,
+        user_id,
+        status,
+        status_name,
+        subject,
+        contents,
+        readChk
+        FROM
+        s1_notice
+        WHERE
+        1 = 1
+        GROUP BY id
+        ORDER BY id DESC;

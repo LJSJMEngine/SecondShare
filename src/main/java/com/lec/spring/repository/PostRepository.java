@@ -22,6 +22,8 @@ public interface PostRepository {
 
     List<Post> findAll();
 
+    List<Post> findLatest();
+
     int modify(Post post);
 
     int chPostStatus(Long id);

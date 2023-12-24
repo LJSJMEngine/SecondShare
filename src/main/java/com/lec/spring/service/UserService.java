@@ -19,6 +19,9 @@ public interface UserService {
     List<Authority> selectAuthById(Long id);
 
     // 어드민 페이지
+    List<User> getAllUsers();
+
+    List<User> getLatestUser();
 
     // 다른 유저 페이지
 

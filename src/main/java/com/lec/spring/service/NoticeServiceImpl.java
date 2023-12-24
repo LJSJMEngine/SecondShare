@@ -2,12 +2,19 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Notice;
 import com.lec.spring.repository.ChatRepository;
+import com.lec.spring.repository.NoticeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
 
-    private ChatRepository chatRepo;
+    private ChatRepository chatRepository;
+
+    @Autowired
+    private NoticeRepository noticeRepository;
 
     @Override
     public Notice findByUserId(Long id) {
@@ -32,5 +39,13 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     // 어드민 페이지용
+    @Override
+    public List<Notice> getAllNotice() {
+        return noticeRepository.findAll();
+    }
 
+    @Override
+    public List<Notice> getLatestNotice() {
+        return noticeRepository.findLatestNotice();
+    }
 }

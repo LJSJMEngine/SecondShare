@@ -39,6 +39,15 @@
         ORDER BY u.registDate DESC
     </select>
 
+    <select id="findLatestUser" resultType="com.lec.spring.domain.User">
+        SELECT *
+        FROM s1_user u
+        JOIN s1_user_authority a ON u.id = a.user_id
+        WHERE a.authority_id != 1
+        ORDER BY u.registDate DESC
+        LIMIT 5
+    </select>
+
     <insert id="join"
             flushCache="true"
             parameterType="com.lec.spring.domain.User"
