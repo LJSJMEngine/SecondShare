@@ -100,7 +100,7 @@ SET sampleImg = 1
 WHERE post_id IN (SELECT post_id FROM s1_attachment WHERE isImage = TRUE)
 ;
 
-INSERT INTO s1_heart (user_id, post_id, is_active, created_at)
+/*INSERT INTO s1_heart (user_id, post_id, is_active, created_at)
 VALUES 
     (2, 1, TRUE, NOW()),
     (2, 7, TRUE, NOW()),
@@ -110,10 +110,10 @@ VALUES
     (3, 4, TRUE, NOW()),
     (3, 5, TRUE, NOW()),
     (3, 6, TRUE, NOW())
-   ;
+   ;*/
 
 
-UPDATE s1_post
+/*UPDATE s1_post
 SET heart_count = (
     SELECT COUNT(*)
     FROM s1_heart
@@ -124,4 +124,4 @@ WHERE s1_post.post_id IN (
     SELECT post_id
     FROM s1_heart
     WHERE is_active = TRUE
-);
+);*/

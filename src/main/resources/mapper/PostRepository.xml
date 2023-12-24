@@ -198,7 +198,6 @@
             p.status,
             p.regDate,
             p.sampleImg,
-            p.heart_count,
             u.username,
             MAX(a.filename) AS attachment_filename
         FROM s1_post p

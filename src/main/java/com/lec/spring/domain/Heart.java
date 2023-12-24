@@ -21,4 +21,29 @@ public class Heart {
 
     private User user;
     private Post post;
+
+    public Heart(int id, int user_id, int post_id, boolean is_active, LocalDateTime created_at, LocalDateTime updated_at) {
+        this.id = id;
+        this.user_id = user_id;
+        this.post_id = post_id;
+        this.is_active = is_active;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+    }
+
+    public Heart(boolean is_active, String message, int heartCount) {
+        this.is_active = is_active;
+    }
+
+    public void setIs_active(boolean is_active) {
+        this.is_active = is_active;
+    }
+
+    public boolean getIs_active() {
+        return is_active;
+    }
+
+    public boolean isIs_active() {
+        return is_active;
+    }
 }

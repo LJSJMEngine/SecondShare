@@ -1,19 +1,20 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.Heart;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface HeartRepository {
 
-    int save(Heart heart);
+    void insertHeart(Heart heart);
 
-    List<Heart> FindBuUserId(Long user_id);
+    void updateHeart(Heart heart);
 
-    List<Heart> FindByPostId(Long post_id);
+    List<Heart> findHeartsByUserId(int user_id);
 
-    List<Heart> FindByUserAndPost(Long user_id, Long post_id);
+    int countHeartsByPostId(int post_id);
 
-
-
+    Heart findHeartByUserAndPost(int user_id, int post_id);
 }

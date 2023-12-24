@@ -23,7 +23,6 @@ public class Post {
     private int status;
     private LocalDateTime regDate;
     private int sampleImg;  // default 0 , 첨부파일 자체가 없으면 0, 첨부파일 (이미지, 텍스트 등 모든 형태)가 있으면 1
-    private int heart_count;   // 해당 판매글이 받은 좋아요 개수 (default 0)
     private List<Heart> hearts; // 해당 판매글에 대한 좋아요 목록
 
     private User user;
