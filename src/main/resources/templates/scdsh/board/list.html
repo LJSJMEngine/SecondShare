@@ -26,7 +26,7 @@
     <table class="table table-hover">
         <thead class="table-success">
         <tbody>
-        <tr th:each="post : ${list}">
+        <tr th:each="post : ${list}" th:if="${post.status != 2}">
             <dl>
                 <a th:href="@{'/board/detail/' + ${post.post_id}}">
                     <img th:if="${post.attachment != '이미지없음' and post.attachment.sourcename != '이미지없음' and (post.attachment.sourcename.toLowerCase().endsWith('.jpg') or post.attachment.sourcename.toLowerCase().endsWith('.png'))}" th:src="@{/upload/{imageName}(imageName=${post.attachment.sourcename})}" style="width:100px" />
