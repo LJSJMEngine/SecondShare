@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -24,10 +25,14 @@ public class User {
     private String birth;   // 생년월일
     private int status;  // 회원 상태 (활성화 / 비활성화)
 
+    // 회원 권한
+    private Set<Authority> authoritie;
+
 
     // 회원 권한
-    @Builder.Default
     @ToString.Exclude
+    @Builder.Default
+    @JsonIgnore
     private List<Authority> authorities = new ArrayList<>();
 
 

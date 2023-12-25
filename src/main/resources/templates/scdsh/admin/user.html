@@ -15,10 +15,10 @@
 <body style="margin-bottom: 200px">
 <th:block th:insert="~{common/adminHeader::header}"></th:block>
 
-    <div class="mb-2 mt-2 clearfix">
+    <div class="mb-2 mt-2">
         <h3>전체 회원 관리</h3>
         <!-- 회원 검색 구역 -->
-        <form id="search" name="search" method="get">
+        <form class="col-lg-6 bg-secondary" id="search" name="search" method="get">
             <label>회원 검색</label>
             <select name="type">
                 <option value="이름" th:selected="${type == '이름'}">이름</option>
@@ -58,7 +58,7 @@
             <span class="float-end align-baseline">
                 <form name="frmPageRows">
                     <input type="hidden" name="page" th:value="${page}">
-                    <select class="form-select" name="userPageRows">
+                    <select class="form-select" name="pageRows">
                         <option value="10" th:selected="${pageRows==10}">10명 정렬</option>
                         <option value="20" th:selected="${pageRows==20}">20명 정렬</option>
                         <option value="30" th:selected="${pageRows==30}">30명 정렬</option>
@@ -70,6 +70,7 @@
                 <thead class="table-secondary">
                     <th><input type="checkbox" name="allCheck" id="tb_checkAll" onclick="checkAll();"></th>
                     <th>회원이름(아이디)</th>
+                    <th>권한</th>
                     <th>상태</th>
                     <th>전화번호</th>
                     <th>이메일</th>
@@ -77,8 +78,9 @@
                 </thead>
                 <tbody>
                     <tr th:each="user : ${list}">
-                        <td><input type="checkbox" th:value="${user.id}" name="selectedUserIds" data-></td>
+                        <td><input type="checkbox" th:value="${u_id}" name="selectedIds" data-></td>
                         <td th:text="${user.name} + '(' + ${user.username} + ')'"></td>
+                        <td></td>
                         <td th:text="${user.status}"></td>
                         <td th:text="${user.phoneNM}"></td>
                         <td th:text="${user.email}"></td>
@@ -86,7 +88,7 @@
                     </tr>
                 </tbody>
 
-                <input type="hidden" id="selectedUserIdsInput" name="selectedUserIds">
+                <input type="hidden" id="selectedUserIdsInput" name="selectedIds">
             </table>
         </div>
     </div>

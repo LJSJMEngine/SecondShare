@@ -17,6 +17,8 @@ public interface UserRepository {
     // 회원의 아이디로 user 정보 리턴
     User findByUsername(@Param("username") String username);
 
+    List<User> findAllButAdmin();
+
     List<User> findAll();
 
     List<User> findLatestUser();

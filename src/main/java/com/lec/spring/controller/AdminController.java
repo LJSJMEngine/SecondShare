@@ -9,14 +9,13 @@ import com.lec.spring.service.PostService;
 import com.lec.spring.service.UserService;
 import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -65,6 +64,10 @@ public class AdminController {
 
     @GetMapping("/notice")
     public void notice(){}
+
+    // 회원 권한 변경
+
+    // 회원 상태 변경
 
     @PostMapping("/userPageRows")
     public String userPageRows(Integer page, Integer pageRows){

@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
     // 어드민 페이지
     @Override
     public List<User> getAllUsers(){
-        return userRepository.findAll();
+        return userRepository.findAllButAdmin();
     }
 
     @Override
@@ -101,28 +101,35 @@ public class UserServiceImpl implements UserService {
         if (pageRows == null) pageRows = PAGE_ROWS;
         session.setAttribute("page", page);
 
-        long cnt;
-        int totalPage;
-        int startPage;
-        int endPage;
+        long cnt = userRepository.countUserResult(keyword, type);
+        int totalPage = (int) Math.ceil(cnt / (double) pageRows);
 
-        List<User> list;
+        int startPage = 0;
+        int endPage = 0;
 
-            cnt = userRepository.countUserResult(keyword, type);
-            list = userRepository.searchWithPaging(keyword, type, (page - 1) * pageRows, pageRows);
+        List<User> list = null;
 
-        totalPage = (int) Math.ceil(cnt / (double) pageRows);
-        startPage = (((page - 1) / writrPages) * writrPages) + 1;
-        endPage = startPage + writrPages - 1;
+        if (cnt > 0) {
+            if (page > totalPage) page = totalPage;
 
-        if (endPage >= totalPage) endPage = totalPage;
+            int fromRow = (page - 1) * pageRows;
 
-        model.addAttribute("list", list);
+            startPage = (((page - 1) / writrPages) * writrPages) + 1;
+            endPage = startPage + writrPages - 1;
+            if (endPage >= totalPage) endPage = totalPage;
+
+            list = userRepository.searchWithPaging(type, keyword, (page - 1)* pageRows, pageRows);
+            model.addAttribute("list", list);
+        } else {
+            page = 0;
+        }
+
         model.addAttribute("cnt", cnt);
         model.addAttribute("page", page);
         model.addAttribute("totalPage", totalPage);
         model.addAttribute("pageRows", pageRows);
 
+        // paging
         model.addAttribute("url", U.getRequest().getRequestURI());
         model.addAttribute("writePages", writrPages);
         model.addAttribute("startPage", startPage);

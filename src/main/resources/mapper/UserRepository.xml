@@ -5,13 +5,20 @@
 
 <mapper namespace="com.lec.spring.repository.UserRepository">
 
+    <resultMap id="mapAuth" type="com.lec.spring.domain.Authority">
+        <result column="a_id" property="id"/>
+        <result column="a_name" property="name"/>
+    </resultMap>
+
     <resultMap id="mapUser" type="com.lec.spring.domain.User">
-        <result column="id" property="id"/>
-        <result column="username" property="username"/>
-        <result column="name" property="name"/>
-        <result column="email" property="email"/>
-        <result column="status" property="status"/>
-        <result column="registDate" property="registDate"/>
+        <result column="u_id" property="id"/>
+        <result column="u_username" property="username"/>
+        <result column="u_name" property="name"/>
+        <result column="u_phoneNM" property="phoneNM"/>
+        <result column="u_email" property="email"/>
+        <result column="u_registDate" property="registDate"/>
+        <result column="u_status" property="status"/>
+        <collection property="authority" resultMap="mapAuth"/>
     </resultMap>
 
     <sql id="SELECT">
@@ -41,7 +48,7 @@
     </select>
 
     <!-- 어드민을 제외한 모두를 검색 -->
-    <select id="findAll" resultType="com.lec.spring.domain.User">
+    <select id="findAllButAdmin" resultType="com.lec.spring.domain.User">
         SELECT *
         FROM s1_user u
         JOIN s1_user_authority a ON u.id = a.user_id
@@ -49,33 +56,43 @@
         ORDER BY u.registDate DESC
     </select>
 
+    <!-- 모두를 검색 -->
+    <select id="findAll" resultType="com.lec.spring.domain.User">
+        SELECT *
+        FROM s1_user u
+        JOIN s1_user_authority a ON u.id = a.user_id
+        ORDER BY u.registDate DESC
+    </select>
+
+    <!-- 최근 가입한 유저 5명을 검색 -->
     <select id="findLatestUser" resultType="com.lec.spring.domain.User">
         SELECT *
         FROM s1_user u
         JOIN s1_user_authority a ON u.id = a.user_id
-        WHERE a.authority_id != 1
         ORDER BY u.registDate DESC
         LIMIT 5
     </select>
 
     <select id="countUserResult" resultType="int">
-        SELECT COUNT(*) FROM s1_user
+        SELECT COUNT(*) FROM s1_user u, s1_user_authority a
+        WHERE u.id = a.user_id
         <if test="type == '이름'">
-            WHERE LOWER(name) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(u.name) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         </if>
         <if test="type == '아이디'">
-            WHERE LOWER(username) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(u.username) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         </if>
         ORDER BY id DESC
     </select>
 
-    <select id="searchWithPaging" resultMap="mapUser" parameterType="map">
-        <include refid="SELECT"/>
+    <select id="searchWithPaging" parameterType="com.lec.spring.domain.User">
+        SELECT * FROM s1_user u, s1_user_authority a
+        WHERE u.id = a.user_id
         <if test="type == '이름'">
-            WHERE LOWER(name) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(u.name) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         </if>
         <if test="type == '아이디'">
-            WHERE LOWER(username) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(u.username) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         </if>
         ORDER BY id DESC
         LIMIT #{from}, #{rows}
