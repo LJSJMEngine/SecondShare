@@ -21,7 +21,7 @@
 <div></div>
 
 <div th:with="user=${#authentication.principal.user}">
-    <div class="container-fluid">
+    <div class="writePage">
     <h3>판매글 작성하기</h3>
     <hr><br><br>
     <form th:action="@{/board/write}" method="post" enctype="multipart/form-data">

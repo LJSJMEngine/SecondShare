@@ -5,6 +5,13 @@ body {
     color: #333333;
 }
 
+.writePage {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+}
+
 /* Form */
 form {
     max-width: 1200px;
