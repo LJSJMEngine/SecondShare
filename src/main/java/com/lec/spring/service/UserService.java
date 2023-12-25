@@ -20,7 +20,7 @@ public interface UserService {
     List<Authority> selectAuthById(Long id);
 
     // 어드민 페이지
-
+    List<Post> Posts(Long id);
     // 다른 유저 페이지
     User userpage(Long id);
     List<Post> findUserPosts(Long id,Model model);
@@ -35,5 +35,6 @@ public interface UserService {
     List<Post.MyPosts> showMyPosts(Long id);
 
     Long findUserIdByUsername(String username);
+
 }
 

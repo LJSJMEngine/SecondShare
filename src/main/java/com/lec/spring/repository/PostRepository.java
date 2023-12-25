@@ -61,4 +61,5 @@ public interface PostRepository {
     List<Post> adminsearchWithPagination(@Param("type") String type, @Param("keyword") String keyword,
                                     @Param("from") int from, @Param("rows") int rows);
 
+
 }

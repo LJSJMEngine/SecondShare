@@ -8,13 +8,14 @@ import com.lec.spring.service.NoticeService;
 import com.lec.spring.service.PostService;
 import com.lec.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -54,4 +55,31 @@ public class AdminController {
 
     @GetMapping("/notice")
     public void notice(){}
+
+
+    @PostMapping("/PostsData")
+    public ResponseEntity<List<Post>> PostsData(Principal principal) {
+        String currentUsername = principal.getName();
+        User user = userService.getUserByUsername(currentUsername);
+        Long userId = user.getId();
+
+        List<Post> Posts = userService.Posts(userId);
+
+        return ResponseEntity.ok(Posts);
+    }
+
+    @PostMapping("/deletePosts")
+    public ResponseEntity<String> deletePosts(@RequestBody Map<String, List<Long>> requestBody) {
+        List<Long> selectedPostIds = requestBody.get("selectedPostIds");
+
+        if (selectedPostIds != null && !selectedPostIds.isEmpty()) {
+            postService.deleteMyPosts(selectedPostIds);
+            return ResponseEntity.ok("삭제가 완료되었습니다.");
+        } else {
+            return ResponseEntity.badRequest().body("삭제할 항목을 선택해주세요.");
+        }
+    }
+
+
+
 }
