@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### API 외부 차단 ###
-application.yml
+application-hidden.yml
