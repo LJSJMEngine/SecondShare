@@ -1,3 +1,10 @@
+.listPage {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+}
+
 .search{
         padding: 0.5rem 15rem;
         border-radius: 50px;

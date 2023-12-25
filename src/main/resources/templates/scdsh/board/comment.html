@@ -3,16 +3,21 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<th:blaock th:fragment="comment">
+<th:block th:fragment="comment">
 
-    <div>
-        <label>댓글: <span id="cmt_cnt"> 개</span></label>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/comment.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
-        <div sec:authorize="hasAnyRole('ADMIN','MEMBER')">
+    <div class="commentSection">
+        <label class="commentStart">댓글: <span id="cmt_cnt" th:text="${cmtCount}">0</span> 개</label>
+
+        <div class="writeComment" sec:authorize="hasAnyRole('ADMIN','MEMBER')">
             <label th:if="${logged_user.id != post.user.id}">[[${logged_user.name}]]</label>
-            <input type="text" id="input_comment" placeholder="댓글을 남겨보세요">
-            <button type="button" id="btn_comment">등록</button>
-        </div>
+            <input class="commentBox" type="text" id="input_comment" placeholder="댓글을 남겨보세요">
+            <button class="btn btn-outline-dark" type="button" id="btn_comment">등록</button>
+        </div><br>
 
         <table id="cmt_table">
             <thead>
@@ -26,6 +31,6 @@
         </table>
     </div>
 
-</th:blaock>
+</th:block>
 
 </html>

@@ -7,7 +7,7 @@ $(function(){
         }
     });
 
-    // 현재 글의 id
+// 현재 글의 id
     const id = $("input[name='post_id']").val().trim();
 
     // 현재 글의 댓글들 불러오기
@@ -20,13 +20,13 @@ $(function(){
 
         if(!content){
             alert("댓글을 입력해주세요!");
-            $("input_comment").focus();
+            $("#input_comment").focus();
             return;
         }
 
         // 댓글 값 전달
-        const date = {
-            "post_id": post_id,
+        const data = {
+            "id": id,
             "user_id": logged_id,
             "content": content,
         };
@@ -59,7 +59,7 @@ function loadComment(post_id){
         cache: false,
         success: function(data, status){
             if(status == "success"){
-                if(data.status != "OK"){
+                if(data.status !== "OK"){
                     alert(data.status);
                     return;
                 }
@@ -68,7 +68,7 @@ function loadComment(post_id){
 
                 addDelete();
             }
-        }
+        },
     });
 }
 

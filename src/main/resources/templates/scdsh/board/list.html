@@ -9,69 +9,79 @@
     <link rel="stylesheet" href="/css/list.css">
     <title center>목록 페이지</title>
 </head>
-<h2>상품목록</h2>
 <body>
-<!-- 페이징 헤더 -->
-<div class="mb-3 mt-3 clearfix">
-    <span class="float-start me-2">[[${type}]]/[[${keyword}]] 검색:[[${cnt}]]개</span>
-    <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
 
-</div>
-<!-- 페이징 헤더 -->
-<a th:href="@{/board/write}"><button class="btn-outline-primary mr-3">판매글 작성하기</button></a>
-<div>
-    <form id="search" name="search" method="GET"  class="search">
-        <select name="type">
-            <option value="제목" th:selected="${type == '제목'}">제목</option>
-            <option value="생활용품" th:selected="${type == '생활용품'}">생활용품</option>
-            <option value="패션의류" th:selected="${type == '패션의류'}">패션의류</option>
-            <option value="가전제품" th:selected="${type == '가전제품'}">가전제품</option>
-            <option value="스포츠용품" th:selected="${type == '스포츠용품'}">스포츠용품</option>
-            <option value="도서/음반/DVD" th:selected="${type == '도서/음반/DVD'}">도서/음반/DVD</option>
-            <option value="문구/오피스" th:selected="${type == '문구/오피스'}">문구/오피스</option>
-        </select>
-        <input type="text" name="keyword"/>
-        <input type="submit" class="btn btn-outline-primary mr-2" value="검색" />
-    </form>
-</div>
+<!-- 헤더 삽입  -->
+<th:block th:insert="~{common/header::header}"></th:block>
+<div class="listPage">
+    <h3>상품목록</h3>
+    <hr><br>
 
+    <!-- 페이징 헤더 -->
+    <div class="mb-3 mt-3 clearfix">
+        <span class="float-start me-2">[[${type}]]/[[${keyword}]] 검색:[[${cnt}]]개</span>
+        <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
+    </div>
 
+    <!-- 페이징 헤더 -->
+    <!--<a th:href="@{/board/write}"><button class="btn-outline-primary mr-3">판매글 작성하기</button></a>
+    <div>
+        <form id="search" name="search" method="GET"  class="search">
+            <select name="type">
+                <option value="제목" th:selected="${type == '제목'}">제목</option>
+                <option value="생활용품" th:selected="${type == '생활용품'}">생활용품</option>
+                <option value="패션의류" th:selected="${type == '패션의류'}">패션의류</option>
+                <option value="가전제품" th:selected="${type == '가전제품'}">가전제품</option>
+                <option value="스포츠용품" th:selected="${type == '스포츠용품'}">스포츠용품</option>
+                <option value="도서/음반/DVD" th:selected="${type == '도서/음반/DVD'}">도서/음반/DVD</option>
+                <option value="문구/오피스" th:selected="${type == '문구/오피스'}">문구/오피스</option>
+            </select>
+            <input type="text" name="keyword"/>
+            <input type="submit" class="btn btn-outline-primary mr-2" value="검색" />
+        </form>
+    </div>-->
 
-
-<!-- 목록 -->
+    <!-- 목록 -->
     <table class="table table-hover">
         <thead class="table-success">
         <tbody>
         <tr th:each="post : ${list}">
             <dl>
                 <a th:href="@{'/board/detail/' + ${post.post_id}}">
-                <img th:if="${post.attachment != '이미지없음' and post.attachment.sourcename != '이미지없음'}" th:src="@{/upload/{imageName}(imageName=${post.attachment.sourcename})}" style="width:100px" />
-                <img th:if="${post.attachment == '이미지없음' or post.attachment.sourcename == '이미지없음'}" src="/img/sample.jpg" style="width:100px" alt="Sample Image" />
-                <dt><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></dt>
-                <dt th:text="${post.price}+'원'"></dt>
-                <dt><a th:href="@{'/board/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></dt>
-                <dt th:text="${post.category.name}"></dt>
-                <dt th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></dt>
-                <dt>
-                <span th:text="'작성일:'+${#temporals.format(post.regDate, 'yyyy-MM-dd')}"></span>
-                </dt>
+
+                    <!-- 이미지 확장자가 .jpg, .png, .gif 로 끝나지 많으면 sample.jpg 로 -->
+                    <img th:if="${post.attachment != '이미지없음' and #strings.endsWith(post.attachment.sourcename, '.jpg')
+                        or #strings.endsWith(post.attachment.sourcename, '.png') or #strings.endsWith(post.attachment.sourcename, '.gif')}"
+                         th:src="@{/upload/{imageName}(imageName=${post.attachment.sourcename})}" style="width: 200px; height: 200px;"/>
+                    <img th:unless="${post.attachment != '이미지없음' and #strings.endsWith(post.attachment.sourcename, '.jpg')
+                        or #strings.endsWith(post.attachment.sourcename, '.png') or #strings.endsWith(post.attachment.sourcename, '.gif')}"
+                         src="/sample.jpg" style="width: 200px; height: 200px;" alt="Sample Image"/>
+
+                    <dt><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></dt>
+                    <dt th:text="${post.price}+'원'"></dt>
+                    <dt><a th:href="@{'/board/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></dt>
+                    <dt th:text="${post.category.name}"></dt>
+                    <dt th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></dt>
+                    <dt>
+                        <span th:text="'작성일:'+${#temporals.format(post.regDate, 'yyyy-MM-dd')}"></span>
+                    </dt>
+                </a>
             </dl>
         </tr>
         </tbody>
     </table>
-    <!-- 목록 -->
+        <!-- 목록 -->
 
-    <!-- pagination -->
-    <div th:insert="~{board/pagination::pagination}">
-    <div class="container mt-1">
-        <ul class="pagination justify-content-center">
-            <th:block th:insert="~{board/pagination::pagination}"></th:block>
-        </ul>
-    </div>
-    </div>
         <!-- pagination -->
+        <div th:insert="~{board/pagination::pagination}">
+        <div class="container mt-1">
+            <ul class="pagination justify-content-center">
+                <th:block th:insert="~{board/pagination::pagination}"></th:block>
+            </ul>
+        </div>
+        </div>
+            <!-- pagination -->
 
-
-
+</div>
 </body>
 </html>
