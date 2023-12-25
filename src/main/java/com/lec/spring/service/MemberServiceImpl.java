@@ -23,4 +23,9 @@ public class MemberServiceImpl implements MemberService{
     public boolean selectUsername(String username) {
         return memberMapper.selectUsername(username);
     }
+
+    @Override
+    public boolean selectEmail(String email) {
+        return memberMapper.selectEmail(email);
+    }
 }

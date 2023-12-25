@@ -9,4 +9,11 @@
         FROM s1_user
         WHERE username = #{username}
     </select>
+
+    <select id="selectEmail" resultType="boolean">
+        SELECT COUNT(*)
+        FROM s1_user
+        WHERE email = #{email}
+    </select>
+
 </mapper>

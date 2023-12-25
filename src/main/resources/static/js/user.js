@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     var isUsernameValidated = false;
+    var isEmailValidated = false;
 
     // 아이디 중복확인
     $("#idChkButton").click(function(event) {
@@ -61,6 +62,7 @@ $(document).ready(function() {
 
     // 이메일 형식 검증
     $("#email").on('input', function() {
+
         var email = $(this).val();
         var emailRegExp = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-z]+$/;
 
@@ -69,6 +71,26 @@ $(document).ready(function() {
         } else {
             $("#label5").css("color", "limegreen").html("<br>사용 가능한 이메일입니다.");
         }
+
+
+        $.ajax({
+            url : '/user/register/email',
+            data : {
+                email : email
+            },
+            type : 'POST',
+            dataType : 'json',
+            success : function(result) {
+                if (result == true) {
+                    $("#label6").css("color", "limegreen").html("<br>사용 가능한 이메일입니다.");
+                    isEmailValidated = true;
+                } else {
+                    $("#label6").css("color", "red").html("<br>이미 사용중인 이메일입니다.");
+                    $("#username").val('');
+                }
+            }
+        });
+
     });
 
 
@@ -145,18 +167,20 @@ $(document).ready(function() {
 
 
     $("#smsChkButton").click(function() {
+        var phoneNumber = $("#phoneNM").val();
         var certificationNumber = $("#verifyNM").val();
 
         $.ajax({
             url: '/user/register/verify',
             method: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({ randomNumber: certificationNumber }),
+            data: JSON.stringify({ phoneNumber: phoneNumber, randomNumber: certificationNumber}),
             success: function(response) {
                 $("#label4").css("color", "limegreen").html("<br>" + response);
             },
             error: function(xhr, status, error) {
-                $("#label4").css("color", "red").html("<br>Error: " + xhr.responseText);
+                $("#label4").css("color", "red").html("<br>" + xhr.responseText);
+                $("verifyNM").val('').focus();
             }
         });
     });

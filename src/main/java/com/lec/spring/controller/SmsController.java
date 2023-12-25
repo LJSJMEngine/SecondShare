@@ -33,13 +33,15 @@ public class SmsController {
 
     @PostMapping("/user/register/verify")
     public ResponseEntity<String> verifySms(UserDto.SmsCertificationDto requestDto) {
+        boolean isVerfied = smsCertification.isVerificationSuccessful(requestDto.getPhoneNumber(), requestDto.getRandomNumber());
 
-        try {
-            smsCertification.deleteSmsCertification(requestDto.getPhoneNumber());
-            return ResponseEntity.ok("인증이 완료되었습니다.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+
+        if (!isVerfied) {
+            return ResponseEntity.badRequest().body("인증번호가 일치하지 않습니다.");
         }
+
+        smsCertification.deleteSmsCertification(requestDto.getPhoneNumber());
+        return ResponseEntity.ok("인증이 완료되었습니다.");
     }
 
 

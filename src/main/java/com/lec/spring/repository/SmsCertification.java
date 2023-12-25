@@ -37,4 +37,15 @@ public class SmsCertification {
         return stringRedisTemplate.hasKey(PREFIX + phone);
     }
 
+    // 인증번호와 사용자가 입력한 값이 동일한지 확인
+    public boolean isVerificationSuccessful(String phone, String verificationNumber) {
+        String storedNumber = getSmsCertification(phone);
+
+        if (storedNumber != null && storedNumber.equals(verificationNumber)) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
