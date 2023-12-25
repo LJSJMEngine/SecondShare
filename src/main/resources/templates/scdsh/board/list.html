@@ -46,7 +46,7 @@
     <table class="table table-hover">
         <thead class="table-success">
         <tbody>
-        <tr th:each="post : ${list}" th:if="${post.status != 2}">
+        <tr th:each="post : ${list}">
             <dl>
                 <a th:href="@{'/board/detail/' + ${post.post_id}}">
 
@@ -60,7 +60,7 @@
 
                     <dt><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></dt>
                     <dt th:text="${post.price}+'원'"></dt>
-                    <dt><a th:href="@{'/board/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></dt>
+                    <dt><a th:href="@{'/user/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></dt>
                     <dt th:text="${post.category.name}"></dt>
                     <dt th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></dt>
                     <dt>

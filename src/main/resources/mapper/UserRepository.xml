@@ -119,6 +119,7 @@
         LEFT JOIN  s1_user u
         ON p.user_id = u.id
         WHERE u.id = #{id}
+        AND p.status != 2
         ORDER BY p.post_id DESC
         LIMIT 5
     </select>
@@ -129,6 +130,7 @@
         FROM s1_post p
         JOIN s1_user u ON p.user_id = u.id
         WHERE u.id = #{userid}
+        AND p.status != 2
     </select>
 
     <!-- 판매완료 갯수   -->

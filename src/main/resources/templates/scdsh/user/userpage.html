@@ -33,7 +33,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="post : ${userPosts}">
+            <tr th:each="post : ${userPosts} ">
                 <td th:text="${post.post_id}"></td>
                 <td><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></td>
                 <td th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></td>

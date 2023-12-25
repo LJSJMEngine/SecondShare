@@ -149,43 +149,33 @@
 
     <select id="searchWithPagination" resultMap="mapPost" parameterType="map">
         <include refid="SELECT_BASE"/>
+        WHERE p.status != 2
         <if test ="type == '제목'">
-            WHERE
-            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         </if>
         <if test="type == '생활용품'">
-            WHERE
-            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 1, '%'))
         </if>
         <if test="type == '패션의류'">
-            WHERE
-            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 2, '%'))
         </if>
         <if test="type == '가전제품'">
-            WHERE
-            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 3, '%'))
         </if>
         <if test="type == '스포츠용품'">
-            WHERE
-            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 4, '%'))
         </if>
         <if test="type == '도서/음반/DVD'">
-            WHERE
-            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 5, '%'))
         </if>
         <if test="type == '문구/오피스'">
-            WHERE
-            LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
+            AND LOWER(p.subject) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
             AND LOWER(c.id) LIKE LOWER(CONCAT('%', 6, '%'))
-        </if>
-        <if test="type == '작성자'">
-            WHERE
-            LOWER(u.username) LIKE LOWER(CONCAT('%', #{keyword}, '%'))
         </if>
         GROUP BY p.post_id
         ORDER BY p.post_id DESC
