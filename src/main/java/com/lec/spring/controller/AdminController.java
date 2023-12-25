@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -40,10 +41,15 @@ public class AdminController {
     public void user(){}
 
     @GetMapping("/post")
-    public String post(Model model,Long id) {
-        List<Post> adminlist = postService.findPost(id);
-        model.addAttribute("adminlist", adminlist);
-        return "admin/post";
+    public void post(@RequestParam(required = false) String type,
+                       @RequestParam(required = false) String keyword,
+                       Integer page,
+                       Model model) {
+        postService.findPost(page, model, type, keyword);
+
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("type", type);
+
     }
 
     @GetMapping("/notice")
