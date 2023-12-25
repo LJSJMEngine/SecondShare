@@ -1,23 +1,35 @@
-/* 일반 */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
+.myPage {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+}
+
+.toHome {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 15px;
+}
+
+.toHome a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.toHome a:hover {
+    background-color: #0056b3;
 }
 
 /* 제목 */
-.title {
+h1 {
     text-align: center;
-    margin-bottom: 20px;
 }
 
-.title h2 {
-    margin-bottom: 10px;
-}
-
-.title hr {
-    margin-top: 5px;
-    margin-bottom: 20px;
-}
 
 /* 컨테이너 */
 .container-full {
@@ -45,42 +57,72 @@ body {
     flex-direction: column;
 }
 
-.mypageBtn button.nav {
+.mypageBtn button.btn-outline-dark {
     margin-bottom: 10px;
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
+    border: 1px solid #007bff;
+    color: #343a40;
+    background-color: transparent;
+    background-image: none;
+    border-color: #343a40;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.mypageBtn button:hover {
-    background-color: #0056B3;
+.mypageBtn button.btn-outline-dark:hover {
+   color: #fff;
+   background-color: #343a40;
+   border-color: #343a40;
+}
+
+.btn-outline-dark:active,
+.btn-outline-dark.active,
+.show > .btn-outline-dark.dropdown-toggle {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+.btn-outline-dark:focus {
+    box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.25);
 }
 
 /* right container 버튼 */
-.allBtns {
+.btn-outline-danger {
     display: inline-block;
     padding: 8px 12px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
     border: 1px solid #007bff;
-    color: #fff;
-    background-color: #007bff;
+    color: #dc3545;
+    background-color: transparent;
+    background-image: none;
+    border-color: #dc3545;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s;
 }
 
-.allBtns:hover {
-    background-color: #0056B3;
-    border-color: #0056B3;
+.btn-outline-danger:hover {
+   color: #fff;
+   background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-outline-danger:active,
+.btn-outline-danger.active,
+.show > .btn-outline-danger.dropdown-toggle {
     color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-outline-danger:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
 }
 
 /* 프로필 보기 및 수정 항목들 */
@@ -137,6 +179,7 @@ p {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    font-size: 15px;
 }
 
 .myPostsList th, .myPostsList td {
@@ -163,7 +206,7 @@ p {
 
 .myPostsList th:nth-child(2),
 .myPostsList td:nth-child(2) {
-    width: 45%;
+    width: 40%;
     text-align: center;
 }
 
@@ -175,7 +218,7 @@ p {
 
 .myPostsList th:nth-child(4),
 .myPostsList td:nth-child(4) {
-    width: 25%;
+    width: 30%;
     text-align: center;
 }
 
