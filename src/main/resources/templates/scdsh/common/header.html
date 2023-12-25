@@ -86,20 +86,21 @@
     </div>
 
     <!-- ★ 로그인 상태 표시 -->
-    <div class="container-fluid mt-3">
-        <!-- 로그인 하지 않았을때 보여주는 화면 -->
+    <!--<div class="container-fluid mt-3">
+        &lt;!&ndash; 로그인 하지 않았을때 보여주는 화면 &ndash;&gt;
         <div sec:authorize="isAnonymous()" class="alert alert-warning alert-dismissible">
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             로그인하지 않은 상태입니다. <br>
         </div>
-        <!-- 로그인 했을때 보여주는 화면 -->
+        &lt;!&ndash; 로그인 했을때 보여주는 화면 &ndash;&gt;
         <div sec:authorize="isAuthenticated()" class="alert alert-info alert-dismissible">
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             <div th:text="${#authentication.principal.user.username + '님 로그인 하셨습니다.'}"></div>
-            <!--<div sec:authentication="principal.authorities"></div>-->
+            &lt;!&ndash;<div sec:authentication="principal.authorities"></div>&ndash;&gt;
         </div>
-    </div>
+    </div>-->
 
+    </nav>
 </th:block>
 
 </html>
