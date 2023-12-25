@@ -9,7 +9,7 @@
 <body>
 
 <div th:if="${userProfile != null}" data-username="${userProfile.username}" data-id="${userProfile.id}">
-    <!--<input type="hidden" id="currentUserId" th:value="${userProfile.id}" />-->
+
     <!-- 나의 판매글 목록 -->
     <section id="myPosts">
 
@@ -41,7 +41,7 @@
             <input type="hidden" id="selectedPostIdsInput" name="selectedPostIds">
 
             <!-- 삭제 버튼 -->
-            <button type="button" onclick="deleteSelectedPostIds()">삭제</button>
+            <button class="allBtns" type="button" onclick="deleteSelectedPostIds()">내 판매글 삭제</button>
         </form>
 
     </section>

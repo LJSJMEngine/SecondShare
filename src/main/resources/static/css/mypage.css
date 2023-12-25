@@ -38,7 +38,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* 버튼 */
+/* left container 버튼 */
 .mypageBtn {
     margin-top: 20px;
     display: flex;
@@ -58,10 +58,11 @@ body {
 }
 
 .mypageBtn button:hover {
-    background-color: #0056b3;
+    background-color: #0056B3;
 }
 
-.delete-account-btn {
+/* right container 버튼 */
+.allBtns {
     display: inline-block;
     padding: 8px 12px;
     font-size: 14px;
@@ -69,16 +70,16 @@ body {
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    border: 2px solid #d9534f;
+    border: 1px solid #007bff;
     color: #fff;
-    background-color: #d9534f;
+    background-color: #007bff;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s;
 }
 
-.delete-account-btn:hover {
-    background-color: #c9302c;
-    border-color: #ac2925;
+.allBtns:hover {
+    background-color: #0056B3;
+    border-color: #0056B3;
     color: #fff;
 }
 
@@ -100,23 +101,6 @@ body {
     margin-left: 0;
     border: 1px solid #cccccc;
     border-radius: 4px;
-}
-
-.showMyPage button.modify {
-    color: #fff;
-    border: 2px solid #d9534f;
-    background-color: #d9534f;
-    padding: 5px;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 50px;
-    transition: background-color 0.3s;
-}
-
-.showMyPage button:hover {
-    background-color: #c9302c;
-    border-color: #ac2925;
-    color: #fff;
 }
 
 /* 메세지 */
@@ -195,28 +179,6 @@ p {
     text-align: center;
 }
 
-/* 판매글 전체 삭제 버튼 스타일 */
-.delete-myPosts-btn {
-    display: inline-block;
-    padding: 8px 12px;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    border: 2px solid #d9534f;
-    color: #fff;
-    background-color: #d9534f;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.delete-myPosts-btn:hover {
-    background-color: #c9302c;
-    border-color: #ac2925;
-    color: #fff;
-}
-
 /* 각 리뷰 박스 스타일 */
 .reviewBox {
     border: 1px solid #ccc;
@@ -235,7 +197,6 @@ p {
 .reviewBox {
     width: 20%;
     margin: 10px;
-    border: 1px solid #ddd;
     padding: 10px;
     border-radius: 10px;
     text-align: center;
@@ -248,13 +209,19 @@ p {
 
 /* reviewChk 별로 색상 다르게 */
 .reviewBox.status-0 {
-    background-color: white;
+    color: #dc3545;
+    background-color: #f8f9fa;
+    border: 1px solid #dc3545;
 }
 
 .reviewBox.status-1 {
-    background-color: white;
+    color: #ffc107;
+    background-color: #f8f9fa;
+    border: 1px solid #ffc107;
 }
 
 .reviewBox.status-2 {
-    background-color: white;
+    color: #28a745;
+    background-color: #f8f9fa;
+    border: 1px solid #28a745;
 }
