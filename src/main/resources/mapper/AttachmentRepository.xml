@@ -14,9 +14,22 @@
 
     <insert id="save" flushCache="true"
             parameterType="com.lec.spring.domain.Attachment">
-        INSERT INTO s1_attachment(sourcename, filename, post_id)
-        VALUES
-        (#{sourcename}, #{filename}, #{post_id})
+        INSERT INTO
+            s1_attachment (sourcename, filename, post_id, isImage)
+        VALUES (
+            #{sourcename},
+            #{filename},
+            #{post_id},
+        <choose>
+            <when test="sourcename != null and (sourcename.toLowerCase().endsWith('.jpg')
+            or sourcename.toLowerCase().endsWith('.png') or sourcename.toLowerCase().endsWith('.gif'))">
+                true
+            </when>
+            <otherwise>
+                false
+            </otherwise>
+        </choose>
+        )
     </insert>
 
     <sql id="SELECT">

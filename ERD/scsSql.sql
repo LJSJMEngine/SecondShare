@@ -129,7 +129,7 @@ CREATE TABLE s1_post
 	viewCnt int DEFAULT 0,
 	status int DEFAULT 0,
 	regDate datetime,
-	sampleImg int NOT NULL DEFAULT 0,		-- 첨부파일 자체가 없으면 0, 첨부파일 (이미지, 텍스트 등 모든 형태)가 있으면 1
+	sampleImg int NOT NULL DEFAULT 0,
 	-- heart_count int DEFAULT 0,
 	PRIMARY KEY (post_id)
 );
@@ -211,6 +211,9 @@ ALTER TABLE s1_attachment
 	ON DELETE CASCADE
 ;
 
+ALTER TABLE s1_attachment
+MODIFY COLUMN isImage BOOLEAN DEFAULT FALSE
+;
 
 ALTER TABLE s1_chatroom
 	ADD FOREIGN KEY (post_id)
