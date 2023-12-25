@@ -60,6 +60,7 @@ $(function(){
     });
 
 });
+
 // 특정 글의 댓글 목록 불러오기
 function loadComment(post_id){
     $.ajax({

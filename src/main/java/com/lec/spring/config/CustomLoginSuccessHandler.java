@@ -1,5 +1,6 @@
 package com.lec.spring.config;
 
+import com.lec.spring.domain.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
@@ -29,17 +30,28 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
         PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
 
-        List<String> role = new ArrayList<>();
-        authentication.getAuthorities().forEach(authority -> {
-            role.add(authority.getAuthority());
-        });
+        User user = userDetails.getUser();
 
-        super.onAuthenticationSuccess(request, response, authentication);
+        // user status == 0인 경우에만 로그인 허용
+        if (user.getStatus() == 0) {
 
-        HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(request);
-        SavedRequest savedRequest = (SavedRequest) wrapper.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
-        System.out.println("Saved Request: " + (savedRequest != null ? savedRequest.getRedirectUrl() : "None"));
+            List<String> role = new ArrayList<>();
+            authentication.getAuthorities().forEach(authority -> {
+                role.add(authority.getAuthority());
+            });
 
+            super.onAuthenticationSuccess(request, response, authentication);
+
+            HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(request);
+            SavedRequest savedRequest = (SavedRequest) wrapper.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+            System.out.println("Saved Request: " + (savedRequest != null ? savedRequest.getRedirectUrl() : "None"));
+
+        } else {
+            // user status == 0이 아닌 경우에는 로그인을 허용하지 않음
+            System.out.println("탈퇴한 사용자입니다.");
+            // 로그인 페이지로 리다이렉션
+            response.sendRedirect("/user/login");
+        }
     }
 
     // client ip 불러오기

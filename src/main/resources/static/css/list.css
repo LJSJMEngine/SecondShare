@@ -1,7 +1,18 @@
-* {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 0;
+.listPage {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+}
+
+.search{
+        padding: 0.5rem 15rem;
+        border-radius: 50px;
+        font-size: 1.0rem;
+        color:#fff;
+        font-family: inherit;
+        margin-top: 5px;
+        margin-left: 105px;
 }
 
 .album-img {
