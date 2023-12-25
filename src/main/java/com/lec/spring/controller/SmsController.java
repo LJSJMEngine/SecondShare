@@ -6,6 +6,8 @@ import com.lec.spring.repository.SmsCertification;
 import com.lec.spring.service.MessageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,8 +33,10 @@ public class SmsController {
         }
     }
 
+
     @PostMapping("/user/register/verify")
-    public ResponseEntity<String> verifySms(UserDto.SmsCertificationDto requestDto) {
+    public ResponseEntity<String> verifySms(@RequestBody UserDto.SmsCertificationDto requestDto) {
+        System.out.println("Received data: " + requestDto.getPhoneNumber() + ", " + requestDto.getRandomNumber());
         boolean isVerfied = smsCertification.isVerificationSuccessful(requestDto.getPhoneNumber(), requestDto.getRandomNumber());
 
 

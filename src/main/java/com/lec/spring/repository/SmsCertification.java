@@ -20,6 +20,7 @@ public class SmsCertification {
     public void createSmsCertification(String phone, String certificationNumber) {
         stringRedisTemplate.opsForValue()
                 .set(PREFIX + phone, certificationNumber, Duration.ofSeconds(LIMIT_TIME));
+        System.out.println("Redis에 저장 : " + certificationNumber + ", " + phone);
     }
 
     // 해당 번호에 인증번호 불러오기

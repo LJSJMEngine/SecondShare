@@ -76,7 +76,7 @@ public class UserController {
     public String registerOk(User user, Model model) {
         int submit = userService.register(user);
         model.addAttribute("result", submit);
-        return "/user/registerOk";
+        return "user/registerOk";
     }
 
 }

@@ -28,6 +28,8 @@ $(document).ready(function() {
                 } else {
                     $("#label1").css("color", "red").html("<br>이미 사용중인 ID 입니다.");
                     $("#username").val('');
+                    event.preventDefault();
+    		        return false;
                 }
             }
         });
@@ -68,8 +70,9 @@ $(document).ready(function() {
 
         if (!emailRegExp.test(email)) {
             $("#label5").css("color", "red").html("<br>이메일 형식에 맞지 않습니다.");
-        } else {
-            $("#label5").css("color", "limegreen").html("<br>사용 가능한 이메일입니다.");
+        }
+        else {
+            $("#label5").css("color", "limegreen").html("<br>이메일 형식 확인.");
         }
 
 
@@ -87,6 +90,8 @@ $(document).ready(function() {
                 } else {
                     $("#label6").css("color", "red").html("<br>이미 사용중인 이메일입니다.");
                     $("#username").val('');
+                    event.preventDefault();
+                    return false;
                 }
             }
         });
@@ -104,6 +109,7 @@ $(document).ready(function() {
 
         if (username == '' || username.length == 0) {
             alert("아이디는 필수 입력 사항입니다.")
+            $("#username").focus();
             event.preventDefault();
             return false;
         }
@@ -117,24 +123,28 @@ $(document).ready(function() {
 
         if(password == '' || password.length == 0) {
            alert("비밀번호는 필수 입력 사항입니다.")
+           $("#password").focus();
            event.preventDefault();
            return false;
         }
 
         if(passwordChk == '' || passwordChk.length == 0) {
            alert("비밀번호 확인을 해주세요.")
+           $("#passwordChk").focus();
            event.preventDefault();
            return false;
         }
 
         if(name == '' || name.length == 0) {
            alert("이름을 입력해주세요.")
+           $("#name").focus();
            event.preventDefault();
            return false;
         }
 
         if(email == '' || email.length == 0) {
            alert("이메일을 입력해주세요.")
+           $("#email").focus();
            event.preventDefault();
            return false;
         }
@@ -174,13 +184,13 @@ $(document).ready(function() {
             url: '/user/register/verify',
             method: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({ phoneNumber: phoneNumber, randomNumber: certificationNumber}),
+            data: JSON.stringify({ phoneNumber: phoneNumber, randomNumber: certificationNumber }),
             success: function(response) {
                 $("#label4").css("color", "limegreen").html("<br>" + response);
             },
             error: function(xhr, status, error) {
                 $("#label4").css("color", "red").html("<br>" + xhr.responseText);
-                $("verifyNM").val('').focus();
+                $("#verifyNM").val('').focus();
             }
         });
     });
