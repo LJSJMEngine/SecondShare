@@ -22,6 +22,14 @@ public interface UserRepository {
     // 신규 user 등록
     int join(User user);
 
+    int update(User user);
+
+    // 유저 페이지
+    List<Post> selectFromRow(@Param("id") Long id);
+    int userpostcountAll(@Param("userid") Long userid); //  상품 갯수
+
+    int userpoststatuscount(@Param("userid") Long userid); //  판매상품 갯수
+
     // 마이페이지 - 프로필 수정
     void updatePassword(
             @Param("newPassword") String newPassword,

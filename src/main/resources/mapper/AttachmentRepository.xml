@@ -5,22 +5,22 @@
 
 <mapper namespace="com.lec.spring.repository.AttachmentRepository">
     <insert id="insert" flushCache="true" parameterType="arraylist">
-        INSERT INTO s1_attachment (sourcename, filename, post_id)
+        INSERT INTO s1_attachment (sourcename, filename, post_id, isImage)
         VALUES
         <foreach collection="list" item="e" separator=",">
-            (#{e.sourcename}, #{e.filename}, #{post_id})
+            (#{e.sourcename}, #{e.filename}, #{post_id},#{isImage})
         </foreach>
     </insert>
 
     <insert id="save" flushCache="true"
             parameterType="com.lec.spring.domain.Attachment">
-        INSERT INTO s1_attachment(sourcename, filename, post_id)
+        INSERT INTO s1_attachment(sourcename, filename, post_id,isImage)
         VALUES
-        (#{sourcename}, #{filename}, #{post_id})
+        (#{sourcename}, #{filename}, #{post_id},#{isImage})
     </insert>
 
     <sql id="SELECT">
-        SELECT id, sourcename, filename, post_id
+        SELECT id, sourcename, filename, post_id, isImage
         FROM s1_attachment
         WHERE 1 = 1
     </sql>

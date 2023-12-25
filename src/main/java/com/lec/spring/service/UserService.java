@@ -3,6 +3,7 @@ package com.lec.spring.service;
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -21,7 +22,8 @@ public interface UserService {
     // 어드민 페이지
 
     // 다른 유저 페이지
-
+    User userpage(Long id);
+    List<Post> findUserPosts(Long id,Model model);
 
     // 마이페이지 - 프로필 보기, 프로필 수정, 판매물품
     User getUserByUsername(String username);

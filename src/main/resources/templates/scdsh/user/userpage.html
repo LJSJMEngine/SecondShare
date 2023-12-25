@@ -1,10 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<section th:if="${user}" th:with="logged_user=${#authentication.principal.user}"><th:block th:if="${user}" th:with="logged_user=${#authentication.principal.user}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <link rel="stylesheet" href="/css/userpage.css">
 </head>
 <body>
+<h2>유저 페이지</h2>
+
+    <section id="userPosts">
+
+        <h2 th:text="${user.username} + '님 프로필'"></h2>
+
+        <span th:text="'이름(닉네임): ' + ${user.name}"></span><br>
+        <span th:text="'가입일: ' + ${#temporals.format(user.registDate, 'yyyy년 MM월 dd일')}"></span>
+
+        <br>
+        <span class="float-start" id="postcnt">총판매글:[[${cnt}]]개 | 거래 성공:[[${statuscnt}]]개</span>
+        <br>
+        <h5>최신 판매글</h5>
+        <table border="1" id="post_table">
+            <thead>
+            <tr>
+                <th>게시글 번호</th>
+                <th>제목</th>
+                <th>판매 상태</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${userPosts}">
+                <td th:text="${post.post_id}"></td>
+                <td><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></td>
+                <td th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></td>
+                <td th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd')}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <section id="userReview">
+
+            <h3 th:text="'받은 리뷰 ' + ${userReview.size()} + ' 건'"></h3>
+
+            <!-- 리뷰를 박스로 표시 -->
+            <div th:each="userReview : ${userReview}"
+                 th:class="${'reviewBox status-' + userReview.reviewChk}">
+                <!-- 리뷰 확인 -->
+                <div class="reviewStatus">
+                    <!--<span th:text="${myReceivedReview.reviewChk}"></span>-->
+                    <span th:text="${userReview.reviewChk == 0 ? '별로에요' : (userReview.reviewChk == 1 ? '만족해요' : (userReview.reviewChk == 2 ? '최고에요' : '알 수 없는 상태'))}"></span>
+                </div>
+                <!-- 리뷰 내용 -->
+                <div class="reviewContent">
+                    <span th:text="${userReview.content}"></span>
+                </div>
+            </div>
+        </section>
+        </tbody>
+
+
+
+        <input type="button" value="뒤로가기" onclick="history.back(-1)">
 
 </body>
+</th:block>
+</section>
 </html>

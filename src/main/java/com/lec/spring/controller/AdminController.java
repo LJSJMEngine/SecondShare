@@ -40,7 +40,11 @@ public class AdminController {
     public void user(){}
 
     @GetMapping("/post")
-    public void post(){}
+    public String post(Model model,Long id) {
+        List<Post> adminlist = postService.findPost(id);
+        model.addAttribute("adminlist", adminlist);
+        return "admin/post";
+    }
 
     @GetMapping("/notice")
     public void notice(){}

@@ -59,13 +59,18 @@ SELECT
         ANY_VALUE(c.id) AS c_id,
         ANY_VALUE(c.name) AS c_name
         FROM s1_post p
+        JOIN s1_user u ON p.user_id = u.id
+        WHERE u.id = #{userid}
+		AND p.status = 1
+
+
         LEFT JOIN  s1_user u
         ON p.user_id = u.id
         LEFT JOIN  s1_category c
         ON p.category_id = c.id
         LEFT JOIN  s1_attachment a
         ON a.post_id =  p.post_id
-        
+
         SELECT
         p.post_id "p_post_id"
         , p.user_id "p_user_id"
