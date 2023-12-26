@@ -5,7 +5,7 @@ let chatArrayLog = new Array();
 console.log(PostData.user);
 $(function () {
     stompClient = new StompJs.Client({
-        brokerURL: 'ws://localhost:8093/ws-stomp'
+        brokerURL: 'ws://' + location.host + '/ws-stomp'
     });
     stompClient.activate();
     console.log(MessageList);

@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface NoticeRepository {
 
-    Notice findByUserId(Long id);
+    List<Notice> findByUserId(Long user_id);
 
-    void checkView();
+    void checkView(Long user_id);
 
     int createNotice(Notice notice);
 
