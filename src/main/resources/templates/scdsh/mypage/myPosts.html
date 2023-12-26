@@ -48,24 +48,26 @@
     <br><br><br>
 
     <!-- 받은 리뷰 -->
+    <!--
     <section id="MyReceivedReviews">
 
         <h3 th:text="'받은 리뷰 ' + ${myReceivedReviews.size()} + ' 건'"></h3>
 
-        <!-- 리뷰를 박스로 표시 -->
+        &lt;!&ndash; 리뷰를 박스로 표시 &ndash;&gt;
         <div th:each="myReceivedReview : ${myReceivedReviews}"
              th:class="${'reviewBox status-' + myReceivedReview.reviewChk}">
-            <!-- 리뷰 확인 -->
+            &lt;!&ndash; 리뷰 확인 &ndash;&gt;
             <div class="reviewStatus">
-                <!--<span th:text="${myReceivedReview.reviewChk}"></span>-->
+                &lt;!&ndash;<span th:text="${myReceivedReview.reviewChk}"></span>&ndash;&gt;
                 <span th:text="${myReceivedReview.reviewChk == 0 ? '별로에요' : (myReceivedReview.reviewChk == 1 ? '만족해요' : (myReceivedReview.reviewChk == 2 ? '최고에요' : '알 수 없는 상태'))}"></span>
             </div>
-            <!-- 리뷰 내용 -->
+            &lt;!&ndash; 리뷰 내용 &ndash;&gt;
             <div class="reviewContent">
                 <span th:text="${myReceivedReview.content}"></span>
             </div>
         </div>
     </section>
+    -->
 
 </div>
 
