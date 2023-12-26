@@ -226,6 +226,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         // 버튼 다시 비활성화
                         document.getElementById('likeSection').disabled = false;
 
+                        // 페이지 전체를 새로고침
+                        location.reload(true);
+
                     } else {
                         console.error('좋아요 상태 업데이트 실패');
                     }
