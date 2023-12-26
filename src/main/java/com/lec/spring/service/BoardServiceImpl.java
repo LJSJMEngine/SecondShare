@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.Post;
+import com.lec.spring.domain.Review;
 import com.lec.spring.repository.CategoryRepository;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AttachmentRepository;
@@ -321,7 +322,13 @@ public class BoardServiceImpl implements BoardService {
         return result;
     }
 
+    @Override
+    public int addReview(Review review, Map<String, Integer> data){
+        int result = 0;
 
+
+        return result;
+    }
 
 
 
