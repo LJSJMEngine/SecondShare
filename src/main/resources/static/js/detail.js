@@ -1,3 +1,5 @@
+
+let buttonFlag = false;
 $(function(){
 
 
@@ -13,6 +15,7 @@ $(function(){
     $("#chkTrade").click(function(){
         let answer = confirm("거래를 완료하시겠습니까? \n거래가 완료되면 게시글의 거래가 종료되고, \n거래한 회원에게 알림이 갑니다.");
         if(answer){
+            publishNotice("해당 게시글이 거래가 종료되었습니다.","SOLDOUT");
             $("form[name='chkTrade']").submit();
         }
     });
@@ -25,6 +28,9 @@ $(function(){
 
     // 댓글 등록하기
     $("#btn_comment").click(function(){
+        if(buttonFlag)
+            return;
+        buttonFlag =true;
         // 입력한 댓글
         const content = $("#input_comment").val().trim();
 
@@ -52,14 +58,18 @@ $(function(){
                         alert(data.status);
                         return;
                     }
+
+                    publishNotice(content,"ADDCOMMENT");
                     loadComment(id);
                     $("#input_comment").val('');
+                    buttonFlag = false;
                 }
             }
         })
     });
 
 });
+
 // 특정 글의 댓글 목록 불러오기
 function loadComment(post_id){
     $.ajax({
@@ -72,7 +82,6 @@ function loadComment(post_id){
                     alert(data.status);
                     return;
                 }
-
                 buildComment(data);
 
                 addDelete();
@@ -109,7 +118,12 @@ function buildCommentChat(comment){
         }
         return chatBtn;
 }
+function publishNotice(content,type){
+        const postId = $("input[name='post_id']").val().trim();
+        publishNoticeMessage(type, "/pub/Notice", content, postData.user_id, postId);
+}
 function buildComment(result){
+    console.log("COMMENT ADD");
     $("#cmt_cnt").text(result.count);   // 댓글 총 개수
     const out = [];
 
@@ -224,6 +238,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         // 버튼 다시 비활성화
                         document.getElementById('likeSection').disabled = false;
+
+                        // 페이지 전체를 새로고침
+                        location.reload(true);
 
                     } else {
                         console.error('좋아요 상태 업데이트 실패');

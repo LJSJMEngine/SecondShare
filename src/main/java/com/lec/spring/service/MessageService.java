@@ -83,7 +83,12 @@ public class MessageService {
                         .equals(requestDto.getRandomNumber());
     }
 
+    public boolean isVerificationSuccessfulForNewPhoneNumber(UserDto.SmsCertificationDto requestDto) {
+        return smsCertification.hasKey(requestDto.getNewPhoneNumber()) &&
+                smsCertification.getSmsCertification(requestDto.getNewPhoneNumber())
+                        .equals(requestDto.getRandomNumber());
+    }
+
 
 }
-
 

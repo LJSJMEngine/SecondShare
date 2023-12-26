@@ -13,10 +13,11 @@ import java.time.LocalDateTime;
 public class Notice {
     int id;
     int user_id;
+    int post_id;
     int status;
     String status_name;
     String subject;
-    String content;
+    String contents;
     boolean readChk;
 
 }

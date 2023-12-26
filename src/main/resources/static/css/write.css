@@ -1,0 +1,106 @@
+/* Body */
+body {
+    margin: 10px;
+    padding: 10px;
+    color: #333333;
+}
+
+.writePage {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+}
+
+/* Form */
+form {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 섹션 간 간격 조정 */
+form > div {
+    margin-bottom: 20px;
+}
+
+/* 입력란 스타일 */
+label.input {
+    display: inline-block;
+    width: 100px;
+    color: #333333;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* Select */
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    color: #333333;
+}
+
+select#category_id {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+/* Input */
+input[type="text"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    color: #333333;
+}
+
+/* Error Message */
+.text-danger {
+    color: #FFCCBC;
+}
+
+/* File Input */
+#files {
+    margin-bottom: 20px;
+}
+
+/* 파일 업로드 버튼 스타일 */
+input[type="file"] {
+    margin-top: 5px;
+    width: 100%;
+}
+
+#files label {
+    margin-bottom: 10px;
+    display: block;
+}
+
+#files input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    color: #333333;
+}
+
+/* 버튼 */
+.btn-outline-dark {
+    color: #333333;
+    border-color: #333333;
+    background-color: #FFFFFF;
+    cursor: pointer;
+}
+
+.btn-outline-dark:hover {
+    color: #FFFFFF;
+    background-color: #0056B3;
+}

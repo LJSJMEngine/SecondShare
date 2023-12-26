@@ -6,6 +6,7 @@ import com.lec.spring.domain.EmailAuthRequestDto;
 import com.lec.spring.domain.Post;
 import com.lec.spring.domain.Review;
 import com.lec.spring.domain.User;
+import com.lec.spring.repository.SmsCertification;
 import com.lec.spring.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,16 +28,18 @@ public class MyPageController {
     private final ReviewService reviewService;
     private final EmailService emailService;
     private final MessageService messageService;
+    private final SmsCertification smsCertification;
     @Autowired
     private PostService postService;
 
 
     @Autowired
-    public MyPageController(UserService userService, ReviewService reviewService, EmailService emailService, MessageService messageService) {
+    public MyPageController(UserService userService, ReviewService reviewService, EmailService emailService, MessageService messageService, SmsCertification smsCertification) {
         this.userService = userService;
         this.reviewService = reviewService;
         this.emailService = emailService;
         this.messageService = messageService;
+        this.smsCertification = smsCertification;
     }
 
     @GetMapping("/home")
@@ -120,10 +123,12 @@ public class MyPageController {
         try {
             // SMS 인증 검증
             UserDto.SmsCertificationDto requestDto = new UserDto.SmsCertificationDto();
-            requestDto.setPhoneNumber(newPhoneNumber);
+            requestDto.setNewPhoneNumber(newPhoneNumber);
             requestDto.setRandomNumber(confirmationCodeSMS);
 
-            if (messageService.isVerificationSuccessful(requestDto)) {
+            System.out.println("Received data: " + requestDto.getNewPhoneNumber() + ", " + requestDto.getRandomNumber());
+
+            if (messageService.isVerificationSuccessfulForNewPhoneNumber(requestDto)) {
                 // 인증 성공 시 핸드폰 번호 업데이트
                 userService.updatePhoneNumber(newPhoneNumber, currentUsername);
                 return ResponseEntity.ok("핸드폰 번호가 성공적으로 변경되었습니다.");
@@ -131,7 +136,8 @@ public class MyPageController {
                 return ResponseEntity.badRequest().body("인증번호가 올바르지 않습니다.");
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("핸드폰 번호 변경 중 오류가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("핸드폰 번호 변경 중 오류가 발생했습니다." + e);
         }
     }
 

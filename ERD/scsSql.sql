@@ -55,7 +55,7 @@ CREATE TABLE s1_chatMessage
 	room_id int NOT NULL,
 	content text,
 	checkedContent boolean,
-	createDate datetime DEFAULT now(),
+	createDate datetime,
 	PRIMARY KEY (chat_id)
 );
 
@@ -110,6 +110,7 @@ CREATE TABLE s1_notice
 (
 	id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
+	post_id int,
 	status int,
 	status_name varchar(50),
 	subject text,
@@ -129,8 +130,9 @@ CREATE TABLE s1_post
 	price int,
 	viewCnt int DEFAULT 0,
 	status int DEFAULT 0,
-	regDate datetime DEFAULT now(),
-	sampleImg int NOT NULL DEFAULT 0,		-- 첨부파일 자체가 없으면 0, 첨부파일 (이미지, 텍스트 등 모든 형태)가 있으면 1
+	regDate datetime,
+	sampleImg int NOT NULL DEFAULT 0,
+	-- heart_count int DEFAULT 0,
 	PRIMARY KEY (post_id)
 );
 
@@ -206,6 +208,9 @@ ALTER TABLE s1_attachment
 	ON DELETE CASCADE
 ;
 
+ALTER TABLE s1_attachment
+MODIFY COLUMN isImage BOOLEAN DEFAULT FALSE
+;
 
 ALTER TABLE s1_chatroom
 	ADD FOREIGN KEY (post_id)
@@ -258,6 +263,12 @@ ALTER TABLE s1_chatroom
 ALTER TABLE s1_comment
 	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
+	ON UPDATE RESTRICT
+	ON DELETE CASCADE
+;
+ALTER TABLE s1_notice
+	ADD FOREIGN KEY (post_id)
+	REFERENCES s1_post (post_id)
 	ON UPDATE RESTRICT
 	ON DELETE CASCADE
 ;

@@ -28,10 +28,12 @@ public class UserDto {
         public String getNewPhoneNumber() {
             return newPhoneNumber;
         }
+        public void setNewPhoneNumber() {
+            this.newPhoneNumber = newPhoneNumber;
+        }
 
         public void setNewPhoneNumber(String newPhoneNumber) {
             this.newPhoneNumber = newPhoneNumber;
         }
     }
 }
-

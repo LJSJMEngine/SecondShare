@@ -1,7 +1,8 @@
-* {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 0;
+.listPage {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
 }
 
 .album-img {

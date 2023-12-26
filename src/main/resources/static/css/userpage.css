@@ -1,21 +1,72 @@
-  table {
-        margin: 0 auto;
-        width: 35%;
-        border-collapse: collapse;
-    }
+.post_table {
+ width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 15px;
+}
 
-    th, td {
-        border: 1px solid #ddd;
-        padding: 2px;
-        text-align: center;
-    }
+.post_table th, .post_table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
 
-    th {
-        background-color: #f2f2f2;
-    }
+.post_table th {
+    background-color: #f2f2f2;
+    text-align: center;
+}
 
-    .postcnt {
-    }
+.post_table th:first-child,
+.post_table td:first-child {
+    width: 5%;
+    text-align: center;
+}
+
+.post_table th:nth-child(2),
+.post_table td:nth-child(2) {
+    width: 40%;
+    text-align: center;
+}
+
+.post_table th:nth-child(3),
+.post_table td:nth-child(3) {
+    width: 25%;
+    text-align: center;
+}
+
+.post_table th:nth-child(4),
+.post_table td:nth-child(4) {
+    width: 30%;
+    text-align: center;
+}
+
+#userPosts{
+text-align: center;
+  font-weight: bold;
+   font-size: 20px;
+}
+
+.header-profile{
+border-radius: 50%;
+}
+
+.return {
+    position: fixed;
+    bottom: 10px;
+    right: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100px;
+    padding: 10px;
+}
+
+.hr-bold {
+    border: 1px solid #000;
+
+}
+
+
 
     /* 각 리뷰 박스 스타일 */
     .reviewBox {

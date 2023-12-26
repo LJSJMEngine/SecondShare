@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -79,6 +80,81 @@ public class UserServiceImpl implements UserService {
     }
 
     // 어드민 페이지
+    @Override
+    public List<User> getAllUsers(){
+        return userRepository.findAllButAdmin();
+    }
+
+    @Override
+    public List<User> getLatestUser(){
+        return userRepository.findLatestUser();
+    }
+
+    @Override
+    public List<User> userList() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> userList(Integer page, Model model, String type, String keyword) {
+        if (page == null) page = 1;
+        if (page < 1) page = 1;
+
+        HttpSession session = U.getSession();
+        Integer writrPages = (Integer) session.getAttribute("writePages");
+        if (writrPages == null) writrPages = WRITE_PAGES;
+        Integer pageRows = (Integer) session.getAttribute("pageRows");
+        if (pageRows == null) pageRows = PAGE_ROWS;
+        session.setAttribute("page", page);
+
+        long cnt = userRepository.countUserResult(keyword, type);
+        int totalPage = (int) Math.ceil(cnt / (double) pageRows);
+
+        int startPage = 0;
+        int endPage = 0;
+
+        List<User> list = null;
+
+        if (cnt > 0) {
+            if (page > totalPage) page = totalPage;
+
+            int fromRow = (page - 1) * pageRows;
+
+            startPage = (((page - 1) / writrPages) * writrPages) + 1;
+            endPage = startPage + writrPages - 1;
+            if (endPage >= totalPage) endPage = totalPage;
+
+            list = userRepository.searchWithPaging(type, keyword, (page - 1)* pageRows, pageRows);
+            model.addAttribute("list", list);
+        } else {
+            page = 0;
+        }
+
+        model.addAttribute("cnt", cnt);
+        model.addAttribute("page", page);
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("pageRows", pageRows);
+
+        // paging
+        model.addAttribute("url", U.getRequest().getRequestURI());
+        model.addAttribute("writePages", writrPages);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return list;
+    }
+
+
+    @Override
+    public List<Post> Posts(Long id) {
+        try {
+            return userRepository.Posts(id);
+        } catch (Exception e) {
+            // 예외가 발생한 경우 로그 출력
+            e.printStackTrace();
+            return Collections.emptyList(); // 빈 리스트 반환
+        }
+    }
 
     // 마이페이지 - 프로필 보기, 프로필 수정
     @Override
@@ -128,7 +204,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean isValidPhoneNumber(String phoneNumber) {
-        String phoneRegex = "^\\d{3}-\\d{4}-\\d{4}$";
+        String phoneRegex = "^010\\d{8}$";
         return phoneNumber.matches(phoneRegex);
     }
 

@@ -29,5 +29,11 @@
         VALUES(#{param1}, #{param2})
     </insert>
 
+    <update id="chAuth" flushCache="true" parameterType="com.lec.spring.domain.Authority">
+        UPDATE s1_user_authority
+        SET authority_id = #{authority_id}
+        WHERE user_id = #{user_id}
+    </update>
+
 
 </mapper>

@@ -435,16 +435,23 @@ function deleteSelectedPostIds() {
 }
 
 // myPage/myPostsData 데이터 가져오기
-$(document).ready(function() {
-    $.ajax({
-        type: "POST",
-        url: "/mypage/myPostsData",
-        success: function(data) {
-            // data를 이용하여 필요한 작업 수행
-            console.log(data);
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/mypage/myPostsData', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
         },
-        error: function(error) {
-            console.error(error);
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('네트워크 응답이 정상이 아닙니다');
         }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
 });
