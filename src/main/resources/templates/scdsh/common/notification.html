@@ -12,13 +12,15 @@
 
     <li class="notice">
         <a th:href="@{/user/login}" sec:authorize="isAnonymous()" >
-            <img width="48" height="48" src="https://img.icons8.com/fluency-systems-regular/48/appointment-reminders--v1.png" alt="notification"/>
+            <img width="48" height="48" class="position-relative" src="https://img.icons8.com/fluency-systems-regular/48/appointment-reminders--v1.png" alt="notification"/>
         </a>
         <a sec:authorize="isAuthenticated()" data-bs-toggle="modal" data-bs-target="#notificationArea">
             <img width="48" height="48" src="https://img.icons8.com/fluency-systems-regular/48/appointment-reminders--v1.png" alt="notification">
 
             <!--신규 데이터가 있는 경우에만 표시dkf-->
-            <img width="24" height="24" class="noticeRedButton position-absolute bottom-0 start-0" src="https://img.icons8.com/fluency/48/full-stop.png"/>
+                <div class="position-relative">
+                    <img width="24" height="24" class="noticeRedButton position-absolute start-0 bottom-0" alt="notification" src="https://img.icons8.com/fluency/48/full-stop.png"/>
+                </div>
             </img>
         </a>
     </li>
