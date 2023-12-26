@@ -2,11 +2,13 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Notice;
 
+import java.util.List;
+
 public interface NoticeService {
 
-    Notice findByUserId(Long id);
+    List<Notice> findByUserId(Long id);
 
-    void checkView();
+    void checkView(Long user_id);
 
     int createNotice(Notice notice);
 
