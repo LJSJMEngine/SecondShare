@@ -9,7 +9,7 @@ public interface NoticeRepository {
 
     List<Notice> findByUserId(Long user_id);
 
-    void checkView();
+    void checkView(Long user_id);
 
     int createNotice(Notice notice);
 

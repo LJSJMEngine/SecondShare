@@ -8,7 +8,7 @@ public interface NoticeService {
 
     List<Notice> findByUserId(Long id);
 
-    void checkView();
+    void checkView(Long user_id);
 
     int createNotice(Notice notice);
 

@@ -32,9 +32,15 @@ public class NoticeController {
         messagingTemplate.convertAndSend("/sub/notice/" + currentUser.getId(),notice);
         return notice;
     }
-    @MessageMapping("/NoticeInit")
-    public Notice NoticeInstanciate(Notice notice, Authentication authentication)
+    @MessageMapping("/NoticeUpdateRead")
+    public void NoticeReadUpdate(Notice notice, Authentication authentication)
     {
+        PrincipalDetails pDetails = (PrincipalDetails)authentication.getPrincipal();
+        User currentUser = pDetails.getUser();
+        noticeService.checkView(currentUser.getId());
+    }
+    @MessageMapping("/NoticeInit")
+    public Notice NoticeInstanciate(Notice notice, Authentication authentication) throws InterruptedException {
 
         PrincipalDetails pDetails = (PrincipalDetails)authentication.getPrincipal();
         User currentUser = pDetails.getUser();
@@ -47,6 +53,7 @@ public class NoticeController {
         boolean isReadCheck = true;
         for(Notice currentNotice : noticeList)
         {
+            Thread.sleep(10);
             messagingTemplate.convertAndSend("/sub/notice/" + currentUser.getId(),currentNotice);
             if(!currentNotice.isReadChk())
                 isReadCheck = false;

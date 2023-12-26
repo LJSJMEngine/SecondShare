@@ -34,9 +34,11 @@
         AND user_id = #{user_id} order by id
     </select>
 
-    <select id="checkView">
-        <!--업데이트 readChk True -->
-    </select>
+    <update id="checkView">
+        UPDATE s1_notice
+        SET readChk = true
+        WHERE user_id= #{user_id}
+    </update>
 
     <insert id="createNotice" flushCache="true" parameterType="com.lec.spring.domain.Notice"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">

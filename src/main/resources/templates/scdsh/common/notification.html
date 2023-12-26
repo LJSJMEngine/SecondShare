@@ -33,20 +33,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5>알림목록</h5>
-                    <h5 th:text="${user.name}"></h5>
                 </div>
-                <div class="modal-body">
-                    <h5 class="text-start text-break ">알림 이름</h5>
-                    <div class="row row-cols-2">
-                        <p class="col-8 text-start">알림 내용</p>
-                        <a href="#" class="col-4 btn btn-secondary popover-test justify-content-md-end" th:text="바로가기"></a>
-                    </div>
-                    <hr>
+                <div class="modal-body notificationList">
+
                 </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="noticeClose btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>

@@ -1,9 +1,26 @@
 let stomp;
 let userId = -1;
+let isModalTrigger = false;
 $(function () {
 
+    $("#notificationArea").on('hidden.bs.modal', function(e) {
+        if(!isModalTrigger) return;
+        isModalTrigger = false;
+        //알림표시 제거
+        $(".noticeRedButton").css("display" ,"none");
+
+        publishMessage("UPDATE", "/pub/NoticeUpdateRead", "setReadChk", userId);
+        $(".notificationList").empty();
+        publishMessage("INIT", "/pub/NoticeInit", "getMessageList", userId);
+
+    });
+    $("#notificationArea").on('shown.bs.modal', function(e) {
+        if(isModalTrigger) return;
+        isModalTrigger = true;
+        //알림표시 제거
+    });
     stomp = new StompJs.Client({
-        brokerURL: 'ws://localhost:8093/ws-stomp'
+        brokerURL: 'ws://localhost:8093/ws-notice'
     });
 
     stomp.activate();
@@ -49,11 +66,28 @@ function subNotice(notice) {
         //빨강버튼 켜라
     }
     else {
+        const content = notice.contents;
+        const stateClass = notice.status;
+        let subject = notice.subject;
+        let subjectColor = "h4";
+        if(notice.readChk)
+        {
+            subject += " (읽음)";
+            subjectColor = "h5 text-muted";
+        }
+        const noticeContent =`
+            <span class="text-start text-break state state-` + stateClass + `"></span>
+            <p class="text-start text-break ` + subjectColor + `">${subject}</p>
+            <div class="row row-cols-2">
+                <p class="col-8 text-start">${content}</p>
+                <a href="#" class="col-4 btn btn-secondary popover-test justify-content-md-end" >바로가기</a>
+            </div>
+            <hr>`;
+
+        $(".notificationList").append(noticeContent);
     }
 
 }
 function userSet(user){
-    console.log("activation");
-    console.log(user);
     userId = user;
 }

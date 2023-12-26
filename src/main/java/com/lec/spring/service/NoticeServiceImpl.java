@@ -26,11 +26,11 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public void checkView() {
-        //todo
-        //알림 봤습니다.
+    public void checkView(Long user_id) {
+        noticeRepo.checkView(user_id);
 
     }
+
 
     @Override
     public int createNotice(Notice notice) {
