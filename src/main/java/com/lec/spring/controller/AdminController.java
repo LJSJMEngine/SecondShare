@@ -35,6 +35,15 @@ public class AdminController {
 
     @GetMapping("/home")
     public String home(Model model){
+        // 모든 유저, 게시글, 공지들을 List에 담음
+        List<User> users = userService.getLatestUser();
+        List<Post> posts = postService.getLatestPosts();
+//        List<Notice> notices = noticeService.getLatestNotice();
+
+        // 담은 값들을 model 에 담아 보냄
+        model.addAttribute("posts", posts);
+        model.addAttribute("users", users);
+//        model.addAttribute("notices", notices);
 
         return "admin/home";
     }

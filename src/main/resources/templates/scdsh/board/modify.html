@@ -31,7 +31,7 @@
 
         <div>
             <h3>판매글 수정하기</h3>
-            <span>작성자: </span><span th:href="TODO">[[${post.user.name}]]</span>
+            <span>작성자: </span><span th:href="@{user/mypage}">[[${post.user.name}]]</span>
             <span>작성일: [[${#temporals.format(post.regDate, 'yyyy년 MM월 dd일')}]]</span>
             <span>조회수: [[${post.viewCnt}]]</span>
             <!-- 좋아요 공간 -->

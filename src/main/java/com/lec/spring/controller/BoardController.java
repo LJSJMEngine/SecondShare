@@ -1,17 +1,12 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.domain.Category;
-import com.lec.spring.domain.Post;
-import com.lec.spring.domain.PostValidator;
-import com.lec.spring.domain.User;
+import com.lec.spring.domain.*;
 import com.lec.spring.service.BoardService;
-import com.lec.spring.service.CategoryService;
 import com.lec.spring.service.HeartService;
 import com.lec.spring.util.U;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Indexed;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -124,18 +119,6 @@ public class BoardController {
         return "board/modifyOk";
     }
 
-    @GetMapping("/review")
-    public void review(){}
-
-    @PostMapping("/review")
-    public String reviewOk(
-            @RequestParam("post_id") Long post_id,
-            @RequestParam("user_id") Long user_id,
-            String content
-            ){
-        return "/board/reviewOk";
-    }
-
     @PostMapping("/chkTrade")
     public String chkTradeOk(Long post_id, Model model){
         int result = boardService.chStatus(post_id);
@@ -155,13 +138,13 @@ public class BoardController {
         System.out.println("initBinder() 호출");
         binder.setValidator(new PostValidator());
     }
-//    @GetMapping("review")
 
     @PostMapping("/pageRows")
     public String pageRows(Integer page, Integer pageRows){
         U.getSession().setAttribute("pageRows", pageRows);
         return "redirect:/board/list?page=" + page;
     }
+
     // 관리자 페이지 게시글
 
 

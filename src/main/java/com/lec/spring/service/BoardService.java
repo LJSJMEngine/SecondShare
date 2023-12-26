@@ -1,6 +1,7 @@
 package com.lec.spring.service;
 
     import com.lec.spring.domain.Post;
+    import com.lec.spring.domain.Review;
     import org.springframework.security.core.parameters.P;
     import org.springframework.ui.Model;
     import org.springframework.validation.BindingResult;
@@ -22,6 +23,8 @@ public interface BoardService {
     Post selectByPostId(Long post_id);
 
     int modify(Post post, Map<String, MultipartFile> files, Long [] delfile);
+
+    int addReview(Review review, Map<String, Integer> data);
 
     int chStatus(Long id);
 
