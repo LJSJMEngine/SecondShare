@@ -61,5 +61,7 @@ public interface PostRepository {
     List<Post> adminsearchWithPagination(@Param("type") String type, @Param("keyword") String keyword,
                                     @Param("from") int from, @Param("rows") int rows);
 
+    // 게시글 삭제 하기
+    void adminupdatePostStatus(@Param("postIds") List<Long> postIds);
 
 }

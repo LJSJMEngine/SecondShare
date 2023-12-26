@@ -107,6 +107,14 @@
         WHERE u.id = #{id}
     </select>
 
+    <select id="Posts" parameterType="long" resultType="com.lec.spring.domain.Post">
+        SELECT p.post_id, p.subject, p.status, p.regDate
+        FROM s1_post p
+        JOIN s1_user u ON p.user_id = u.id
+        WHERE u.id = #{id}
+    </select>
+
+
     <select id="findUserIdByUsername" parameterType="java.lang.String" resultType="java.lang.Long">
         SELECT id
         FROM s1_user
@@ -144,4 +152,9 @@
 
 
 <!--   유저페이지   -->
+
+<!-- 관리자 게시글 삭제 -->
+
+
+
 </mapper>

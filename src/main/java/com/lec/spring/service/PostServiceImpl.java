@@ -153,8 +153,13 @@ public class PostServiceImpl implements PostService {
 
         return adminlist;
 
+    }
 
-
+    // 관리자페이지 게시글 삭제
+    @Override
+    @Transactional
+    public void deletePosts(List<Long> selectedPostIds) {
+        postRepository.adminupdatePostStatus(selectedPostIds);
     }
 
 }
