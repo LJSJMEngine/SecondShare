@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jdk8.LongStreamSerializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -26,7 +27,7 @@ public class Comment {
     private String content;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LongStreamSerializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     @JsonProperty("regdate")
     private LocalDateTime regdate;

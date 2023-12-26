@@ -23,7 +23,7 @@ public class User {
     private LocalDateTime registDate;   // 가입일자
     private String birth;   // 생년월일
     private int status;  // 회원 상태 (활성화 / 비활성화)
-
+    private List<Post> userpost;; //유저 페이지 Post값
 
     // 회원 권한
     @Builder.Default
@@ -72,5 +72,8 @@ public class User {
             this.username = username;
         }
     }
+
+    // 어드민 페이지 용
+
 }
 

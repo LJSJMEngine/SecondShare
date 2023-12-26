@@ -4,12 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lec.spring.repository.NoticeRepository">
+
+    <resultMap id="mapNotice" type="com.lec.spring.domain.Notice">
+        <result column="n_user_id" property="user_id"/>
+        <result column="n_status" property="status"/>
+        <result column="n_status_name" property="status_name"/>
+        <result column="n_subject" property="subject"/>
+        <result column="n_content" property="content"/>
+        <result column="n_readChk" property="readChk"/>
+    </resultMap>
+
     <sql id="SELECT_NOTICE">
         SELECT
         id,
         user_id,
+        post_id,
         status,
         status_name,
+        subject,
         contents,
         readChk
         FROM
@@ -20,18 +32,32 @@
 
     <select id="findByUserId" resultType="com.lec.spring.domain.Notice">
         <include refid="SELECT_NOTICE"/>
-        AND user_id = #{user_id}
+        AND user_id = #{user_id} ORDER BY id DESC
     </select>
-    <select id="checkView">
-        <!--업데이트 readChk True -->
-    </select>
+
+    <update id="checkView">
+        UPDATE s1_notice
+        SET readChk = true
+        WHERE user_id= #{user_id}
+    </update>
+
     <insert id="createNotice" flushCache="true" parameterType="com.lec.spring.domain.Notice"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO s1_notice
-        (user_id, status, status_name, contents, readChk)
+        (user_id,post_id,subject, status, status_name, contents, readChk)
         VALUES
-        (#{user_id}, #{status}, #{status_name}, #{contents}, false)
+        (#{user_id},#{post_id}, #{subject}, #{status}, #{status_name}, #{contents}, false)
     </insert>
+
     <!--chatMessage -->
+
+    <!-- For admin -->
+    <select id="findAll" resultType="com.lec.spring.domain.Notice">
+        <include refid="SELECT_NOTICE"/>
+        GROUP BY id
+        ORDER BY id DESC
+    </select>
+
+
 
 </mapper>

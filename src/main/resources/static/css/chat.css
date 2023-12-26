@@ -250,8 +250,26 @@ height:540px;
 }
 
 .list-i-selling {
-    position: absolute;
     bottom: 0;
     left: 0;
     width: 35%;
+}
+
+.status {
+    background-color: #CB4335;
+    color: #fff;
+    text-align: center;
+    display: block;
+}
+.otherName{
+font-size: 35px;
+}
+.status.selling::before {
+    content: "판매중";
+    font-size: 12px;
+}
+
+.status.sold-out::before {
+    content: "판매완료";
+    font-size: 12px;
 }

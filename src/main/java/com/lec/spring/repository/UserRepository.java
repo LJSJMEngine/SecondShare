@@ -17,8 +17,18 @@ public interface UserRepository {
     // 회원의 아이디로 user 정보 리턴
     User findByUsername(@Param("username") String username);
 
+    User findAll();
+
     // 신규 user 등록
     int join(User user);
+
+    int update(User user);
+
+    // 유저 페이지
+    List<Post> selectFromRow(@Param("id") Long id);
+    int userpostcountAll(@Param("userid") Long userid); //  상품 갯수
+
+    int userpoststatuscount(@Param("userid") Long userid); //  판매상품 갯수
 
     // 마이페이지 - 프로필 수정
     void updatePassword(
@@ -46,4 +56,7 @@ public interface UserRepository {
 
     // 메인페이지 - 내 관심물품
     Long findUserIdByUsername(@Param("username") String username);
+
+    // 관리자 페이제 게시글
+    List<Post> Posts(Long id);
 }

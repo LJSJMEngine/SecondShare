@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+
+</head>
+<body>
+<th:block th:fragment="notification">
+
+    <li class="notice">
+        <a th:href="@{/user/login}" sec:authorize="isAnonymous()" >
+            <img width="48" height="48" src="https://img.icons8.com/fluency-systems-regular/48/appointment-reminders--v1.png" alt="notification"/>
+        </a>
+        <a sec:authorize="isAuthenticated()" data-bs-toggle="modal" data-bs-target="#notificationArea">
+            <img width="48" height="48" src="https://img.icons8.com/fluency-systems-regular/48/appointment-reminders--v1.png" alt="notification">
+
+            <!--신규 데이터가 있는 경우에만 표시dkf-->
+            <img width="24" height="24" class="noticeRedButton position-absolute bottom-0 start-0" src="https://img.icons8.com/fluency/48/full-stop.png"/>
+            </img>
+        </a>
+    </li>
+    <!--https://getbootstrap.kr/docs/5.0/components/modal/-->
+    <div class="modal fade" id="notificationArea" tabindex="-1" role="dialog" aria-labelledby="modalArea" aria-hidden="true">
+        <!-- header -->
+        <div class="modal-dialog modal-dialog-scrollable" sec:authorize="isAuthenticated()"  th:with="user=${#authentication.getPrincipal().getUser()}" role="document">
+            <script th:inline="javascript">
+                userSet([[${user.id}]]);
+
+            </script>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>알림목록</h5>
+                </div>
+                <div class="modal-body notificationList">
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="noticeClose btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

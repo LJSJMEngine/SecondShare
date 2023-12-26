@@ -1,0 +1,30 @@
+
+.status.state-1::before {
+    content: "공지";
+    font-size: 12px;
+}
+
+.status.state-2::before {
+    content: "알림";
+    font-size: 12px;
+}
+.status.state-2::before {
+    content: "읽음";
+    font-size: 12px;
+}
+.modal-content{
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+.state-1 {
+    background-color: #CB4335;
+    color: #fff;
+    text-align: center;
+    display: block;
+}
+.state-2 {
+    background-color: #CB4335;
+    color: #fff;
+    text-align: center;
+    display: block;
+}

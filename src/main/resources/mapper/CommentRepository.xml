@@ -23,27 +23,27 @@
 
     <select id="findByPost" resultMap="mapComment">
         SELECT
-            c.id "c_id",
-            c.content "c_content",
-            c.regdate "c_regdate",
-            c.post_id "c_post_id",
-            u.id "u_id",
-            u.username "u_username",
-            u.name "u_name",
-            u.email "u_email",
-            u.registDate "u_registDate"
-        FROM s1_comment c, s1_user u
-        WHERE
-        c.user_id = u.id
-        AND c.post_id = #{post_id}
+            c.id AS "c_id",
+            c.content AS "c_content",
+            c.regdate AS "c_regdate",
+            c.post_id AS "c_post_id",
+            u.id AS "u_id",
+            u.username AS "u_username",
+            u.name AS "u_name",
+            u.email AS "u_email",
+            u.registDate AS "u_registDate"
+        FROM s1_comment c
+        LEFT JOIN s1_user u ON c.user_id = u.id
+        LEFT JOIN s1_post p ON c.post_id = p.post_id
+        WHERE c.post_id = #{post_id}
         ORDER BY c.id DESC
     </select>
 
     <insert id="save" flushCache="true"
             parameterType="com.lec.spring.domain.Comment"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO s1_comment (user_id, post_id, content)
-        VALUES (#{user.id}, #{post_id}, #{content})
+        INSERT INTO s1_comment (user_id, post_id, content, regdate)
+        VALUES (#{user.id}, #{post_id}, #{content}, NOW())
     </insert>
 
     <delete id="deleteById" flushCache="true">

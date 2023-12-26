@@ -20,6 +20,17 @@
             1 = 1
     </sql>
 
+
+    <resultMap id="mapPost" type="com.lec.spring.domain.Post">
+        <result column="post_id" property="post_id"/>
+        <result column="subject" property="subject"/>
+        <result column="regDate" property="regDate"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+
+
+
     <select id="findById" resultType="com.lec.spring.domain.User">
         <include refid="SELECT"/>
         AND id = #{id}
@@ -28,6 +39,15 @@
     <select id="findByUsername" resultType="com.lec.spring.domain.User">
         <include refid="SELECT"/>
         AND username = #{username}
+    </select>
+
+    <!-- 어드민을 제외한 모두를 검색 -->
+    <select id="findAll" resultType="com.lec.spring.domain.User">
+        SELECT *
+        FROM s1_user u
+        JOIN s1_user_authority a ON u.id = a.user_id
+        WHERE a.authority_id != 1
+        ORDER BY u.registDate DESC
     </select>
 
     <insert id="join"
@@ -87,10 +107,54 @@
         WHERE u.id = #{id}
     </select>
 
+    <select id="Posts" parameterType="long" resultType="com.lec.spring.domain.Post">
+        SELECT p.post_id, p.subject, p.status, p.regDate
+        FROM s1_post p
+        JOIN s1_user u ON p.user_id = u.id
+        WHERE u.id = #{id}
+    </select>
+
+
     <select id="findUserIdByUsername" parameterType="java.lang.String" resultType="java.lang.Long">
         SELECT id
         FROM s1_user
         WHERE username = #{username}
     </select>
+
+<!--    유저페이지  -->
+    <select id="selectFromRow" resultMap="mapPost">
+        SELECT * FROM s1_post p
+        LEFT JOIN  s1_user u
+        ON p.user_id = u.id
+        WHERE u.id = #{id}
+        AND p.status != 2
+        ORDER BY p.post_id DESC
+        LIMIT 5
+    </select>
+
+    <!-- 해당 유저에 상품 게시물   -->
+    <select id="userpostcountAll" parameterType="long" resultType="int">
+        SELECT COUNT(p.post_id)
+        FROM s1_post p
+        JOIN s1_user u ON p.user_id = u.id
+        WHERE u.id = #{userid}
+        AND p.status != 2
+    </select>
+
+    <!-- 판매완료 갯수   -->
+    <select id="userpoststatuscount" parameterType="long" resultType="int">
+        SELECT COUNT(p.status)
+        FROM s1_post p
+        JOIN s1_user u ON p.user_id = u.id
+        WHERE u.id = #{userid}
+        AND p.status = 1
+    </select>
+
+
+<!--   유저페이지   -->
+
+<!-- 관리자 게시글 삭제 -->
+
+
 
 </mapper>

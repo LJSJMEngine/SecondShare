@@ -133,12 +133,20 @@ public class BoardController {
             @RequestParam("user_id") Long user_id,
             String content
             ){
-        return "/board/review";
+        return "/board/reviewOk";
+    }
+
+    @PostMapping("/chkTrade")
+    public String chkTradeOk(Long post_id, Model model){
+        int result = boardService.chStatus(post_id);
+        model.addAttribute("result", result);
+        return "/board/chkTradeOk";
     }
 
     @PostMapping("/delete")
-    public String deleteOk(Long id, Model model){
-        model.addAttribute("result", boardService.deleteByPostId(id));
+    public String deleteOk(Long post_id, Model model) {
+        int result = boardService.delStatus(post_id);
+        model.addAttribute("result", result);
         return "board/deleteOk";
     }
 
@@ -154,6 +162,7 @@ public class BoardController {
         U.getSession().setAttribute("pageRows", pageRows);
         return "redirect:/board/list?page=" + page;
     }
+    // 관리자 페이지 게시글
 
 
 }

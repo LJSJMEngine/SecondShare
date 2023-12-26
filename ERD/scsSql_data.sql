@@ -41,6 +41,11 @@ INSERT INTO s1_user (username, password, name, phoneNM, email, registDate, statu
 ('USER4', '1234', '회원4', '01099990000', 'user4@gmail.com', NOW(), 0)
 ;
 
+
+
+INSERT INTO s1_notice (user_id, status, status_name, subject, contents, readChk) VALUES
+(1,0,"읽음","제목","내용",false);
+
 INSERT INTO s1_user_authority VALUES
 (1, 1),
 (1, 2),
@@ -76,12 +81,12 @@ INSERT INTO s1_comment (user_id, post_id, content) VALUES
 (2, 2, '댓글4')
 ;
 
-INSERT INTO s1_review (user_id, post_id, reviewChk, content) VALUES
-(2, 2, 2, '설명이 상세해요'),
-(2, 3, 2, '상태가 좋아요'),
-(2, 4, 1, '친절해요'),
-(2, 5, 0, '대답이 느려요'),
-(2, 6, 1, '저렴해요')
+INSERT INTO s1_review (user_id, post_id, reviewChk, reviewRate, content) VALUES
+(2, 2, 2, 3, '설명이 상세해요'),
+(2, 3, 2, 2, '상태가 좋아요'),
+(2, 4, 1, 2, '친절해요'),
+(2, 5, 0, 1, '대답이 느려요'),
+(2, 6, 1, 3, '저렴해요')
 ;
 
 INSERT INTO s1_attachment (post_id, sourcename, filename, isImage) VALUES
@@ -95,13 +100,19 @@ INSERT INTO s1_attachment (post_id, sourcename, filename, isImage) VALUES
 (7, 'img_avatar4.png', 'img_avatar4.png', TRUE)
 ;
 
+INSERT INTO s1_notice (status, user_id, status_name, subject, contents,readChk) VALUES
+(1, 1, '공지', '환영인사', '어서오세요!',false),
+(1, 1, '공지', '공지1', '공지입니다',true),
+(2, 1, '알림', '알림1', '알림입니다',false)
+;
+
 UPDATE s1_post
 SET sampleImg = 1
 WHERE post_id IN (SELECT post_id FROM s1_attachment WHERE isImage = TRUE)
 ;
 
 /*INSERT INTO s1_heart (user_id, post_id, is_active, created_at)
-VALUES 
+VALUES
     (2, 1, TRUE, NOW()),
     (2, 7, TRUE, NOW()),
     (3, 1, TRUE, NOW()),

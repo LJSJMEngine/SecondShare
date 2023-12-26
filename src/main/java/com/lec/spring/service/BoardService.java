@@ -3,6 +3,7 @@ package com.lec.spring.service;
     import com.lec.spring.domain.Post;
     import org.springframework.security.core.parameters.P;
     import org.springframework.ui.Model;
+    import org.springframework.validation.BindingResult;
     import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -22,6 +23,13 @@ public interface BoardService {
 
     int modify(Post post, Map<String, MultipartFile> files, Long [] delfile);
 
+    int chStatus(Long id);
+
+    int delStatus(Long id);
+
     int deleteByPostId(Long post_id);
+
+
+
 
 }

@@ -1,10 +1,15 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.domain.Post;
+import com.lec.spring.domain.Review;
 import com.lec.spring.domain.User;
 //import com.lec.spring.domain.UserValidator;
 import com.lec.spring.repository.UserRepository;
+import com.lec.spring.service.BoardService;
 import com.lec.spring.service.MemberService;
+import com.lec.spring.service.ReviewService;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +36,9 @@ public class UserController {
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private ReviewService reviewService;
+
     @GetMapping("/login")
     public void login(Model model){}
 
@@ -42,7 +50,7 @@ public class UserController {
 
     @RequestMapping("/rejectAuth")
     public String rejectAuth(){
-        return "common/rejectAuth";
+        return "user/rejectAuth";
     }
 
     @GetMapping("/register")
@@ -60,11 +68,35 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping("/register/email")
+    @ResponseBody
+    public ResponseEntity<Boolean> confirmEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+
+        boolean result = !memberService.selectEmail(email);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
     @PostMapping("/register")
     public String registerOk(User user, Model model) {
         int submit = userService.register(user);
         model.addAttribute("result", submit);
-        return "/user/registerOk";
+        return "user/registerOk";
     }
+
+    // 유저 페이지
+    @GetMapping("/userpage/{id}")
+    public String userpage(@PathVariable Long id ,Model model){
+        User user = userService.userpage(id);
+        model.addAttribute("user", user);
+        userService.findUserPosts(id,model);
+        List<Review> userReview = reviewService.findReview(Math.toIntExact(user.getId()));
+        model.addAttribute("userReview", userReview);
+        return "user/userpage";
+    }
+
 
 }

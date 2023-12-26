@@ -80,7 +80,7 @@ CREATE TABLE s1_comment
 	user_id int NOT NULL,
 	post_id int NOT NULL,
 	content longtext NOT NULL,
-	regdate datetime,
+	regdate datetime DEFAULT now(),
 	PRIMARY KEY (id)
 );
 
@@ -110,10 +110,12 @@ CREATE TABLE s1_notice
 (
 	id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
+	post_id int,
 	status int,
 	status_name varchar(50),
+	subject text,
 	contents text,
-	readChk boolean,
+	readChk boolean DEFAULT false,
 	PRIMARY KEY (id)
 );
 
@@ -141,7 +143,8 @@ CREATE TABLE s1_review
 	user_id int NOT NULL,
 	post_id int NOT NULL,
 	reviewChk int NOT NULL,
-	content longtext NOT NULL,
+	reviewRate int NOT NULL,
+	content text,
 	PRIMARY KEY (id)
 );
 
@@ -154,8 +157,7 @@ CREATE TABLE s1_user
 	name varchar(20) NOT NULL,
 	phoneNM varchar(20) NOT NULL,
 	email varchar(100) NOT NULL,
-	age int,
-	registDate datetime DEFAULT NOW(),
+	registDate datetime DEFAULT now(),
 	status int,
 	PRIMARY KEY (id),
 	UNIQUE (username),
@@ -181,19 +183,14 @@ ALTER TABLE s1_user_authority
 ;
 
 ALTER TABLE s1_post
-ADD CONSTRAINT s1_post_ibfk_1
-FOREIGN KEY (category_id) REFERENCES s1_category(id)
-ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE s1_post
-DROP FOREIGN KEY s1_post_ibfk_1;
-
-ALTER TABLE s1_post
 	ADD FOREIGN KEY (category_id)
 	REFERENCES s1_category (id)
 	ON UPDATE RESTRICT
-	ON DELETE CASCADE
+	ON DELETE RESTRICT
 ;
+
+ALTER TABLE s1_post
+DROP FOREIGN KEY s1_post_ibfk_1;
 
 
 ALTER TABLE s1_chatMessage
@@ -266,6 +263,12 @@ ALTER TABLE s1_chatroom
 ALTER TABLE s1_comment
 	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
+	ON UPDATE RESTRICT
+	ON DELETE CASCADE
+;
+ALTER TABLE s1_notice
+	ADD FOREIGN KEY (post_id)
+	REFERENCES s1_post (post_id)
 	ON UPDATE RESTRICT
 	ON DELETE CASCADE
 ;

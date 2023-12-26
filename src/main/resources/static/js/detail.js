@@ -1,4 +1,6 @@
 $(function(){
+
+
     // 글 삭제 버튼
     $("#btnDel").click(function(){
         let answer = confirm("게시글을 삭제하시겠습니까?");
@@ -7,7 +9,15 @@ $(function(){
         }
     });
 
-// 현재 글의 id
+    // 거래 확인 버튼
+    $("#chkTrade").click(function(){
+        let answer = confirm("거래를 완료하시겠습니까? \n거래가 완료되면 게시글의 거래가 종료되고, \n거래한 회원에게 알림이 갑니다.");
+        if(answer){
+            $("form[name='chkTrade']").submit();
+        }
+    });
+
+    // 현재 글의 id
     const id = $("input[name='post_id']").val().trim();
 
     // 현재 글의 댓글들 불러오기
@@ -71,7 +81,35 @@ function loadComment(post_id){
         },
     });
 }
+function onClickChatBtn(commentUserId){
+    var $form = $('<form action="/chat/room" method="post"></form>');
 
+//https://joyhong.tistory.com/104
+
+	$form.appendTo('body');
+
+    const postId = $("input[name='post_id']").val().trim();
+	var post_id = $('<input type="hidden" id="post_id" name="post_id" value="' + postId + '">');
+	var buyer_id = $('<input type="hidden" id="buyer_id" name="buyer_id" value="' + commentUserId + '">');
+
+	$form.append(post_id).append(buyer_id);
+	$form.submit();
+}
+function buildCommentChat(comment){
+        const chatBtn = "";
+
+        let commentUser_id = parseInt(comment.user.id);
+        const postId = $("input[name='post_id']").val().trim();
+        const funcName = "onClickChatBtn(" + commentUser_id + ")";
+        console.log(funcName);
+        if((logged_id == commentUser_id && logged_id != postData.user_id) ||
+            (logged_id != commentUser_id && logged_id == postData.user_id)) {
+            const newBtn = `
+            <button type="button btn-outline-dark" onclick="${funcName}">1:1 채팅하기</button>`;
+            return newBtn;
+        }
+        return chatBtn;
+}
 function buildComment(result){
     $("#cmt_cnt").text(result.count);   // 댓글 총 개수
     const out = [];
@@ -84,6 +122,8 @@ function buildComment(result){
         let username = comment.user.username;
         let name = comment.user.name;
 
+        const chatBtn = buildCommentChat(comment);
+
         const delBtn = (logged_id !== user_id) ? '' : `
                 <i class="btn fa-solid fa-delete-left text-danger" data-bs-toggle="tooltip"
                 data-cmtdel-id="${id}" title="삭제"></i>
@@ -95,6 +135,7 @@ function buildComment(result){
                     <span>${content}</span>${delBtn}
                 </td>
                 <td><span>${regdate}</span></td>
+                <td>${chatBtn}</td>
             </tr>
             `;
         out.push(row);
@@ -106,7 +147,7 @@ function buildComment(result){
 // 댓글 삭제 기능
 function addDelete(){
     // 현재 글의 id
-    const id = $("input[name='id']")
+    const id = $("input[name='id']");
 
     $("[data-cmtdel-id]").click(function(){
         if(!confirm("댓글을 삭제하시겠습니까?")) return;
