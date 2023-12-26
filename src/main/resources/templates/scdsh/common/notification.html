@@ -5,19 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-    <script th:inline="javascript">
-        // 댓글 작성시 필요
-        const logged_id = [[${logged_user.id}]];
-        console.log(logged_id);
-    </script>
 </head>
 <body>
 <th:block th:fragment="notification">
+
     <li>
         <a th:href="@{/user/login}" sec:authorize="isAnonymous()" >
             <img width="48" height="48" src="https://img.icons8.com/fluency-systems-regular/48/appointment-reminders--v1.png" alt="notification"/>
@@ -25,39 +17,30 @@
         <a sec:authorize="isAuthenticated()" data-bs-toggle="modal" data-bs-target="#notificationArea">
             <img width="48" height="48" src="https://img.icons8.com/fluency-systems-regular/48/appointment-reminders--v1.png" alt="notification">
 
-            <!--신규 데이터가 있는 경우에만 표시-->
-            <img width="24" height="24" class="position-absolute bottom-0 start-0" src="https://img.icons8.com/fluency/48/full-stop.png"/>
+            <!--신규 데이터가 있는 경우에만 표시dkf-->
+            <img width="24" height="24" class="noticeRedButton position-absolute bottom-0 start-0" src="https://img.icons8.com/fluency/48/full-stop.png"/>
             </img>
         </a>
     </li>
     <!--https://getbootstrap.kr/docs/5.0/components/modal/-->
     <div class="modal fade" id="notificationArea" tabindex="-1" role="dialog" aria-labelledby="modalArea" aria-hidden="true">
         <!-- header -->
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-dialog-scrollable" sec:authorize="isAuthenticated()"  th:with="user=${#authentication.getPrincipal().getUser()}" role="document">
+            <script>
+                userSet([[${user.id}]]);
+
+            </script>
             <div class="modal-content">
                 <div class="modal-header">
                     <h5>알림목록</h5>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <!-- col-6 : [bootstrap] 가로 배치 (공간은 6/12 차지) -->
-                        <div class="col-6" style="text-align: right;">
-                            <div style="background-color: gray; color: darkblue; height: 200px;">
-                                모달 테스트
-                            </div>
-                        </div>
-                        <!-- col-6 : [bootstrap] 가로 배치 (공간은 6/12 차지) -->
-                        <div class="col-6" style="text-align: left;">
-                            <div style="background-color: darkblue; color: gray; height: 200px;">
-                                입니다.
-                            </div>
-                        </div>
-                    </div>
+                <div class="modal-body notificationList">
+
                 </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="noticeClose btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
