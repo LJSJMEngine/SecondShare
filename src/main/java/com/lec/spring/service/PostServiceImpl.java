@@ -162,4 +162,12 @@ public class PostServiceImpl implements PostService {
         postRepository.adminupdatePostStatus(selectedPostIds);
     }
 
+    @Override
+    @Transactional
+    public void changeStatus(List<Long> selectedPostIds, Integer selectedStatus) {
+        postRepository.adminChangeStatus(selectedPostIds, selectedStatus);
+    }
+
+
+
 }

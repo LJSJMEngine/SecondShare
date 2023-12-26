@@ -299,5 +299,15 @@
         </foreach>
     </update>
 
+    <!-- 관리자페이지 - 게시글 판매상태 변경 -->
+    <update id="adminChangeStatus" parameterType="java.util.Map">
+        UPDATE s1_post
+        SET status = #{selectedStatus}
+        WHERE post_id IN
+        <foreach collection="selectedPostIds" item="postId" open="(" separator="," close=")">
+            #{postId}
+        </foreach>
+    </update>
+
 
 </mapper>

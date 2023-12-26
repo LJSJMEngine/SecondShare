@@ -64,4 +64,7 @@ public interface PostRepository {
     // 게시글 삭제 하기
     void adminupdatePostStatus(@Param("postIds") List<Long> postIds);
 
+    // 게시글 변경 하기
+    void adminChangeStatus(@Param("selectedPostIds") List<Long> selectedPostIds, @Param("selectedStatus") Integer selectedStatus);
+
 }

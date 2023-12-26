@@ -78,6 +78,20 @@ public class AdminController {
         } else {
             return ResponseEntity.badRequest().body("삭제할 항목을 선택해주세요.");
         }
+
+    }
+
+    @PostMapping("/chStatus")
+    public ResponseEntity<String> chStatus(@RequestBody Map<String, Object> requestBody) {
+        List<Long> selectedPostIds = (List<Long>) requestBody.get("selectedPostIds");
+        Integer selectedStatus = Integer.valueOf(requestBody.get("selectedStatus").toString());
+
+        if (selectedPostIds != null && !selectedPostIds.isEmpty() && selectedStatus != null) {
+            postService.changeStatus(selectedPostIds, selectedStatus);
+            return ResponseEntity.ok("상태 변경이 완료되었습니다.");
+        } else {
+            return ResponseEntity.badRequest().body("변경할 항목을 선택하고 새로운 상태를 지정해주세요.");
+        }
     }
 
 

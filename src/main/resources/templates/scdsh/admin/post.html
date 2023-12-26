@@ -30,9 +30,18 @@
 
     <h5>전체 게시글 수: :[[${cnt}]]개</h5>
 
-    <form th:action="@{/admin/deletePosts}" method="post" id="deleteForm">
+    <form th:action="@{/admin/chStatus}" th:method="post">
         <!-- 선택된 판매글을 담을 hidden input -->
         <input type="hidden" id="selectedPostIdsInput" name="selectedPostIds">
+
+        <select id="selectedStatus" name="statusSelect">
+            <option value="0">판매중</option>
+            <option value="1">판매완료</option>
+        </select>
+
+        <!-- 추가된 부분: 상태 변경 버튼 -->
+        <button type="button" onclick="changeStatus()">상태 변경</button>
+
 
         <!-- 삭제 버튼 -->
         <button type="button" onclick="deleteSelectedPostIds()">삭제</button>

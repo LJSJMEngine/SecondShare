@@ -24,5 +24,5 @@ public interface PostService {
     //관리자페이지 - 게시글 삭제
     void deletePosts(List<Long> selectedPostIds);
 
-
+    void changeStatus(List<Long> selectedPostIds, Integer selectedStatus);
 }
