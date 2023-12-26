@@ -110,6 +110,7 @@ CREATE TABLE s1_notice
 (
 	id int NOT NULL AUTO_INCREMENT,
 	user_id int NOT NULL,
+	post_id int,
 	status int,
 	status_name varchar(50),
 	subject text,
@@ -258,6 +259,12 @@ ALTER TABLE s1_chatroom
 ALTER TABLE s1_comment
 	ADD FOREIGN KEY (user_id)
 	REFERENCES s1_user (id)
+	ON UPDATE RESTRICT
+	ON DELETE CASCADE
+;
+ALTER TABLE s1_notice
+	ADD FOREIGN KEY (post_id)
+	REFERENCES s1_post (post_id)
 	ON UPDATE RESTRICT
 	ON DELETE CASCADE
 ;

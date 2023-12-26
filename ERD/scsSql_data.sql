@@ -41,6 +41,11 @@ INSERT INTO s1_user (username, password, name, phoneNM, email, registDate, statu
 ('USER4', '1234', '회원4', '01099990000', 'user4@gmail.com', NOW(), 0)
 ;
 
+
+
+INSERT INTO s1_notice (user_id, status, status_name, subject, contents, readChk) VALUES
+(1,0,"읽음","제목","내용",false);
+
 INSERT INTO s1_user_authority VALUES
 (1, 1),
 (1, 2),
@@ -95,10 +100,10 @@ INSERT INTO s1_attachment (post_id, sourcename, filename, isImage) VALUES
 (7, 'img_avatar4.png', 'img_avatar4.png', TRUE)
 ;
 
-INSERT INTO s1_notice (status, user_id, status_name, subject, contents) VALUES
-(1, 1, '공지', '환영인사', '어서오세요!'),
-(1, 1, '공지', '공지1', '공지입니다'),
-(2, 1, '알림', '알림1', '알림입니다')
+INSERT INTO s1_notice (status, user_id, status_name, subject, contents,readChk) VALUES
+(1, 1, '공지', '환영인사', '어서오세요!',false),
+(1, 1, '공지', '공지1', '공지입니다',true),
+(2, 1, '알림', '알림1', '알림입니다',false)
 ;
 
 UPDATE s1_post
