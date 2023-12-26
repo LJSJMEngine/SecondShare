@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### API 외부 차단 ###
+application.yml
