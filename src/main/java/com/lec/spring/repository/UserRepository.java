@@ -17,7 +17,11 @@ public interface UserRepository {
     // 회원의 아이디로 user 정보 리턴
     User findByUsername(@Param("username") String username);
 
-    User findAll();
+    List<User> findAllButAdmin();
+
+    List<User> findAll();
+
+    List<User> findLatestUser();
 
     // 신규 user 등록
     int join(User user);
@@ -59,4 +63,13 @@ public interface UserRepository {
 
     // 관리자 페이제 게시글
     List<Post> Posts(Long id);
+
+    // 어드민 페이지 회원 검색
+
+    // 검색 결과 전체 개수
+    int countUserResult(@Param("keyword") String keyword, @Param("type") String type);
+
+    // 결과를 페이징해서 가져오기
+    List<User> searchWithPaging(@Param("type") String type, @Param("keyword") String keyword,
+                                @Param("from") int from, @Param("rows") int rows);
 }

@@ -20,6 +20,14 @@ public interface UserService {
     List<Authority> selectAuthById(Long id);
 
     // 어드민 페이지
+    List<User> getAllUsers();
+
+    List<User> getLatestUser();
+
+    List<User> userList();
+
+    List<User> userList(Integer page, Model model, String type, String keyword);
+
     List<Post> Posts(Long id);
     // 다른 유저 페이지
     User userpage(Long id);

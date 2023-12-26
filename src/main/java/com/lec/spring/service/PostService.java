@@ -12,6 +12,10 @@ public interface PostService {
     Post getPostByPostId(Long post_id);
     void deleteMyPosts(List<Long> selectedPostIds);
 
+    List<Post> getAllPosts();
+
+    List<Post> getLatestPosts();
+
     // 메인페이지 - 최신 판매글
     List<Map<String, Object>> getLatestPostsWithUsernameAndImgPath();
 

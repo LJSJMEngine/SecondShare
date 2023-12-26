@@ -10,7 +10,7 @@
         <result column="n_status" property="status"/>
         <result column="n_status_name" property="status_name"/>
         <result column="n_subject" property="subject"/>
-        <result column="n_content" property="content"/>
+        <result column="n_contents" property="contents"/>
         <result column="n_readChk" property="readChk"/>
     </resultMap>
 
@@ -58,6 +58,11 @@
         ORDER BY id DESC
     </select>
 
-
+    <select id="findLatestNotice" resultType="com.lec.spring.domain.Notice">
+        <include refid="SELECT_NOTICE"/>
+        GROUP BY id
+        ORDER BY id DESC
+        LIMIT 10
+    </select>
 
 </mapper>

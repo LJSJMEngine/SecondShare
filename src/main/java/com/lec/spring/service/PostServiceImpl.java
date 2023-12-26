@@ -47,6 +47,17 @@ public class PostServiceImpl implements PostService {
         postRepository.updatePostStatus(selectedPostIds);
     }
 
+    // 어드민 용
+    @Override
+    public List<Post> getAllPosts(){
+        return postRepository.findAll();
+    }
+
+    @Override
+    public List<Post> getLatestPosts(){
+        return postRepository.findLatest();
+    }
+
     // 마이페이지 - 최신 판매글
     @Override
     public List<Map<String, Object>> getLatestPostsWithUsernameAndImgPath() {

@@ -106,6 +106,13 @@
         ORDER BY p.post_id DESC
     </select>
 
+    <select id="findLatest" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        GROUP BY p.post_id
+        ORDER BY p.post_id DESC
+        LIMIT 10
+    </select>
+
     <update id="modify" flushCache="true"
             parameterType="com.lec.spring.domain.Post">
         UPDATE s1_post

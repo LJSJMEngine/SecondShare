@@ -7,6 +7,7 @@ import com.lec.spring.service.BoardService;
 import com.lec.spring.service.NoticeService;
 import com.lec.spring.service.PostService;
 import com.lec.spring.service.UserService;
+import com.lec.spring.util.U;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -39,7 +40,16 @@ public class AdminController {
     }
 
     @GetMapping("/user")
-    public void user(){}
+    public void user(
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String keyword,
+            Integer page,
+            Model model){
+        userService.userList(page, model, type, keyword);
+
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("type", type);
+    }
 
     @GetMapping("/post")
     public void post(@RequestParam(required = false) String type,
@@ -95,5 +105,13 @@ public class AdminController {
     }
 
 
+    // 회원 권한 변경
 
+    // 회원 상태 변경
+
+    @PostMapping("/userPageRows")
+    public String userPageRows(Integer page, Integer pageRows){
+        U.getSession().setAttribute("pageRows", pageRows);
+        return "redirect:/admin/user?page=" + page;
+    }
 }
