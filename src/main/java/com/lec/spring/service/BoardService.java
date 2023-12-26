@@ -29,4 +29,7 @@ public interface BoardService {
 
     int deleteByPostId(Long post_id);
 
+
+
+
 }

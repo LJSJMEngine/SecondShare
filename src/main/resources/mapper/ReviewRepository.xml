@@ -19,6 +19,22 @@
             u.id = #{userId}
     </select>
 
+<!-- 유저페이지 리뷰   -->
+        <select id="findReview" resultType="map">
+            SELECT
+            r.id,
+            r.user_id,
+            r.post_id,
+            r.reviewChk,
+            r.content
+            FROM
+            s1_review r
+            JOIN
+            s1_user u ON r.user_id = u.id
+            WHERE
+            u.id = #{userId}
+        </select>
+
     <insert id="save" parameterType="com.lec.spring.domain.Review"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO s1_review

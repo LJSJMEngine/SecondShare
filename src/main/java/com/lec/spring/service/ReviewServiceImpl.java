@@ -29,4 +29,16 @@ public class ReviewServiceImpl implements ReviewService {
             return Collections.emptyList();
         }
     }
+
+    @Override
+    public List<Review> findReview(int userId) {
+        try {
+            return reviewRepository.findReview(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+
 }
