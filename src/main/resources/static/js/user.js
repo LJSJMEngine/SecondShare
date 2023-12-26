@@ -6,7 +6,7 @@ $(document).ready(function() {
     // 아이디 중복확인
     $("#idChkButton").click(function(event) {
         event.preventDefault();
-        var username = $("#username").val();
+        var username = $("#username_reg").val();
 
         if(username == '' || username.length == 0) {
             $("#label1").css("color", "red").html("<br>아이디는 필수 입력 사항입니다.");
@@ -89,7 +89,7 @@ $(document).ready(function() {
                     isEmailValidated = true;
                 } else {
                     $("#label6").css("color", "red").html("<br>이미 사용중인 이메일입니다.");
-                    $("#username").val('');
+                    $("#username_reg").val('');
                     event.preventDefault();
                     return false;
                 }
@@ -101,7 +101,7 @@ $(document).ready(function() {
 
     // 필수 입력사항 기재 여부 및 형식 오류 검증 (회원가입 방지)
     $('form[name="frm"]').submit(function(event) {
-        var username = $("#username").val();
+        var username = $("#username_reg").val();
         var password = $("#password").val();
         var passwordChk = $("#passwordChk").val();
         var name = $("#name").val();
@@ -109,7 +109,7 @@ $(document).ready(function() {
 
         if (username == '' || username.length == 0) {
             alert("아이디는 필수 입력 사항입니다.")
-            $("#username").focus();
+            $("#username_reg").focus();
             event.preventDefault();
             return false;
         }
@@ -199,66 +199,62 @@ $(document).ready(function() {
 
     // -------------------------------------
 
-    // 아이디 저장
-    var key = getCookie("key");
-    $("#username").val(key);
-
-    // 페이지 로딩시, ID 체크 상태라면
-    if ($("#username").val() != '') {
-        $("#remember").prop("checked", true); // 체크 상태로 표시하기
-
+    // 저장된 쿠키 확인
+    var savedUsername = getCookie("username");
+    if (savedUsername != '') {
+        // If there is, fill the username field and check the 'Remember Me' box
+        $("#username").val(savedUsername);
+        $("#remember").prop("checked", true);
     }
 
+    // 체크박스 변화 처리
     $("#remember").change(function() {
-        if($("#remember").is(":checked")) {
-            setCookie("key", $("#username").val(), 7) // 7일간 쿠키 보관하기
+        if ($("#remember").is(":checked")) {
+            // If checked, save the current username in a cookie
+            setCookie("username", $("#username").val(), 7);
         } else {
-            deleteCookie("key");
+            // If unchecked, delete the cookie
+            deleteCookie("username");
         }
     });
 
-    // ID 저장하기를 누른 상태에서도 쿠키 저장
+    // 아이디가 바뀌면 쿠키 재설정
     $("#username").keyup(function() {
-        if($("#remember").is(":checked")) {
-            setCookie("key", $("#username").val(), 7)
+        if ($("#remember").is(":checked")) {
+            setCookie("username", $("#username").val(), 7);
         }
     });
 
-    // 쿠키 저장
-    // 쿠키 생성 및 삭제의 역할
+    // 쿠키 설정
     function setCookie(cookieName, value, exdays) {
         var exdate = new Date();
         exdate.setDate(exdate.getDate() + exdays);
-        var cookieValue = encodeURIComponent(value)
-                + ((exdays == null) ? "" : "; expires = " + exdate.toGMTstring());
-        document.cookie = cookieName + " = " + cookieValue;
+        var cookieValue = encodeURIComponent(value) + "; expires=" + exdate.toGMTString();
+        document.cookie = cookieName + "=" + cookieValue;
     }
 
     // 쿠키 삭제
     function deleteCookie(cookieName) {
-        var expireDate = new Date();
-        expireDate.setDate(expireDate.getDate() - 1);
-        document.cookie = cookieName + " = " + "; expires = " + expireDate.toGMTstring();
+        document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     }
 
-    // 쿠키 가져오기
+    // 쿠키 값 따오기
     function getCookie(cookieName) {
-        cookieName = cookieName + " = ";
-        var cookieData = document.cookie;
-        var start = cookieData.indexOf(cookieName);
-        var cookieValue = '';
-        if (start != -1) {
-            start += cookieName.length;
-            var end = cookieData.indexOf(";", start);
-            if (end == -1) {
-                end = cookieData.length;
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
             }
-            cookieValue = cookieData.substring(start, end);
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
         }
-
-        return decodeURIComponent(cookieValue);
-
+        return "";
     }
+
 
 });
 
