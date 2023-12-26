@@ -20,6 +20,7 @@ public class SmsCertification {
     public void createSmsCertification(String phone, String certificationNumber) {
         stringRedisTemplate.opsForValue()
                 .set(PREFIX + phone, certificationNumber, Duration.ofSeconds(LIMIT_TIME));
+        System.out.println("Redis에 저장 : " + certificationNumber + ", " + phone);
     }
 
     // 해당 번호에 인증번호 불러오기
@@ -35,6 +36,17 @@ public class SmsCertification {
     // Redis에 해당 번호로 저장된 인증번호가 존재하는지 확인
     public boolean hasKey(String phone) {
         return stringRedisTemplate.hasKey(PREFIX + phone);
+    }
+
+    // 인증번호와 사용자가 입력한 값이 동일한지 확인
+    public boolean isVerificationSuccessful(String phone, String verificationNumber) {
+        String storedNumber = getSmsCertification(phone);
+
+        if (storedNumber != null && storedNumber.equals(verificationNumber)) {
+            return true;
+        }
+
+        return false;
     }
 
 }
