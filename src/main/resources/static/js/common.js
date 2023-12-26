@@ -20,7 +20,7 @@ $(function () {
         //알림표시 제거
     });
     stomp = new StompJs.Client({
-        brokerURL: 'ws://localhost:8093/ws-notice'
+        brokerURL: 'ws://' + location.host + '/ws-notice'
     });
 
     stomp.activate();
