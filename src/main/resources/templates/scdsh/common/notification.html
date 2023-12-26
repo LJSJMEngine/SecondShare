@@ -10,7 +10,7 @@
 <body>
 <th:block th:fragment="notification">
 
-    <li>
+    <li class="notice">
         <a th:href="@{/user/login}" sec:authorize="isAnonymous()" >
             <img width="48" height="48" src="https://img.icons8.com/fluency-systems-regular/48/appointment-reminders--v1.png" alt="notification"/>
         </a>
@@ -26,7 +26,7 @@
     <div class="modal fade" id="notificationArea" tabindex="-1" role="dialog" aria-labelledby="modalArea" aria-hidden="true">
         <!-- header -->
         <div class="modal-dialog modal-dialog-scrollable" sec:authorize="isAuthenticated()"  th:with="user=${#authentication.getPrincipal().getUser()}" role="document">
-            <script>
+            <script th:inline="javascript">
                 userSet([[${user.id}]]);
 
             </script>

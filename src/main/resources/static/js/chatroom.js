@@ -1,35 +1,39 @@
-let stompClient;
 let roomId = RoomData.room_id;
 let isInitFlag = false;
 let chatArrayLog = new Array();
 console.log(PostData.user);
 $(function () {
-    stompClient = new StompJs.Client({
-        brokerURL: 'ws://' + location.host + '/ws-stomp'
-    });
-    stompClient.activate();
-    console.log(MessageList);
+
+    console.log("STOMPCHECK : " + stomp);
+    console.log(stomp);
 
     //Stomp연결
-    stompClient.onConnect = (frame) => {
-        stompClient.subscribe('/sub/chat/room/' + roomId, function (chat) {
+    stomp.onConnect = (frame) => {
+        stomp.subscribe('/sub/chat/room/' + roomId, function (chat) {
                 var content = JSON.parse(chat.body);
                 console.log(content);
                 subChat(content);
+
         });
 
         publishMessage("INIT", "/pub/init", "getMessageList", currentUser.id);
 
-
+        stomp.subscribe('/sub/notice/' + userId, function (notice) {
+                var content = JSON.parse(notice.body);
+                console.log(content);
+                subNotice(content);
+        });
+        if(userId > -1) // Notice초기화
+            publishNoticeMessage("INIT", "/pub/NoticeInit", "getMessageList", userId);
     };
 
     //웹소켓 에러
-    stompClient.onWebSocketError = (error) => {
+    stomp.onWebSocketError = (error) => {
         console.error('Error with websocket', error);
     };
 
     //Stomp 에러
-    stompClient.onStompError = (frame) => {
+    stomp.onStompError = (frame) => {
         console.error('Broker reported error: ' + frame.headers['message']);
         console.error('Additional details: ' + frame.body);
     };
@@ -50,6 +54,8 @@ $(function () {
 function messageSend() {
         var message = $("#chatInput").val();
         publishMessage("MESSAGE" , "/pub/message", message, currentUser.id);
+        console.log(PostData.post_id);
+        publishNoticeMessage("SENDCHAT", "/pub/Notice", message, otherUser.id, PostData.post_id );
         $("#chatInput").val('');
 }
 function subChat(chat) {
@@ -97,13 +103,13 @@ function publishMessage(TYPE , dest , message, senderId) {
         var JsonBody = JSON.stringify({room_id: roomId, content: message, sender_id: senderId})
 
         if(TYPE == "MESSAGE") { // 현재 방의 최근 상태 변경.
-            stompClient.publish({
+            stomp.publish({
                 destination: "/pub/roomUpdateDate",
                 body: JsonBody
             });
         }
         console.log("[PUBLISH] : dest : " + dest + " Message : " + message + " senderId :" + senderId);
-        stompClient.publish({ // 메세지 보내기.
+        stomp.publish({ // 메세지 보내기.
             destination: dest,
             body: JsonBody
         });

@@ -2,8 +2,10 @@ package com.lec.spring.controller;
 
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.domain.Notice;
+import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.NoticeService;
+import com.lec.spring.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -20,16 +22,18 @@ public class NoticeController {
     @Autowired
     private final NoticeService noticeService;
 
+    private final PostService postService;
     private final SimpMessageSendingOperations messagingTemplate;
 
     @MessageMapping("/Notice")
     public Notice NoticeAddition(Notice notice,  Authentication authentication)
     {
+        System.out.println(notice);
+        Post p = postService.getPostByPostId((long) notice.getPost_id());
+        notice.setSubject(p.getSubject()+ " 게시글의 " + notice.getSubject());
         noticeService.createNotice(notice);
 
-        PrincipalDetails pDetails = (PrincipalDetails)authentication.getPrincipal();
-        User currentUser = pDetails.getUser();
-        messagingTemplate.convertAndSend("/sub/notice/" + currentUser.getId(),notice);
+        messagingTemplate.convertAndSend("/sub/notice/" + notice.getUser_id(), notice);
         return notice;
     }
     @MessageMapping("/NoticeUpdateRead")
@@ -50,6 +54,7 @@ public class NoticeController {
         }
         List<Notice> noticeList = noticeService.findByUserId(currentUser.getId());
 
+        Thread.sleep(100);
         boolean isReadCheck = true;
         for(Notice currentNotice : noticeList)
         {
