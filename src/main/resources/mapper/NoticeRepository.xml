@@ -18,6 +18,7 @@
         SELECT
         id,
         user_id,
+        post_id,
         status,
         status_name,
         subject,
@@ -31,7 +32,7 @@
 
     <select id="findByUserId" resultType="com.lec.spring.domain.Notice">
         <include refid="SELECT_NOTICE"/>
-        AND user_id = #{user_id} order by id
+        AND user_id = #{user_id} ORDER BY id DESC
     </select>
 
     <update id="checkView">
@@ -43,9 +44,9 @@
     <insert id="createNotice" flushCache="true" parameterType="com.lec.spring.domain.Notice"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO s1_notice
-        (user_id, status, status_name, contents, readChk)
+        (user_id,post_id,subject, status, status_name, contents, readChk)
         VALUES
-        (#{user_id}, #{status}, #{status_name}, #{contents}, false)
+        (#{user_id},#{post_id}, #{subject}, #{status}, #{status_name}, #{contents}, false)
     </insert>
 
     <!--chatMessage -->

@@ -7,14 +7,15 @@
         <title>Title</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="/js/admin.js"></script>
     </head>
     <body style="margin-bottom: 200px">
     <th:block th:insert="~{common/adminHeader::header}"></th:block>
 
-        <h1>전체 게시글 관리</h1>
+    <h3>전체 게시글 관리</h3>
     <li class="searchlist">
-        <div>
+        <div >
             <form id="searchlist" name="search" method="GET" action="/admin/post">
                 <select id="typeSelect" name="type">
                     <option value="작성자" th:selected="${type == '작성자'}">작성자</option>
@@ -27,12 +28,29 @@
         </a>
     </li>
 
+    <h5>전체 게시글 수: :[[${cnt}]]개</h5>
 
-    <h1>전체 게시글 수</h1>
-    <table class="table table-hover">
+    <form th:action="@{/admin/chStatus}" th:method="post">
+        <!-- 선택된 판매글을 담을 hidden input -->
+        <input type="hidden" id="selectedPostIdsInput" name="selectedPostIds">
+
+        <select id="selectedStatus" name="statusSelect">
+            <option value="0">판매중</option>
+            <option value="1">판매완료</option>
+        </select>
+
+        <!-- 추가된 부분: 상태 변경 버튼 -->
+        <button type="button" onclick="changeStatus()">상태 변경</button>
+
+
+        <!-- 삭제 버튼 -->
+        <button type="button" onclick="deleteSelectedPostIds()">삭제</button>
+
+        <table class="table table-hover">
         <thead class="table-success">
         <thead>
         <tr>
+            <th></th>
             <th>게시글 번호</th>
             <th>제목</th>
             <th>작성자</th>
@@ -42,13 +60,28 @@
         </thead>
         <tbody>
         <tr th:each="post : ${adminlist}">
+            <td><input type="checkbox" th:value="${post.post_id}" name="selectedPostIds" data-></td>
             <td th:text="${post.post_id}"></td>
             <td><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></td>
-            <td th:text="${post.username}"></td>
-            <td th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></td>
+            <td th:text="${post.user.username}"></td>
+            <td th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '삭제')}"></td>
             <td th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd')}"></td>
         </tr>
         </tbody>
     </table>
+    </form>
+
+    <div th:insert="~{admin/pagination::pagination}">
+        <div class="container mt-1">
+            <ul class="pagination justify-content-center">
+                <th:block th:insert="~{admin/pagination::pagination}"></th:block>
+            </ul>
+        </div>
+    </div>
+    <div class="container-right" id="content-container" th:if="${containerRightPage}">
+        <div th:insert="${containerRightPage} :: content"></div>
+    </div>
+
+
     </body>
 </html>

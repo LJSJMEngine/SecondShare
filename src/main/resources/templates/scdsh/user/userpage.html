@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="/css/userpage.css">
 </head>
 <body>
-<h2>유저 페이지</h2>
+<h3>유저 페이지</h3>
 
     <section id="userPosts">
 
-        <h2 th:text="${user.username} + '님 프로필'"></h2>
+        <h2 th:text="${user.name} + '님 프로필'"></h2>
 
         <span th:text="'이름(닉네임): ' + ${user.name}"></span><br>
         <span th:text="'가입일: ' + ${#temporals.format(user.registDate, 'yyyy년 MM월 dd일')}"></span>
@@ -33,7 +33,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="post : ${userPosts}">
+            <tr th:each="post : ${userPosts} ">
                 <td th:text="${post.post_id}"></td>
                 <td><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></td>
                 <td th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></td>

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserService {
     public User findById(Long id) {
         return userRepository.findById(id);
     }
+
 
 
     @Override
@@ -143,6 +145,16 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public List<Post> Posts(Long id) {
+        try {
+            return userRepository.Posts(id);
+        } catch (Exception e) {
+            // 예외가 발생한 경우 로그 출력
+            e.printStackTrace();
+            return Collections.emptyList(); // 빈 리스트 반환
+        }
+    }
 
     // 마이페이지 - 프로필 보기, 프로필 수정
     @Override
@@ -192,7 +204,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean isValidPhoneNumber(String phoneNumber) {
-        String phoneRegex = "^\\d{11}$";
+        String phoneRegex = "^\\d{3}-\\d{4}-\\d{4}$";
         return phoneNumber.matches(phoneRegex);
     }
 

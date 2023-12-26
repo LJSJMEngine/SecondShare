@@ -68,11 +68,23 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping("/register/email")
+    @ResponseBody
+    public ResponseEntity<Boolean> confirmEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+
+        boolean result = !memberService.selectEmail(email);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
     @PostMapping("/register")
     public String registerOk(User user, Model model) {
         int submit = userService.register(user);
         model.addAttribute("result", submit);
-        return "/user/registerOk";
+        return "user/registerOk";
     }
 
     // 유저 페이지

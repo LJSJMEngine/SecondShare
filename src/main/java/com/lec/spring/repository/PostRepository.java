@@ -56,6 +56,17 @@ public interface PostRepository {
 
 
     //관리자 페이지 게시글
-    List<Post> findPost(Long id);
+    // 검색 결과의 전체 개수
+    int admincountSearchResults(@Param("keyword") String keyword, @Param("type") String type);
+
+    // 검색 결과를 페이징하여 가져오기
+    List<Post> adminsearchWithPagination(@Param("type") String type, @Param("keyword") String keyword,
+                                    @Param("from") int from, @Param("rows") int rows);
+
+    // 게시글 삭제 하기
+    void adminupdatePostStatus(@Param("postIds") List<Long> postIds);
+
+    // 게시글 변경 하기
+    void adminChangeStatus(@Param("selectedPostIds") List<Long> selectedPostIds, @Param("selectedStatus") Integer selectedStatus);
 
 }
