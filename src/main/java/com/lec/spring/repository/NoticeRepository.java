@@ -3,9 +3,11 @@ package com.lec.spring.repository;
 import com.lec.spring.domain.Notice;
 import com.lec.spring.domain.Post;
 
+import java.util.List;
+
 public interface NoticeRepository {
 
-    Notice findByUserId(Long id);
+    List<Notice> findByUserId(Long user_id);
 
     void checkView();
 

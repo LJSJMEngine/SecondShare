@@ -31,7 +31,7 @@
 
     <select id="findByUserId" resultType="com.lec.spring.domain.Notice">
         <include refid="SELECT_NOTICE"/>
-        AND user_id = #{user_id}
+        AND user_id = #{user_id} order by id
     </select>
 
     <select id="checkView">
