@@ -1,0 +1,54 @@
+body {
+    margin: 10px;
+    padding: 10px;
+    color: #333333;
+}
+
+.detailPage {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+}
+
+.detailPage h2 {
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.sell-status {
+    background-color: #CB4335;
+    color: #FFF;
+    padding: 5px;
+    border: 1px solid #ccc;
+    white-space: nowrap;
+}
+
+.categoryPrice {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.classification {
+    width: 20%;
+    font-weight: bold;
+    color: #333;
+}
+
+.content {
+    width: 80%;
+    text-align: left;
+}
+
+.rounded-container {
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.rounded-container label {
+    font-weight: bold;
+}

@@ -5,7 +5,7 @@
     <div class="container mt-1">
         <ul class="pagination justify-content-center">
             <!--/* << 표시 여부 */-->
-            <li class="page-item" th:if="${page > 1}"><a class="page-link" th:href="@{${url}(type=${type}, keyword=${keyword})}" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
+            <li class="page-item" th:if="${page > 1}"><a class="page-link" th:href="@{${url}( type=${type}, keyword=${keyword})}" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
 
             <!--/* < 표시 여부 */-->
             <li class="page-item" th:if="${startPage > 1 }"><a class="page-link" th:href="@{${url}(page=${startPage - 1}, type=${type}, keyword=${keyword})}"><i class='fas fa-angle-left'></i></a></li>
@@ -27,7 +27,7 @@
             <li class="page-item" th:if="${totalPage > endPage }"><a class="page-link" th:href="@{${url }(page=${endPage + 1},type=${type},keyword=${keyword})}"><i class='fas fa-angle-right'></i></a></li>
 
             <!--/* >> 표시 여부 */-->
-            <li class="page-item" th:if="${page < totalPage }"><a class="page-link" th:href="@{${url }(page=${totalPage},type=${type},keyword=${keyword})}"><i class='fas fa-angle-double-right'></i></a></li>
+            <li class="page-item" th:if="${page < totalPage }"><a class="page-link" th:href="@{${url }(page=${totalPage },type=${type},keyword=${keyword})}"><i class='fas fa-angle-double-right'></i></a></li>
 
         </ul>
     </div>

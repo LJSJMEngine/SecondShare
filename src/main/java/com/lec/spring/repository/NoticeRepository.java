@@ -15,5 +15,7 @@ public interface NoticeRepository {
 
 
     // 어드민 페이지 - 공지 조회
-    Notice findAll();
+    List<Notice> findAll();
+
+    List<Notice> findLatestNotice();
 }

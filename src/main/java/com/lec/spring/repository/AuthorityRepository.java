@@ -16,4 +16,7 @@ public interface AuthorityRepository {
         // 특정 회원에 대해 권한 부여하기
         int addAuth(Long userId, Long authId);
 
+        // 권한 변경하기
+        int chAuth(Long user_id, Long authority_id);
+
 }

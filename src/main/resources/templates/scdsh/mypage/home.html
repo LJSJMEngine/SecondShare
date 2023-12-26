@@ -5,22 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
     <link rel="stylesheet" href="/css/mypage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
-<div class="title">
-    <h2>마이페이지</h2>
+<div class="myPage">
+
+    <div class="toHome">
+        <a href="/main">
+            <i class="fas fa-home"></i>
+            홈으로 돌아가기
+        </a>
+    </div>
+
+    <h1>마이페이지</h1>
     <hr>
-</div>
+
 <div class="container-full">
     <div class="container-left">
         <div class="row">
             <!-- 좌측 버튼 그룹 -->
             <div class="col-md-3">
                 <div class="mypageBtn">
-                    <button class="nav" onclick="loadContent('view')">프로필 보기</button>
-                    <button class="nav" onclick="loadContent('modify')">프로필 수정</button>
-                    <button class="nav" onclick="loadContent('myPosts')">판매물품</button>
+                    <button class="btn-outline-dark" onclick="loadContent('view')">프로필 보기</button>
+                    <button class="btn-outline-dark" onclick="loadContent('modify')">프로필 수정</button>
+                    <button class="btn-outline-dark" onclick="loadContent('myPosts')">판매물품</button>
                 </div>
             </div>
         </div>
@@ -37,5 +46,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="/js/mypage.js"></script>
+</div>
 </body>
 </html>
