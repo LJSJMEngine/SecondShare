@@ -78,6 +78,7 @@ public class ChatController {
             // 현재 접속자 : 구매자, 채팅 상대방 : 판매자
             otherUser = chatService.getUser(Math.toIntExact(chatService.getPostData(cRoom.getPost_id()).getUser_id()));
             seller = otherUser;
+            cRoom.setBuyer_id(myId);
         }
         ChatRoom newRoom = chatService.findRoomByPostAndBuyer(cRoom.getPost_id(),cRoom.getBuyer_id());
         if(newRoom == null)

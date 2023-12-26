@@ -4,6 +4,7 @@ import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AuthorityRepository;
+import com.lec.spring.repository.ReviewRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpSession;
@@ -30,12 +31,15 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
     private AuthorityRepository authorityRepository;
+    private ReviewRepository reviewRepository;
 
 
     @Autowired
     public UserServiceImpl(SqlSession sqlSession) {
         userRepository = sqlSession.getMapper(UserRepository.class);
         authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
+        reviewRepository = sqlSession.getMapper(ReviewRepository.class);
+        System.out.println(getClass().getName() + "() 생성");
     }
 
     @Override
@@ -224,5 +228,25 @@ public class UserServiceImpl implements UserService {
     public Long findUserIdByUsername(String username) {
         return userRepository.findUserIdByUsername(username);
     }
+
+
+    @Override
+    public User userpage(Long id) {
+        User user = userRepository.findById(id);
+        return user;
+    }
+
+    @Override
+    public List<Post> findUserPosts(Long id, Model model) {
+        long cnt = userRepository.userpostcountAll(id);   // 글 목록 전체의 개수
+        long statuscnt = userRepository.userpoststatuscount(id); // 판매완료 개수
+        List<Post> userPosts = userRepository.selectFromRow(id);
+        model.addAttribute("userPosts", userPosts);
+        model.addAttribute("cnt", cnt);  // 전체 글 개수
+        model.addAttribute("statuscnt",statuscnt); // 판매글 개수
+
+        return userPosts;
+    }
+
 
 }

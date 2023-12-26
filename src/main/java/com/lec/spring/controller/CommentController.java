@@ -24,6 +24,14 @@ public class CommentController {
         return commentService.write(post_id, user_id, content);
     }
 
+    @PostMapping("/chatButton")
+    public QryResult chatBtnCreate(
+            @RequestParam("id") Long post_id,
+            @RequestParam("user_id") Long user_id,
+            String content){
+        return commentService.write(post_id, user_id, content);
+    }
+
     @PostMapping("/delete")
     public QryResult delete(Long id) { return commentService.delete(id); }
 }

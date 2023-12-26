@@ -20,4 +20,7 @@ public interface PostService {
 
     // 메인페이지 - 관심 판매글
     List<Map<String, Object>> findLikedPostsByUserId(Long userId);
+
+    // 관리자페이지 - 게시글
+    List<Post> findPost(Long id);
 }

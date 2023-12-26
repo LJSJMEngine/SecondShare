@@ -18,6 +18,7 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
 
+
     @Autowired
     public PostServiceImpl(SqlSession sqlss){
         this.postRepository = sqlss.getMapper(PostRepository.class);
@@ -106,4 +107,10 @@ public class PostServiceImpl implements PostService {
 
         return likedPosts;
     }
+
+    @Override
+    public List<Post> findPost(Long id) {
+        return postRepository.findPost(id);
+    }
+
 }

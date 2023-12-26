@@ -162,6 +162,7 @@ public class BoardController {
         U.getSession().setAttribute("pageRows", pageRows);
         return "redirect:/board/list?page=" + page;
     }
+    // 관리자 페이지 게시글
 
 
 }

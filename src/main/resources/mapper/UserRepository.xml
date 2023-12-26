@@ -37,6 +37,17 @@
             1 = 1
     </sql>
 
+
+    <resultMap id="mapPost" type="com.lec.spring.domain.Post">
+        <result column="post_id" property="post_id"/>
+        <result column="subject" property="subject"/>
+        <result column="regDate" property="regDate"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+
+
+
     <select id="findById" resultType="com.lec.spring.domain.User">
         <include refid="SELECT"/>
         AND id = #{id}
@@ -163,4 +174,33 @@
         WHERE username = #{username}
     </select>
 
+<!--    유저페이지  -->
+    <select id="selectFromRow" resultMap="mapPost">
+        SELECT * FROM s1_post p
+        LEFT JOIN  s1_user u
+        ON p.user_id = u.id
+        WHERE u.id = #{id}
+        ORDER BY p.post_id DESC
+        LIMIT 5
+    </select>
+
+    <!-- 해당 유저에 상품 게시물   -->
+    <select id="userpostcountAll" parameterType="long" resultType="int">
+        SELECT COUNT(p.post_id)
+        FROM s1_post p
+        JOIN s1_user u ON p.user_id = u.id
+        WHERE u.id = #{userid}
+    </select>
+
+    <!-- 판매완료 갯수   -->
+    <select id="userpoststatuscount" parameterType="long" resultType="int">
+        SELECT COUNT(p.status)
+        FROM s1_post p
+        JOIN s1_user u ON p.user_id = u.id
+        WHERE u.id = #{userid}
+        AND p.status = 1
+    </select>
+
+
+<!--   유저페이지   -->
 </mapper>

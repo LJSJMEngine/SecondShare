@@ -47,6 +47,7 @@
         ANY_VALUE(u.name) AS u_name,
         ANY_VALUE(u.email) AS u_email,
         COALESCE(ANY_VALUE(a.sourcename), '이미지없음') AS a_sourcename,
+        ANY_VALUE(a.isImage) AS a_isImage,
         ANY_VALUE(c.id) AS c_id,
         ANY_VALUE(c.name) AS c_name
         FROM s1_post p
@@ -73,6 +74,7 @@
         <result column="a_id" property="id"/>
         <result column="a_sourcename" property="sourcename"/>
         <result column="a_filename" property="filename"/>
+        <result column="a_isImage" property="isImage"/>
     </resultMap>
 
 
@@ -117,17 +119,6 @@
         SET subject = #{subject}, contents = #{contents}, price = #{price}, category_id = #{category_id}, status = #{status}
         WHERE post_id = #{post_id}
     </update>
-
-    <!-- 페이징 용 쿼리 -->
-    <select id="selectFromRow" resultMap="mapPost">
-        <include refid="SELECT_BASE"/>
-        ORDER BY p.post_id DESC
-        LIMIT #{param1}, #{param2}
-    </select>
-
-    <select id="countAll" resultType="int">
-        SELECT count(*) FROM s1_post
-    </select>
 
     <select id="countSearchResults" resultType="int">
         SELECT COUNT(*) FROM s1_post p ,s1_category c
@@ -270,5 +261,15 @@
             parameterType="com.lec.spring.domain.Post">
         DELETE FROM s1_post FROM post_id = #{post_id}
     </delete>
+
+    <!-- 관리자 페이지 게시글   -->
+    <select id="findPost"  resultType="java.util.Map">
+        SELECT  p.*,
+        u.username as username
+        FROM s1_post p
+        LEFT JOIN  s1_user u
+        ON p.user_id = u.id
+    </select>
+
 
 </mapper>

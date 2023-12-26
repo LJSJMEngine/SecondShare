@@ -35,6 +35,7 @@
     <script th:inline="javascript">
         // 댓글 작성시 필요
         const logged_id = [[${logged_user.id}]];
+        const postData = [[${post}]];
     </script>
 
     <title>[[${post.subject}]]</title>
@@ -65,6 +66,12 @@
         <hr>
 
         <section>
+
+            <form name="chatConnect" th:action="@{/chat/room}" method="post">
+                <input type="hidden" id="post_id" name="post_id" th:value="${post.post_id}">
+                <input type="hidden" id="buyer_id" name="buyer_id" th:value="${buyerId}">
+            </form>
+
             <form name="frmDelete" th:action="@{/board/delete}" method="post">
                 <input type="hidden" id="id" name="post_id" th:value="${post.post_id}">
             </form>
@@ -107,7 +114,6 @@
             <div >
                 <a class="btn btn-outline-dark" th:href="@{'/board/modify/' + ${post.post_id}}" th:if="${logged_user.id == post.user.id} and ${post.status != 1}">수정</a>
                 <button type="button" id="btnDel" th:if="${logged_user.id == post.user.id}">삭제</button>
-                <a class="btn btn-outline-dark" th:href="TODO" th:if="${logged_user.id != post.user.id}">1:1 채팅하기</a>
                 <button type="button" id="chkTrade" th:href="@{'/board/chkTrade}" th:if="${logged_user.id == post.user.id} and ${post.status != 1}">거래완료</button>
                 <a class="btn btn-outline-dark" th:href="@{/board/list(page=${session.page})}">목록</a>
             </div>

@@ -1,14 +1,10 @@
 <!doctype html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org">
-<div id="Header" th:replace="/common/header.html :: header">
-</div>
 <head>
     <title>Websocket Chat</title>
     <meta charset="utf-8">
     <!-- CSS -->
-    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
     <link rel="stylesheet" href="/css/chat.css">
     <script th:inline="javascript">
         /* <![CDATA[ */
@@ -30,14 +26,13 @@
         /*]]>*/
 
     </script>
-    <script th:src="@{/js/chatroom.js}"></script>
 
 </head>
 <body>
-<h3 th:if="${RoomData}"> 현재 방 이름 : [[${RoomData.subject}]]</h3>
-<h3 th:if="${RoomData}"> 현재 접속중인 나는 누구? : [[${currentUser.name}]]</h3>
+<th:block th:insert="~{common/header::header}"></th:block>
+<script th:src="@{/js/chatroom.js}"></script>
 <!-- 내용 수정 필수. -->
-<div class="container-full">
+<div class="container">
     <div class="row ">
         <div class="col">
             <div class="card chat-app">
@@ -45,11 +40,8 @@
                     <div class="row chat-header clearfix ">
                         <div class="row">
                             <div class="col-lg-3">
-                                <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
-                                </a>
                                 <div class="chat-about">
-                                    <h6 class="m-b-0">[[${otherUser.name}]]</h6>
+                                    <h6 class="otherName m-b-0">[[${otherUser.name}]]</h6>
                                 </div>
                             </div>
                         </div>
@@ -79,31 +71,26 @@
                 th:text="${PostData.subject}"></h2>
             <div class="image-container">
                 <!-- 대표 이미지가 있을 때 -->
-                <img class="card-img-top" th:if="${ PostData != null and PostData.fileList != null }"
-                     th:src= "@{'/upload/' + ${PostData.fileList[0].filename}}"/>
+                <img class="card-img-top" th:if="${ PostData != null and MainImg != null }"
+                     th:src= "@{'/upload/' + ${MainImg.filename}}"/>
 
                 <!-- 대표 이미지가 없을 때 -->
-                <img class="card-img-top" th:unless="${PostData != null and PostData.fileList != null  }"
+                <img class="card-img-top" th:unless="${PostData != null and MainImg != null  }"
                      src="/upload/sample.jpg" />
-                <span class="list-i-selling">
-                        <i th:class="${PostData.status == 0} ? 'status selling' : 'status sold-out'"></i>
-                    </span>
             </div>
 
             <div class="card-body">
                 <!-- 판매글 제목 -->
-                <h2>
-                    <a th:href="@{'/board/detail/' + ${PostData.post_id}}" th:text="${PostData.subject}" class="col subject"
-                       onclick="clickLink(event, '${PostData.post_id}')"></a>
-                </h2>
-
+                <span class="list-i-selling">
+                    <i th:class="${PostData.status == 0} ? 'status selling' : 'status sold-out'"></i>
+                </span>
                 <!-- 판매글 작성일 & 조회수 -->
                 <div class="col date-cnt">
                     <span th:text="${#temporals.format(PostData.regDate, 'MM/dd')}" class="regDate"></span>
                     <span th:text="'조회 ' + ${PostData.viewCnt}" class="viewCnt"></span>
                 </div>
                 <!-- 판매글 작성자명 -->
-                <div class="col" th:text="${PostData.user.name}" ></div>
+                <div class="col content" th:text="${PostData.contents}" ></div>
                 <!-- 판매글 가격 -->
                 <h5 class="col mt-3 border-top"></h5>
                 <h3 class="col mt-3 price" th:text="${#numbers.formatDecimal(PostData.price, 0, 'COMMA', 0, 'POINT') + '원'}"></h3>
