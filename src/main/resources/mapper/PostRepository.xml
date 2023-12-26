@@ -204,6 +204,7 @@
             p.regDate,
             p.sampleImg,
             u.username,
+            u.name,
             MAX(a.filename) AS attachment_filename
         FROM s1_post p
             JOIN s1_user u ON p.user_id = u.id

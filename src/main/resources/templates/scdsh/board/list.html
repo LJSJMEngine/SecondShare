@@ -19,8 +19,9 @@
 
     <!-- 페이징 헤더 -->
     <div class="mb-3 mt-3 clearfix">
-        <span class="float-start me-2">[[${type}]]/[[${keyword}]] 검색:[[${cnt}]]개</span>
-        <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
+        <h3><span class="float-start me-2" th:unless="${cnt == 0}">[[${type}]]/[[${keyword}]] 검색:[[${cnt}]]개</span></h3>
+        <div th:if="${cnt == 0}"><h2>검색한 결과가 없습니다.</h2></div>
+<!--        <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>-->
     </div>
 <!-- 목록 -->
     <table class="table table-hover">
@@ -39,7 +40,7 @@
 
                     <dt><a th:href="@{'/board/detail/' + ${post.post_id}}" th:text="${post.subject}"></a></dt>
                     <dt th:text="${post.price}+'원'"></dt>
-                    <dt><a th:href="@{'/user/userpage/' + ${post.user_id}}" th:text="${post.user.username}"></a></dt>
+                    <dt><a th:href="@{'/user/userpage/' + ${post.user_id}}" th:text="${post.user.name}"></a></dt>
                     <dt th:text="${post.category.name}"></dt>
                     <dt th:text="${post.status == 0 ? '판매중' : (post.status == 1 ? '판매완료' : '판매불가')}"></dt>
                     <dt>
