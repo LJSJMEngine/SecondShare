@@ -1,8 +1,5 @@
-
 let buttonFlag = false;
 $(function(){
-
-
     // 글 삭제 버튼
     $("#btnDel").click(function(){
         let answer = confirm("게시글을 삭제하시겠습니까?");
@@ -83,12 +80,11 @@ function loadComment(post_id){
                     return;
                 }
                 buildComment(data);
-
-                addDelete();
             }
         },
     });
 }
+
 function onClickChatBtn(commentUserId){
     var $form = $('<form action="/chat/room" method="post"></form>');
 
@@ -155,35 +151,6 @@ function buildComment(result){
     });
 
     $("#cmt_list").html(out.join("\n"));
-}
-
-// 댓글 삭제 기능
-function addDelete(){
-    // 현재 글의 id
-    const id = $("input[name='id']");
-
-    $("[data-cmtdel-id]").click(function(){
-        if(!confirm("댓글을 삭제하시겠습니까?")) return;
-
-        const comment_id = $(this).attr("data-cmtdel-id");
-
-        $.ajax({
-            url: "/comment/delete",
-            type: "POST",
-            cache: false,
-            data: {"id": comment_id},
-            success: function(data, status){
-                if (status == "success"){
-                    if(data.status !== "OK"){
-                        alert(data.status);
-                        return;
-                    }
-
-                    loadComment(id);
-                }
-            }
-        });
-    });
 }
 
 // ----------------- 좋아요 기능 -------------------------

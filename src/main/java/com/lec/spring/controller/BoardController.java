@@ -120,8 +120,8 @@ public class BoardController {
     }
 
     @PostMapping("/chkTrade")
-    public String chkTradeOk(Long post_id, Model model){
-        int result = boardService.chStatus(post_id);
+    public String chkTradeOk(Long ch_post_id, Model model){
+        int result = boardService.chStatus(ch_post_id);
         model.addAttribute("result", result);
         return "/board/chkTradeOk";
     }

@@ -21,7 +21,16 @@
 
 #input_comment {
     width: 70%;
+    margin-left: 15px;
     margin-right: 10px;
+    border: solid gray;
+    border-radius: 5px;
+}
+
+#btn_comment {
+    border: solid gray;
+    border-radius: 5px;
+    background-color: white;
 }
 
 .commentBox {

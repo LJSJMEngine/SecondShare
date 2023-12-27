@@ -56,25 +56,24 @@
 
             <div style="flex: 1; margin-left: 20px;">
                 <label class="input" for="price">가격:</label><br>
-                <input type="number" id="price" name="price" th:value="${price}" th:text=" 원" style="width: calc(100% - 20px);">
+                <input type="number" id="price" name="price" th:value="${price}" style="width: calc(100% - 20px);"/>원
                 <span class="text-danger" th:if="${error_price}" th:utext="${error_price}"></span>
             </div>
         </div>
 
-        <div>
+        <div class="my-3">
             <label class="input" for="contents">내용:</label><br>
-            <textarea rows="5" id="contents" placeholder="내용을 입력하세요" name="contents" th:utext="${contents}"></textarea>
+            <textarea class="form-control" rows="5" id="contents" placeholder="내용을 입력하세요" name="contents" th:utext="${contents}"></textarea>
         </div>
 
-        <div>
-            <div id="files">
-                <label class="input">상품 사진:</label>
-                <input class="form-control col-xs-3" type="file" name="upfile${i}"/>
-                <br>
-                <label class="input">추가 사진:</label>
-            </div>
+        <div class="container mt-3 mb-3 border rounded">
+            <div class="mb-3 mt-3">
+                <label class="input">첨부 사진:</label>
+                <div id="files">
 
-            <button class="btn btn-outline-dark" type="button" id="btnAdd">추가</button>
+                </div>
+                <button class="btn btn btn-secondary" type="button" id="btnAdd">추가</button>
+            </div>
         </div>
         <br>
 

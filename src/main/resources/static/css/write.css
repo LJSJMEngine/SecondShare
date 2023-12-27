@@ -61,6 +61,13 @@ textarea {
     color: #333333;
 }
 
+/* Input 화살표 버튼 제거 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 /* Error Message */
 .text-danger {
     color: #FFCCBC;
@@ -72,7 +79,7 @@ textarea {
 }
 
 /* 파일 업로드 버튼 스타일 */
-input[type="file"] {
+/* input[type="file"] {
     margin-top: 5px;
     width: 100%;
 }
@@ -91,6 +98,7 @@ input[type="file"] {
     background-color: #FFFFFF;
     color: #333333;
 }
+*/
 
 /* 버튼 */
 .btn-outline-dark {

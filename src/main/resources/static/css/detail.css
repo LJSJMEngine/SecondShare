@@ -25,13 +25,24 @@ body {
     white-space: nowrap;
 }
 
-.categoryPrice {
-    width: 100%;
+.categoryPrice1 {
+    background-color: #dcddde;
+    padding: 5px;
     border-collapse: collapse;
+    border-radius: 5px;
+    float: left;
+}
+
+.categoryPrice2 {
+    background-color: #dcddde;
+    padding: 5px;
+    border-collapse: collapse;
+    border-radius: 5px;
+    float: right;
 }
 
 .classification {
-    width: 20%;
+    margin-right: 20px;
     font-weight: bold;
     color: #333;
 }
@@ -44,11 +55,17 @@ body {
 .rounded-container {
     border-radius: 10px;
     overflow: hidden;
-    background-color: #f8f9fa;
+    background-color: #dcddde;
     padding: 10px;
     margin-top: 20px;
 }
 
 .rounded-container label {
     font-weight: bold;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
