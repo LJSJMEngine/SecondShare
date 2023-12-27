@@ -9,7 +9,7 @@
 </script>
 
 <th:block th:if="${post}" th:with="logged_user=${#authentication.principal.user}">
-
+    <th:block th:insert="~{common/header::header}"></th:block>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
