@@ -1,3 +1,10 @@
+.userPage {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+}
+
 .post_table {
  width: 100%;
     border-collapse: collapse;
