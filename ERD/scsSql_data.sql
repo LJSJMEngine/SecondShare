@@ -62,13 +62,11 @@ INSERT INTO s1_category (name) VALUES
 /* 게시물 정보 영역 */
 
 INSERT INTO s1_post (user_id, subject, contents, price, status, regDate, category_id) VALUES
-(1, '제목1', '내용1', 20000, 0, NOW(), 1),
-(2, '제목2', '내용2', 15000, 1, NOW(), 2),
-(2, '제목3', '내용3', 20000, 1, NOW(), 3),
-(2, '제목4', '내용4', 15000, 0, NOW(), 4),
-(2, '제목5', '내용5', 20000, 0, NOW(), 5),
-(2, '제목6', '내용6', 15000, 0, NOW(), 2),
-(3, '제목7', '내용7', 15000, 0, NOW(), 4)
+(1, '제목1', '내용1', 20000, 1, NOW(), 1),
+(1, '제목2', '내용2', 20000, 0, NOW(), 1),
+(2, '제목3', '내용3', 20000, 1, NOW(), 2),
+(2, '제목4', '내용4', 20000, 0, NOW(), 2),
+(3, '제목5', '내용5', 20000, 1, NOW(), 3)
 ;
 
 INSERT INTO s1_comment (user_id, post_id, content) VALUES
@@ -81,9 +79,7 @@ INSERT INTO s1_comment (user_id, post_id, content) VALUES
 INSERT INTO s1_review (user_id, post_id, reviewChk, reviewRate, content) VALUES
 (2, 2, 2, 3, '설명이 상세해요'),
 (2, 3, 2, 2, '상태가 좋아요'),
-(2, 4, 1, 2, '친절해요'),
-(2, 5, 0, 1, '대답이 느려요'),
-(2, 6, 1, 3, '저렴해요')
+(2, 4, 1, 2, '친절해요')
 ;
 
 INSERT INTO s1_attachment (post_id, sourcename, filename, isImage) VALUES
@@ -91,10 +87,8 @@ INSERT INTO s1_attachment (post_id, sourcename, filename, isImage) VALUES
 (1, 'phone2.jpg', 'phone2.jpg', TRUE),
 (2, 'phone2.jpg', 'phone2.jpg', TRUE),
 (3, 'phone3.jpg', 'phone3.jpg', TRUE),
-(4, '첨부파일 샘플.txt', '첨부파일 샘플.txt', FALSE),
-(5, 'img_avatar2.png', 'img_avatar2.png', TRUE),
-(6, 'img_avatar3.png', 'img_avatar3.png', TRUE),
-(7, 'img_avatar4.png', 'img_avatar4.png', TRUE)
+(4, 'img_avatar1.png', 'img_avatar1.png', TRUE),
+(5, 'img_avatar2.png', 'img_avatar2.png', TRUE)
 ;
 
 INSERT INTO s1_notice (status, user_id, status_name, subject, contents,readChk) VALUES
