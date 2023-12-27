@@ -209,6 +209,7 @@
         FROM s1_post p
             JOIN s1_user u ON p.user_id = u.id
             LEFT JOIN s1_attachment a ON p.post_id = a.post_id
+            Where p.status != 2
         GROUP BY p.post_id
         ORDER BY p.regDate DESC LIMIT 5;
     </select>
